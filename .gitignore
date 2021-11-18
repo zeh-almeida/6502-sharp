@@ -1,0 +1,10 @@
+﻿/.vs/6502-sharp
+/coveragereport
+/Cpu/bin
+/Cpu/obj
+/Test.Integrated.Cpu/bin
+/Test.Integrated.Cpu/obj
+/Test.Integrated.Cpu/coverage.cobertura.xml
+/Test.Unit.Cpu/obj
+/Test.Unit.Cpu/coverage.cobertura.xml
+/Test.Unit.Cpu/bin
