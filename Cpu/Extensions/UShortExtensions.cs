@@ -1,0 +1,139 @@
+﻿using System;
+
+namespace Cpu.Extensions
+{
+    /// <summary>
+    /// Additional functionality to the <see cref="ushort"/> struct
+    /// </summary>
+    public static class UShortExtensions
+    {
+        /// <summary>
+        /// Returns the 8 least significant bits from a 16-bit value.
+        /// The first 8 bits will be zero.
+        /// </summary>
+        /// <param name="value">16-bit value</param>
+        /// <returns>Least significant digits</returns>
+        public static ushort LeastSignificantBits(this ushort value)
+        {
+            return (ushort)(value & 0x00FF);
+        }
+
+        /// <summary>
+        /// Returns the 8 most significant bits from a 16-bit value.
+        /// The last 8 bits will be zero.
+        /// </summary>
+        /// <param name="value">16-bit value</param>
+        /// <returns>Most significant digits</returns>
+        public static ushort MostSignificantBits(this ushort value)
+        {
+            return (ushort)(value & 0xFF00);
+        }
+
+        /// <summary>
+        /// Combines the least and most significant bits into a single 16-bit number
+        /// </summary>
+        /// <param name="lsb">Least significant bits</param>
+        /// <param name="msb">Most significant bits</param>
+        /// <returns>Combined 16-bit value</returns>
+        public static ushort CombineSignificantBits(this ushort lsb, ushort msb)
+        {
+            return (ushort)(msb | lsb);
+        }
+
+        /// <summary>
+        /// Checks if the first bit of an 16-bit number is set.
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <returns>True if bit 0 is set, false otherwise</returns>
+        public static bool IsFirstBitSet(this ushort value)
+        {
+            return value.IsBitSet(0);
+        }
+
+        /// <summary>
+        /// Checks if the seventh bit of an 16-bit number is set.
+        /// This is the same as checking the last bit of an 8-bit number.
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <returns>True if bit 7 is set, false otherwise</returns>
+        /// <see cref="ByteExtensions.IsLastBitSet(byte)"/>
+        public static bool IsSeventhBitSet(this ushort value)
+        {
+            return value.IsBitSet(7);
+        }
+
+        /// <summary>
+        /// Checks if the desired bit of an 16-bit number is set.
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <param name="index">Index of the bit to check</param>
+        /// <returns>True if the bit is set, false otherwise</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the index is less than 0 or bigger than 15</exception>
+        public static bool IsBitSet(this ushort value, int index)
+        {
+            if (index is < 0 or >= 16)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0-15");
+            }
+
+            var toRight = (ushort)(value << (15 - index));
+            var toLeft = (ushort)(toRight >> 15);
+
+            return 1.Equals(toLeft);
+        }
+
+        /// <summary>
+        /// Checks if the 16-bit is zero
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        /// <returns>True if zero, false otherwise</returns>
+        public static bool IsZero(this ushort value)
+        {
+            return 0.Equals(value);
+        }
+
+        /// <summary>
+        /// Rotates the bits to the right.
+        /// If carry is set, sets the last bit of the new number.
+        /// </summary>
+        /// <param name="value">Value to shift</param>
+        /// <param name="isCarry">If true, sets the last bit</param>
+        /// <returns>Shifted value</returns>
+        public static ushort RotateRight(this ushort value, bool isCarry)
+        {
+            var shiftedValue = value >> 1;
+            var carryMask = isCarry ? 0b_1000_0000_0000_0000 : 0b_0000_0000_0000_0000;
+
+            return (ushort)(shiftedValue | carryMask);
+        }
+
+        /// <summary>
+        /// Rotates the bits to the left.
+        /// If carry is set, sets the first bit of the new number.
+        /// </summary>
+        /// <param name="value">Value to shift</param>
+        /// <param name="isCarry">If true, sets the first bit</param>
+        /// <returns>Shifted value</returns>
+        public static ushort RotateLeft(this ushort value, bool isCarry)
+        {
+            var shiftedValue = value << 1;
+            var carryMask = isCarry ? 0b_0000_0000_0000_0001 : 0b_0000_0000_0000_0000;
+
+            return (ushort)(shiftedValue | carryMask);
+        }
+
+        /// <summary>
+        /// Breaks the 16-bit into its least and most significant values.
+        /// The numbers are ordered in little endian fashion
+        /// </summary>
+        /// <param name="value">Vale to break down</param>
+        /// <returns>least and most significant value pair</returns>
+        public static (byte lsb, byte msb) SignificantBits(this ushort value)
+        {
+            var lsb = (byte)LeastSignificantBits(value);
+            var msb = (byte)(MostSignificantBits(value) >> 8);
+
+            return (lsb, msb);
+        }
+    }
+}
