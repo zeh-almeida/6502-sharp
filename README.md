@@ -8,6 +8,8 @@ Not only that but most of them are very "machine friendly" but not really "human
 
 The objective of this project is to present a alternative: while aiming at the original hardware, the goal is to provide an implementation which is as "human-friendly" as possible.
 
+At the same time, this is a learning project: most people with high-level background tremble and shake when mentioning assembly, binary and any other low-level term, let's change that.
+
 There are many techniques used to reach the objective:
 * Object Oriented design
 * Code documentation
