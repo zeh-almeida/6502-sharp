@@ -8,3 +8,5 @@
 /Test.Unit.Cpu/obj
 /Test.Unit.Cpu/coverage.cobertura.xml
 /Test.Unit.Cpu/bin
+/Documentation.Cpu/obj/Debug
+/Documentation.Cpu/Help
