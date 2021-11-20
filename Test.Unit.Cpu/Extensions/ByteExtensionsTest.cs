@@ -148,6 +148,33 @@ namespace Test.Unit.Cpu.Extensions
         }
 
         [Theory]
+        [InlineData(0b_0000_0001, 1)]
+        [InlineData(0b_0000_0010, 2)]
+        [InlineData(0b_0000_0100, 4)]
+        public void ToBCD_Returns(byte value, byte expected)
+        {
+            Assert.Equal(expected, value.ToBCD());
+        }
+
+        [Theory]
+        [InlineData(0x0F)]
+        [InlineData(0x1F)]
+        [InlineData(0x2F)]
+        public void ToBCD_LargeLsb_Throws(byte value)
+        {
+            _ = Assert.Throws<InvalidOperationException>(() => value.ToBCD());
+        }
+
+        [Theory]
+        [InlineData(1, 0b_0000_0001)]
+        [InlineData(2, 0b_0000_0010)]
+        [InlineData(4, 0b_0000_0100)]
+        public void ToHex_Returns(byte value, byte expected)
+        {
+            Assert.Equal(expected, value.ToHex());
+        }
+
+        [Theory]
         [ClassData(typeof(SignificantBitsData))]
         public void SignificantBits_Returns(byte value, Tuple<byte, byte> expected)
         {

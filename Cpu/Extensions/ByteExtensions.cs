@@ -159,5 +159,34 @@ namespace Cpu.Extensions
 
             return (lsb, msb);
         }
+
+        /// <summary>
+        /// Converts a BCD byte to a Hex byte
+        /// </summary>
+        /// <param name="value">BCD byte to convert</param>
+        /// <returns>Hex byte</returns>
+        /// <see href="https://github.com/amensch/e6502/blob/master/e6502CPU/Utility/CPUMath.cs"/>
+        public static byte ToHex(this byte value)
+        {
+            return value <= 9
+                 ? value
+                 : (byte)(((value / 10) << 4) + (value % 10));
+        }
+
+        /// <summary>
+        /// Converts a Hex byte to a BCD byte
+        /// </summary>
+        /// <param name="value">Hex byte to convert</param>
+        /// <returns>BCD byte</returns>
+        /// <see href="https://github.com/amensch/e6502/blob/master/e6502CPU/Utility/CPUMath.cs"/>
+        public static byte ToBCD(this byte value)
+        {
+            if ((value & 0x0f) > 0x09)
+            {
+                throw new InvalidOperationException($"Invalid BCD number: {value:X2}");
+            }
+
+            return (byte)(((value >> 4) * 10) + (value & 0x0f));
+        }
     }
 }

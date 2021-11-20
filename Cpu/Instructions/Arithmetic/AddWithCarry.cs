@@ -24,8 +24,15 @@ namespace Cpu.Instructions.Arithmetic
     /// </para>
     /// </summary>
     /// <see href="https://masswerk.at/6502/6502_instruction_set.html#ADC"/>
+    /// <see href="https://github.com/amensch/e6502/blob/master/e6502CPU/CPU/e6502.cs"/>
     public sealed class AddWithCarry : BaseInstruction
     {
+        #region Constants
+        private const byte BinaryOverflowCheck = 0x80;
+
+        private const byte DecimalOverflowCheck = 0x7F;
+        #endregion
+
         #region Constructors
         /// <summary>
         /// Instantiates a new <see cref="AddWithCarry"/> instruction
@@ -47,22 +54,52 @@ namespace Cpu.Instructions.Arithmetic
         public override ICpuState Execute(ICpuState currentState, ushort value)
         {
             var loadValue = Load(currentState, value);
+
+            var operation = currentState.Flags.IsDecimalMode
+                              ? DecimalCalculation(currentState, loadValue)
+                              : BinaryCalculation(currentState, loadValue);
+
+            currentState.Flags.IsZero = operation.IsZero();
+            currentState.Registers.Accumulator = operation;
+
+            return currentState;
+        }
+
+        private static byte BinaryCalculation(ICpuState currentState, ushort loadValue)
+        {
             var accumulator = currentState.Registers.Accumulator;
             var carry = currentState.Flags.IsCarry ? 1 : 0;
 
             var operation = (ushort)(accumulator + loadValue + carry);
 
-            var isNegative = operation.IsSeventhBitSet();
-            var isOverflow = 0x80.Equals((~(accumulator ^ loadValue)) & (accumulator ^ operation) & 0x80);
+            currentState.Flags.IsCarry = operation.IsBitSet(8);
+            currentState.Flags.IsNegative = operation.IsSeventhBitSet();
+            currentState.Flags.IsOverflow = !0.Equals((~(accumulator ^ (byte)loadValue)) & (accumulator ^ operation) & BinaryOverflowCheck);
 
-            currentState.Flags.IsCarry = (operation.IsBitSet(8));
-            currentState.Flags.IsOverflow = isOverflow;
+            return (byte)operation;
+        }
 
-            currentState.Flags.IsZero = (operation.IsZero());
-            currentState.Flags.IsNegative = isNegative;
+        private static byte DecimalCalculation(ICpuState currentState, ushort loadValue)
+        {
+            var carry = currentState.Flags.IsCarry ? 1 : 0;
 
-            currentState.Registers.Accumulator = ((byte)operation);
-            return currentState;
+            var accumulator = currentState.Registers.Accumulator.ToBCD();
+            var value = ((byte)loadValue).ToBCD();
+
+            var operation = (byte)(accumulator + value + carry);
+            var isCarry = operation > 99;
+
+            if (isCarry)
+            {
+                operation -= 100;
+            }
+
+            var result = operation.ToHex();
+
+            currentState.Flags.IsCarry = isCarry;
+            currentState.Flags.IsNegative = result > DecimalOverflowCheck;
+
+            return result;
         }
 
         private static ushort Load(ICpuState currentState, ushort address)

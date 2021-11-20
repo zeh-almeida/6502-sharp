@@ -87,7 +87,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         }
 
         [Fact]
-        public void Execute_ResultSeventhBitSet_WritesNegativeFlag()
+        public void Execute_WritesNegativeFlag()
         {
             const byte value = 0b_0111_1111;
             const byte accumulator = 0b_1000_0000;
@@ -106,11 +106,11 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         }
 
         [Fact]
-        public void Execute_ResultOverflows_WritesOverflowFlag()
+        public void Execute_WritesOverflowFlag()
         {
-            const byte value = 0b_0111_1111;
-            const byte accumulator = 0b_0000_0001;
-            const byte result = 0b_1000_0000;
+            const byte value = 0b_1111_1111;
+            const byte accumulator = 0b_1000_0000;
+            const byte result = 0b_0111_1111;
 
             var stateMock = SetupMock(0x69, accumulator);
 
@@ -119,13 +119,13 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
             stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
-            stateMock.VerifySet(state => state.Flags.IsNegative = true, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsOverflow = true, Times.Once());
-            stateMock.VerifySet(state => state.Flags.IsCarry = false, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsCarry = true, Times.Once());
         }
 
         [Fact]
-        public void Execute_ResultLargerThanMaxBit_WritesCarryFlag()
+        public void Execute_WritesCarryFlag()
         {
             const byte value = 0b_1111_1111;
             const byte accumulator = 0b_0000_0001;
@@ -137,20 +137,99 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
-            stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsOverflow = false, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsCarry = true, Times.Once());
         }
 
         [Fact]
-        public void Execute_NoCarry_Sums()
+        public void Execute_Carry_Sums()
         {
             const byte value = 0b_0000_0011;
             const byte accumulator = 0b_0000_0001;
             const byte result = 0b_0000_0101;
 
             var stateMock = SetupMock(0x69, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Flags.IsCarry)
+                .Returns(true);
+
+            _ = this.Subject.Execute(stateMock.Object, value);
+
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_BCD_WritesNegativeFlag()
+        {
+            const byte value = 0b_0100_0000;
+            const byte accumulator = 0b_0100_0000;
+            const byte result = 0b_1000_0000;
+
+            var stateMock = SetupMock(0x69, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Flags.IsDecimalMode)
+                .Returns(true);
+
+            _ = this.Subject.Execute(stateMock.Object, value);
+
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsNegative = true, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_BCD_WritesCarryFlag()
+        {
+            const byte value = 0b_0100_0110;
+            const byte accumulator = 0b_0101_1000;
+            const byte result = 0b_0000_0100;
+
+            var stateMock = SetupMock(0x69, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Flags.IsDecimalMode)
+                .Returns(true);
+
+            _ = this.Subject.Execute(stateMock.Object, value);
+
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsCarry = true, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_BCD_WritesZeroFlag()
+        {
+            const byte value = 0b_0000_0001;
+            const byte accumulator = 0b_1001_1001;
+            const byte result = 0b_0000_0000;
+
+            var stateMock = SetupMock(0x69, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Flags.IsDecimalMode)
+                .Returns(true);
+
+            _ = this.Subject.Execute(stateMock.Object, value);
+
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_BCD_Carry_Sums()
+        {
+            const byte value = 0b_0000_0001;
+            const byte accumulator = 0b_0000_0001;
+            const byte result = 0b_0000_0011;
+
+            var stateMock = SetupMock(0x69, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Flags.IsDecimalMode)
+                .Returns(true);
 
             _ = stateMock
                 .Setup(s => s.Flags.IsCarry)

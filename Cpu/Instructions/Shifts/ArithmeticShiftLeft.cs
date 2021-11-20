@@ -12,7 +12,7 @@ namespace Cpu.Instructions.Shifts
     /// Bit 0 is set to 0 and bit 7 is placed in the carry flag.
     /// </para>
     /// <para>
-    /// The effect of this operation is to multiply the memory contents by 2 (ignoring 2's complement considerations), 
+    /// The effect of this operation is to multiply the memory contents by 2 (ignoring 2's complement considerations),
     /// setting the carry if the result will not fit in 8 bits.
     /// </para>
     /// <para>
