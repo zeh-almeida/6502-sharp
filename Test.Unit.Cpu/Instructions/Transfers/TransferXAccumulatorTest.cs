@@ -90,7 +90,7 @@ namespace Test.Unit.Cpu.Instructions.Transfers
             BasicExecutionAssertion(stateMock, value);
 
             stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
-            stateMock.VerifySet(state => state.Flags.IsZero     = false, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
         }
 
         private static Mock<ICpuState> SetupMock(byte value)
