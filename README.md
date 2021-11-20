@@ -82,7 +82,7 @@ Most of the time the difference in execution is based on where to read from or w
 
 Therefore, each instruction is modeled in a separate class, which encapsulates all different behaviors of the specific instruction respecting their specific opcode.
 
-At the moment all instruction implementations will ignore the `Decimal Mode` flag.
+All instruction implementations will honor the `Decimal Mode` flag, if set.
 
 #### Opcodes
 Represent a variation of a specific instruction. In this implementation they are encapsulated with additional information such as clock cycles and length.
