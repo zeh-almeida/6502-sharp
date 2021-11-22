@@ -71,7 +71,7 @@ namespace Test.Unit.Cpu.Instructions.Store
 
             var stateMock = SetupMock(0x84, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.IndexY, Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPage(address, value), Times.Once());
@@ -85,7 +85,7 @@ namespace Test.Unit.Cpu.Instructions.Store
 
             var stateMock = SetupMock(0x94, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.IndexY, Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPageX(address, value), Times.Once());
@@ -99,7 +99,7 @@ namespace Test.Unit.Cpu.Instructions.Store
 
             var stateMock = SetupMock(0x8C, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.IndexY, Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsolute(address, value), Times.Once());

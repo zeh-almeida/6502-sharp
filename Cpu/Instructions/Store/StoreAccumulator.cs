@@ -38,10 +38,9 @@ namespace Cpu.Instructions.Store
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             Write(currentState, value);
-            return currentState;
         }
 
         private static void Write(ICpuState currentState, ushort address)

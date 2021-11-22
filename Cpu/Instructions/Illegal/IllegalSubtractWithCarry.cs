@@ -30,7 +30,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var accumulator = currentState.Registers.Accumulator;
             var carry = currentState.Flags.IsCarry ? 1 : 0;
@@ -48,7 +48,6 @@ namespace Cpu.Instructions.Illegal
             currentState.Flags.IsNegative = isNegative;
 
             currentState.Registers.Accumulator = ((byte)operation);
-            return currentState;
         }
     }
 }

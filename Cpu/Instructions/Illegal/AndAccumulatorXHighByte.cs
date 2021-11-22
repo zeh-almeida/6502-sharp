@@ -34,7 +34,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var highByte = ReadHighByte(currentState, value);
             var accumulator = currentState.Registers.Accumulator;
@@ -43,7 +43,6 @@ namespace Cpu.Instructions.Illegal
             var andValue = (byte)(accumulator & registerX & highByte);
 
             Write(currentState, value, andValue);
-            return currentState;
         }
 
         private static byte ReadHighByte(ICpuState currentState, ushort value)

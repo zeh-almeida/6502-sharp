@@ -59,7 +59,7 @@ namespace Test.Unit.Cpu.Instructions.Stack
             const byte value = 0;
             var stateMock = SetupMock(value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             BasicExecutionAssertion(stateMock, value);
 
@@ -72,7 +72,7 @@ namespace Test.Unit.Cpu.Instructions.Stack
             const byte value = 0b_1000_0000;
             var stateMock = SetupMock(value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             BasicExecutionAssertion(stateMock, value);
 
@@ -85,7 +85,7 @@ namespace Test.Unit.Cpu.Instructions.Stack
             const byte value = 1;
             var stateMock = SetupMock(value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             BasicExecutionAssertion(stateMock, value);
 

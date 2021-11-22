@@ -70,7 +70,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE0, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
@@ -85,7 +85,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE0, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsNegative = true, Times.Once());
@@ -100,7 +100,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE0, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
@@ -115,7 +115,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE0, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(It.IsAny<ushort>()), Times.Never());
             stateMock.Verify(state => state.Memory.ReadAbsolute(It.IsAny<ushort>()), Times.Never());
@@ -135,7 +135,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
         }
@@ -154,7 +154,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsolute(address), Times.Once());
         }

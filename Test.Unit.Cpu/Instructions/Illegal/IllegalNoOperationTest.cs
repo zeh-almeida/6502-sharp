@@ -82,7 +82,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
         {
             var stateMock = TestUtils.GenerateStateMock();
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.VerifyNoOtherCalls();
         }

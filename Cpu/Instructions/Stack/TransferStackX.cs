@@ -25,7 +25,7 @@ namespace Cpu.Instructions.Stack
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort _)
+        public override void Execute(ICpuState currentState, ushort _)
         {
             var loadValue = currentState.Registers.StackPointer;
 
@@ -33,7 +33,6 @@ namespace Cpu.Instructions.Stack
             currentState.Flags.IsNegative = loadValue.IsLastBitSet();
 
             currentState.Registers.IndexX = loadValue;
-            return currentState;
         }
     }
 }

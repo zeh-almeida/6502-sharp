@@ -61,7 +61,7 @@ namespace Test.Unit.Cpu.Instructions.Decrements
 
             var stateMock = SetupMock(0xCA, value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Registers.IndexX, Times.Once());
             stateMock.VerifySet(state => state.Registers.IndexX = result, Times.Once());
@@ -78,7 +78,7 @@ namespace Test.Unit.Cpu.Instructions.Decrements
 
             var stateMock = SetupMock(0xE8, value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Registers.IndexX, Times.Once());
             stateMock.VerifySet(state => state.Registers.IndexX = result, Times.Once());
@@ -95,7 +95,7 @@ namespace Test.Unit.Cpu.Instructions.Decrements
 
             var stateMock = SetupMock(0xE8, value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Registers.IndexX, Times.Once());
             stateMock.VerifySet(state => state.Registers.IndexX = result, Times.Once());

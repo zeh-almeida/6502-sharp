@@ -30,7 +30,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var loadValue = currentState.Memory.ReadAbsoluteY(value);
             var stackPointer = currentState.Registers.StackPointer;
@@ -44,7 +44,6 @@ namespace Cpu.Instructions.Illegal
             currentState.Registers.Accumulator = operation;
             currentState.Registers.StackPointer = operation;
 
-            return currentState;
         }
     }
 }

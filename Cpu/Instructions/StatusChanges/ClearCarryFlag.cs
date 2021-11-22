@@ -23,10 +23,9 @@ namespace Cpu.Instructions.StatusChanges
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort _)
+        public override void Execute(ICpuState currentState, ushort _)
         {
             currentState.Flags.IsCarry = false;
-            return currentState;
         }
     }
 }

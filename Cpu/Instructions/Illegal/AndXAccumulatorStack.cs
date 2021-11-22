@@ -34,7 +34,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var highByte = (byte)((byte)(value >> 8) + 1);
 
@@ -47,7 +47,6 @@ namespace Cpu.Instructions.Illegal
             currentState.Registers.StackPointer = spValue;
             currentState.Memory.WriteAbsoluteY(value, memoryValue);
 
-            return currentState;
         }
     }
 }

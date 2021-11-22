@@ -56,7 +56,7 @@ namespace Test.Unit.Cpu.Instructions.StatusChanges
         public void Execute_SetsFlag_True()
         {
             var stateMock = TestUtils.GenerateStateMock();
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.VerifySet(state => state.Flags.IsCarry = true, Times.Once());
         }

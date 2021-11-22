@@ -62,7 +62,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -81,7 +81,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -100,7 +100,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -119,7 +119,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -142,7 +142,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Flags.IsCarry)
                 .Returns(false);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
         }
@@ -156,7 +156,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
         }

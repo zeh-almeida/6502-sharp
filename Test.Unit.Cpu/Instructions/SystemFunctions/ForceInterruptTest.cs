@@ -64,7 +64,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
                 .Setup(state => state.Flags.Save())
                 .Returns(stateValue);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Flags.Save(), Times.Once());
 
@@ -82,7 +82,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
                 .Setup(state => state.Registers.ProgramCounter)
                 .Returns(counter);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Registers.ProgramCounter, Times.Once());
             stateMock.Verify(state => state.Stack.Push16(counter), Times.Once());
@@ -108,7 +108,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
                 .Setup(state => state.Memory.ReadAbsolute(lsbInterrupt))
                 .Returns(interruptLsb);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Memory.ReadAbsolute(lsbInterrupt), Times.Once());
             stateMock.Verify(state => state.Memory.ReadAbsolute(msbInterrupt), Times.Once());

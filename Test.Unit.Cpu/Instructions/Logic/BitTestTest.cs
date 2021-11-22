@@ -69,7 +69,7 @@ namespace Test.Unit.Cpu.Instructions.Logic
 
             var stateMock = SetupMock(0x2C, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.ReadZeroPage(It.IsAny<ushort>()), Times.Never());
@@ -85,7 +85,7 @@ namespace Test.Unit.Cpu.Instructions.Logic
 
             var stateMock = SetupMock(0x2C, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.ReadZeroPage(It.IsAny<ushort>()), Times.Never());
@@ -101,7 +101,7 @@ namespace Test.Unit.Cpu.Instructions.Logic
 
             var stateMock = SetupMock(0x2C, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.ReadZeroPage(It.IsAny<ushort>()), Times.Never());
@@ -122,7 +122,7 @@ namespace Test.Unit.Cpu.Instructions.Logic
                 .Setup(s => s.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
@@ -135,7 +135,7 @@ namespace Test.Unit.Cpu.Instructions.Logic
 
             var stateMock = SetupMock(0x2C, value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.ReadZeroPage(It.IsAny<ushort>()), Times.Never());

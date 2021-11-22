@@ -66,7 +66,7 @@ namespace Test.Unit.Cpu.Instructions.Jumps
                 .Setup(state => state.Stack.StackPointer)
                 .Returns(pointer);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Stack.Push16(result), Times.Exactly(1));
             stateMock.VerifySet(state => state.Registers.ProgramCounter = value, Times.Once());

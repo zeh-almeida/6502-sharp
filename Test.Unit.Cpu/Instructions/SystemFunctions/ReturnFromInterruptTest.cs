@@ -64,7 +64,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
                 .Setup(state => state.Stack.Pull())
                 .Returns(stateValue);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Stack.Pull(), Times.Exactly(1));
             stateMock.Verify(state => state.Stack.Pull16(), Times.Exactly(1));
@@ -82,7 +82,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
                 .Setup(state => state.Stack.Pull16())
                 .Returns(interruptCounter);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Stack.Pull(), Times.Exactly(1));
             stateMock.Verify(state => state.Stack.Pull16(), Times.Exactly(1));

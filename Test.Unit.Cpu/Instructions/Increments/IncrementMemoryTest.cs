@@ -76,7 +76,7 @@ namespace Test.Unit.Cpu.Instructions.Increments
                 .Setup(state => state.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPage(address, result), Times.Once());
@@ -98,7 +98,7 @@ namespace Test.Unit.Cpu.Instructions.Increments
                 .Setup(state => state.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPage(address, result), Times.Once());
@@ -120,7 +120,7 @@ namespace Test.Unit.Cpu.Instructions.Increments
                 .Setup(state => state.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPage(address, result), Times.Once());
@@ -140,7 +140,7 @@ namespace Test.Unit.Cpu.Instructions.Increments
                 .Setup(s => s.Memory.ReadZeroPageX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPageX(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPageX(address, result), Times.Once());
@@ -160,7 +160,7 @@ namespace Test.Unit.Cpu.Instructions.Increments
                 .Setup(s => s.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsolute(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsolute(address, result), Times.Once());
@@ -180,7 +180,7 @@ namespace Test.Unit.Cpu.Instructions.Increments
                 .Setup(s => s.Memory.ReadAbsoluteX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsoluteX(address, result), Times.Once());

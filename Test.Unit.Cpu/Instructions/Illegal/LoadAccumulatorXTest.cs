@@ -77,7 +77,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
 
@@ -97,7 +97,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.VerifySet(state => state.Flags.IsNegative = true, Times.Once());
 
@@ -117,7 +117,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
 
@@ -137,7 +137,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadZeroPageY(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPageY(address), Times.Once());
 
@@ -157,7 +157,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadIndirectX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadIndirectX(address), Times.Once());
 
@@ -177,7 +177,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadIndirectY(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadIndirectY(address), Times.Once());
 
@@ -197,7 +197,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsolute(address), Times.Once());
 
@@ -217,7 +217,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
                 .Setup(s => s.Memory.ReadAbsoluteY(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
 

@@ -63,7 +63,7 @@ namespace Test.Unit.Cpu.Instructions.Stack
                 .Setup(s => s.Stack.Pull())
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Flags.Load(value), Times.Once());
         }

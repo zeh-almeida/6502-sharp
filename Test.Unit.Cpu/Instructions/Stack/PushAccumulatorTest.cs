@@ -63,7 +63,7 @@ namespace Test.Unit.Cpu.Instructions.Stack
                 .Setup(s => s.Registers.Accumulator)
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Stack.Push16(value), Times.Once());
         }

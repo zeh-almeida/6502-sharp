@@ -61,7 +61,7 @@ namespace Test.Unit.Cpu.Instructions.Branches
 
             var stateMock = SetupMock(true, counter);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.ProgramCounter, Times.Never());
             stateMock.VerifySet(state => state.Registers.ProgramCounter = (It.IsAny<ushort>()), Times.Never());
@@ -76,7 +76,7 @@ namespace Test.Unit.Cpu.Instructions.Branches
 
             var stateMock = SetupMock(false, counter);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.ProgramCounter, Times.Once());
             stateMock.VerifySet(state => state.Registers.ProgramCounter = result, Times.Once());

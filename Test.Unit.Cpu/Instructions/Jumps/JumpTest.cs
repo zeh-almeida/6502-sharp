@@ -67,7 +67,7 @@ namespace Test.Unit.Cpu.Instructions.Jumps
             const ushort value = 1;
             var stateMock = SetupMock(0x4C);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.ProgramCounter = value, Times.Once());
         }
@@ -83,7 +83,7 @@ namespace Test.Unit.Cpu.Instructions.Jumps
                 .Setup(state => state.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.VerifySet(state => state.Registers.ProgramCounter = value, Times.Once());
         }

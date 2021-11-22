@@ -38,7 +38,6 @@ namespace Cpu.Execution
             var opcodeInfo = instruction.GatherInformation(opcode);
 
             var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
-
             return new DecodedInstruction(opcodeInfo, instructionValue);
         }
 
@@ -73,8 +72,7 @@ namespace Cpu.Execution
 
         private static byte ReadNextOpcode(ICpuState currentState)
         {
-            var pc = currentState.Registers.ProgramCounter;
-            return currentState.Memory.ReadAbsolute(pc);
+            return currentState.Memory.ReadAbsolute(currentState.Registers.ProgramCounter);
         }
     }
 }

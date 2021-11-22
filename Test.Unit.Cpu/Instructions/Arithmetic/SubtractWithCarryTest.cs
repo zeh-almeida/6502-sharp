@@ -76,7 +76,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE9, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -95,7 +95,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE9, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -114,7 +114,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE9, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -133,7 +133,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE9, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
 
@@ -156,7 +156,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Flags.IsCarry)
                 .Returns(false);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
         }
@@ -174,7 +174,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Flags.IsDecimalMode)
                 .Returns(true);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsNegative = true, Times.Once());
@@ -197,7 +197,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Flags.IsCarry)
                 .Returns(true);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsCarry = true, Times.Once());
@@ -220,7 +220,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Flags.IsCarry)
                 .Returns(true);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
             stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
@@ -243,7 +243,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Flags.IsCarry)
                 .Returns(false);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
         }
@@ -257,7 +257,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             var stateMock = SetupMock(0xE9, accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
         }
@@ -277,7 +277,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
 
@@ -299,7 +299,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadZeroPageX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadZeroPageX(address), Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
@@ -320,7 +320,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsolute(address), Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
@@ -341,7 +341,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadAbsoluteX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
@@ -362,7 +362,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadAbsoluteY(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
@@ -383,7 +383,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadIndirectX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadIndirectX(address), Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
@@ -404,7 +404,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
                 .Setup(s => s.Memory.ReadIndirectY(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadIndirectY(address), Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());

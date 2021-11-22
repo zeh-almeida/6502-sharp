@@ -74,7 +74,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(0x87, accumulator, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.WriteZeroPage(address, result), Times.Once());
         }
@@ -90,7 +90,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(0x97, accumulator, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.WriteZeroPageX(address, result), Times.Once());
         }
@@ -106,7 +106,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(0x83, accumulator, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.WriteIndirectX(address, result), Times.Once());
         }
@@ -122,7 +122,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(0x8F, accumulator, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.WriteAbsolute(address, result), Times.Once());
         }

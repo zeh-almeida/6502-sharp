@@ -33,7 +33,7 @@ namespace Cpu.Instructions.Logic
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var toCompare = ValueToCompare(currentState, value);
             var result = (ushort)(toCompare & currentState.Registers.Accumulator);
@@ -42,7 +42,6 @@ namespace Cpu.Instructions.Logic
             currentState.Flags.IsOverflow = toCompare.IsBitSet(6);
             currentState.Flags.IsNegative = toCompare.IsSeventhBitSet();
 
-            return currentState;
         }
 
         private static ushort ValueToCompare(ICpuState currentState, ushort address)

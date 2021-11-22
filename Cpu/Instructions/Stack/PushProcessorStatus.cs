@@ -24,12 +24,11 @@ namespace Cpu.Instructions.Stack
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort _)
+        public override void Execute(ICpuState currentState, ushort _)
         {
             var bits = currentState.Flags.Save();
             currentState.Stack.Push(bits);
 
-            return currentState;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace Cpu.Execution
                 var decoded = this.DecodeStream();
 
                 this.AdvanceProgramCount(decoded);
-                _ = this.ExecuteDecoded(decoded);
+                this.ExecuteDecoded(decoded);
             }
             catch (ProgramExecutionExeption)
             {
@@ -101,17 +101,15 @@ namespace Cpu.Execution
             }
         }
 
-        private ICpuState ExecuteDecoded(DecodedInstruction decoded)
+        private void ExecuteDecoded(DecodedInstruction decoded)
         {
             try
             {
                 this.State.ExecutingOpcode = decoded.Opcode;
                 this.CyclesLeft = decoded.Cycles - 1;
 
-                var modifiedState = decoded.Instruction.Execute(this.State, decoded.ValueParameter);
+                decoded.Instruction.Execute(this.State, decoded.ValueParameter);
                 this.CyclesLeft--;
-
-                return modifiedState;
             }
             catch (Exception ex)
             {

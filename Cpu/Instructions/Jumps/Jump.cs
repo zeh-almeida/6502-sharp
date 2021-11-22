@@ -28,12 +28,11 @@ namespace Cpu.Instructions.Jumps
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var loadValue = Load(currentState, value);
             currentState.Registers.ProgramCounter = loadValue;
 
-            return currentState;
         }
 
         private static ushort Load(ICpuState currentState, ushort value)

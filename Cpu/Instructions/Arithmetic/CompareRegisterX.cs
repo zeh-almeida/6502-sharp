@@ -31,7 +31,7 @@ namespace Cpu.Instructions.Arithmetic
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var loadValue = Load(currentState, value);
             var register = currentState.Registers.IndexX;
@@ -42,7 +42,6 @@ namespace Cpu.Instructions.Arithmetic
             currentState.Flags.IsNegative = (operation.IsLastBitSet());
             currentState.Flags.IsCarry = (loadValue <= register);
 
-            return currentState;
         }
 
         private static ushort Load(ICpuState currentState, ushort address)

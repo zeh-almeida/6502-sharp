@@ -42,7 +42,7 @@ namespace Cpu.Instructions.Shifts
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var loadValue = Load(currentState, value);
             var shifted = (byte)(loadValue << 1);
@@ -53,7 +53,6 @@ namespace Cpu.Instructions.Shifts
             currentState.Flags.IsNegative = shifted.IsLastBitSet();
             currentState.Flags.IsZero = shifted.IsZero();
 
-            return currentState;
         }
 
         private static byte Load(ICpuState currentState, ushort address)

@@ -33,7 +33,7 @@ namespace Cpu.Instructions.Decrements
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var operation = (byte)(Read(currentState, value) - 1);
 
@@ -41,7 +41,6 @@ namespace Cpu.Instructions.Decrements
             currentState.Flags.IsNegative = operation.IsLastBitSet();
 
             Write(currentState, value, operation);
-            return currentState;
         }
 
         private static void Write(ICpuState currentState, ushort address, byte value)

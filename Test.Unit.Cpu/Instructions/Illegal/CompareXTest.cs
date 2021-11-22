@@ -64,7 +64,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Registers.IndexX, Times.Once());
@@ -84,7 +84,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Registers.IndexX, Times.Once());
@@ -104,7 +104,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator, registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Registers.IndexX, Times.Once());

@@ -57,7 +57,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
         {
             var stateMock = TestUtils.GenerateStateMock();
 
-            _ = this.Subject.Execute(stateMock.Object, 0);
+            this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.VerifyNoOtherCalls();
         }

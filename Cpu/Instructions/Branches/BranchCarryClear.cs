@@ -25,7 +25,7 @@ namespace Cpu.Instructions.Branches
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var isFlag = currentState.Flags.IsCarry;
 
@@ -38,7 +38,6 @@ namespace Cpu.Instructions.Branches
                 currentState.Registers.ProgramCounter = newAddress;
             }
 
-            return currentState;
         }
     }
 }

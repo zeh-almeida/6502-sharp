@@ -29,7 +29,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var accumulator = currentState.Registers.Accumulator;
             var registerX = currentState.Registers.IndexX;
@@ -40,7 +40,6 @@ namespace Cpu.Instructions.Illegal
             currentState.Flags.IsNegative = (andValue.IsLastBitSet());
 
             currentState.Registers.Accumulator = andValue;
-            return currentState;
         }
     }
 }

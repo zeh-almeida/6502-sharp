@@ -25,7 +25,7 @@ namespace Cpu.Instructions
         /// <param name="currentState">Current CPU state</param>
         /// <param name="value">Operand, not always necessary</param>
         /// <returns>Modified CPU state</returns>
-        ICpuState Execute(ICpuState currentState, ushort value);
+        void Execute(ICpuState currentState, ushort value);
 
         /// <summary>
         /// Checks if the instruction supports an specific opcode

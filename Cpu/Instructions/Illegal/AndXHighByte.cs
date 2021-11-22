@@ -29,7 +29,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var highByte = (byte)((byte)value + 1);
             var registerX = currentState.Registers.IndexX;
@@ -37,7 +37,6 @@ namespace Cpu.Instructions.Illegal
             var andValue = (byte)(registerX & highByte);
 
             currentState.Memory.WriteAbsoluteY(value, andValue);
-            return currentState;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Cpu.Instructions.Load
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var loadValue = Load(currentState, value);
 
@@ -42,7 +42,6 @@ namespace Cpu.Instructions.Load
             currentState.Flags.IsNegative = loadValue.IsLastBitSet();
 
             currentState.Registers.IndexY = loadValue;
-            return currentState;
         }
 
         private static byte Load(ICpuState currentState, ushort address)

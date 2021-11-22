@@ -25,7 +25,7 @@ namespace Cpu.Instructions.Increments
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort _)
+        public override void Execute(ICpuState currentState, ushort _)
         {
             var operation = currentState.Registers.IndexX;
             operation = (byte)(operation + 1);
@@ -34,7 +34,6 @@ namespace Cpu.Instructions.Increments
             currentState.Flags.IsNegative = (operation.IsLastBitSet());
 
             currentState.Registers.IndexX = operation;
-            return currentState;
         }
     }
 }

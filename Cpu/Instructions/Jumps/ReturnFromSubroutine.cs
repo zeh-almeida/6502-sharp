@@ -24,10 +24,9 @@ namespace Cpu.Instructions.ReturnFromSubroutines
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort _)
+        public override void Execute(ICpuState currentState, ushort _)
         {
             currentState.Registers.ProgramCounter = currentState.Stack.Pull16();
-            return currentState;
         }
     }
 }

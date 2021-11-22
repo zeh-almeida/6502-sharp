@@ -30,7 +30,7 @@ namespace Cpu.Instructions.SystemFunctions
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort _)
+        public override void Execute(ICpuState currentState, ushort _)
         {
             StoreProgramCounter(currentState);
             StoreProcessorStatus(currentState);
@@ -38,7 +38,6 @@ namespace Cpu.Instructions.SystemFunctions
             LoadInterruptProgramAddress(currentState);
 
             currentState.Flags.IsBreakCommand = true;
-            return currentState;
         }
 
         private static void StoreProcessorStatus(ICpuState currentState)

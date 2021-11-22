@@ -18,30 +18,25 @@ namespace Cpu.Execution
         /// Number of Cycles to run the instruction
         /// </summary>
         /// <see cref="OpcodeInformation.Cycles"/>
-        public byte Cycles => this.OpcodeInformation.Cycles;
+        public byte Cycles { get; }
 
         /// <summary>
         /// Number of bytes that make the operand for the instruction
         /// </summary>
         /// <see cref="OpcodeInformation.Bytes"/>
-        public byte Bytes => this.OpcodeInformation.Bytes;
+        public byte Bytes { get; }
 
         /// <summary>
         /// Byte representing the instruction to be executed
         /// </summary>
         /// <see cref="OpcodeInformation.Opcode"/>
-        public byte Opcode => this.OpcodeInformation.Opcode;
+        public byte Opcode { get; }
 
         /// <summary>
         /// Decoded <see cref="IInstruction"/>
         /// </summary>
         /// <see cref="OpcodeInformation.Instruction"/>
-        public IInstruction Instruction => this.OpcodeInformation.Instruction;
-
-        /// <summary>
-        /// Contains all information regarding the decoded Opcode
-        /// </summary>
-        private OpcodeInformation OpcodeInformation { get; }
+        public IInstruction Instruction { get; }
         #endregion
 
         #region Constructors
@@ -55,7 +50,11 @@ namespace Cpu.Execution
             ushort valueParameter)
         {
             this.ValueParameter = valueParameter;
-            this.OpcodeInformation = opcodeInformation;
+
+            this.Bytes = opcodeInformation.Bytes;
+            this.Cycles = opcodeInformation.Cycles;
+            this.Opcode = opcodeInformation.Opcode;
+            this.Instruction = opcodeInformation.Instruction;
         }
         #endregion
     }

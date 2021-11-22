@@ -49,7 +49,7 @@ namespace Cpu.Instructions.Arithmetic
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var loadValue = Load(currentState, value);
 
@@ -60,7 +60,6 @@ namespace Cpu.Instructions.Arithmetic
             currentState.Flags.IsZero = operation.IsZero();
             currentState.Registers.Accumulator = operation;
 
-            return currentState;
         }
 
         private static byte DecimalCalculation(ICpuState currentState, ushort loadValue)

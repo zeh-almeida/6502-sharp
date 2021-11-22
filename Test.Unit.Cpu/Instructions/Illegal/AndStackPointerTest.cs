@@ -68,7 +68,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(stackPointer, address, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
             stateMock.Verify(state => state.Registers.StackPointer, Times.Once());
@@ -91,7 +91,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(stackPointer, address, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
             stateMock.Verify(state => state.Registers.StackPointer, Times.Once());

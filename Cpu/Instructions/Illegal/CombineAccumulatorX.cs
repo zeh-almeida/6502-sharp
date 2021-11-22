@@ -34,7 +34,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var accumulator = currentState.Registers.Accumulator;
             var registerX = currentState.Registers.IndexX;
@@ -42,7 +42,6 @@ namespace Cpu.Instructions.Illegal
             var operation = (byte)(accumulator & registerX);
             Write(currentState, value, operation);
 
-            return currentState;
         }
 
         private static void Write(ICpuState currentState, ushort address, byte value)

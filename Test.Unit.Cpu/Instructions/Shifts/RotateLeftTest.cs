@@ -77,7 +77,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Registers.Accumulator)
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = finalValue, Times.Once());
@@ -100,7 +100,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Registers.Accumulator)
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = finalValue, Times.Once());
@@ -123,7 +123,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Registers.Accumulator)
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = finalValue, Times.Once());
@@ -146,7 +146,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Registers.Accumulator)
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = finalValue, Times.Once());
@@ -169,7 +169,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Registers.Accumulator)
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = finalValue, Times.Once());
@@ -189,7 +189,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Memory.ReadZeroPage(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Memory.ReadZeroPage(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPage(address, finalValue), Times.Once());
@@ -210,7 +210,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Memory.ReadZeroPageX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Memory.ReadZeroPageX(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPageX(address, finalValue), Times.Once());
@@ -230,7 +230,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Memory.ReadAbsolute(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Memory.ReadAbsolute(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsolute(address, finalValue), Times.Once());
@@ -251,7 +251,7 @@ namespace Test.Unit.Cpu.Instructions.Shifts
                 .Setup(s => s.Memory.ReadAbsoluteX(address))
                 .Returns(value);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsoluteX(address, finalValue), Times.Once());

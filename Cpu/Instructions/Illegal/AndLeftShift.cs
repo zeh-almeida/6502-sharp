@@ -27,7 +27,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var accumulator = currentState.Registers.Accumulator;
 
@@ -40,7 +40,6 @@ namespace Cpu.Instructions.Illegal
             currentState.Flags.IsZero = (0.Equals(shifted));
 
             currentState.Registers.Accumulator = shifted;
-            return currentState;
         }
     }
 }

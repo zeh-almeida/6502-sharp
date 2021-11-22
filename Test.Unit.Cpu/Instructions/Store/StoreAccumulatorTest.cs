@@ -76,7 +76,7 @@ namespace Test.Unit.Cpu.Instructions.Store
 
             var stateMock = SetupMock(0x85, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
 
@@ -97,7 +97,7 @@ namespace Test.Unit.Cpu.Instructions.Store
                 .Setup(s => s.Registers.IndexX)
                 .Returns(registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.WriteZeroPageX(address, value), Times.Once());
@@ -111,7 +111,7 @@ namespace Test.Unit.Cpu.Instructions.Store
 
             var stateMock = SetupMock(0x8D, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsolute(address, value), Times.Once());
@@ -130,7 +130,7 @@ namespace Test.Unit.Cpu.Instructions.Store
                 .Setup(s => s.Registers.IndexX)
                 .Returns(registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsoluteX(address, value), Times.Once());
@@ -145,7 +145,7 @@ namespace Test.Unit.Cpu.Instructions.Store
 
             var stateMock = SetupMock(0x99, value);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.WriteAbsoluteY(address, value), Times.Once());
@@ -164,7 +164,7 @@ namespace Test.Unit.Cpu.Instructions.Store
                 .Setup(s => s.Registers.IndexX)
                 .Returns(registerX);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.Verify(state => state.Memory.WriteIndirectX(address, value), Times.Once());
@@ -183,7 +183,7 @@ namespace Test.Unit.Cpu.Instructions.Store
                 .Setup(s => s.Registers.IndexY)
                 .Returns(registerY);
 
-            _ = this.Subject.Execute(stateMock.Object, address);
+            this.Subject.Execute(stateMock.Object, address);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
         }

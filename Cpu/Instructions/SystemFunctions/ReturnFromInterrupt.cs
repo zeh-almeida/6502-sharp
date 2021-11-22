@@ -27,12 +27,11 @@ namespace Cpu.Instructions.SystemFunctions
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort _)
+        public override void Execute(ICpuState currentState, ushort _)
         {
             LoadProcessorStatus(currentState);
             LoadProgramCounter(currentState);
 
-            return currentState;
         }
 
         private static void LoadProcessorStatus(ICpuState currentState)

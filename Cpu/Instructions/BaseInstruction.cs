@@ -30,7 +30,7 @@ namespace Cpu.Instructions
         #endregion
 
         /// <inheritdoc/>
-        public abstract ICpuState Execute(ICpuState currentState, ushort value);
+        public abstract void Execute(ICpuState currentState, ushort value);
 
         /// <inheritdoc/>
         public override int GetHashCode()

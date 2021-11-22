@@ -63,7 +63,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
 
@@ -82,7 +82,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             var stateMock = SetupMock(accumulator);
 
-            _ = this.Subject.Execute(stateMock.Object, value);
+            this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
 

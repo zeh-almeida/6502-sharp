@@ -28,7 +28,7 @@ namespace Cpu.Instructions.Illegal
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var accumulator = currentState.Registers.Accumulator;
             var andValue = (byte)(accumulator & value);
@@ -39,7 +39,6 @@ namespace Cpu.Instructions.Illegal
             currentState.Registers.Accumulator = andValue;
             currentState.Registers.IndexX = andValue;
 
-            return currentState;
         }
     }
 }

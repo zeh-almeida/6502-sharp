@@ -24,13 +24,12 @@ namespace Cpu.Instructions.JumpToSubroutines
         #endregion
 
         /// <inheritdoc/>
-        public override ICpuState Execute(ICpuState currentState, ushort value)
+        public override void Execute(ICpuState currentState, ushort value)
         {
             var newStack = (ushort)(currentState.Stack.StackPointer + 1);
             currentState.Stack.Push16(newStack);
 
             currentState.Registers.ProgramCounter = value;
-            return currentState;
         }
     }
 }
