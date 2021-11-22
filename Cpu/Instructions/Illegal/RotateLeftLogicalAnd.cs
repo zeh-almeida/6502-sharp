@@ -13,7 +13,7 @@ namespace Cpu.Instructions.Illegal
     /// <c>0x27</c>,
     /// <c>0x37</c>,
     /// <c>0x2F</c>,
-    /// <c>0x3F</c>
+    /// <c>0x3F</c>,
     /// <c>0x3B</c>,
     /// <c>0x23</c>,
     /// <c>0x33</c>
