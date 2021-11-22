@@ -63,6 +63,86 @@ namespace Test.Integrated.Cpu.Files {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] adc1 {
+            get {
+                object obj = ResourceManager.GetObject("adc1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] adc2 {
+            get {
+                object obj = ResourceManager.GetObject("adc2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] adc3 {
+            get {
+                object obj = ResourceManager.GetObject("adc3", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] adc4 {
+            get {
+                object obj = ResourceManager.GetObject("adc4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] adc5 {
+            get {
+                object obj = ResourceManager.GetObject("adc5", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] adc6 {
+            get {
+                object obj = ResourceManager.GetObject("adc6", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] adc7 {
+            get {
+                object obj = ResourceManager.GetObject("adc7", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] adc8 {
+            get {
+                object obj = ResourceManager.GetObject("adc8", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] ancb {
             get {
                 object obj = ResourceManager.GetObject("ancb", resourceCulture);

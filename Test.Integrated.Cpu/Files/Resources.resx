@@ -118,6 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="adc1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc1.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="adc2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc2.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="adc3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc3.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="adc4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc4.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="adc5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc5.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="adc6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc6.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="adc7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc7.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="adc8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>ADC\adc8.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="ancb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>ANC\ancb.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
