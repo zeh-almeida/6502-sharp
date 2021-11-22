@@ -64,7 +64,7 @@ namespace Cpu.Instructions.Arithmetic
 
         private static byte DecimalCalculation(ICpuState currentState, ushort loadValue)
         {
-            var carry = currentState.Flags.IsCarry ? 1 : 0;
+            var carry = currentState.Flags.IsCarry ? 0 : 1;
 
             var accumulator = currentState.Registers.Accumulator.ToBCD();
             var value = ((byte)loadValue).ToBCD();

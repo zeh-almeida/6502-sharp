@@ -166,7 +166,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         {
             const byte value = 0b_0000_0001;
             const byte accumulator = 0b_0000_0000;
-            const byte result = 0b_1001_1000;
+            const byte result = 0b_1001_1001;
 
             var stateMock = SetupMock(0xE9, accumulator);
 
@@ -185,7 +185,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         {
             const byte value = 0b_0001_0010;
             const byte accumulator = 0b_0100_0110;
-            const byte result = 0b_0011_0011;
+            const byte result = 0b_0011_0100;
 
             var stateMock = SetupMock(0xE9, accumulator);
 
@@ -206,7 +206,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         [Fact]
         public void Execute_BCD_WritesZeroFlag()
         {
-            const byte value = 0b_0000_0001;
+            const byte value = 0b_0000_0010;
             const byte accumulator = 0b_0000_0010;
             const byte result = 0b_0000_0000;
 
@@ -231,7 +231,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         {
             const byte value = 0b_0000_0001;
             const byte accumulator = 0b_0000_0011;
-            const byte result = 0b_0000_0010;
+            const byte result = 0b_0000_0001;
 
             var stateMock = SetupMock(0xE9, accumulator);
 

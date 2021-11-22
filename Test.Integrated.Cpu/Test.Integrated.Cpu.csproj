@@ -73,6 +73,10 @@
       </EmbeddedResource>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Files\SBC\" />
+    </ItemGroup>
+
     <Target Name="ClearTestReports" AfterTargets="Build">
         <RemoveDir Directories="@(DirsToClean)" />
     </Target>
