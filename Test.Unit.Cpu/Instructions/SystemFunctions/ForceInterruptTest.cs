@@ -115,5 +115,33 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
 
             stateMock.VerifySet(state => state.Registers.ProgramCounter = interruptBits, Times.Once());
         }
+
+        [Fact]
+        public void Execute_InterruptProgram_FlagsSet()
+        {
+            const ushort interruptBits = 0b_1010_0000_0000_0101;
+            const byte interruptMsb = 0b_1010_0000;
+            const byte interruptLsb = 0b_0000_0101;
+
+            const ushort lsbInterrupt = 0xFFFE;
+            const ushort msbInterrupt = 0xFFFF;
+
+            var stateMock = TestUtils.GenerateStateMock();
+
+            _ = stateMock
+                .Setup(state => state.Memory.ReadAbsolute(msbInterrupt))
+                .Returns(interruptMsb);
+
+            _ = stateMock
+                .Setup(state => state.Memory.ReadAbsolute(lsbInterrupt))
+                .Returns(interruptLsb);
+
+            this.Subject.Execute(stateMock.Object, 0);
+
+            stateMock.VerifySet(state => state.Flags.IsBreakCommand = true, Times.Once());
+            stateMock.VerifySet(state => state.Flags.IsInterruptDisable = true, Times.Once());
+
+            stateMock.VerifySet(state => state.Registers.ProgramCounter = interruptBits, Times.Once());
+        }
     }
 }

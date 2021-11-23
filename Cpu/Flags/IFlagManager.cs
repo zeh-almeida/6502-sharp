@@ -17,7 +17,7 @@
         bool IsZero { get; set; }
 
         /// <summary>
-        /// Disable interrupt flag
+        /// Current state of interrupts
         /// </summary>
         bool IsInterruptDisable { get; set; }
 
@@ -27,7 +27,7 @@
         bool IsDecimalMode { get; set; }
 
         /// <summary>
-        /// Break flag. Signalizes the ssytem to execute a break
+        /// Break flag. Signalizes the system to execute a break
         /// </summary>
         bool IsBreakCommand { get; set; }
 

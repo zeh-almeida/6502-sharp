@@ -20,18 +20,15 @@ namespace Test.Integrated.Cpu
         [Fact]
         public void Incrementing_Accumulator_Computes()
         {
-            const byte overflowValue = 0b_0101_0001;
             const byte xValue = 193;
             const byte accumulatorValue = 132;
 
-            const ushort overflowLocation = 0;
             const ushort xLocation = 4 + MachineFixture.RegisterOffset;
             const ushort accumulatorLocation = 3 + MachineFixture.RegisterOffset;
 
             var programStream = BuildProgramStream();
             var finalState = this.Fixture.Compute(programStream);
 
-            Assert.Equal(overflowValue, finalState[overflowLocation]);
             Assert.Equal(xValue, finalState[xLocation]);
             Assert.Equal(accumulatorValue, finalState[accumulatorLocation]);
         }
