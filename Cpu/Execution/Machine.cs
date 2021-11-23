@@ -17,6 +17,9 @@ namespace Cpu.Execution
 
         /// <inheritdoc/>
         public int CyclesLeft { get; private set; }
+
+        /// <inheritdoc/>
+        public bool IsHardwareInterrupt { get; set; }
         #endregion
 
         #region Constructors
@@ -76,6 +79,9 @@ namespace Cpu.Execution
 
             try
             {
+                this.CyclesLeft = 0;
+                this.ProcessHardwareInterrupt();
+
                 var decoded = this.DecodeStream();
 
                 this.AdvanceProgramCount(decoded);
@@ -106,7 +112,7 @@ namespace Cpu.Execution
             try
             {
                 this.State.ExecutingOpcode = decoded.Opcode;
-                this.CyclesLeft = decoded.Cycles - 1;
+                this.CyclesLeft += decoded.Cycles - 1;
 
                 decoded.Instruction.Execute(this.State, decoded.ValueParameter);
                 this.CyclesLeft--;
@@ -125,6 +131,25 @@ namespace Cpu.Execution
         private bool IsProgramRunning()
         {
             return !ushort.MaxValue.Equals(this.State.Registers.ProgramCounter);
+        }
+
+        private void ProcessHardwareInterrupt()
+        {
+            if (this.IsHardwareInterrupt)
+            {
+                var value = (ushort)(this.State.Registers.ProgramCounter + 2);
+                this.State.Stack.Push16(value);
+
+                this.State.Flags.IsBreakCommand = false;
+                var bits = this.State.Flags.Save();
+                this.State.Stack.Push(bits);
+
+                // Adds cycles of fetching and pushing values.
+                // It is the same amout of cycles used by the 0x00 BRK Instruction,
+                // without the single decode cycle
+                this.CyclesLeft += 6;
+                this.IsHardwareInterrupt = false;
+            }
         }
     }
 }

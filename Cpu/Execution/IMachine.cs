@@ -15,6 +15,11 @@ namespace Cpu.Execution
         /// Cycles left from the current execution
         /// </summary>
         int CyclesLeft { get; }
+
+        /// <summary>
+        /// Signalizes the CPU to perform an interrupt based on external activity
+        /// </summary>
+        bool IsHardwareInterrupt { get; set; }
         #endregion
 
         /// <summary>

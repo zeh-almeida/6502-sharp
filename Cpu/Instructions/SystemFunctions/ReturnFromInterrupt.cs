@@ -31,7 +31,6 @@ namespace Cpu.Instructions.SystemFunctions
         {
             LoadProcessorStatus(currentState);
             LoadProgramCounter(currentState);
-
         }
 
         private static void LoadProcessorStatus(ICpuState currentState)

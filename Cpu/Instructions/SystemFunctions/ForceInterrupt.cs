@@ -37,12 +37,13 @@ namespace Cpu.Instructions.SystemFunctions
 
             LoadInterruptProgramAddress(currentState);
 
-            currentState.Flags.IsBreakCommand = true;
             currentState.Flags.IsInterruptDisable = true;
         }
 
         private static void StoreProcessorStatus(ICpuState currentState)
         {
+            currentState.Flags.IsBreakCommand = true;
+
             var bits = currentState.Flags.Save();
             currentState.Stack.Push(bits);
         }

@@ -158,6 +158,55 @@ namespace Test.Unit.Cpu.Execution
         }
 
         [Fact]
+        public void HardwareInterrupt_Successful()
+        {
+            const int cycleCount = 12;
+
+            const byte flagState = 0b_1111_0110;
+
+            const ushort initialProgramCounter = 65532;
+            const ushort pushedProgramCounter = 65534;
+            const ushort finalProgramCounter = 65535;
+
+            _ = this.StateMock
+                .SetupSequence(mock => mock.Registers.ProgramCounter)
+                .Returns(initialProgramCounter)
+                .Returns(initialProgramCounter)
+                .Returns(initialProgramCounter)
+                .Returns(finalProgramCounter);
+
+            _ = this.StateMock
+                .Setup(mock => mock.ExecutingOpcode)
+                .Returns(StreamByte);
+
+            _ = this.StateMock
+                .Setup(mock => mock.Flags.Save())
+                .Returns(flagState);
+
+            _ = this.DecoderMock
+                .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+                .Returns(this.Decoded);
+
+            this.Subject.IsHardwareInterrupt = true;
+
+            var results = new List<bool>();
+            var result = false;
+
+            do
+            {
+                result = this.Subject.Cycle();
+                results.Add(result);
+
+            } while (result);
+
+            this.StateMock.Verify(state => state.Stack.Push(flagState), Times.Once());
+            this.StateMock.Verify(state => state.Stack.Push16(pushedProgramCounter), Times.Once());
+
+            Assert.Equal(cycleCount, results.Count);
+            Assert.False(this.Subject.IsHardwareInterrupt);
+        }
+
+        [Fact]
         public void DecodeStream_Action_Executes()
         {
             _ = this.StateMock
