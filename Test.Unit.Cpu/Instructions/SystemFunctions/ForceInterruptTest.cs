@@ -75,6 +75,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
         public void Execute_ProgramCounter_IsStored()
         {
             const ushort counter = 0b_1010_1010_0101_0101;
+            const ushort finalCounter = 0b_1010_1010_0101_0111;
 
             var stateMock = TestUtils.GenerateStateMock();
 
@@ -85,7 +86,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
             this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Registers.ProgramCounter, Times.Once());
-            stateMock.Verify(state => state.Stack.Push16(counter), Times.Once());
+            stateMock.Verify(state => state.Stack.Push16(finalCounter), Times.Once());
         }
 
         [Fact]

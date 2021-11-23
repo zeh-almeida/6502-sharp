@@ -49,7 +49,8 @@ namespace Cpu.Instructions.SystemFunctions
 
         private static void StoreProgramCounter(ICpuState currentState)
         {
-            currentState.Stack.Push16(currentState.Registers.ProgramCounter);
+            var value = (ushort)(currentState.Registers.ProgramCounter + 2);
+            currentState.Stack.Push16(value);
         }
 
         private static void LoadInterruptProgramAddress(ICpuState currentState)
