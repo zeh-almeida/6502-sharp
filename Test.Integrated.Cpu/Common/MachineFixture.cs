@@ -7,6 +7,7 @@ using Cpu.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Test.Integrated.Cpu.Files;
 
 namespace Test.Integrated.Cpu.Common
 {
@@ -74,6 +75,12 @@ namespace Test.Integrated.Cpu.Common
                 .ToArray();
         }
 
+        public byte[] Compute(string programName)
+        {
+            var program = BuildProgramStream(programName);
+            return this.Compute(program);
+        }
+
         private static IEnumerable<IInstruction> LoadInstructions()
         {
             var instructionType = typeof(IInstruction);
@@ -86,6 +93,19 @@ namespace Test.Integrated.Cpu.Common
                                       && !t.IsAbstract)
                 .Select(t => Activator.CreateInstance(t) as IInstruction)
                 .ToArray();
+        }
+
+        private static IEnumerable<byte> BuildProgramStream(string programName)
+        {
+            var state = new byte[MachineFixture.LoadDataLength];
+            var program = Resources.ResourceManager.GetObject(programName) as byte[];
+
+            Array.Copy(program, 0, state, MachineFixture.MemoryStateOffset, program.Length);
+
+            state[0xFFFE + MachineFixture.MemoryStateOffset] = 0xFF;
+            state[0xFFFF + MachineFixture.MemoryStateOffset] = 0xFF;
+
+            return state;
         }
     }
 }
