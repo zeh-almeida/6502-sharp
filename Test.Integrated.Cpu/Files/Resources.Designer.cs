@@ -359,5 +359,15 @@ namespace Test.Integrated.Cpu.Files {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] software_interrupt {
+            get {
+                object obj = ResourceManager.GetObject("software_interrupt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

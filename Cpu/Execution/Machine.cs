@@ -125,8 +125,8 @@ namespace Cpu.Execution
         {
             var upperAddress = (ushort)(address + 1);
 
-            var msb = this.State.Memory.ReadAbsolute(upperAddress);
             var lsb = this.State.Memory.ReadAbsolute(address);
+            var msb = this.State.Memory.ReadAbsolute(upperAddress);
 
             this.State.Registers.ProgramCounter = lsb.CombineBytes(msb);
         }

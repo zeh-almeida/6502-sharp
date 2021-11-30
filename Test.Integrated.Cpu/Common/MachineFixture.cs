@@ -88,7 +88,26 @@ namespace Test.Integrated.Cpu.Common
             return this.Compute(program, cycleAction);
         }
 
-        public static IEnumerable<byte> BuildProgramStream(string programName, ushort offset = 0)
+        public byte[] Compute(string programName, ushort offset, Action<ICpuState> cycleAction)
+        {
+            var program = BuildProgramStream(programName, offset);
+            return this.Compute(program, cycleAction);
+        }
+
+        public static IEnumerable<byte> BuildProgramStream(string programName)
+        {
+            var state = new byte[MachineFixture.LoadDataLength];
+
+            var program = Resources.ResourceManager.GetObject(programName) as byte[];
+            program.CopyTo(state, MachineFixture.MemoryStateOffset);
+
+            state[MachineFixture.MemoryStateOffset + 0xFFFE] = 0xFF;
+            state[MachineFixture.MemoryStateOffset + 0xFFFF] = 0xFF;
+
+            return state;
+        }
+
+        public static IEnumerable<byte> BuildProgramStream(string programName, ushort offset)
         {
             var state = new byte[MachineFixture.LoadDataLength];
 
@@ -98,12 +117,6 @@ namespace Test.Integrated.Cpu.Common
 
             var program = Resources.ResourceManager.GetObject(programName) as byte[];
             program.CopyTo(state, MachineFixture.MemoryStateOffset + offset);
-
-            if (0.Equals(offset))
-            {
-                state[MachineFixture.MemoryStateOffset + 0xFFFE] = 0xFF;
-                state[MachineFixture.MemoryStateOffset + 0xFFFF] = 0xFF;
-            }
 
             return state;
         }

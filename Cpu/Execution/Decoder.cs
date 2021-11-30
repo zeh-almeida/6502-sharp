@@ -4,6 +4,7 @@ using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Cpu.Execution
@@ -38,7 +39,10 @@ namespace Cpu.Execution
             var opcodeInfo = instruction.GatherInformation(opcode);
 
             var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
-            return new DecodedInstruction(opcodeInfo, instructionValue);
+            var result = new DecodedInstruction(opcodeInfo, instructionValue);
+
+            Debug.WriteLine($"{result} @ {currentState.Registers.ProgramCounter.AsHex()}");
+            return result;
         }
 
         private IInstruction FetchInstruction(byte opcode)

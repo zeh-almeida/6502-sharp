@@ -208,4 +208,7 @@
   <data name="sbc6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SBC\sbc6.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="software_interrupt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Interrupts\software_interrupt.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>
