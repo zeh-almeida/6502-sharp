@@ -58,12 +58,12 @@ namespace Test.Unit.Cpu.Instructions.Jumps
         {
             const ushort value = 1;
             const byte pointer = 2;
-            const ushort result = value + pointer;
+            const ushort result = 2;
 
             var stateMock = TestUtils.GenerateStateMock();
 
             _ = stateMock
-                .Setup(state => state.Stack.StackPointer)
+                .Setup(state => state.Registers.ProgramCounter)
                 .Returns(pointer);
 
             this.Subject.Execute(stateMock.Object, value);

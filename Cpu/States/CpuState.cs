@@ -1,4 +1,5 @@
-﻿using Cpu.Flags;
+﻿using Cpu.Execution;
+using Cpu.Flags;
 using Cpu.Memory;
 using Cpu.Registers;
 using System;
@@ -14,7 +15,16 @@ namespace Cpu.States
     {
         #region Properties
         /// <inheritdoc/>
+        public int CyclesLeft { get; private set; }
+
+        /// <inheritdoc/>
         public byte ExecutingOpcode { get; set; }
+
+        /// <inheritdoc/>
+        public bool IsHardwareInterrupt { get; set; }
+
+        /// <inheritdoc/>
+        public bool IsSoftwareInterrupt { get; set; }
 
         /// <inheritdoc/>
         public IRegisterManager Registers { get; }
@@ -84,6 +94,36 @@ namespace Cpu.States
             this.Flags.Load(dataArr[0]);
             this.Registers.Load(registerState);
             this.Memory.Load(memoryState);
+        }
+        #endregion
+
+        #region Cycles
+        /// <inheritdoc/>
+        public void PrepareCycle()
+        {
+            this.ExecutingOpcode = 0;
+            this.CyclesLeft = 0;
+        }
+
+        /// <inheritdoc/>
+        public void CountCycle()
+        {
+            this.CyclesLeft--;
+        }
+
+        /// <inheritdoc/>
+        public void SetCycleInterrupt()
+        {
+            this.CyclesLeft += 6;
+        }
+
+        /// <inheritdoc/>
+        public void SetExecutingInstruction(DecodedInstruction decoded)
+        {
+            this.ExecutingOpcode = decoded.Opcode;
+            this.CyclesLeft += decoded.Cycles;
+
+            this.CountCycle();
         }
         #endregion
     }

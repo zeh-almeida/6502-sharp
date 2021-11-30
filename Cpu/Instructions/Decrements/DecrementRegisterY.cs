@@ -30,8 +30,8 @@ namespace Cpu.Instructions.Decrements
             var operation = currentState.Registers.IndexY;
             operation = (byte)(operation - 1);
 
-            currentState.Flags.IsZero = (operation.IsZero());
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
+            currentState.Flags.IsZero = operation.IsZero();
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
 
             currentState.Registers.IndexY = operation;
         }

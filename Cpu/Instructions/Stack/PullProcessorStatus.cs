@@ -31,7 +31,6 @@ namespace Cpu.Instructions.Stack
         {
             var stackValue = currentState.Stack.Pull();
             currentState.Flags.Load(stackValue);
-
         }
     }
 }

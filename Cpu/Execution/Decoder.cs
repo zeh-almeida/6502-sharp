@@ -46,7 +46,8 @@ namespace Cpu.Execution
             var instruction = this.Instructions
                 .FirstOrDefault(ins => ins.HasOpcode(opcode));
 
-            return instruction ?? throw new UnknownOpcodeException(opcode);
+            return instruction
+                ?? throw new UnknownOpcodeException(opcode);
         }
 
         private static ushort ReadOpcodeParameter(ICpuState currentState, OpcodeInformation opcodeInfo)

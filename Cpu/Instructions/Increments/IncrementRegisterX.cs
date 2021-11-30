@@ -27,11 +27,10 @@ namespace Cpu.Instructions.Increments
         /// <inheritdoc/>
         public override void Execute(ICpuState currentState, ushort _)
         {
-            var operation = currentState.Registers.IndexX;
-            operation = (byte)(operation + 1);
+            var operation = (byte)(currentState.Registers.IndexX + 1);
 
-            currentState.Flags.IsZero = (operation.IsZero());
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
+            currentState.Flags.IsZero = operation.IsZero();
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
 
             currentState.Registers.IndexX = operation;
         }

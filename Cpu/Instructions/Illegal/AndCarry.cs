@@ -33,11 +33,10 @@ namespace Cpu.Instructions.Illegal
         public override void Execute(ICpuState currentState, ushort value)
         {
             var accumulator = currentState.Registers.Accumulator;
-
             var andValue = (byte)(value & accumulator);
-            var is7thBitSet = andValue.IsLastBitSet();
 
-            currentState.Flags.IsZero = (andValue.IsZero());
+            var is7thBitSet = andValue.IsLastBitSet();
+            currentState.Flags.IsZero = andValue.IsZero();
 
             currentState.Flags.IsCarry = is7thBitSet;
             currentState.Flags.IsNegative = is7thBitSet;

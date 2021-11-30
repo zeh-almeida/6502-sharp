@@ -38,10 +38,9 @@ namespace Cpu.Instructions.Arithmetic
 
             var operation = (byte)(register - loadValue);
 
-            currentState.Flags.IsZero = (operation.IsZero());
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
-            currentState.Flags.IsCarry = (loadValue <= register);
-
+            currentState.Flags.IsZero = operation.IsZero();
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
+            currentState.Flags.IsCarry = loadValue <= register;
         }
 
         private static ushort Load(ICpuState currentState, ushort address)

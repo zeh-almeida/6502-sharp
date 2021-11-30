@@ -3,7 +3,6 @@ using Cpu.Instructions.JumpToSubroutines;
 using Cpu.States;
 using Moq;
 using System;
-using System.Collections.Generic;
 using Test.Unit.Cpu.Utils;
 using Xunit;
 
@@ -117,14 +116,14 @@ namespace Test.Unit.Cpu.Execution
 
             Assert.True(result);
 
-            this.StateMock.Verify(mock => mock.Registers.ProgramCounter, Times.Exactly(2));
+            this.StateMock.Verify(mock => mock.Registers.ProgramCounter, Times.Exactly(3));
             this.StateMock.VerifySet(mock => mock.Registers.ProgramCounter = finalProgramCounter, Times.Exactly(2));
         }
 
         [Fact]
         public void RemainingCycles_Count_Successful()
         {
-            const int cycleCount = 6;
+            const int totalCycleCount = 6;
             const ushort initialProgramCounter = 65532;
             const ushort finalProgramCounter = 65535;
 
@@ -139,72 +138,79 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.ExecutingOpcode)
                 .Returns(StreamByte);
 
-            _ = this.DecoderMock
-                .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
-                .Returns(this.Decoded);
-
-            var results = new List<bool>();
-            var result = false;
-
-            do
-            {
-                result = this.Subject.Cycle();
-                results.Add(result);
-
-            } while (result);
-
-            Assert.Equal(cycleCount, results.Count);
-            Assert.Equal(0, this.Subject.CyclesLeft);
-        }
-
-        [Fact]
-        public void HardwareInterrupt_Successful()
-        {
-            const int cycleCount = 12;
-
-            const byte flagState = 0b_1111_0110;
-
-            const ushort initialProgramCounter = 65532;
-            const ushort pushedProgramCounter = 65534;
-            const ushort finalProgramCounter = 65535;
-
             _ = this.StateMock
-                .SetupSequence(mock => mock.Registers.ProgramCounter)
-                .Returns(initialProgramCounter)
-                .Returns(initialProgramCounter)
-                .Returns(initialProgramCounter)
-                .Returns(finalProgramCounter);
-
-            _ = this.StateMock
-                .Setup(mock => mock.ExecutingOpcode)
-                .Returns(StreamByte);
-
-            _ = this.StateMock
-                .Setup(mock => mock.Flags.Save())
-                .Returns(flagState);
+                .SetupSequence(mock => mock.CyclesLeft)
+                .Returns(4)
+                .Returns(3)
+                .Returns(2)
+                .Returns(1)
+                .Returns(0);
 
             _ = this.DecoderMock
                 .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
                 .Returns(this.Decoded);
 
-            this.Subject.IsHardwareInterrupt = true;
-
-            var results = new List<bool>();
+            var cycleCount = 0;
             var result = false;
 
             do
             {
                 result = this.Subject.Cycle();
-                results.Add(result);
+                cycleCount++;
 
             } while (result);
 
-            this.StateMock.Verify(state => state.Stack.Push(flagState), Times.Once());
-            this.StateMock.Verify(state => state.Stack.Push16(pushedProgramCounter), Times.Once());
-
-            Assert.Equal(cycleCount, results.Count);
-            Assert.False(this.Subject.IsHardwareInterrupt);
+            Assert.Equal(totalCycleCount, cycleCount);
         }
+
+        //[Fact]
+        //public void HardwareInterrupt_Successful()
+        //{
+        //    const int cycleCount = 12;
+
+        //    const byte flagState = 0b_1111_0110;
+
+        //    const ushort initialProgramCounter = 65532;
+        //    const ushort pushedProgramCounter = 65534;
+        //    const ushort finalProgramCounter = 65535;
+
+        //    _ = this.StateMock
+        //        .SetupSequence(mock => mock.Registers.ProgramCounter)
+        //        .Returns(initialProgramCounter)
+        //        .Returns(initialProgramCounter)
+        //        .Returns(initialProgramCounter)
+        //        .Returns(finalProgramCounter);
+
+        //    _ = this.StateMock
+        //        .Setup(mock => mock.ExecutingOpcode)
+        //        .Returns(StreamByte);
+
+        //    _ = this.StateMock
+        //        .Setup(mock => mock.Flags.Save())
+        //        .Returns(flagState);
+
+        //    _ = this.DecoderMock
+        //        .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+        //        .Returns(this.Decoded);
+
+        //    this.Subject.IsHardwareInterrupt = true;
+
+        //    var results = new List<bool>();
+        //    var result = false;
+
+        //    do
+        //    {
+        //        result = this.Subject.Cycle();
+        //        results.Add(result);
+
+        //    } while (result);
+
+        //    this.StateMock.Verify(state => state.Stack.Push(flagState), Times.Once());
+        //    this.StateMock.Verify(state => state.Stack.Push16(pushedProgramCounter), Times.Once());
+
+        //    Assert.Equal(cycleCount, results.Count);
+        //    Assert.False(this.Subject.IsHardwareInterrupt);
+        //}
 
         [Fact]
         public void DecodeStream_Action_Executes()
@@ -260,7 +266,7 @@ namespace Test.Unit.Cpu.Execution
                 .Returns(finalProgramCounter);
 
             _ = this.StateMock
-                .SetupSet(mock => mock.ExecutingOpcode = StreamByte)
+                .Setup(mock => mock.SetExecutingInstruction(It.IsAny<DecodedInstruction>()))
                 .Throws<Exception>();
 
             _ = this.DecoderMock
@@ -271,5 +277,125 @@ namespace Test.Unit.Cpu.Execution
 
             Assert.False(result);
         }
+
+        #region Interrupts
+        [Fact]
+        public void ProcessInterrupts_AllClear_DoesNothing()
+        {
+            _ = this.StateMock
+                .Setup(mock => mock.IsHardwareInterrupt)
+                .Returns(false);
+
+            _ = this.StateMock
+                .Setup(mock => mock.IsSoftwareInterrupt)
+                .Returns(false);
+
+            this.Subject.ProcessInterrupts();
+
+            this.StateMock.Verify(m => m.Stack.Push(It.IsAny<byte>()), Times.Never());
+            this.StateMock.Verify(m => m.Stack.Push16(It.IsAny<byte>()), Times.Never());
+
+            this.StateMock.VerifySet(m => m.Registers.ProgramCounter = It.IsAny<ushort>(), Times.Never());
+        }
+
+        [Fact]
+        public void ProcessInterrupts_Hardware_Executes()
+        {
+            const byte flagState = 0b_1111_1111;
+            const ushort programCounter = 0b_1111_0000_1111_0000;
+
+            const byte interruptMsb = 0x11;
+            const byte interruptLsb = 0x22;
+
+            const ushort interruptPC = 0x1122;
+
+            _ = this.StateMock
+                .Setup(mock => mock.IsHardwareInterrupt)
+                .Returns(true);
+
+            _ = this.StateMock
+                .Setup(mock => mock.IsSoftwareInterrupt)
+                .Returns(false);
+
+            _ = this.StateMock
+                .Setup(m => m.Flags.Save())
+                .Returns(flagState);
+
+            _ = this.StateMock
+                .Setup(m => m.Registers.ProgramCounter)
+                .Returns(programCounter);
+
+            _ = this.StateMock
+                .Setup(m => m.Memory.ReadAbsolute(0xFFFA))
+                .Returns(interruptLsb);
+
+            _ = this.StateMock
+                .Setup(m => m.Memory.ReadAbsolute(0xFFFB))
+                .Returns(interruptMsb);
+
+            this.Subject.ProcessInterrupts();
+
+            this.StateMock.Verify(m => m.Stack.Push(flagState), Times.Once());
+            this.StateMock.Verify(m => m.Stack.Push16(programCounter), Times.Once());
+
+            this.StateMock.VerifySet(m => m.Flags.IsInterruptDisable = true, Times.Once());
+
+            this.StateMock.VerifySet(m => m.IsHardwareInterrupt = false, Times.Once());
+            this.StateMock.VerifySet(m => m.IsSoftwareInterrupt = false, Times.Once());
+            this.StateMock.VerifySet(m => m.Registers.ProgramCounter = interruptPC, Times.Once());
+
+            this.StateMock.Verify(m => m.SetCycleInterrupt(), Times.Once());
+        }
+
+        [Fact]
+        public void ProcessInterrupts_Software_Executes()
+        {
+            const byte flagState = 0b_1111_1111;
+            const ushort programCounter = 0b_1111_0000_1111_0000;
+
+            const byte interruptMsb = 0x11;
+            const byte interruptLsb = 0x22;
+
+            const ushort interruptPC = 0x1122;
+
+            _ = this.StateMock
+                .Setup(mock => mock.IsHardwareInterrupt)
+                .Returns(false);
+
+            _ = this.StateMock
+                .Setup(mock => mock.IsSoftwareInterrupt)
+                .Returns(true);
+
+            _ = this.StateMock
+                .Setup(m => m.Flags.Save())
+                .Returns(flagState);
+
+            _ = this.StateMock
+                .Setup(m => m.Registers.ProgramCounter)
+                .Returns(programCounter);
+
+            _ = this.StateMock
+                .Setup(m => m.Memory.ReadAbsolute(0xFFFE))
+                .Returns(interruptLsb);
+
+            _ = this.StateMock
+                .Setup(m => m.Memory.ReadAbsolute(0xFFFF))
+                .Returns(interruptMsb);
+
+            this.Subject.ProcessInterrupts();
+
+            this.StateMock.Verify(m => m.Stack.Push(flagState), Times.Once());
+            this.StateMock.Verify(m => m.Stack.Push16(programCounter), Times.Once());
+
+            this.StateMock.VerifySet(m => m.Flags.IsInterruptDisable = true, Times.Once());
+            this.StateMock.VerifySet(m => m.Flags.IsBreakCommand = true, Times.Once());
+
+            this.StateMock.VerifySet(m => m.IsHardwareInterrupt = It.IsAny<bool>(), Times.Never());
+            this.StateMock.VerifySet(m => m.IsSoftwareInterrupt = false, Times.Once());
+            this.StateMock.VerifySet(m => m.Registers.ProgramCounter = interruptPC, Times.Once());
+
+            this.StateMock.Verify(m => m.SetCycleInterrupt(), Times.Once());
+        }
+        #endregion
     }
 }

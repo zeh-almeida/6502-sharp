@@ -1,4 +1,5 @@
-﻿using Cpu.Instructions.Exceptions;
+﻿using Cpu.Extensions;
+using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace Cpu.Instructions
                 .FirstOrDefault(info => info.Opcode.Equals(opcode));
 
             return result
-                ?? throw new UnknownOpcodeException(opcode, $"{this.GetType().Name} does not handle this opcode");
+                ?? throw new UnknownOpcodeException(opcode, $"{this.GetType().Name} does not handle opcode {opcode.AsHex()}");
         }
     }
 }

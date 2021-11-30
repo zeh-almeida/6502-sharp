@@ -75,7 +75,7 @@ namespace Test.Unit.Cpu.Instructions.SystemFunctions
         public void Execute_ProgramCounter_IsStored()
         {
             const ushort counter = 0b_1010_1010_0101_0101;
-            const ushort finalCounter = 0b_1010_1010_0101_0111;
+            const ushort finalCounter = 0b_1010_1010_0101_0101;
 
             var stateMock = TestUtils.GenerateStateMock();
 

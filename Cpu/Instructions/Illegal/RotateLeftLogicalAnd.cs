@@ -46,14 +46,13 @@ namespace Cpu.Instructions.Illegal
             var loadValue = Load(currentState, value);
             var accumulator = currentState.Registers.Accumulator;
             var oldCarry = currentState.Flags.IsCarry;
-            var newCarry = loadValue.IsFirstBitSet();
 
             var shifted = loadValue.RotateLeft(oldCarry);
             var result = (byte)(shifted & accumulator);
 
-            currentState.Flags.IsCarry = newCarry;
             currentState.Flags.IsZero = result.IsZero();
             currentState.Flags.IsNegative = result.IsLastBitSet();
+            currentState.Flags.IsCarry = loadValue.IsFirstBitSet();
 
             currentState.Registers.Accumulator = result;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cpu.Extensions;
+using System;
 
 namespace Cpu.Instructions.Exceptions
 {
@@ -12,6 +13,9 @@ namespace Cpu.Instructions.Exceptions
         /// Opcode which caused the error
         /// </summary>
         public byte UnknownOpcode { get; }
+
+        /// <inheritdoc/>
+        public override string Message => base.Message + $", OP Code={UShortExtensions.AsHex(this.UnknownOpcode)}";
         #endregion
 
         #region Constructors

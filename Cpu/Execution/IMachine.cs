@@ -12,16 +12,12 @@ namespace Cpu.Execution
     {
         #region Properties
         /// <summary>
-        /// Cycles left from the current execution
+        /// Current CPU state
         /// </summary>
-        int CyclesLeft { get; }
-
-        /// <summary>
-        /// Signalizes the CPU to perform an interrupt based on external activity
-        /// </summary>
-        bool IsHardwareInterrupt { get; set; }
+        ICpuState State { get; }
         #endregion
 
+        #region Execution
         /// <summary>
         /// Performs a single cycle of execution in the current program
         /// and allows to validate the state after the cycle
@@ -37,7 +33,9 @@ namespace Cpu.Execution
         /// <returns>True if the cycle completed successfully, false otherwise</returns>
         /// <exception cref="Exceptions.ProgramExecutionExeption"></exception>
         bool Cycle();
+        #endregion
 
+        #region Save/Load
         /// <summary>
         /// Loads the program data
         /// </summary>
@@ -53,5 +51,13 @@ namespace Cpu.Execution
         /// </summary>
         /// <returns>Current state as bytes</returns>
         IEnumerable<byte> Save();
+        #endregion
+
+        #region Interrupts
+        /// <summary>
+        /// Processes all hardware and software based interrupts when signaled
+        /// </summary>
+        void ProcessInterrupts();
+        #endregion
     }
 }

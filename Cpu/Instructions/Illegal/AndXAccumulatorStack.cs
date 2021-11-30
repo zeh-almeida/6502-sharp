@@ -46,7 +46,6 @@ namespace Cpu.Instructions.Illegal
 
             currentState.Registers.StackPointer = spValue;
             currentState.Memory.WriteAbsoluteY(value, memoryValue);
-
         }
     }
 }

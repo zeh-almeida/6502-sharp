@@ -1,7 +1,9 @@
 ﻿using Cpu.Execution.Exceptions;
+using Cpu.Extensions;
 using Cpu.States;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Cpu.Execution
 {
@@ -11,15 +13,10 @@ namespace Cpu.Execution
     public sealed record Machine : IMachine
     {
         #region Properties
-        private ICpuState State { get; }
+        /// <inheritdoc/>
+        public ICpuState State { get; }
 
         private IDecoder Decoder { get; }
-
-        /// <inheritdoc/>
-        public int CyclesLeft { get; private set; }
-
-        /// <inheritdoc/>
-        public bool IsHardwareInterrupt { get; set; }
         #endregion
 
         #region Constructors
@@ -49,9 +46,9 @@ namespace Cpu.Execution
         /// <inheritdoc/>
         public bool Cycle()
         {
-            if (this.CyclesLeft > 0)
+            if (this.State.CyclesLeft > 0)
             {
-                this.CyclesLeft--;
+                this.State.CountCycle();
                 return true;
             }
             else
@@ -73,22 +70,85 @@ namespace Cpu.Execution
             return this.State.Save();
         }
 
+        #region Interrupts
+        /// <inheritdoc/>
+        public void ProcessInterrupts()
+        {
+            this.ProcessHardwareInterrupt();
+            this.ProcessSoftwareInterrupt();
+        }
+
+        private void ProcessHardwareInterrupt()
+        {
+            if (this.State.IsHardwareInterrupt)
+            {
+                this.State.Flags.IsBreakCommand = false;
+                var bits = this.State.Flags.Save();
+
+                this.State.Stack.Push(bits);
+                this.State.Stack.Push16(this.State.Registers.ProgramCounter);
+
+                // Adds cycles of fetching and pushing values.
+                // It is the same amout of cycles used by the 0x00 BRK Instruction,
+                // without the single decode cycle
+                this.State.SetCycleInterrupt();
+                this.State.Flags.IsInterruptDisable = true;
+
+                this.LoadInterruptProgramAddress(0xFFFA);
+                this.State.IsHardwareInterrupt = false;
+                this.State.IsSoftwareInterrupt = false;
+            }
+        }
+
+        private void ProcessSoftwareInterrupt()
+        {
+            if (this.State.IsSoftwareInterrupt && !this.State.Flags.IsInterruptDisable)
+            {
+                this.State.Flags.IsBreakCommand = true;
+                var bits = this.State.Flags.Save();
+
+                this.State.Stack.Push(bits);
+                this.State.Stack.Push16(this.State.Registers.ProgramCounter);
+
+                // Adds cycles of fetching and pushing values.
+                // It is the same amout of cycles used by the 0x00 BRK Instruction,
+                // without the single decode cycle
+                this.State.SetCycleInterrupt();
+                this.State.Flags.IsInterruptDisable = true;
+
+                this.LoadInterruptProgramAddress(0xFFFE);
+                this.State.IsSoftwareInterrupt = false;
+            }
+        }
+
+        private void LoadInterruptProgramAddress(ushort address)
+        {
+            var upperAddress = (ushort)(address + 1);
+
+            var msb = this.State.Memory.ReadAbsolute(upperAddress);
+            var lsb = this.State.Memory.ReadAbsolute(address);
+
+            this.State.Registers.ProgramCounter = lsb.CombineBytes(msb);
+        }
+        #endregion
+
         private bool Execute()
         {
             var result = true;
 
             try
             {
-                this.CyclesLeft = 0;
-                this.ProcessHardwareInterrupt();
+                this.State.PrepareCycle();
+                this.ProcessInterrupts();
 
                 var decoded = this.DecodeStream();
 
                 this.AdvanceProgramCount(decoded);
                 this.ExecuteDecoded(decoded);
             }
-            catch (ProgramExecutionExeption)
+            catch (ProgramExecutionExeption ex)
             {
+                Debug.WriteLine(ex.InnerException.Message);
                 result = false;
             }
 
@@ -111,11 +171,9 @@ namespace Cpu.Execution
         {
             try
             {
-                this.State.ExecutingOpcode = decoded.Opcode;
-                this.CyclesLeft += decoded.Cycles - 1;
-
+                this.State.SetExecutingInstruction(decoded);
                 decoded.Instruction.Execute(this.State, decoded.ValueParameter);
-                this.CyclesLeft--;
+                this.State.CountCycle();
             }
             catch (Exception ex)
             {
@@ -131,25 +189,6 @@ namespace Cpu.Execution
         private bool IsProgramRunning()
         {
             return !ushort.MaxValue.Equals(this.State.Registers.ProgramCounter);
-        }
-
-        private void ProcessHardwareInterrupt()
-        {
-            if (this.IsHardwareInterrupt)
-            {
-                var value = (ushort)(this.State.Registers.ProgramCounter + 2);
-                this.State.Stack.Push16(value);
-
-                this.State.Flags.IsBreakCommand = false;
-                var bits = this.State.Flags.Save();
-                this.State.Stack.Push(bits);
-
-                // Adds cycles of fetching and pushing values.
-                // It is the same amout of cycles used by the 0x00 BRK Instruction,
-                // without the single decode cycle
-                this.CyclesLeft += 6;
-                this.IsHardwareInterrupt = false;
-            }
         }
     }
 }

@@ -56,7 +56,8 @@ namespace Test.Unit.Cpu.Instructions.Jumps
         [Fact]
         public void Execute_Pointer_WritesFromStack()
         {
-            const ushort value = 1;
+            const ushort value = 4;
+            const ushort result = 4;
 
             var stateMock = TestUtils.GenerateStateMock();
 
@@ -67,7 +68,7 @@ namespace Test.Unit.Cpu.Instructions.Jumps
             this.Subject.Execute(stateMock.Object, 0);
 
             stateMock.Verify(state => state.Stack.Pull16(), Times.Exactly(1));
-            stateMock.VerifySet(state => state.Registers.ProgramCounter = value, Times.Once());
+            stateMock.VerifySet(state => state.Registers.ProgramCounter = result, Times.Once());
         }
     }
 }

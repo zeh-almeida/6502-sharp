@@ -75,6 +75,7 @@
 
     <ItemGroup>
       <Folder Include="Files\ADC\" />
+      <Folder Include="Files\Interrupts\" />
       <Folder Include="Files\SBC\" />
     </ItemGroup>
 

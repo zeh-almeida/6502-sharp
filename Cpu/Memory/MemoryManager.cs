@@ -22,8 +22,8 @@ namespace Cpu.Memory
         /// Instantiates a new memory manager
         /// </summary>
         /// <param name="registerManager"><see cref="IRegisterManager"/> to read Indexes from</param>
-        /// <see cref="Registers.IRegisterManager.IndexX"/>
-        /// <see cref="Registers.IRegisterManager.IndexY"/>
+        /// <see cref="IRegisterManager.IndexX"/>
+        /// <see cref="IRegisterManager.IndexY"/>
         public MemoryManager(IRegisterManager registerManager)
         {
             this.RegisterManager = registerManager;
@@ -80,10 +80,7 @@ namespace Cpu.Memory
         /// <inheritdoc/>
         public void WriteIndirect(ushort address, byte value)
         {
-            var addressLsb = this.ReadZeroPage(address);
-            var addressMsb = this.ReadZeroPage((ushort)(address + 1));
-
-            var realAddress = addressLsb.CombineBytes(addressMsb);
+            var realAddress = this.ReadWord(address);
             this.WriteAbsolute(realAddress, value);
         }
 
@@ -91,24 +88,18 @@ namespace Cpu.Memory
         public void WriteIndirectX(ushort address, byte value)
         {
             var addressX = (ushort)(address + this.RegisterManager.IndexX);
+            var realAddress = this.ReadWord(addressX);
 
-            var addressLsb = this.ReadZeroPage(addressX);
-            var addressMsb = this.ReadZeroPage((ushort)(addressX + 1));
-
-            var realAddress = addressLsb.CombineBytes(addressMsb);
             this.WriteAbsolute(realAddress, value);
         }
 
         /// <inheritdoc/>
         public void WriteIndirectY(ushort address, byte value)
         {
-            var addressLsb = this.ReadZeroPage(address);
-            var addressMsb = this.ReadZeroPage((ushort)(address + 1));
+            var realAddress = this.ReadWord(address);
+            var addressY = (ushort)(realAddress + this.RegisterManager.IndexY);
 
-            var baseAddress = addressLsb.CombineBytes(addressMsb);
-            var realAddress = (ushort)(baseAddress + this.RegisterManager.IndexY);
-
-            this.WriteAbsolute(realAddress, value);
+            this.WriteAbsolute(addressY, value);
         }
         #endregion
 
@@ -169,22 +160,18 @@ namespace Cpu.Memory
         public byte ReadIndirectX(ushort address)
         {
             var addressX = (ushort)(address + this.RegisterManager.IndexX);
+            var realAddress = this.ReadWord(addressX);
 
-            var addressLsb = this.ReadZeroPage(addressX);
-            var addressMsb = this.ReadZeroPage((ushort)(addressX + 1));
-
-            var realAddress = addressLsb.CombineBytes(addressMsb);
             return this.ReadAbsolute(realAddress);
         }
 
         /// <inheritdoc/>
         public byte ReadIndirectY(ushort address)
         {
-            var byteAddress = address.MostSignificantBits();
-            var byteMemory = this.ReadZeroPage(byteAddress);
+            var realAddress = this.ReadWord(address);
+            var addressY = (ushort)(realAddress + this.RegisterManager.IndexY);
 
-            var addressY = byteMemory + this.RegisterManager.IndexY;
-            return this.ReadAbsolute((ushort)addressY);
+            return this.ReadAbsolute(addressY);
         }
         #endregion
 
@@ -213,9 +200,17 @@ namespace Cpu.Memory
         }
         #endregion
 
+        private ushort ReadWord(ushort address)
+        {
+            var addressLsb = this.ReadAbsolute(address);
+            var addressMsb = this.ReadAbsolute((ushort)(address + 1));
+
+            return addressLsb.CombineBytes(addressMsb);
+        }
+
         private static ushort WrapZeroPageAddress(ushort address)
         {
-            return (ushort)(address <= 0xFF ? address : address - 0xFF);
+            return (ushort)(address & 0xFF);
         }
     }
 }

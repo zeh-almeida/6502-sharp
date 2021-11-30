@@ -60,7 +60,6 @@ namespace Cpu.Instructions.Illegal
 
             currentState.Registers.Accumulator = ((byte)operation);
             Write(currentState, value, (byte)operation);
-
         }
 
         private static byte Load(ICpuState currentState, ushort address)

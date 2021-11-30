@@ -28,7 +28,6 @@ namespace Cpu.Instructions.Stack
         {
             var bits = currentState.Flags.Save();
             currentState.Stack.Push(bits);
-
         }
     }
 }

@@ -32,8 +32,8 @@ namespace Cpu.Instructions.SystemFunctions
         /// <inheritdoc/>
         public override void Execute(ICpuState currentState, ushort _)
         {
-            StoreProgramCounter(currentState);
             StoreProcessorStatus(currentState);
+            StoreProgramCounter(currentState);
 
             LoadInterruptProgramAddress(currentState);
 
@@ -50,8 +50,7 @@ namespace Cpu.Instructions.SystemFunctions
 
         private static void StoreProgramCounter(ICpuState currentState)
         {
-            var value = (ushort)(currentState.Registers.ProgramCounter + 2);
-            currentState.Stack.Push16(value);
+            currentState.Stack.Push16(currentState.Registers.ProgramCounter);
         }
 
         private static void LoadInterruptProgramAddress(ICpuState currentState)

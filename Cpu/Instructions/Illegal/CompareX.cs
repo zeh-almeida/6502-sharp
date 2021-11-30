@@ -35,12 +35,11 @@ namespace Cpu.Instructions.Illegal
             var andValue = (byte)(accumulator & registerX);
             var operation = (byte)(andValue - value);
 
-            currentState.Flags.IsZero = (operation.Equals(accumulator));
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
-            currentState.Flags.IsCarry = (operation <= accumulator);
+            currentState.Flags.IsZero = operation.Equals(accumulator);
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
+            currentState.Flags.IsCarry = operation <= accumulator;
 
             currentState.Registers.IndexX = operation;
-
         }
     }
 }

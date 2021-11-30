@@ -65,15 +65,6 @@ namespace Test.Unit.Cpu.Extensions
         }
 
         [Theory]
-        [InlineData(0b_1111_1000, 0b_0000_1000)]
-        [InlineData(0b_0111_1000, 0b_1000_0110)]
-        public void BranchAddress_Returns(byte value, byte expected)
-        {
-            var result = value.BranchAddress();
-            Assert.Equal(expected, result);
-        }
-
-        [Theory]
         [InlineData(0b_1111_1001, true)]
         [InlineData(0b_0111_1000, false)]
         public void IsFirstBitSet_Returns(byte value, bool expected)

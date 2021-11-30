@@ -38,8 +38,8 @@ namespace Cpu.Instructions.Increments
             var operation = Read(currentState, value);
             operation = (byte)(operation + 1);
 
-            currentState.Flags.IsZero = (operation.IsZero());
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
+            currentState.Flags.IsZero = operation.IsZero();
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
 
             Write(currentState, value, operation);
         }

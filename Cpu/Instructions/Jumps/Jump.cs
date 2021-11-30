@@ -30,9 +30,7 @@ namespace Cpu.Instructions.Jumps
         /// <inheritdoc/>
         public override void Execute(ICpuState currentState, ushort value)
         {
-            var loadValue = Load(currentState, value);
-            currentState.Registers.ProgramCounter = loadValue;
-
+            currentState.Registers.ProgramCounter = Load(currentState, value);
         }
 
         private static ushort Load(ICpuState currentState, ushort value)

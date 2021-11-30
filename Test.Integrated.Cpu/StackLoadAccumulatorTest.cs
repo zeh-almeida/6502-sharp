@@ -20,7 +20,7 @@ namespace Test.Integrated.Cpu
         [Fact]
         public void Stacking_Accumulator_Computes()
         {
-            const byte stackPointerValue = 3;
+            const byte stackPointerValue = 0xFD;
             const byte accumulatorValue = 8;
 
             const byte firstStackValue = 0x01;

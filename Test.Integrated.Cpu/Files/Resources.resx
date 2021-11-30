@@ -166,6 +166,9 @@
   <data name="asozx" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>SLO\asozx.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="hardware_interrupt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Interrupts\hardware_interrupt.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="rlaa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>RLA\rlaa.prg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

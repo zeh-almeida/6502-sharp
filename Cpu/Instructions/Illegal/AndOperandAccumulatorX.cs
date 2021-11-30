@@ -38,7 +38,6 @@ namespace Cpu.Instructions.Illegal
 
             currentState.Registers.Accumulator = andValue;
             currentState.Registers.IndexX = andValue;
-
         }
     }
 }

@@ -48,7 +48,6 @@ namespace Cpu.Instructions.Illegal
 
             currentState.Registers.Accumulator = loadValue;
             currentState.Registers.IndexX = loadValue;
-
         }
 
         private static byte Load(ICpuState currentState, ushort address)

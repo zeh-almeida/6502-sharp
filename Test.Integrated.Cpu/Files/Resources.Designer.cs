@@ -223,6 +223,16 @@ namespace Test.Integrated.Cpu.Files {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] hardware_interrupt {
+            get {
+                object obj = ResourceManager.GetObject("hardware_interrupt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] rlaa {
             get {
                 object obj = ResourceManager.GetObject("rlaa", resourceCulture);

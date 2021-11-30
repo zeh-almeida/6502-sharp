@@ -24,7 +24,7 @@ namespace Test.Unit.Cpu.Instructions.Exceptions
             var subject = new UnknownOpcodeException(opcode, message);
 
             Assert.Equal(opcode, subject.UnknownOpcode);
-            Assert.Equal(message, subject.Message);
+            Assert.Equal($"{message}, OP Code=0x0001", subject.Message);
         }
     }
 }

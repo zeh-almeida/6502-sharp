@@ -29,8 +29,8 @@ namespace Cpu.Instructions.SystemFunctions
         /// <inheritdoc/>
         public override void Execute(ICpuState currentState, ushort _)
         {
-            LoadProcessorStatus(currentState);
             LoadProgramCounter(currentState);
+            LoadProcessorStatus(currentState);
         }
 
         private static void LoadProcessorStatus(ICpuState currentState)

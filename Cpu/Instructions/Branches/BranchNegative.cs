@@ -27,17 +27,10 @@ namespace Cpu.Instructions.Branches
         /// <inheritdoc/>
         public override void Execute(ICpuState currentState, ushort value)
         {
-            var isFlag = currentState.Flags.IsNegative;
-
-            if (isFlag)
+            if (currentState.Flags.IsNegative)
             {
-                var pc = currentState.Registers.ProgramCounter;
-                var valueCorrected = ((byte)value).BranchAddress();
-
-                var newAddress = (ushort)(pc - valueCorrected);
-                currentState.Registers.ProgramCounter = newAddress;
+                currentState.Registers.ProgramCounter = currentState.Registers.ProgramCounter.BranchAddress((byte)value);
             }
-
         }
     }
 }

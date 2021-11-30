@@ -1,4 +1,5 @@
-﻿using Cpu.Flags;
+﻿using Cpu.Execution;
+using Cpu.Flags;
 using Cpu.Memory;
 using Cpu.Registers;
 using System.Collections.Generic;
@@ -19,9 +20,24 @@ namespace Cpu.States
 
         #region Properties
         /// <summary>
+        /// Cycles left from the current execution
+        /// </summary>
+        int CyclesLeft { get; }
+
+        /// <summary>
         /// Most recent opcode value
         /// </summary>
-        byte ExecutingOpcode { get; set; }
+        byte ExecutingOpcode { get; }
+
+        /// <summary>
+        /// Signalizes the CPU to perform an interrupt based on external activity
+        /// </summary>
+        bool IsHardwareInterrupt { get; set; }
+
+        /// <summary>
+        /// Signalizes the CPU to perform an interrupt based on internal activity
+        /// </summary>
+        bool IsSoftwareInterrupt { get; set; }
 
         /// <summary>
         /// Manipulates the CPU registers
@@ -73,6 +89,29 @@ namespace Cpu.States
         /// <exception cref="System.ArgumentNullException">if <paramref name="data"/> is null</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
         void Load(IEnumerable<byte> data);
+        #endregion
+
+        #region Cycles
+        /// <summary>
+        /// Prepares a new execution cycle
+        /// </summary>
+        void PrepareCycle();
+
+        /// <summary>
+        /// Decrements the cycle count by one
+        /// </summary>
+        void CountCycle();
+
+        /// <summary>
+        /// Sets cycles for an interrupt execution
+        /// </summary>
+        void SetCycleInterrupt();
+
+        /// <summary>
+        /// Prepares the state according to the decoded instruction
+        /// </summary>
+        /// <param name="decoded">information of the new instruction</param>
+        void SetExecutingInstruction(DecodedInstruction decoded);
         #endregion
     }
 }

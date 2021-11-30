@@ -41,7 +41,6 @@ namespace Cpu.Instructions.Logic
             currentState.Flags.IsZero = result.IsZero();
             currentState.Flags.IsOverflow = toCompare.IsBitSet(6);
             currentState.Flags.IsNegative = toCompare.IsSeventhBitSet();
-
         }
 
         private static ushort ValueToCompare(ICpuState currentState, ushort address)

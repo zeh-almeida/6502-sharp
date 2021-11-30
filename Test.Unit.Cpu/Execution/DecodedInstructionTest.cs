@@ -59,5 +59,14 @@ namespace Test.Unit.Cpu.Execution
 
             Assert.Equal(Value, subject.ValueParameter);
         }
+
+        [Fact]
+        public void ToString_IsFormatted()
+        {
+            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes);
+            var subject = new DecodedInstruction(opcodeInfo, Value);
+
+            Assert.Equal("0x01 (0x0001)", subject.ToString());
+        }
     }
 }

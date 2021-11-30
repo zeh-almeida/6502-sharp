@@ -99,7 +99,8 @@ namespace Test.Unit.Cpu.Memory
             const byte value = 1;
 
             _ = this.RegisterMock
-                .Setup(s => s.IndexX)
+                .SetupSequence(s => s.IndexX)
+                .Returns(registerX)
                 .Returns(registerX);
 
             this.Subject.WriteIndirectX(address, value);
@@ -118,7 +119,8 @@ namespace Test.Unit.Cpu.Memory
             const byte value = 1;
 
             _ = this.RegisterMock
-                .Setup(s => s.IndexY)
+                .SetupSequence(s => s.IndexY)
+                .Returns(registerY)
                 .Returns(registerY);
 
             this.Subject.WriteIndirectY(address, value);

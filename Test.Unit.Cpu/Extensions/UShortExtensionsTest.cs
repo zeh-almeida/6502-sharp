@@ -161,6 +161,14 @@ namespace Test.Unit.Cpu.Extensions
         }
 
         [Theory]
+        [InlineData(0x0001, 0x7F, 0x0080)]
+        [InlineData(0x1000, 0x80, 0x0F80)]
+        public void BranchAddress_Executes(ushort value, byte offset, ushort expected)
+        {
+            Assert.Equal(expected, value.BranchAddress(offset));
+        }
+
+        [Theory]
         [ClassData(typeof(SignificantBitsData))]
         public void SignificantBits_Returns(ushort value, Tuple<byte, byte> expected)
         {

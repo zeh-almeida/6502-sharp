@@ -37,7 +37,7 @@ namespace Test.Integrated.Cpu
             var programStream = BuildProgramStream();
             var finalState = this.Fixture.Compute(programStream, cpuState =>
             {
-                if (0.Equals(this.Fixture.Subject.CyclesLeft))
+                if (0.Equals(cpuState.CyclesLeft))
                 {
                     opcodeCount++;
                     var value = cpuState.Registers.Accumulator;

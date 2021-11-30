@@ -5,13 +5,6 @@
     /// </summary>
     public interface IStackManager
     {
-        #region Properties
-        /// <summary>
-        /// Current stack pointer memory location
-        /// </summary>
-        byte StackPointer { get; }
-        #endregion
-
         /// <summary>
         /// Pushes a new 8-bit value to the stack and increments the pointer
         /// </summary>

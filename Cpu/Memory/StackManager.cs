@@ -13,9 +13,6 @@ namespace Cpu.Memory
         #endregion
 
         #region Properties
-        /// <inheritdoc/>
-        public byte StackPointer { get; private set; }
-
         private IMemoryManager MemoryManager { get; }
 
         private IRegisterManager RegisterManager { get; }
@@ -35,13 +32,11 @@ namespace Cpu.Memory
         /// <inheritdoc/>
         public void Push(byte value)
         {
-            this.StackPointer = this.RegisterManager.StackPointer;
-            var memoryPointer = this.PadStackPointer();
+            var pointer = this.RegisterManager.StackPointer;
+            var address = PadStackPointer(pointer);
 
-            this.StackPointer++;
-            this.RegisterManager.StackPointer = (this.StackPointer);
-
-            this.MemoryManager.WriteAbsolute(memoryPointer, value);
+            this.MemoryManager.WriteAbsolute(address, value);
+            this.RegisterManager.StackPointer = (byte)(pointer - 1);
         }
 
         /// <inheritdoc/>
@@ -56,13 +51,12 @@ namespace Cpu.Memory
         /// <inheritdoc/>
         public byte Pull()
         {
-            this.StackPointer = this.RegisterManager.StackPointer;
-            this.StackPointer--;
+            var pointer = this.RegisterManager.StackPointer;
+            var finalPointer = (byte)(pointer + 1);
+            this.RegisterManager.StackPointer = finalPointer;
 
-            this.RegisterManager.StackPointer = (this.StackPointer);
-
-            var memoryPointer = this.PadStackPointer();
-            return this.MemoryManager.ReadAbsolute(memoryPointer);
+            var address = PadStackPointer(finalPointer);
+            return this.MemoryManager.ReadAbsolute(address);
         }
 
         /// <inheritdoc/>
@@ -74,9 +68,9 @@ namespace Cpu.Memory
             return lsb.CombineBytes(msb);
         }
 
-        private ushort PadStackPointer()
+        private static ushort PadStackPointer(byte value)
         {
-            return (ushort)(LowestAddress + this.StackPointer);
+            return (ushort)(LowestAddress | value);
         }
     }
 }

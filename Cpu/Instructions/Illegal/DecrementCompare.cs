@@ -49,9 +49,9 @@ namespace Cpu.Instructions.Illegal
             var operation = (byte)(loadValue - 1);
             var result = (byte)(accumulator - operation);
 
-            currentState.Flags.IsZero = (operation.Equals(accumulator));
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
-            currentState.Flags.IsCarry = (operation <= accumulator);
+            currentState.Flags.IsZero = operation.Equals(accumulator);
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
+            currentState.Flags.IsCarry = operation <= accumulator;
 
             Write(currentState, value, result);
         }

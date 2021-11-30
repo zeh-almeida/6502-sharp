@@ -43,7 +43,6 @@ namespace Cpu.Instructions.Illegal
             currentState.Registers.IndexX = operation;
             currentState.Registers.Accumulator = operation;
             currentState.Registers.StackPointer = operation;
-
         }
     }
 }

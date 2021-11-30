@@ -50,10 +50,9 @@ namespace Cpu.Instructions.Arithmetic
 
             var operation = (byte)(accumulator - loadValue);
 
-            currentState.Flags.IsZero = (operation.Equals(accumulator));
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
-            currentState.Flags.IsCarry = (loadValue <= accumulator);
-
+            currentState.Flags.IsZero = operation.Equals(accumulator);
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
+            currentState.Flags.IsCarry = loadValue <= accumulator;
         }
 
         private static ushort Load(ICpuState currentState, ushort address)

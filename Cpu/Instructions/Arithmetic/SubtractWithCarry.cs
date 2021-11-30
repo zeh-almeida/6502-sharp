@@ -59,7 +59,6 @@ namespace Cpu.Instructions.Arithmetic
 
             currentState.Flags.IsZero = operation.IsZero();
             currentState.Registers.Accumulator = operation;
-
         }
 
         private static byte DecimalCalculation(ICpuState currentState, ushort loadValue)

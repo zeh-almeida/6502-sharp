@@ -1,4 +1,6 @@
-﻿using Cpu.Flags;
+﻿using Cpu.Execution;
+using Cpu.Flags;
+using Cpu.Instructions.StatusChanges;
 using Cpu.Memory;
 using Cpu.Registers;
 using Cpu.States;
@@ -38,20 +40,7 @@ namespace Test.Unit.Cpu.States
         }
         #endregion
 
-        [Fact]
-        public void ReadWrite_Opcode_Successful()
-        {
-            const byte opcode = 0x7F;
-            const byte finalOpcode = 0x80;
-
-            this.Subject.ExecutingOpcode = opcode;
-
-            Assert.Equal(opcode, this.Subject.ExecutingOpcode);
-
-            this.Subject.ExecutingOpcode++;
-            Assert.Equal(finalOpcode, this.Subject.ExecutingOpcode);
-        }
-
+        #region Properties
         [Fact]
         public void Property_RegisterManager_Exists()
         {
@@ -75,6 +64,49 @@ namespace Test.Unit.Cpu.States
         {
             Assert.NotNull(this.Subject.Flags);
         }
+        #endregion
+
+        #region Cycles
+        [Fact]
+        public void PrepareCycle_Executes()
+        {
+            this.Subject.PrepareCycle();
+
+            Assert.Equal(0, this.Subject.CyclesLeft);
+            Assert.Equal(0, this.Subject.ExecutingOpcode);
+        }
+
+        [Fact]
+        public void CountCycle_Executes()
+        {
+            this.Subject.CountCycle();
+
+            Assert.Equal(-1, this.Subject.CyclesLeft);
+        }
+
+        [Fact]
+        public void SetCycleInterrupt_Executes()
+        {
+            this.Subject.SetCycleInterrupt();
+
+            Assert.Equal(6, this.Subject.CyclesLeft);
+        }
+
+        [Fact]
+        public void SetExecutingInstruction_Executes()
+        {
+            const int streamByte = 0x38;
+
+            var instruction = new SetCarryFlag();
+            var opcodeInfo = instruction.GatherInformation(streamByte);
+            var decoded = new DecodedInstruction(opcodeInfo, 0x00);
+
+            this.Subject.SetExecutingInstruction(decoded);
+
+            Assert.Equal(decoded.Cycles - 1, this.Subject.CyclesLeft);
+            Assert.Equal(decoded.Opcode, this.Subject.ExecutingOpcode);
+        }
+        #endregion
 
         #region Save/Load
         [Fact]
@@ -171,5 +203,25 @@ namespace Test.Unit.Cpu.States
             _ = Assert.Throws<ArgumentOutOfRangeException>(() => this.Subject.Load(memory));
         }
         #endregion
+
+        [Fact]
+        public void GetSet_IsHardwareInterrupt_Executes()
+        {
+            this.Subject.IsHardwareInterrupt = true;
+            Assert.True(this.Subject.IsHardwareInterrupt);
+
+            this.Subject.IsHardwareInterrupt = false;
+            Assert.False(this.Subject.IsHardwareInterrupt);
+        }
+
+        [Fact]
+        public void GetSet_IsSoftwareInterrupt_Executes()
+        {
+            this.Subject.IsSoftwareInterrupt = true;
+            Assert.True(this.Subject.IsSoftwareInterrupt);
+
+            this.Subject.IsSoftwareInterrupt = false;
+            Assert.False(this.Subject.IsSoftwareInterrupt);
+        }
     }
 }

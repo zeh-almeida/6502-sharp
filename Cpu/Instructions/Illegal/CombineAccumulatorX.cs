@@ -41,7 +41,6 @@ namespace Cpu.Instructions.Illegal
 
             var operation = (byte)(accumulator & registerX);
             Write(currentState, value, operation);
-
         }
 
         private static void Write(ICpuState currentState, ushort address, byte value)

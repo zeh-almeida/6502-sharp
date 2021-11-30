@@ -76,10 +76,28 @@ namespace Cpu.Extensions
                 throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0-15");
             }
 
-            var toRight = (ushort)(value << (15 - index));
-            var toLeft = (ushort)(toRight >> 15);
+            var mask = index switch
+            {
+                0 => 0b_0000_0001,
+                1 => 0b_0000_0010,
+                2 => 0b_0000_0100,
+                3 => 0b_0000_1000,
+                4 => 0b_0001_0000,
+                5 => 0b_0010_0000,
+                6 => 0b_0100_0000,
+                7 => 0b_1000_0000,
 
-            return 1.Equals(toLeft);
+                8 => 0b_0000_0001_0000_0000,
+                9 => 0b_0000_0010_0000_0000,
+                10 => 0b_0000_0100_0000_0000,
+                11 => 0b_0000_1000_0000_0000,
+                12 => 0b_0001_0000_0000_0000,
+                13 => 0b_0010_0000_0000_0000,
+                14 => 0b_0100_0000_0000_0000,
+                _ => 0b_1000_0000_0000_0000,
+            };
+
+            return mask.Equals(value & mask);
         }
 
         /// <summary>
@@ -117,7 +135,7 @@ namespace Cpu.Extensions
         public static ushort RotateLeft(this ushort value, bool isCarry)
         {
             var shiftedValue = value << 1;
-            var carryMask = isCarry ? 0b_0000_0000_0000_0001 : 0b_0000_0000_0000_0000;
+            var carryMask = isCarry ? 1 : 0;
 
             return (ushort)(shiftedValue | carryMask);
         }
@@ -134,6 +152,30 @@ namespace Cpu.Extensions
             var msb = (byte)(MostSignificantBits(value) >> 8);
 
             return (lsb, msb);
+        }
+
+        /// <summary>
+        /// Formats the byte as an hexadecimal value, 0X0000
+        /// </summary>
+        /// <param name="opcode"> opcode to format</param>
+        /// <returns>Formatted value</returns>
+        public static string AsHex(this ushort opcode)
+        {
+            return $"0x{opcode:X4}";
+        }
+
+        /// <summary>
+        /// Calculates the branch jump address.
+        /// Jumps must be signed so a two-complement subtraction is performed
+        /// </summary>
+        /// <param name="value">Value to calculate from</param>
+        /// <param name="offset">Value to offset to</param>
+        /// <returns>Jump address</returns>
+        public static ushort BranchAddress(this ushort value, byte offset)
+        {
+            return offset < 0x80
+                 ? (ushort)(value + offset)
+                 : (ushort)(value - (0xFF - offset) - 1);
         }
     }
 }

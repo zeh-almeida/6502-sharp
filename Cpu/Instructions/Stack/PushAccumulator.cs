@@ -28,7 +28,6 @@ namespace Cpu.Instructions.Stack
         {
             var accumulator = currentState.Registers.Accumulator;
             currentState.Stack.Push16(accumulator);
-
         }
     }
 }

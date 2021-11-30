@@ -34,10 +34,9 @@ namespace Cpu.Instructions.Illegal
             var andValue = (byte)(value & accumulator);
             var shifted = (byte)(andValue << 1);
 
-            currentState.Flags.IsCarry = (andValue.IsLastBitSet());
-            currentState.Flags.IsNegative = (shifted.IsLastBitSet());
-
-            currentState.Flags.IsZero = (0.Equals(shifted));
+            currentState.Flags.IsCarry = andValue.IsLastBitSet();
+            currentState.Flags.IsNegative = shifted.IsLastBitSet();
+            currentState.Flags.IsZero = shifted.IsZero();
 
             currentState.Registers.Accumulator = shifted;
         }

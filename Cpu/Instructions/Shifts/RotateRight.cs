@@ -51,7 +51,6 @@ namespace Cpu.Instructions.Shifts
             currentState.Flags.IsCarry = newCarry;
             currentState.Flags.IsNegative = oldCarry;
             currentState.Flags.IsZero = shifted.IsZero();
-
         }
 
         private static byte Load(ICpuState currentState, ushort address)

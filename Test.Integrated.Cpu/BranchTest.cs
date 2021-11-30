@@ -4,34 +4,35 @@ using Xunit;
 
 namespace Test.Integrated.Cpu
 {
-    public sealed record BranchNotEqualTest : IClassFixture<MachineFixture>
+    /// <summary>
+    /// <see href="http://skilldrick.github.io/easy6502/#branching"/>
+    /// </summary>
+    public sealed record BranchTest : IClassFixture<MachineFixture>
     {
         #region Properties
         private MachineFixture Fixture { get; }
         #endregion
 
         #region Constructors
-        public BranchNotEqualTest(MachineFixture fixture)
+        public BranchTest(MachineFixture fixture)
         {
             this.Fixture = fixture;
         }
         #endregion
 
         [Fact]
-        public void Decrementing_BranchNotEqual_Computes()
+        public void Executes()
         {
             const byte value = 0x03;
 
             const ushort xLocation = 4 + MachineFixture.RegisterOffset;
-            const ushort firstLocation = 0x0200 + MachineFixture.MemoryStateOffset;
-            const ushort secondLocation = 0x0201 + MachineFixture.MemoryStateOffset;
+            const ushort memoryLocation = 0x0201 + MachineFixture.MemoryStateOffset;
 
             var programStream = BuildProgramStream();
             var finalState = this.Fixture.Compute(programStream);
 
             Assert.Equal(value, finalState[xLocation]);
-            Assert.Equal(value, finalState[firstLocation]);
-            Assert.Equal(value, finalState[secondLocation]);
+            Assert.Equal(value, finalState[memoryLocation]);
         }
 
         private static IEnumerable<byte> BuildProgramStream()
@@ -54,6 +55,7 @@ namespace Test.Integrated.Cpu
             state[0x060A + MachineFixture.MemoryStateOffset] = 0x8E;
             state[0x060B + MachineFixture.MemoryStateOffset] = 0x01;
             state[0x060C + MachineFixture.MemoryStateOffset] = 0x02;
+
             state[0xFFFE + MachineFixture.MemoryStateOffset] = 0xFF;
             state[0xFFFF + MachineFixture.MemoryStateOffset] = 0xFF;
 

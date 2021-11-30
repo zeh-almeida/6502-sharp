@@ -1,4 +1,5 @@
 ﻿using Cpu.Execution;
+using Cpu.Extensions;
 using Cpu.Flags;
 using Cpu.Instructions;
 using Cpu.Memory;
@@ -81,6 +82,32 @@ namespace Test.Integrated.Cpu.Common
             return this.Compute(program);
         }
 
+        public byte[] Compute(string programName, Action<ICpuState> cycleAction)
+        {
+            var program = BuildProgramStream(programName);
+            return this.Compute(program, cycleAction);
+        }
+
+        public static IEnumerable<byte> BuildProgramStream(string programName, ushort offset = 0)
+        {
+            var state = new byte[MachineFixture.LoadDataLength];
+
+            (var programLsb, var programMsb) = offset.SignificantBits();
+            state[MachineFixture.RegisterOffset + 0] = programLsb;
+            state[MachineFixture.RegisterOffset + 1] = programMsb;
+
+            var program = Resources.ResourceManager.GetObject(programName) as byte[];
+            program.CopyTo(state, MachineFixture.MemoryStateOffset + offset);
+
+            if (0.Equals(offset))
+            {
+                state[MachineFixture.MemoryStateOffset + 0xFFFE] = 0xFF;
+                state[MachineFixture.MemoryStateOffset + 0xFFFF] = 0xFF;
+            }
+
+            return state;
+        }
+
         private static IEnumerable<IInstruction> LoadInstructions()
         {
             var instructionType = typeof(IInstruction);
@@ -93,19 +120,6 @@ namespace Test.Integrated.Cpu.Common
                                       && !t.IsAbstract)
                 .Select(t => Activator.CreateInstance(t) as IInstruction)
                 .ToArray();
-        }
-
-        private static IEnumerable<byte> BuildProgramStream(string programName)
-        {
-            var state = new byte[MachineFixture.LoadDataLength];
-            var program = Resources.ResourceManager.GetObject(programName) as byte[];
-
-            Array.Copy(program, 0, state, MachineFixture.MemoryStateOffset, program.Length);
-
-            state[0xFFFE + MachineFixture.MemoryStateOffset] = 0xFF;
-            state[0xFFFF + MachineFixture.MemoryStateOffset] = 0xFF;
-
-            return state;
         }
     }
 }

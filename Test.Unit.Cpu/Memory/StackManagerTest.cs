@@ -26,11 +26,30 @@ namespace Test.Unit.Cpu.Memory
         #endregion
 
         [Fact]
-        public void PushPull_Stack_Successful()
+        public void Push_Executes()
         {
             const byte value = 1;
-            const byte pointer = 2;
-            const byte finalPointer = 3;
+            const byte pointer = 0x02;
+            const byte finalPointer = 0x01;
+            const ushort memoryPointer = 0x0102;
+
+            _ = this.RegisterMock
+                .SetupSequence(mock => mock.StackPointer)
+                .Returns(pointer)
+                .Returns(pointer);
+
+            this.Subject.Push(value);
+
+            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryPointer, value), Times.Once());
+            this.RegisterMock.VerifySet(mock => mock.StackPointer = finalPointer, Times.Once());
+        }
+
+        [Fact]
+        public void Pull_Executes()
+        {
+            const byte value = 1;
+            const byte pointer = 0x01;
+            const byte finalPointer = 0x02;
             const ushort memoryPointer = 0x0102;
 
             _ = this.MemoryMock
@@ -38,95 +57,125 @@ namespace Test.Unit.Cpu.Memory
                 .Returns(value);
 
             _ = this.RegisterMock
-                .SetupSequence(mock => mock.StackPointer)
-                .Returns(pointer)
-                .Returns(finalPointer);
+                .Setup(mock => mock.StackPointer)
+                .Returns(pointer);
 
-            this.Subject.Push(value);
             var result = this.Subject.Pull();
 
-            Assert.Equal(value, result);
-
-            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryPointer, value), Times.Once());
+            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryPointer), Times.Once());
             this.RegisterMock.VerifySet(mock => mock.StackPointer = finalPointer, Times.Once());
 
-            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryPointer), Times.Once());
-            this.RegisterMock.VerifySet(mock => mock.StackPointer = pointer, Times.Once());
+            Assert.Equal(value, result);
         }
 
         [Fact]
-        public void PushPull_OverflowStack_Successful()
+        public void Push_Overflow_Executes()
         {
             const byte value = 1;
-            const byte pointer = 255;
-            const byte finalPointer = 0;
-            const ushort memoryPointer = 0x01FF;
+            const byte pointer = 0x00;
+            const byte finalPointer = 0xFF;
+            const ushort memoryPointer = 0x0100;
+
+            _ = this.RegisterMock
+                .SetupSequence(mock => mock.StackPointer)
+                .Returns(pointer)
+                .Returns(pointer);
+
+            this.Subject.Push(value);
+
+            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryPointer, value), Times.Once());
+            this.RegisterMock.VerifySet(mock => mock.StackPointer = finalPointer, Times.Once());
+        }
+
+        [Fact]
+        public void Pull_Overflow_Executes()
+        {
+            const byte value = 1;
+            const byte pointer = 0xFF;
+            const byte finalPointer = 0x00;
+            const ushort memoryPointer = 0x0100;
 
             _ = this.MemoryMock
                 .Setup(mock => mock.ReadAbsolute(memoryPointer))
                 .Returns(value);
 
             _ = this.RegisterMock
-                .SetupSequence(mock => mock.StackPointer)
-                .Returns(pointer)
-                .Returns(finalPointer);
+                .Setup(mock => mock.StackPointer)
+                .Returns(pointer);
 
-            this.Subject.Push(value);
             var result = this.Subject.Pull();
 
-            Assert.Equal(value, result);
-
-            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryPointer, value), Times.Once());
+            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryPointer), Times.Once());
             this.RegisterMock.VerifySet(mock => mock.StackPointer = finalPointer, Times.Once());
 
-            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryPointer), Times.Once());
-            this.RegisterMock.VerifySet(mock => mock.StackPointer = pointer, Times.Once());
+            Assert.Equal(value, result);
         }
 
         [Fact]
-        public void PushPull16_Stack_Successful()
+        public void Push16_Executes()
         {
-            const byte valueMsb = 0b_1111_1111;
-            const byte valueLsb = 0b_0000_0010;
-            const ushort value = 0b_1111_1111_0000_0010;
+            const ushort value = 0xFF00;
+            const byte valueLsb = 0x00;
+            const byte valueMsb = 0xFF;
 
-            const byte pointerMsb = 2;
-            const byte pointerLsb = 3;
+            const byte pointerLsb = 0x02;
+            const byte pointerMsb = 0x03;
 
-            const ushort memoryPointerMsb = 0x0102;
-            const ushort memoryPointerLsb = 0x0103;
+            const byte finalPointer = 0x01;
 
-            const byte afterPushPointer = 4;
-            const byte afterPullPointer = 2;
-
-            _ = this.MemoryMock
-                .Setup(mock => mock.ReadAbsolute(memoryPointerMsb))
-                .Returns(valueMsb);
-
-            _ = this.MemoryMock
-                .Setup(mock => mock.ReadAbsolute(memoryPointerLsb))
-                .Returns(valueLsb);
+            const ushort memoryLsb = 0x0102;
+            const ushort memoryMsb = 0x0103;
 
             _ = this.RegisterMock
                 .SetupSequence(mock => mock.StackPointer)
                 .Returns(pointerMsb)
-                .Returns(pointerLsb)
-                .Returns(afterPushPointer)
+                .Returns(pointerLsb);
+
+            this.Subject.Push16(value);
+
+            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryMsb, valueMsb), Times.Once());
+            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryLsb, valueLsb), Times.Once());
+
+            this.RegisterMock.VerifySet(mock => mock.StackPointer = finalPointer, Times.Once());
+        }
+
+        [Fact]
+        public void Pull16_Executes()
+        {
+            const ushort value = 0xFF00;
+            const byte valueLsb = 0x00;
+            const byte valueMsb = 0xFF;
+
+            const byte pointerLsb = 0x02;
+            const byte pointerMsb = 0x03;
+
+            const byte initialPointer = 0x01;
+
+            const ushort memoryLsb = 0x0102;
+            const ushort memoryMsb = 0x0103;
+
+            _ = this.MemoryMock
+                .Setup(mock => mock.ReadAbsolute(memoryMsb))
+                .Returns(valueMsb);
+
+            _ = this.MemoryMock
+                .Setup(mock => mock.ReadAbsolute(memoryLsb))
+                .Returns(valueLsb);
+
+            _ = this.RegisterMock
+                .SetupSequence(mock => mock.StackPointer)
+                .Returns(initialPointer)
                 .Returns(pointerLsb)
                 .Returns(pointerMsb);
 
-            this.Subject.Push16(value);
             var result = this.Subject.Pull16();
 
+            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryLsb), Times.Once());
+            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryMsb), Times.Once());
+
+            this.RegisterMock.VerifySet(mock => mock.StackPointer = pointerMsb, Times.Once());
+
             Assert.Equal(value, result);
-
-            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryPointerMsb, valueMsb), Times.Once());
-            this.MemoryMock.Verify(mock => mock.WriteAbsolute(memoryPointerLsb, valueLsb), Times.Once());
-            this.RegisterMock.VerifySet(mock => mock.StackPointer = afterPushPointer, Times.Once());
-
-            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryPointerMsb), Times.Once());
-            this.MemoryMock.Verify(mock => mock.ReadAbsolute(memoryPointerLsb), Times.Once());
-            this.RegisterMock.VerifySet(mock => mock.StackPointer = afterPullPointer, Times.Once());
         }
     }
 }

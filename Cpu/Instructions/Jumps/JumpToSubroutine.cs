@@ -26,9 +26,7 @@ namespace Cpu.Instructions.JumpToSubroutines
         /// <inheritdoc/>
         public override void Execute(ICpuState currentState, ushort value)
         {
-            var newStack = (ushort)(currentState.Stack.StackPointer + 1);
-            currentState.Stack.Push16(newStack);
-
+            currentState.Stack.Push16(currentState.Registers.ProgramCounter);
             currentState.Registers.ProgramCounter = value;
         }
     }

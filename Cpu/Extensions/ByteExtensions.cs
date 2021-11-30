@@ -30,21 +30,6 @@ namespace Cpu.Extensions
         }
 
         /// <summary>
-        /// Calculates the branch jump address.
-        /// Jumps must be signed so a two-complement subtraction is performed
-        /// </summary>
-        /// <param name="value">Value to calculate from</param>
-        /// <returns>Jump address</returns>
-        public static byte BranchAddress(this byte value)
-        {
-            var sign = value.IsLastBitSet()
-                        ? -1
-                        : 1;
-
-            return (byte)(~value - sign);
-        }
-
-        /// <summary>
         /// Combines the least and most significant bits into a single 8-bit number
         /// </summary>
         /// <param name="lsb">Least significant bits</param>
@@ -100,10 +85,19 @@ namespace Cpu.Extensions
                 throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0-7");
             }
 
-            var toRight = (byte)(value << (7 - index));
-            var toLeft = (byte)(toRight >> 7);
+            var mask = index switch
+            {
+                0 => 0b_0000_0001,
+                1 => 0b_0000_0010,
+                2 => 0b_0000_0100,
+                3 => 0b_0000_1000,
+                4 => 0b_0001_0000,
+                5 => 0b_0010_0000,
+                6 => 0b_0100_0000,
+                _ => 0b_1000_0000,
+            };
 
-            return 1.Equals(toLeft);
+            return mask.Equals(value & mask);
         }
 
         /// <summary>
@@ -141,7 +135,7 @@ namespace Cpu.Extensions
         public static byte RotateLeft(this byte value, bool isCarry)
         {
             var shiftedValue = value << 1;
-            var carryMask = isCarry ? 0b_0000_0001 : 0b_0000_0000;
+            var carryMask = isCarry ? 1 : 0;
 
             return (byte)(shiftedValue | carryMask);
         }
@@ -187,6 +181,16 @@ namespace Cpu.Extensions
             }
 
             return (byte)(((value >> 4) * 10) + (value & 0x0f));
+        }
+
+        /// <summary>
+        /// Formats the byte as an hexadecimal value, 0X00
+        /// </summary>
+        /// <param name="opcode"> opcode to format</param>
+        /// <returns>Formatted value</returns>
+        public static string AsHex(this byte opcode)
+        {
+            return $"0x{opcode:X2}";
         }
     }
 }

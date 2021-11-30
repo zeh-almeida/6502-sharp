@@ -1,4 +1,5 @@
-﻿using Cpu.Instructions;
+﻿using Cpu.Extensions;
+using Cpu.Instructions;
 using Cpu.Opcodes;
 
 namespace Cpu.Execution
@@ -57,5 +58,11 @@ namespace Cpu.Execution
             this.Instruction = opcodeInformation.Instruction;
         }
         #endregion
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{this.Opcode.AsHex()} ({this.ValueParameter.AsHex()})";
+        }
     }
 }
