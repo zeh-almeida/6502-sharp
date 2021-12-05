@@ -1,5 +1,6 @@
 ﻿using Cpu.Memory;
 using Cpu.Registers;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using Xunit;
@@ -11,6 +12,8 @@ namespace Test.Unit.Cpu.Memory
         #region Properties
         private Mock<IRegisterManager> RegisterMock { get; }
 
+        private Mock<ILogger<MemoryManager>> LoggerMock { get; }
+
         private MemoryManager Subject { get; }
         #endregion
 
@@ -18,7 +21,11 @@ namespace Test.Unit.Cpu.Memory
         public MemoryManagerTest()
         {
             this.RegisterMock = new Mock<IRegisterManager>();
-            this.Subject = new MemoryManager(this.RegisterMock.Object);
+            this.LoggerMock = new Mock<ILogger<MemoryManager>>();
+
+            this.Subject = new MemoryManager(
+                this.LoggerMock.Object,
+                this.RegisterMock.Object);
         }
         #endregion
 

@@ -1,9 +1,11 @@
 ﻿using Cpu.Execution.Exceptions;
 using Cpu.Extensions;
 using Cpu.States;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Cpu.Execution
 {
@@ -17,19 +19,24 @@ namespace Cpu.Execution
         public ICpuState State { get; }
 
         private IDecoder Decoder { get; }
+
+        private ILogger<Machine> Logger { get; }
         #endregion
 
         #region Constructors
         /// <summary>
         /// Instantiates a new machine
         /// </summary>
+        /// <param name="logger"><see cref="ILogger{TCategoryName}"/> to log machine operations</param>
         /// <param name="state"><see cref="ICpuState"/> to maintain the execution state</param>
         /// <param name="decoder"><see cref="IDecoder"/> to decode instructions</param>
         public Machine(
+            ILogger<Machine> logger,
             ICpuState state,
             IDecoder decoder)
         {
             this.State = state;
+            this.Logger = logger;
             this.Decoder = decoder;
         }
         #endregion
@@ -61,12 +68,14 @@ namespace Cpu.Execution
         /// <inheritdoc/>
         public void Load(IEnumerable<byte> data)
         {
+            this.Logger.LogInformation(MachineEvents.OnLoadData, "{dataLength}", data.Count());
             this.State.Load(data);
         }
 
         /// <inheritdoc/>
         public IEnumerable<byte> Save()
         {
+            this.Logger.LogInformation(MachineEvents.OnSaveData, "Save state");
             return this.State.Save();
         }
 
@@ -82,6 +91,8 @@ namespace Cpu.Execution
         {
             if (this.State.IsHardwareInterrupt)
             {
+                this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Hardware");
+
                 this.State.Flags.IsBreakCommand = false;
                 var bits = this.State.Flags.Save();
 
@@ -104,6 +115,8 @@ namespace Cpu.Execution
         {
             if (this.State.IsSoftwareInterrupt && !this.State.Flags.IsInterruptDisable)
             {
+                this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Software");
+
                 this.State.Flags.IsBreakCommand = true;
                 var bits = this.State.Flags.Save();
 
@@ -159,7 +172,12 @@ namespace Cpu.Execution
         {
             try
             {
-                return this.Decoder.Decode(this.State);
+                var result = this.Decoder.Decode(this.State);
+
+                this.Logger.LogInformation(MachineEvents.OnDecode, "{Instruction} @ {ProgramCounter}",
+                    result, this.State.Registers.ProgramCounter.AsHex());
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -174,6 +192,9 @@ namespace Cpu.Execution
                 this.State.SetExecutingInstruction(decoded);
                 decoded.Instruction.Execute(this.State, decoded.ValueParameter);
                 this.State.CountCycle();
+
+                this.Logger.LogInformation(MachineEvents.OnFlags, "{flagState}", this.State.Flags.ToString());
+                this.Logger.LogInformation(MachineEvents.OnRegisters, "{registerState}", this.State.Registers.ToString());
             }
             catch (Exception ex)
             {

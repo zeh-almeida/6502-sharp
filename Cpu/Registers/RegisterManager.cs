@@ -79,5 +79,11 @@ namespace Cpu.Registers
             this.IndexY = dataArr[5];
         }
         #endregion
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"PC:{this.ProgramCounter.AsHex()};SP:{this.StackPointer.AsHex()};A:{this.Accumulator.AsHex()};X:{this.IndexX.AsHex()};Y:{this.IndexY.AsHex()}";
+        }
     }
 }

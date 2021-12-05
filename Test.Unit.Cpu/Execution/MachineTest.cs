@@ -1,6 +1,7 @@
 ﻿using Cpu.Execution;
 using Cpu.Instructions.JumpToSubroutines;
 using Cpu.States;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using Test.Unit.Cpu.Utils;
@@ -19,6 +20,8 @@ namespace Test.Unit.Cpu.Execution
 
         private Mock<IDecoder> DecoderMock { get; }
 
+        private Mock<ILogger<Machine>> LoggerMock { get; }
+
         private DecodedInstruction Decoded { get; }
 
         private Machine Subject { get; }
@@ -28,13 +31,15 @@ namespace Test.Unit.Cpu.Execution
         public MachineTest()
         {
             this.StateMock = TestUtils.GenerateStateMock();
+
             this.DecoderMock = new Mock<IDecoder>();
+            this.LoggerMock = new Mock<ILogger<Machine>>();
 
             var instruction = new JumpToSubroutine();
             var opcodeInfo = instruction.GatherInformation(StreamByte);
 
             this.Decoded = new DecodedInstruction(opcodeInfo, 65535);
-            this.Subject = new Machine(this.StateMock.Object, this.DecoderMock.Object);
+            this.Subject = new Machine(this.LoggerMock.Object, this.StateMock.Object, this.DecoderMock.Object);
         }
         #endregion
 
@@ -116,8 +121,8 @@ namespace Test.Unit.Cpu.Execution
 
             Assert.True(result);
 
-            this.StateMock.Verify(mock => mock.Registers.ProgramCounter, Times.Exactly(3));
-            this.StateMock.VerifySet(mock => mock.Registers.ProgramCounter = finalProgramCounter, Times.Exactly(2));
+            this.StateMock.Verify(mock => mock.Registers.ProgramCounter, Times.AtLeast(3));
+            this.StateMock.VerifySet(mock => mock.Registers.ProgramCounter = finalProgramCounter, Times.AtLeast(1));
         }
 
         [Fact]

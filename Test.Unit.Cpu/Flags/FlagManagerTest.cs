@@ -123,5 +123,19 @@ namespace Test.Unit.Cpu.Flags
             Assert.True(this.Subject.IsNegative);
         }
         #endregion
+
+        [Fact]
+        public void ToString_Executes()
+        {
+            this.Subject.IsCarry = true;
+            this.Subject.IsZero = true;
+            this.Subject.IsInterruptDisable = true;
+            this.Subject.IsDecimalMode = true;
+            this.Subject.IsBreakCommand = true;
+            this.Subject.IsOverflow = true;
+            this.Subject.IsNegative = true;
+
+            Assert.Equal("N:1;Z:1;C:1;I:1;D:1;V:1", this.Subject.ToString());
+        }
     }
 }

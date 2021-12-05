@@ -1,5 +1,6 @@
 ﻿using Cpu.Extensions;
 using Cpu.Registers;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace Cpu.Memory
     public sealed record MemoryManager : IMemoryManager
     {
         #region Properties
+        private ILogger<MemoryManager> Logger { get; }
+
         private IRegisterManager RegisterManager { get; }
 
         private byte[] MemoryArea { get; }
@@ -21,12 +24,17 @@ namespace Cpu.Memory
         /// <summary>
         /// Instantiates a new memory manager
         /// </summary>
+        /// <param name="logger"><see cref="ILogger{TCategoryName}"/> to report reads and writes</param>
         /// <param name="registerManager"><see cref="IRegisterManager"/> to read Indexes from</param>
         /// <see cref="IRegisterManager.IndexX"/>
         /// <see cref="IRegisterManager.IndexY"/>
-        public MemoryManager(IRegisterManager registerManager)
+        public MemoryManager(
+            ILogger<MemoryManager> logger,
+            IRegisterManager registerManager)
         {
+            this.Logger = logger;
             this.RegisterManager = registerManager;
+
             this.MemoryArea = new byte[IMemoryManager.Length];
         }
         #endregion
@@ -60,6 +68,7 @@ namespace Cpu.Memory
         /// <inheritdoc/>
         public void WriteAbsolute(ushort address, byte value)
         {
+            this.Logger.LogInformation(MemoryEvents.OnWrite, "{value:X2} @ {address:X4}", value, address);
             this.MemoryArea[address] = value;
         }
 
@@ -132,7 +141,10 @@ namespace Cpu.Memory
         /// <inheritdoc/>
         public byte ReadAbsolute(ushort address)
         {
-            return this.MemoryArea[address];
+            var value = this.MemoryArea[address];
+            this.Logger.LogInformation(MemoryEvents.OnRead, "{value:X2} @ {address:X4}", value, address);
+
+            return value;
         }
 
         /// <inheritdoc/>

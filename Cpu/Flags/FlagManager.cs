@@ -73,5 +73,11 @@ namespace Cpu.Flags
             this.IsNegative = bits[6];
         }
         #endregion
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"N:{this.IsNegative.AsBin()};Z:{this.IsZero.AsBin()};C:{this.IsCarry.AsBin()};I:{this.IsInterruptDisable.AsBin()};D:{this.IsDecimalMode.AsBin()};V:{this.IsOverflow.AsBin()}";
+        }
     }
 }

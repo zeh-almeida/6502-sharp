@@ -136,6 +136,24 @@ namespace Test.Unit.Cpu.Registers
             _ = Assert.Throws<ArgumentNullException>(() => this.Subject.Load(null));
         }
 
+        [Fact]
+        public void ToString_Executes()
+        {
+            var expected = new byte[]
+            {
+                0x10,
+                0x10,
+                0x10,
+                0x10,
+                0x10,
+                0x10,
+            };
+
+            this.Subject.Load(expected);
+
+            Assert.Equal("PC:0x1010;SP:0x10;A:0x10;X:0x10;Y:0x10", this.Subject.ToString());
+        }
+
         [Theory]
         [InlineData(6 + 1)]
         [InlineData(6 - 1)]

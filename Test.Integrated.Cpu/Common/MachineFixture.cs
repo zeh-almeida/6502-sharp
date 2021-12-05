@@ -5,14 +5,16 @@ using Cpu.Instructions;
 using Cpu.Memory;
 using Cpu.Registers;
 using Cpu.States;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Test.Integrated.Cpu.Files;
 
 namespace Test.Integrated.Cpu.Common
 {
-    public sealed record MachineFixture
+    public sealed record MachineFixture : IDisposable, IAsyncDisposable
     {
         #region Constants
         public const ushort MemoryStateOffset = 7;
@@ -24,23 +26,31 @@ namespace Test.Integrated.Cpu.Common
 
         #region Properties
         public Machine Subject { get; }
+
+        private ILoggerFactory LogFactory { get; }
+
+        private bool IsDisposed { get; set; }
         #endregion
 
         #region Constructors
         public MachineFixture()
         {
+            this.LogFactory = BuildLogFactory();
             var instructions = LoadInstructions();
+
+            var machineLogger = this.LogFactory.CreateLogger<Machine>();
+            var memoryLogger = this.LogFactory.CreateLogger<MemoryManager>();
 
             var flagManager = new FlagManager();
             var registerManager = new RegisterManager();
 
-            var memoryManager = new MemoryManager(registerManager);
+            var memoryManager = new MemoryManager(memoryLogger, registerManager);
             var stackManager = new StackManager(memoryManager, registerManager);
 
             var state = new CpuState(flagManager, stackManager, memoryManager, registerManager);
             var decoder = new Decoder(instructions);
 
-            this.Subject = new Machine(state, decoder);
+            this.Subject = new Machine(machineLogger, state, decoder);
         }
         #endregion
 
@@ -94,7 +104,23 @@ namespace Test.Integrated.Cpu.Common
             return this.Compute(program, cycleAction);
         }
 
-        public static IEnumerable<byte> BuildProgramStream(string programName)
+        public void Dispose()
+        {
+            if (!this.IsDisposed)
+            {
+                this.IsDisposed = true;
+                GC.SuppressFinalize(this);
+
+                this.LogFactory.Dispose();
+            }
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            return new ValueTask(Task.Run(() => this.Dispose()));
+        }
+
+        private static IEnumerable<byte> BuildProgramStream(string programName)
         {
             var state = new byte[MachineFixture.LoadDataLength];
 
@@ -107,7 +133,7 @@ namespace Test.Integrated.Cpu.Common
             return state;
         }
 
-        public static IEnumerable<byte> BuildProgramStream(string programName, ushort offset)
+        private static IEnumerable<byte> BuildProgramStream(string programName, ushort offset)
         {
             var state = new byte[MachineFixture.LoadDataLength];
 
@@ -133,6 +159,26 @@ namespace Test.Integrated.Cpu.Common
                                       && !t.IsAbstract)
                 .Select(t => Activator.CreateInstance(t) as IInstruction)
                 .ToArray();
+        }
+
+        private static ILoggerFactory BuildLogFactory()
+        {
+            return LoggerFactory.Create(builder =>
+            {
+                _ = builder
+                    .AddFilter("Microsoft", LogLevel.Warning)
+                    .AddFilter("System", LogLevel.Warning)
+                    .AddFilter("Cpu", LogLevel.Debug);
+
+                _ = builder.AddSimpleConsole(options =>
+                  {
+                      options.SingleLine = true;
+                      options.IncludeScopes = true;
+                      options.UseUtcTimestamp = true;
+
+                      options.TimestampFormat = "yyyy-MM-dd HH:mm:ss ";
+                  });
+            });
         }
     }
 }
