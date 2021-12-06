@@ -1,14 +1,9 @@
-﻿/.vs/6502-sharp
+﻿/.vs
 /coveragereport
-/Cpu/bin
-/Cpu/obj
-/Test.Integrated.Cpu/bin
-/Test.Integrated.Cpu/obj
 /Test.Integrated.Cpu/coverage.cobertura.xml
-/Test.Unit.Cpu/obj
 /Test.Unit.Cpu/coverage.cobertura.xml
-/Test.Unit.Cpu/bin
-/Documentation.Cpu/obj/Debug
 /Documentation.Cpu/Help
 /documentation
 /**/TestResults
+/**/bin
+/**/obj
