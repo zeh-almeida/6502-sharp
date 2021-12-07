@@ -27,6 +27,9 @@ namespace Cpu.States
         public bool IsSoftwareInterrupt { get; set; }
 
         /// <inheritdoc/>
+        public DecodedInstruction DecodedInstruction { get; private set; }
+
+        /// <inheritdoc/>
         public IRegisterManager Registers { get; }
 
         /// <inheritdoc/>
@@ -94,6 +97,14 @@ namespace Cpu.States
             this.Flags.Load(dataArr[0]);
             this.Registers.Load(registerState);
             this.Memory.Load(memoryState);
+
+            this.CyclesLeft = 0;
+            this.ExecutingOpcode = 0;
+
+            this.IsHardwareInterrupt = false;
+            this.IsSoftwareInterrupt = false;
+
+            this.DecodedInstruction = null;
         }
         #endregion
 
@@ -120,6 +131,8 @@ namespace Cpu.States
         /// <inheritdoc/>
         public void SetExecutingInstruction(DecodedInstruction decoded)
         {
+            this.DecodedInstruction = decoded;
+
             this.ExecutingOpcode = decoded.Opcode;
             this.CyclesLeft += decoded.Cycles;
 

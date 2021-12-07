@@ -40,6 +40,11 @@ namespace Cpu.States
         bool IsSoftwareInterrupt { get; set; }
 
         /// <summary>
+        /// Last decoded instruction
+        /// </summary>
+        DecodedInstruction DecodedInstruction { get; }
+
+        /// <summary>
         /// Manipulates the CPU registers
         /// </summary>
         /// <see cref="IRegisterManager"/>

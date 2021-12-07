@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support", "Support", "{DCAE
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "Documentation.Cpu", "Documentation.Cpu\Documentation.Cpu.shfbproj", "{E5E13546-F94E-4989-AB5B-A20F12EA2A18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cpu.Forms", "Cpu.Form\Cpu.Forms.csproj", "{D38AB876-2774-4739-ABD2-C039060D407F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cpu.DependencyInjection", "Cpu.DependencyInjection\Cpu.DependencyInjection.csproj", "{1221758B-27AF-46C9-B127-5915E4D2460F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{E5E13546-F94E-4989-AB5B-A20F12EA2A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5E13546-F94E-4989-AB5B-A20F12EA2A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5E13546-F94E-4989-AB5B-A20F12EA2A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38AB876-2774-4739-ABD2-C039060D407F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38AB876-2774-4739-ABD2-C039060D407F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38AB876-2774-4739-ABD2-C039060D407F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38AB876-2774-4739-ABD2-C039060D407F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1221758B-27AF-46C9-B127-5915E4D2460F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1221758B-27AF-46C9-B127-5915E4D2460F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1221758B-27AF-46C9-B127-5915E4D2460F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1221758B-27AF-46C9-B127-5915E4D2460F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

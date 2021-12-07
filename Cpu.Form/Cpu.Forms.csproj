@@ -1,8 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
-		<OutputType>Library</OutputType>
-		<TargetFramework>net6</TargetFramework>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -10,19 +13,16 @@
 		<owners>Zeh</owners>
 		<Authors>Zeh</Authors>
 		<NeutralLanguage>en-US</NeutralLanguage>
-		<description>6502 CPU Emulator</description>
+		<description>6502 CPU Emulator View</description>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Update="Cpu.xml">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-	</ItemGroup>
-	
 	<ItemGroup>
 		<PackageReference Include="Roslynator.Analyzers" Version="3.3.0">
 			<PrivateAssets>all</PrivateAssets>
@@ -40,5 +40,10 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Cpu.DependencyInjection\Cpu.DependencyInjection.csproj" />
+		<ProjectReference Include="..\Cpu\Cpu.csproj" />
 	</ItemGroup>
 </Project>
