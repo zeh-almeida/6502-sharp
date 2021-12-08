@@ -33,6 +33,11 @@ namespace Cpu.Forms
             this.UpdateState();
             this.UpdateFlags();
             this.UpdateRegisters();
+
+            if (!this.Machine.State.IsHardwareInterrupt)
+            {
+                this.triggerInterruptButton.Enabled = true;
+            }
         }
 
         private void UpdateFlags()
@@ -231,6 +236,14 @@ namespace Cpu.Forms
                 await this.LoadProgram()
                     .ConfigureAwait(false);
             }
+        }
+
+        private void TriggerInterruptButton_Click(object sender, EventArgs e)
+        {
+            this.Machine.State.IsHardwareInterrupt = true;
+
+            this.UpdateControls();
+            this.triggerInterruptButton.Enabled = false;
         }
         #endregion
 

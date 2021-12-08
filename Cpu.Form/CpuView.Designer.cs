@@ -64,6 +64,7 @@
             this.executionContent = new System.Windows.Forms.TextBox();
             this.instructionButton = new System.Windows.Forms.Button();
             this.clockButton = new System.Windows.Forms.Button();
+            this.triggerInterruptButton = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.flagGroup.SuspendLayout();
             this.registerGroup.SuspendLayout();
@@ -312,6 +313,7 @@
             // 
             // stateGroup
             // 
+            this.stateGroup.Controls.Add(this.triggerInterruptButton);
             this.stateGroup.Controls.Add(this.softwareInterruptFlag);
             this.stateGroup.Controls.Add(this.hardwareInterruptFlag);
             this.stateGroup.Controls.Add(this.opcodeInput);
@@ -435,6 +437,16 @@
             this.clockButton.UseVisualStyleBackColor = true;
             this.clockButton.Click += new System.EventHandler(this.ClockButton_Click);
             // 
+            // triggerInterruptButton
+            // 
+            this.triggerInterruptButton.Location = new System.Drawing.Point(6, 122);
+            this.triggerInterruptButton.Name = "triggerInterruptButton";
+            this.triggerInterruptButton.Size = new System.Drawing.Size(130, 23);
+            this.triggerInterruptButton.TabIndex = 6;
+            this.triggerInterruptButton.Text = "Trigger HW Interrupt";
+            this.triggerInterruptButton.UseVisualStyleBackColor = true;
+            this.triggerInterruptButton.Click += new System.EventHandler(this.TriggerInterruptButton_Click);
+            // 
             // CpuView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -503,5 +515,6 @@
         private Button resetButton;
         private ToolStripMenuItem saveStateToolStripMenuItem;
         private ToolStripMenuItem loadStateToolStripMenuItem;
+        private Button triggerInterruptButton;
     }
 }

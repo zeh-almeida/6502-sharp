@@ -2,7 +2,7 @@
 
 namespace Cpu.Forms.Serialization
 {
-    internal static record Serializer
+    internal static class Serializer
     {
         #region Constants
         private const ushort MemoryStateOffset = 7;
