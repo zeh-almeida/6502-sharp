@@ -446,6 +446,8 @@
             this.Controls.Add(this.flagGroup);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
+            this.MaximumSize = new System.Drawing.Size(816, 461);
+            this.MinimumSize = new System.Drawing.Size(816, 461);
             this.Name = "CpuView";
             this.Text = "6502 Emulator";
             this.menuStrip.ResumeLayout(false);

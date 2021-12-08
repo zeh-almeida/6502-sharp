@@ -1,5 +1,6 @@
 using Cpu.Execution;
 using Cpu.Extensions;
+using Cpu.Forms.Serialization;
 using Microsoft.Extensions.Logging;
 
 namespace Cpu.Forms
@@ -133,7 +134,7 @@ namespace Cpu.Forms
             {
                 try
                 {
-                    await this.SaveState(programDialog.SelectedPath)
+                    await Serializer.SaveState(this.CurrentProgram, this.Machine, programDialog.SelectedPath)
                         .ConfigureAwait(false);
 
                     _ = MessageBox.Show(
@@ -169,10 +170,13 @@ namespace Cpu.Forms
             {
                 try
                 {
-                    await ProgramLoader.LoadState(this.Machine, programDialog.FileName)
+                    var state = await Serializer.LoadState(programDialog.FileName)
                         .ConfigureAwait(false);
 
-                    this.EnableProgramExecution();
+                    this.CurrentProgram = state.ProgramPath;
+                    this.Machine.Load(state.State);
+
+                    this.Invoke(() => this.EnableProgramExecution());
 
                     _ = MessageBox.Show(
                         $"Loaded state from '{programDialog.FileName}'",
@@ -241,7 +245,7 @@ namespace Cpu.Forms
 
         private async Task LoadProgram()
         {
-            await ProgramLoader.LoadProgram(this.Machine, this.CurrentProgram);
+            await Serializer.LoadProgram(this.Machine, this.CurrentProgram);
             this.EnableProgramExecution();
 
             _ = MessageBox.Show(
@@ -262,14 +266,6 @@ namespace Cpu.Forms
             this.instructionButton.Enabled = true;
 
             this.saveStateToolStripMenuItem.Enabled = true;
-        }
-
-        private Task SaveState(string destinationPath)
-        {
-            var fileName = $"{destinationPath}/{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_6502.state";
-
-            var machineState = this.Machine.Save();
-            return File.WriteAllBytesAsync(fileName, machineState.ToArray());
         }
     }
 }
