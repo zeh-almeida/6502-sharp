@@ -171,6 +171,9 @@ namespace Test.Unit.Cpu.States
             memoryState[0] = 0b_0100_0000;
 
             var expected = new byte[ICpuState.Length];
+            expected[0] = 0x10;
+            expected[1] = 0x12;
+
             expected[2] = 0b_0101_0101;
             expected[3] = 0b_0000_0001;
             expected[4] = 0b_0000_0010;
@@ -185,6 +188,9 @@ namespace Test.Unit.Cpu.States
             this.FlagMock.Verify(mock => mock.Load(flagState), Times.Exactly(1));
             this.RegisterMock.Verify(mock => mock.Load(registerState), Times.Exactly(1));
             this.MemoryMock.Verify(mock => mock.Load(memoryState), Times.Exactly(1));
+
+            Assert.Equal(0x10, this.Subject.CyclesLeft);
+            Assert.Equal(0x12, this.Subject.ExecutingOpcode);
         }
 
         [Fact]
