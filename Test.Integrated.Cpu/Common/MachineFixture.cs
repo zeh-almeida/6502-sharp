@@ -16,14 +16,6 @@ namespace Test.Integrated.Cpu.Common
 {
     public sealed record MachineFixture : IDisposable, IAsyncDisposable
     {
-        #region Constants
-        public const ushort MemoryStateOffset = 7;
-
-        public const ushort RegisterOffset = 1;
-
-        public const int LoadDataLength = ushort.MaxValue + 1 + MemoryStateOffset;
-        #endregion
-
         #region Properties
         public Machine Subject { get; }
 
@@ -122,27 +114,27 @@ namespace Test.Integrated.Cpu.Common
 
         private static IEnumerable<byte> BuildProgramStream(string programName)
         {
-            var state = new byte[MachineFixture.LoadDataLength];
+            var state = new byte[ICpuState.Length];
 
             var program = Resources.ResourceManager.GetObject(programName) as byte[];
-            program.CopyTo(state, MachineFixture.MemoryStateOffset);
+            program.CopyTo(state, ICpuState.MemoryStateOffset);
 
-            state[MachineFixture.MemoryStateOffset + 0xFFFE] = 0xFF;
-            state[MachineFixture.MemoryStateOffset + 0xFFFF] = 0xFF;
+            state[ICpuState.MemoryStateOffset + 0xFFFE] = 0xFF;
+            state[ICpuState.MemoryStateOffset + 0xFFFF] = 0xFF;
 
             return state;
         }
 
         private static IEnumerable<byte> BuildProgramStream(string programName, ushort offset)
         {
-            var state = new byte[MachineFixture.LoadDataLength];
+            var state = new byte[ICpuState.Length];
 
             (var programLsb, var programMsb) = offset.SignificantBits();
-            state[MachineFixture.RegisterOffset + 0] = programLsb;
-            state[MachineFixture.RegisterOffset + 1] = programMsb;
+            state[ICpuState.RegisterOffset + 0] = programLsb;
+            state[ICpuState.RegisterOffset + 1] = programMsb;
 
             var program = Resources.ResourceManager.GetObject(programName) as byte[];
-            program.CopyTo(state, MachineFixture.MemoryStateOffset + offset);
+            program.CopyTo(state, ICpuState.MemoryStateOffset + offset);
 
             return state;
         }

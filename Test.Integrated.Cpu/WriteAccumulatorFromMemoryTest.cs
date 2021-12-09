@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cpu.States;
+using System.Collections.Generic;
 using Test.Integrated.Cpu.Common;
 using Xunit;
 
@@ -29,8 +30,8 @@ namespace Test.Integrated.Cpu
             const byte fourthValue = 0x02;
             const byte fifthValue = 0x00;
 
-            const ushort yLocation = 5 + MachineFixture.RegisterOffset;
-            const ushort accLocation = 3 + MachineFixture.RegisterOffset;
+            const ushort yLocation = 5 + ICpuState.RegisterOffset;
+            const ushort accLocation = 3 + ICpuState.RegisterOffset;
 
             var opcodeCount = 0;
 
@@ -73,33 +74,33 @@ namespace Test.Integrated.Cpu
 
         private static IEnumerable<byte> BuildProgramStream()
         {
-            var state = new byte[MachineFixture.LoadDataLength];
+            var state = new byte[ICpuState.Length];
 
-            state[0x0000 + MachineFixture.RegisterOffset] = 0b_0000_0000;
-            state[0x0001 + MachineFixture.RegisterOffset] = 0b_0000_0110;
+            state[0x0000 + ICpuState.RegisterOffset] = 0b_0000_0000;
+            state[0x0001 + ICpuState.RegisterOffset] = 0b_0000_0110;
 
-            state[0x0600 + MachineFixture.MemoryStateOffset] = 0xA0;
-            state[0x0601 + MachineFixture.MemoryStateOffset] = 0x00;
-            state[0x0602 + MachineFixture.MemoryStateOffset] = 0xB9;
-            state[0x0603 + MachineFixture.MemoryStateOffset] = 0x0E;
-            state[0x0604 + MachineFixture.MemoryStateOffset] = 0x06;
-            state[0x0605 + MachineFixture.MemoryStateOffset] = 0xF0;
-            state[0x0606 + MachineFixture.MemoryStateOffset] = 0x06;
-            state[0x0607 + MachineFixture.MemoryStateOffset] = 0x99;
-            state[0x0608 + MachineFixture.MemoryStateOffset] = 0x00;
-            state[0x0609 + MachineFixture.MemoryStateOffset] = 0xF0;
-            state[0x060A + MachineFixture.MemoryStateOffset] = 0xC8;
-            state[0x060B + MachineFixture.MemoryStateOffset] = 0xD0;
-            state[0x060C + MachineFixture.MemoryStateOffset] = 0xF5;
-            state[0x060D + MachineFixture.MemoryStateOffset] = 0x00;
-            state[0x060E + MachineFixture.MemoryStateOffset] = 0x06;
-            state[0x060F + MachineFixture.MemoryStateOffset] = 0x05;
-            state[0x0610 + MachineFixture.MemoryStateOffset] = 0x01;
-            state[0x0611 + MachineFixture.MemoryStateOffset] = 0x02;
-            state[0x0612 + MachineFixture.MemoryStateOffset] = 0x00;
+            state[0x0600 + ICpuState.MemoryStateOffset] = 0xA0;
+            state[0x0601 + ICpuState.MemoryStateOffset] = 0x00;
+            state[0x0602 + ICpuState.MemoryStateOffset] = 0xB9;
+            state[0x0603 + ICpuState.MemoryStateOffset] = 0x0E;
+            state[0x0604 + ICpuState.MemoryStateOffset] = 0x06;
+            state[0x0605 + ICpuState.MemoryStateOffset] = 0xF0;
+            state[0x0606 + ICpuState.MemoryStateOffset] = 0x06;
+            state[0x0607 + ICpuState.MemoryStateOffset] = 0x99;
+            state[0x0608 + ICpuState.MemoryStateOffset] = 0x00;
+            state[0x0609 + ICpuState.MemoryStateOffset] = 0xF0;
+            state[0x060A + ICpuState.MemoryStateOffset] = 0xC8;
+            state[0x060B + ICpuState.MemoryStateOffset] = 0xD0;
+            state[0x060C + ICpuState.MemoryStateOffset] = 0xF5;
+            state[0x060D + ICpuState.MemoryStateOffset] = 0x00;
+            state[0x060E + ICpuState.MemoryStateOffset] = 0x06;
+            state[0x060F + ICpuState.MemoryStateOffset] = 0x05;
+            state[0x0610 + ICpuState.MemoryStateOffset] = 0x01;
+            state[0x0611 + ICpuState.MemoryStateOffset] = 0x02;
+            state[0x0612 + ICpuState.MemoryStateOffset] = 0x00;
 
-            state[0xFFFE + MachineFixture.MemoryStateOffset] = 0xFF;
-            state[0xFFFF + MachineFixture.MemoryStateOffset] = 0xFF;
+            state[0xFFFE + ICpuState.MemoryStateOffset] = 0xFF;
+            state[0xFFFF + ICpuState.MemoryStateOffset] = 0xFF;
 
             return state;
         }

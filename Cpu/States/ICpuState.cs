@@ -13,9 +13,24 @@ namespace Cpu.States
     {
         #region Constants
         /// <summary>
+        /// Offset for the memory location in state
+        /// </summary>
+        public const ushort MemoryStateOffset = 9;
+
+        /// <summary>
+        /// Offset for the register location in state
+        /// </summary>
+        public const ushort RegisterOffset = 3;
+
+        /// <summary>
+        /// Offset for the flags location in state
+        /// </summary>
+        public const ushort FlagOffset = 2;
+
+        /// <summary>
         /// CPU State size when serialized
         /// </summary>
-        public const int Length = ushort.MaxValue + 1 + 7;
+        public const int Length = ushort.MaxValue + MemoryStateOffset + 1;
         #endregion
 
         #region Properties

@@ -1,4 +1,5 @@
-﻿using Test.Integrated.Cpu.Common;
+﻿using Cpu.States;
+using Test.Integrated.Cpu.Common;
 using Xunit;
 
 namespace Test.Integrated.Cpu
@@ -20,11 +21,11 @@ namespace Test.Integrated.Cpu
         [InlineData("software_interrupt")]
         public void Computes(string programName)
         {
-            const ushort xLocation = 4 + MachineFixture.RegisterOffset;
-            const ushort yLocation = 5 + MachineFixture.RegisterOffset;
+            const ushort xLocation = 4 + ICpuState.RegisterOffset;
+            const ushort yLocation = 5 + ICpuState.RegisterOffset;
 
-            const ushort xMemoryLocation = 0x0400 + MachineFixture.MemoryStateOffset;
-            const ushort yMemoryLocation = 0x0401 + MachineFixture.MemoryStateOffset;
+            const ushort xMemoryLocation = 0x0400 + ICpuState.MemoryStateOffset;
+            const ushort yMemoryLocation = 0x0401 + ICpuState.MemoryStateOffset;
 
             var opcodes = 0;
 

@@ -126,15 +126,15 @@ namespace Test.Unit.Cpu.States
             var memoryState = new byte[ushort.MaxValue];
             memoryState[0] = 0b_0100_0000;
 
-            var expected = new byte[ushort.MaxValue + 7];
-            expected[0] = 0b_0101_0101;
-            expected[1] = 0b_0000_0001;
-            expected[2] = 0b_0000_0010;
-            expected[3] = 0b_0000_0100;
-            expected[4] = 0b_0000_1000;
-            expected[5] = 0b_0001_0000;
-            expected[6] = 0b_0010_0000;
-            expected[7] = 0b_0100_0000;
+            var expected = new byte[ushort.MaxValue + 9];
+            expected[2] = 0b_0101_0101;
+            expected[3] = 0b_0000_0001;
+            expected[4] = 0b_0000_0010;
+            expected[5] = 0b_0000_0100;
+            expected[6] = 0b_0000_1000;
+            expected[7] = 0b_0001_0000;
+            expected[8] = 0b_0010_0000;
+            expected[9] = 0b_0100_0000;
 
             _ = this.FlagMock
                 .Setup(mock => mock.Save())
@@ -170,15 +170,15 @@ namespace Test.Unit.Cpu.States
             var memoryState = new byte[ushort.MaxValue + 1];
             memoryState[0] = 0b_0100_0000;
 
-            var expected = new byte[ushort.MaxValue + 8];
-            expected[0] = 0b_0101_0101;
-            expected[1] = 0b_0000_0001;
-            expected[2] = 0b_0000_0010;
-            expected[3] = 0b_0000_0100;
-            expected[4] = 0b_0000_1000;
-            expected[5] = 0b_0001_0000;
-            expected[6] = 0b_0010_0000;
-            expected[7] = 0b_0100_0000;
+            var expected = new byte[ICpuState.Length];
+            expected[2] = 0b_0101_0101;
+            expected[3] = 0b_0000_0001;
+            expected[4] = 0b_0000_0010;
+            expected[5] = 0b_0000_0100;
+            expected[6] = 0b_0000_1000;
+            expected[7] = 0b_0001_0000;
+            expected[8] = 0b_0010_0000;
+            expected[9] = 0b_0100_0000;
 
             this.Subject.Load(expected);
 
@@ -194,8 +194,8 @@ namespace Test.Unit.Cpu.States
         }
 
         [Theory]
-        [InlineData(ushort.MaxValue + 8 + 1)]
-        [InlineData(ushort.MaxValue + 8 - 1)]
+        [InlineData(ICpuState.Length + 1)]
+        [InlineData(ICpuState.Length - 1)]
         public void Load_WrongLength_Throws(int length)
         {
             var memory = new byte[length];

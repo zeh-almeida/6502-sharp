@@ -69,9 +69,20 @@ namespace Cpu.States
         {
             var registerState = this.Registers.Save();
             var memoryState = this.Memory.Save();
-            var flagState = new byte[] { this.Flags.Save() };
 
-            return flagState
+            var flagState = new byte[]
+            {
+                this.Flags.Save()
+            };
+
+            var currentState = new byte[]
+            {
+                (byte)this.CyclesLeft,
+                this.ExecutingOpcode,
+            };
+
+            return currentState
+                .Concat(flagState)
                 .Concat(registerState)
                 .Concat(memoryState)
                 .ToArray();
@@ -85,21 +96,34 @@ namespace Cpu.States
                 throw new ArgumentNullException(nameof(data));
             }
 
-            if (!ICpuState.Length.Equals(data.Count()))
+            var dataLength = data.Count();
+
+            if (!ICpuState.Length.Equals(dataLength))
             {
-                throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {ICpuState.Length}");
+                throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {ICpuState.Length}, was {dataLength}");
             }
 
             var dataArr = data.ToArray();
-            var registerState = data.Skip(1).Take(6).ToArray();
-            var memoryState = data.Skip(7).ToArray();
 
-            this.Flags.Load(dataArr[0]);
-            this.Registers.Load(registerState);
+            var registerState = data
+                .Skip(ICpuState.RegisterOffset)
+                .Take(6)
+                .ToArray();
+
+            var flagState = data
+                .Skip(ICpuState.FlagOffset)
+                .FirstOrDefault();
+
+            var memoryState = data
+                .Skip(ICpuState.MemoryStateOffset)
+                .ToArray();
+
+            this.Flags.Load(flagState);
             this.Memory.Load(memoryState);
+            this.Registers.Load(registerState);
 
-            this.CyclesLeft = 0;
-            this.ExecutingOpcode = 0;
+            this.CyclesLeft = dataArr[0];
+            this.ExecutingOpcode = dataArr[1];
 
             this.IsHardwareInterrupt = false;
             this.IsSoftwareInterrupt = false;
