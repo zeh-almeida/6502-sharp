@@ -22,6 +22,7 @@ namespace Cpu.Forms
         {
             this.Logger = logger;
             this.Machine = machine;
+            this.CurrentProgram = string.Empty;
 
             this.InitializeComponent();
         }

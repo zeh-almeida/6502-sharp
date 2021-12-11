@@ -7,5 +7,13 @@
 
         public IEnumerable<byte> State { get; set; }
         #endregion
+
+        #region Constructors
+        public EmulatorState()
+        {
+            this.ProgramPath = string.Empty;
+            this.State = Array.Empty<byte>();
+        }
+        #endregion
     }
 }

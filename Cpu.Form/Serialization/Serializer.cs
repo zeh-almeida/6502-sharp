@@ -1,26 +1,21 @@
 ﻿using Cpu.Execution;
+using Cpu.States;
 
 namespace Cpu.Forms.Serialization
 {
     internal static class Serializer
     {
-        #region Constants
-        private const ushort MemoryStateOffset = 7;
-
-        private const int LoadDataLength = ushort.MaxValue + 1 + MemoryStateOffset;
-        #endregion
-
         public static async Task LoadProgram(IMachine machine, string programPath, CancellationToken token = default)
         {
-            var state = new byte[Serializer.LoadDataLength];
+            var state = new byte[ICpuState.Length];
 
             var program = await LoadFile(programPath, token)
                 .ConfigureAwait(false);
 
-            program.CopyTo(state, Serializer.MemoryStateOffset);
+            program.CopyTo(state, ICpuState.MemoryStateOffset);
 
-            state[Serializer.MemoryStateOffset + 0xFFFE] = 0xFF;
-            state[Serializer.MemoryStateOffset + 0xFFFF] = 0xFF;
+            state[ICpuState.MemoryStateOffset + 0xFFFE] = 0xFF;
+            state[ICpuState.MemoryStateOffset + 0xFFFF] = 0xFF;
 
             machine.Load(state);
         }
@@ -33,7 +28,7 @@ namespace Cpu.Forms.Serialization
                 using var reader = new BinaryReader(stream);
 
                 var programName = reader.ReadString();
-                var state = reader.ReadBytes(LoadDataLength);
+                var state = reader.ReadBytes(ICpuState.Length);
 
                 return new EmulatorState
                 {
