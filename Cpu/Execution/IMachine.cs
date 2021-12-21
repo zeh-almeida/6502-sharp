@@ -1,6 +1,4 @@
 ﻿using Cpu.States;
-using System;
-using System.Collections.Generic;
 
 namespace Cpu.Execution
 {

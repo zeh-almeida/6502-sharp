@@ -5,7 +5,6 @@ using Cpu.Memory;
 using Cpu.Registers;
 using Cpu.States;
 using Moq;
-using System;
 using Xunit;
 
 namespace Test.Unit.Cpu.States

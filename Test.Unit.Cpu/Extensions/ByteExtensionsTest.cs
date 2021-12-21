@@ -1,7 +1,5 @@
 ﻿using Cpu.Extensions;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Test.Unit.Cpu.Extensions

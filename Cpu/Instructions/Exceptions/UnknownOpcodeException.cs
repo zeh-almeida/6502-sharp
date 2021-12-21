@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using System;
 
 namespace Cpu.Instructions.Exceptions
 {

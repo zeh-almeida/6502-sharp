@@ -1,5 +1,4 @@
 ﻿using Cpu.Registers;
-using System;
 using Xunit;
 
 namespace Test.Unit.Cpu.Registers

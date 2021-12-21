@@ -6,7 +6,6 @@ using Cpu.Instructions.JumpToSubroutines;
 using Cpu.Instructions.StatusChanges;
 using Cpu.States;
 using Moq;
-using System;
 using Test.Unit.Cpu.Utils;
 using Xunit;
 

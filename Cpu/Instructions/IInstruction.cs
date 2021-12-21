@@ -1,7 +1,5 @@
 ﻿using Cpu.Opcodes;
 using Cpu.States;
-using System;
-using System.Collections.Generic;
 
 namespace Cpu.Instructions
 {

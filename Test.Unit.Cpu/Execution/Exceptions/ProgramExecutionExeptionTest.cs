@@ -1,5 +1,4 @@
 ﻿using Cpu.Execution.Exceptions;
-using System;
 using Xunit;
 
 namespace Test.Unit.Cpu.Execution.Exceptions

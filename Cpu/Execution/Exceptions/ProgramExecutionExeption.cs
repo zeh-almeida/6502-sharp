@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cpu.Execution.Exceptions
+﻿namespace Cpu.Execution.Exceptions
 {
     /// <summary>
     /// Represents errors that occur during a program execution.

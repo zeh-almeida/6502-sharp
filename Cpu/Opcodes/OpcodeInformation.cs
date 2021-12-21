@@ -1,5 +1,4 @@
 ﻿using Cpu.Instructions;
-using System;
 
 namespace Cpu.Opcodes
 {

@@ -2,8 +2,6 @@
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cpu.Instructions
 {

@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using System;
 using System.Collections;
 using Xunit;
 
@@ -10,8 +9,11 @@ namespace Test.Unit.Cpu.Extensions
         [Fact]
         public void AsEightBit_Null_Throws()
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8604 // Possible null reference argument.
             BitArray target = null;
             _ = Assert.Throws<ArgumentNullException>(() => target.AsEightBit());
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
         }
 
         [Theory]
@@ -34,8 +36,12 @@ namespace Test.Unit.Cpu.Extensions
         [Fact]
         public void AsSixteenBit_Null_Throws()
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8604 // Possible null reference argument.
             BitArray target = null;
             _ = Assert.Throws<ArgumentNullException>(() => target.AsSixteenBit());
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
         }
 
         [Theory]

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Cpu.Registers
+﻿namespace Cpu.Registers
 {
     /// <summary>
     /// Manipulates the CPU registers

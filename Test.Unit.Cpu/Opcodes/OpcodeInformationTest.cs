@@ -1,6 +1,5 @@
 ﻿using Cpu.Instructions.Logic;
 using Cpu.Opcodes;
-using System;
 using Xunit;
 
 namespace Test.Unit.Cpu.Opcodes

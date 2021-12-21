@@ -1,9 +1,6 @@
 ﻿using Cpu.Extensions;
 using Cpu.Registers;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cpu.Memory
 {

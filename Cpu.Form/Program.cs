@@ -22,9 +22,11 @@ namespace Cpu.Forms
 
         private static IServiceProvider BuildProvider()
         {
-            return CpuServiceCollection
-                .Load()
+            var collection = new ServiceCollection();
+
+            return collection
                 .AddLogging(b => b.AddSimpleConsole())
+                .Add6502Cpu()
                 .AddSingleton<CpuView>()
                 .BuildServiceProvider();
         }

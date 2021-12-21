@@ -3,7 +3,6 @@ using Cpu.Instructions.JumpToSubroutines;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
 using Test.Unit.Cpu.Utils;
 using Xunit;
 

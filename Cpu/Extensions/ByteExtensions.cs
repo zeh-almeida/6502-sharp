@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cpu.Extensions
+﻿namespace Cpu.Extensions
 {
     /// <summary>
     /// Additional functionality to the <see cref="byte"/> struct

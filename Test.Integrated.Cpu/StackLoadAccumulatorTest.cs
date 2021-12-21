@@ -1,5 +1,4 @@
 ﻿using Cpu.States;
-using System.Collections.Generic;
 using Test.Integrated.Cpu.Common;
 using Xunit;
 

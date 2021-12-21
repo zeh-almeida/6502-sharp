@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Cpu.Memory
+﻿namespace Cpu.Memory
 {
     /// <summary>
     /// Allows manipulation of the CPU Memory

@@ -2,9 +2,6 @@
 using Cpu.Flags;
 using Cpu.Memory;
 using Cpu.Registers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Cpu.States
 {

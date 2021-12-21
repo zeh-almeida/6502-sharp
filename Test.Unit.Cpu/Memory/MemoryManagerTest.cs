@@ -2,7 +2,6 @@
 using Cpu.Registers;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
 using Xunit;
 
 namespace Test.Unit.Cpu.Memory

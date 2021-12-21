@@ -8,25 +8,32 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cpu.DependencyInjection
 {
+    /// <summary>
+    /// Extends <see cref="IServiceCollection"/> to add CPU dependency injection mechanisms
+    /// </summary>
     public static class CpuServiceCollection
     {
         #region Constants
         private static Type InstructionType { get; } = typeof(IInstruction);
         #endregion
 
-        public static IServiceCollection Load()
+        /// <summary>
+        /// Registers all necessary components for the CPU
+        /// </summary>
+        /// <param name="collection"><see cref="IServiceCollection"/>`to register to</param>
+        /// <returns>Populated registry</returns>
+        public static IServiceCollection Add6502Cpu(this IServiceCollection collection)
         {
-            var collection = new ServiceCollection();
             var instructions = LoadInstructionTypes();
 
             _ = collection
                 .AddScoped<IMachine, Machine>()
                 .AddScoped<IDecoder, Decoder>()
+                .AddScoped<ICpuState, CpuState>()
                 .AddScoped<IFlagManager, FlagManager>()
-                .AddScoped<IMemoryManager, MemoryManager>()
                 .AddScoped<IStackManager, StackManager>()
-                .AddScoped<IRegisterManager, RegisterManager>()
-                .AddScoped<ICpuState, CpuState>();
+                .AddScoped<IMemoryManager, MemoryManager>()
+                .AddScoped<IRegisterManager, RegisterManager>();
 
             foreach (var instruction in instructions)
             {

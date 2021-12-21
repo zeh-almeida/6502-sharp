@@ -3,9 +3,7 @@ using Cpu.Instructions;
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Cpu.Execution
 {
