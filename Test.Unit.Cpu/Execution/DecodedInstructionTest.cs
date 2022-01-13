@@ -63,10 +63,20 @@ namespace Test.Unit.Cpu.Execution
         [Fact]
         public void ToString_IsFormatted()
         {
-            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes);
+            var instructionMock = new Mock<IInstruction>();
+            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes)
+                .SetInstruction(instructionMock.Object);
+
             var subject = new DecodedInstruction(opcodeInfo, Value);
 
             Assert.Equal("0x01 (0x0001)", subject.ToString());
+        }
+
+        [Fact]
+        public void Instruction_Null_Throws()
+        {
+            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes);
+            _ = Assert.Throws<ArgumentNullException>(() => new DecodedInstruction(opcodeInfo, Value));
         }
     }
 }

@@ -43,6 +43,9 @@ public sealed record OpcodeInformationTest
     [Fact]
     public void Equals_Object_IsFalseForNonInstructions()
     {
+        OpcodeInformation? test = null;
+
+        Assert.False(this.Subject.Equals(test));
         Assert.False(this.Subject.Equals(1));
     }
 

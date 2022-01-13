@@ -183,11 +183,6 @@ namespace Cpu.Execution
 
         private void ExecuteDecoded(DecodedInstruction decoded)
         {
-            if (decoded.Instruction is null)
-            {
-                throw new ArgumentException("No decoded instruction", nameof(decoded));
-            }
-
             try
             {
                 this.State.SetExecutingInstruction(decoded);

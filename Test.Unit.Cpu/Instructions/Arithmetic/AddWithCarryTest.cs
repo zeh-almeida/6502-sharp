@@ -1,4 +1,5 @@
-﻿using Cpu.Instructions.Arithmetic;
+﻿using Cpu.Instructions;
+using Cpu.Instructions.Arithmetic;
 using Cpu.Instructions.Exceptions;
 using Cpu.States;
 using Moq;
@@ -57,6 +58,9 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         [Fact]
         public void Equals_Object_IsFalseForNonInstructions()
         {
+            IInstruction? test = null;
+
+            Assert.False(this.Subject.Equals(test));
             Assert.False(this.Subject.Equals(1));
         }
 

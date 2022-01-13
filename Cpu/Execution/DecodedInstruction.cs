@@ -37,7 +37,7 @@ namespace Cpu.Execution
         /// Decoded <see cref="IInstruction"/>
         /// </summary>
         /// <see cref="OpcodeInformation.Instruction"/>
-        public IInstruction? Instruction { get; }
+        public IInstruction Instruction { get; }
         #endregion
 
         #region Constructors
@@ -51,6 +51,11 @@ namespace Cpu.Execution
             ushort valueParameter)
         {
             this.ValueParameter = valueParameter;
+
+            if (opcodeInformation.Instruction is null)
+            {
+                throw new ArgumentNullException(nameof(opcodeInformation), "Instruction is null");
+            }
 
             this.Bytes = opcodeInformation.Bytes;
             this.Cycles = opcodeInformation.Cycles;
