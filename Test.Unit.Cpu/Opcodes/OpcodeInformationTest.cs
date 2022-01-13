@@ -2,83 +2,84 @@
 using Cpu.Opcodes;
 using Xunit;
 
-namespace Test.Unit.Cpu.Opcodes
+namespace Test.Unit.Cpu.Opcodes;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
+
+public sealed record OpcodeInformationTest
 {
-    public sealed record OpcodeInformationTest
+    #region Constants
+    private const byte Opcode = 0x01;
+
+    private const int Cycles = 1;
+
+    private const int Bytes = 2;
+    #endregion
+
+    #region Properties
+    private OpcodeInformation Subject { get; }
+    #endregion
+
+    #region Constructors
+    public OpcodeInformationTest()
     {
-        #region Constants
-        private const byte Opcode = 0x01;
+        this.Subject = new OpcodeInformation(Opcode, Cycles, Bytes)
+            .SetInstruction(new InclusiveOr());
+    }
+    #endregion
 
-        private const int Cycles = 1;
+    [Fact]
+    public void HashCode_Matches_True()
+    {
+        Assert.Equal(Opcode.GetHashCode(), this.Subject.GetHashCode());
+    }
 
-        private const int Bytes = 2;
-        #endregion
+    [Fact]
+    public void Equals_Object_IsTrueForInstruction()
+    {
+        Assert.True(this.Subject.Equals(this.Subject));
+        Assert.True(this.Subject.Equals(this.Subject as object));
+    }
 
-        #region Properties
-        private OpcodeInformation Subject { get; }
-        #endregion
+    [Fact]
+    public void Equals_Object_IsFalseForNonInstructions()
+    {
+        Assert.False(this.Subject.Equals(1));
+    }
 
-        #region Constructors
-        public OpcodeInformationTest()
-        {
-            this.Subject = new OpcodeInformation(Opcode, Cycles, Bytes)
-                .SetInstruction(new InclusiveOr());
-        }
-        #endregion
+    [Fact]
+    public void Opcode_Equals_Defined()
+    {
+        Assert.Equal(Opcode, this.Subject.Opcode);
+    }
 
-        [Fact]
-        public void HashCode_Matches_True()
-        {
-            Assert.Equal(Opcode.GetHashCode(), this.Subject.GetHashCode());
-        }
+    [Fact]
+    public void Cycles_Equals_Defined()
+    {
+        Assert.Equal(Cycles, this.Subject.Cycles);
+    }
 
-        [Fact]
-        public void Equals_Object_IsTrueForInstruction()
-        {
-            Assert.True(this.Subject.Equals(this.Subject));
-            Assert.True(this.Subject.Equals(this.Subject as object));
-        }
+    [Fact]
+    public void Bytes_Equals_Defined()
+    {
+        Assert.Equal(Bytes, this.Subject.Bytes);
+    }
 
-        [Fact]
-        public void Equals_Object_IsFalseForNonInstructions()
-        {
-            Assert.False(this.Subject.Equals(1));
-        }
+    [Fact]
+    public void Instruction_Is_Set()
+    {
+        Assert.NotNull(this.Subject.Instruction);
+    }
 
-        [Fact]
-        public void Opcode_Equals_Defined()
-        {
-            Assert.Equal(Opcode, this.Subject.Opcode);
-        }
+    [Fact]
+    public void Instruction_SetNull_Throws()
+    {
+        _ = Assert.Throws<ArgumentNullException>(() => this.Subject.SetInstruction(null));
+    }
 
-        [Fact]
-        public void Cycles_Equals_Defined()
-        {
-            Assert.Equal(Cycles, this.Subject.Cycles);
-        }
-
-        [Fact]
-        public void Bytes_Equals_Defined()
-        {
-            Assert.Equal(Bytes, this.Subject.Bytes);
-        }
-
-        [Fact]
-        public void Instruction_Is_Set()
-        {
-            Assert.NotNull(this.Subject.Instruction);
-        }
-
-        [Fact]
-        public void Instruction_SetNull_Throws()
-        {
-            _ = Assert.Throws<ArgumentNullException>(() => this.Subject.SetInstruction(null));
-        }
-
-        [Fact]
-        public void Instruction_AlreadySet_Throws()
-        {
-            _ = Assert.Throws<ArgumentException>(() => this.Subject.SetInstruction(new InclusiveOr()));
-        }
+    [Fact]
+    public void Instruction_AlreadySet_Throws()
+    {
+        _ = Assert.Throws<ArgumentException>(() => this.Subject.SetInstruction(new InclusiveOr()));
     }
 }
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.

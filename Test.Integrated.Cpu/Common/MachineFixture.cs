@@ -36,7 +36,7 @@ namespace Test.Integrated.Cpu.Common
             var stackManager = new StackManager(memoryManager, registerManager);
 
             var state = new CpuState(flagManager, stackManager, memoryManager, registerManager);
-            var decoder = new Decoder(instructions);
+            var decoder = new Decoder(instructions as IEnumerable<IInstruction>);
 
             this.Subject = new Machine(machineLogger, state, decoder);
         }

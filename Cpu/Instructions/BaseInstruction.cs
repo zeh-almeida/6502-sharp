@@ -2,7 +2,6 @@
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Cpu.Instructions
 {
