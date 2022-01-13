@@ -1,9 +1,8 @@
 ﻿/.vs
 /coveragereport
-/Test.Integrated.Cpu/coverage.cobertura.xml
-/Test.Unit.Cpu/coverage.cobertura.xml
 /Documentation.Cpu/Help
 /documentation
 /**/TestResults
 /**/bin
 /**/obj
+/**/coverage.cobertura.xml
