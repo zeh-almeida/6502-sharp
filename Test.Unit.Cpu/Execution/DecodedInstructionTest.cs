@@ -33,7 +33,7 @@ namespace Test.Unit.Cpu.Execution
 
             var subject = new DecodedInstruction(opcodeInfo, Value);
 
-            Assert.Equal(instruction.GetHashCode(), subject.Instruction.GetHashCode());
+            Assert.Equal(instruction.GetHashCode(), subject.Instruction?.GetHashCode());
         }
 
         [Fact]

@@ -37,7 +37,7 @@ namespace Cpu.Execution
         /// Decoded <see cref="IInstruction"/>
         /// </summary>
         /// <see cref="OpcodeInformation.Instruction"/>
-        public IInstruction Instruction { get; }
+        public IInstruction? Instruction { get; }
         #endregion
 
         #region Constructors

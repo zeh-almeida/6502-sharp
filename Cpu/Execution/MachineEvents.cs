@@ -36,5 +36,10 @@ namespace Cpu.Execution
         /// Signifies the current state of the registers
         /// </summary>
         public static EventId OnRegisters { get; } = new EventId(1500, "Register result");
+
+        /// <summary>
+        /// Signifies a clock execution
+        /// </summary>
+        public static EventId OnExecute { get; } = new EventId(1600, "Execution");
     }
 }

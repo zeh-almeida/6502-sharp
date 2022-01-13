@@ -2,7 +2,6 @@
 using Cpu.Extensions;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace Cpu.Execution
 {
@@ -158,7 +157,7 @@ namespace Cpu.Execution
             }
             catch (ProgramExecutionExeption ex)
             {
-                Debug.WriteLine(ex.InnerException.Message);
+                this.Logger.LogError(MachineEvents.OnExecute, ex, "Failed to clock");
                 result = false;
             }
 
@@ -184,9 +183,15 @@ namespace Cpu.Execution
 
         private void ExecuteDecoded(DecodedInstruction decoded)
         {
+            if (decoded.Instruction is null)
+            {
+                throw new ArgumentException("No decoded instruction", nameof(decoded));
+            }
+
             try
             {
                 this.State.SetExecutingInstruction(decoded);
+
                 decoded.Instruction.Execute(this.State, decoded.ValueParameter);
                 this.State.CountCycle();
 

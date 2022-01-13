@@ -2,6 +2,7 @@
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cpu.Instructions
 {
@@ -38,16 +39,17 @@ namespace Cpu.Instructions
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             return other is BaseInstruction instruction
                 && this.Equals(instruction);
         }
 
         /// <inheritdoc/>
-        public bool Equals(IInstruction other)
+        public bool Equals(IInstruction? other)
         {
-            return this.Opcodes.Equals(other.Opcodes);
+            return other is not null
+                && this.Opcodes.Equals(other.Opcodes);
         }
 
         /// <inheritdoc/>

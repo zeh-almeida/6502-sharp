@@ -27,7 +27,7 @@ namespace Cpu.Opcodes
         /// <summary>
         /// Instruction to be executed by the Opcode
         /// </summary>
-        public IInstruction Instruction { get; private set; }
+        public IInstruction? Instruction { get; private set; }
         #endregion
 
         #region Constructors
@@ -49,13 +49,14 @@ namespace Cpu.Opcodes
         #endregion
 
         /// <inheritdoc/>
-        public bool Equals(OpcodeInformation other)
+        public bool Equals(OpcodeInformation? other)
         {
-            return this.Opcode.Equals(other.Opcode);
+            return other is not null
+                && this.Opcode.Equals(other.Opcode);
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             return other is OpcodeInformation info
                 && this.Equals(info);

@@ -1,30 +1,31 @@
-﻿using Cpu.States;
+﻿using Cpu.Extensions;
+using Cpu.States;
 
 namespace NesApu;
 
-public sealed record Apu
+/// <summary>
+/// Implements <see cref="IApu"/> to handle audio processing
+/// </summary>
+public sealed record Apu : IApu
 {
-    #region Constants
-    private const ushort FrameCounterAddress = 4017;
-
-    private const byte SequencerByte = 0x80;
-
-    private const byte IrqByte = 0x40;
-    #endregion
-
     #region Variables
     private double _amplitude;
     #endregion
 
     #region Properties
+    /// <inheritdoc/>
     public SequencerMode SequencerMode { get; private set; }
 
+    /// <inheritdoc/>
     public bool IsIrqDisable { get; private set; }
 
+    /// <inheritdoc/>
     public bool IsFrameInterrupt { get; private set; }
 
+    /// <inheritdoc/>
     public int Cycles { get; private set; }
 
+    /// <inheritdoc/>
     public double Amplitude
     {
         get => this._amplitude;
@@ -42,12 +43,16 @@ public sealed record Apu
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Instantiates a new <see cref="Apu"/>
+    /// </summary>
     public Apu()
     {
         this.Amplitude = 0.05;
     }
     #endregion
 
+    /// <inheritdoc/>
     public void Cycle(ICpuState cpuState)
     {
         this.LoadFrameCounter(cpuState);
@@ -66,13 +71,13 @@ public sealed record Apu
 
     private void LoadFrameCounter(ICpuState cpuState)
     {
-        var value = cpuState.Memory.ReadAbsolute(FrameCounterAddress);
+        var value = cpuState.Memory.ReadAbsolute(IApu.FrameCounterAddress);
 
-        this.SequencerMode = (value & SequencerByte) > 0
+        this.SequencerMode = value.IsLastBitSet()
                            ? SequencerMode.FiveStep
                            : SequencerMode.FourStep;
 
-        this.IsIrqDisable = (value & IrqByte) > 0;
+        this.IsIrqDisable = value.IsBitSet(6);
 
         if (this.IsIrqDisable)
         {

@@ -56,7 +56,7 @@ namespace Cpu.States
         /// <summary>
         /// Last decoded instruction
         /// </summary>
-        DecodedInstruction DecodedInstruction { get; }
+        DecodedInstruction? DecodedInstruction { get; }
 
         /// <summary>
         /// Manipulates the CPU registers

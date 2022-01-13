@@ -112,7 +112,11 @@ namespace Test.Integrated.Cpu.Common
         {
             var state = new byte[ICpuState.Length];
 
-            var program = Resources.ResourceManager.GetObject(programName) as byte[];
+            if (Resources.ResourceManager.GetObject(programName) is not byte[] program)
+            {
+                throw new ArgumentException("Program not found", nameof(programName));
+            }
+
             program.CopyTo(state, ICpuState.MemoryStateOffset);
 
             state[ICpuState.MemoryStateOffset + 0xFFFE] = 0xFF;
@@ -129,13 +133,17 @@ namespace Test.Integrated.Cpu.Common
             state[ICpuState.RegisterOffset + 0] = programLsb;
             state[ICpuState.RegisterOffset + 1] = programMsb;
 
-            var program = Resources.ResourceManager.GetObject(programName) as byte[];
+            if (Resources.ResourceManager.GetObject(programName) is not byte[] program)
+            {
+                throw new ArgumentException("Program not found", nameof(programName));
+            }
+
             program.CopyTo(state, ICpuState.MemoryStateOffset + offset);
 
             return state;
         }
 
-        private static IEnumerable<IInstruction> LoadInstructions()
+        private static IEnumerable<IInstruction?> LoadInstructions()
         {
             var instructionType = typeof(IInstruction);
 

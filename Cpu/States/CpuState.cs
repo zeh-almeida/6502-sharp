@@ -24,7 +24,7 @@ namespace Cpu.States
         public bool IsSoftwareInterrupt { get; set; }
 
         /// <inheritdoc/>
-        public DecodedInstruction DecodedInstruction { get; private set; }
+        public DecodedInstruction? DecodedInstruction { get; private set; }
 
         /// <inheritdoc/>
         public IRegisterManager Registers { get; }

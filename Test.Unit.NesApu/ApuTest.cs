@@ -27,4 +27,70 @@ public sealed record ApuTest
     {
         Assert.Equal(0.05, this.Apu.Amplitude);
     }
+
+    [Fact]
+    public void Cycle_SetFiveStep_FrameCounter()
+    {
+        const byte memoryValue = 0b_1000_0000;
+
+        _ = this.StateMock
+            .Setup(mock => mock.Memory.ReadAbsolute(IApu.FrameCounterAddress))
+            .Returns(memoryValue);
+
+        this.Apu.Cycle(this.StateMock.Object);
+
+        Assert.Equal(SequencerMode.FiveStep, this.Apu.SequencerMode);
+    }
+
+    [Fact]
+    public void Cycle_SetFourStep_FrameCounter()
+    {
+        const byte memoryValue = 0b_0000_0000;
+
+        _ = this.StateMock
+            .Setup(mock => mock.Memory.ReadAbsolute(IApu.FrameCounterAddress))
+            .Returns(memoryValue);
+
+        this.Apu.Cycle(this.StateMock.Object);
+
+        Assert.Equal(SequencerMode.FourStep, this.Apu.SequencerMode);
+    }
+
+    [Fact]
+    public void Cycle_SetIrqDisable_FrameCounter()
+    {
+        const byte memoryValue = 0b_0100_0000;
+
+        _ = this.StateMock
+            .Setup(mock => mock.Memory.ReadAbsolute(IApu.FrameCounterAddress))
+            .Returns(memoryValue);
+
+        this.Apu.Cycle(this.StateMock.Object);
+
+        Assert.True(this.Apu.IsIrqDisable);
+    }
+
+    [Fact]
+    public void Cycle_UnsetIrqDisable_FrameCounter()
+    {
+        const byte memoryValue = 0b_0000_0000;
+
+        _ = this.StateMock
+            .Setup(mock => mock.Memory.ReadAbsolute(IApu.FrameCounterAddress))
+            .Returns(memoryValue);
+
+        this.Apu.Cycle(this.StateMock.Object);
+
+        Assert.False(this.Apu.IsIrqDisable);
+    }
+
+    [Fact]
+    public void Cycle_Increase_CycleCount()
+    {
+        var currentCount = this.Apu.Cycles;
+
+        this.Apu.Cycle(this.StateMock.Object);
+
+        Assert.Equal(currentCount + 1, this.Apu.Cycles);
+    }
 }

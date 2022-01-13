@@ -188,7 +188,8 @@ namespace Cpu.Memory
         /// <inheritdoc/>
         public IEnumerable<byte> Save()
         {
-            return this.MemoryArea.Clone() as byte[];
+            var result = this.MemoryArea.Clone() as byte[];
+            return result ?? Array.Empty<byte>();
         }
 
         /// <inheritdoc/>
