@@ -26,6 +26,12 @@ public sealed record Apu : IApu
     public int Cycles { get; private set; }
 
     /// <inheritdoc/>
+    public bool IsQuarterFrame { get; private set; }
+
+    /// <inheritdoc/>
+    public bool IsHalfFrame { get; private set; }
+
+    /// <inheritdoc/>
     public double Amplitude
     {
         get => this._amplitude;
@@ -103,6 +109,11 @@ public sealed record Apu : IApu
             case 18641:
                 this.Cycles = 0;
                 break;
+
+            default:
+                this.IsHalfFrame = false;
+                this.IsQuarterFrame = false;
+                break;
         }
     }
 
@@ -138,10 +149,21 @@ public sealed record Apu : IApu
 
                 this.Cycles = 0;
                 break;
+
+            default:
+                this.IsHalfFrame = false;
+                this.IsQuarterFrame = false;
+                break;
         }
     }
 
-    private void ExecuteQuarterFrame() { }
+    private void ExecuteQuarterFrame()
+    {
+        this.IsQuarterFrame = true;
+    }
 
-    private void ExecuteHalfFrame() { }
+    private void ExecuteHalfFrame()
+    {
+        this.IsHalfFrame = true;
+    }
 }

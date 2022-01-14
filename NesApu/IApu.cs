@@ -37,9 +37,19 @@ public interface IApu
     public int Cycles { get; }
 
     /// <summary>
-    /// Current audio aplitude
+    /// Current audio amplitude
     /// </summary>
     public double Amplitude { get; set; }
+
+    /// <summary>
+    /// Checks if a Quarter Frame was executed
+    /// </summary>
+    public bool IsQuarterFrame { get; }
+
+    /// <summary>
+    /// Checks if a Half Frame was executed
+    /// </summary>
+    public bool IsHalfFrame { get; }
     #endregion
 
     /// <summary>
