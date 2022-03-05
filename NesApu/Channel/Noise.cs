@@ -19,18 +19,39 @@ public sealed class Noise : AbstractChannel
     #endregion
 
     #region Properties
+    /// <summary>
+    /// Indicates if should produce sound
+    /// </summary>
     public bool VolumeStart { get; private set; }
 
+    /// <summary>
+    /// Changes the Feedback factor for  <see cref="ShiftRegister"/>
+    /// </summary>
     public bool Mode { get; private set; }
 
+    /// <summary>
+    /// Volume value from the envelope
+    /// </summary>
     public bool ConstantVolume { get; private set; }
 
+    /// <summary>
+    /// Sample source for constant volume
+    /// </summary>
     public byte VolumeReset { get; private set; }
 
+    /// <summary>
+    /// divisor of <see cref="VolumeDecay"/>
+    /// </summary>
     public byte VolumeDivider { get; private set; }
 
+    /// <summary>
+    /// Steps of the volume
+    /// </summary>
     public byte VolumeDecay { get; private set; }
 
+    /// <summary>
+    /// Checks if sample is necessary
+    /// </summary>
     public ushort ShiftRegister { get; private set; }
 
     private IRandomGenerator Random { get; }
@@ -158,18 +179,9 @@ public sealed class Noise : AbstractChannel
     /// <inheritdoc/>
     protected override void OnTimer0()
     {
-        byte feedback;
-
-        if (this.Mode)
-        {
-            feedback = (byte)((this.ShiftRegister & 0x01) ^ ((this.ShiftRegister & 0x01) << 6));
-        }
-        else
-        {
-            feedback = (byte)((this.ShiftRegister & 0x01) ^ ((this.ShiftRegister & 0x01) << 1));
-        }
+        var feedbackFactor = this.Mode ? 6 : 1;
 
         this.ShiftRegister <<= 1;
-        this.ShiftRegister |= feedback;
+        this.ShiftRegister |= (byte)((this.ShiftRegister & 0x01) ^ ((this.ShiftRegister & 0x01) << feedbackFactor));
     }
 }
