@@ -13,6 +13,11 @@ public interface IApu
     /// <see href="https://wiki.nesdev.org/w/index.php?title=APU#Frame_Counter_.28.244017.29"/>
     /// </summary>
     public const ushort FrameCounterAddress = 4017;
+
+    /// <summary>
+    /// Initial amplitude value
+    /// </summary>
+    public const double InitialAmplitude = 0.05;
     #endregion
 
     #region Properties

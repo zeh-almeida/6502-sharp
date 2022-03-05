@@ -40,7 +40,7 @@ public abstract class AbstractChannel
     /// <summary>
     /// Current channel amplitude
     /// </summary>
-    protected double Amplitude { get; set; }
+    public double Amplitude { get; protected set; }
     #endregion
 
     #region Constructors

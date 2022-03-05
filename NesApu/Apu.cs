@@ -54,7 +54,7 @@ public sealed record Apu : IApu
     /// </summary>
     public Apu()
     {
-        this.Amplitude = 0.05;
+        this.Amplitude = IApu.InitialAmplitude;
     }
     #endregion
 
