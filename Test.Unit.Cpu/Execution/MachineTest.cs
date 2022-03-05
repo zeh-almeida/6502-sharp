@@ -136,6 +136,7 @@ namespace Test.Unit.Cpu.Execution
                 .Returns(initialProgramCounter)
                 .Returns(initialProgramCounter)
                 .Returns(initialProgramCounter)
+                .Returns(finalProgramCounter)
                 .Returns(finalProgramCounter);
 
             _ = this.StateMock
@@ -162,6 +163,7 @@ namespace Test.Unit.Cpu.Execution
                 result = this.Subject.Cycle();
                 cycleCount++;
 
+                Assert.True(totalCycleCount >= cycleCount, $"{cycleCount} > {totalCycleCount}");
             } while (result);
 
             Assert.Equal(totalCycleCount, cycleCount);
