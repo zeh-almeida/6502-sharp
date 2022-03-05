@@ -1,8 +1,10 @@
 ﻿/.vs
+/coverage
 /coveragereport
-/Documentation.Cpu/Help
-/documentation
-/**/TestResults
+
 /**/bin
 /**/obj
+/**/TestResults
+
+/**/coverage.json
 /**/coverage.cobertura.xml
