@@ -14,6 +14,10 @@
 		<description>6502 CPU Emulator Integration tests</description>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\test.runsettings</RunSettingsFilePath>
+	</PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="coverlet.msbuild" Version="3.1.0">
             <PrivateAssets>all</PrivateAssets>
@@ -81,6 +85,12 @@
       <Folder Include="Files\ADC\" />
       <Folder Include="Files\Interrupts\" />
       <Folder Include="Files\SBC\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="test.runsettings">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <Target Name="ClearTestReports" AfterTargets="Build">
