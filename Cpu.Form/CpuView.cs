@@ -1,7 +1,9 @@
 using Cpu.Execution;
 using Cpu.Extensions;
 using Cpu.Forms.Serialization;
+using Cpu.States;
 using Microsoft.Extensions.Logging;
+using System.Text;
 
 namespace Cpu.Forms
 {
@@ -96,33 +98,30 @@ namespace Cpu.Forms
 
             var result = programDialog.ShowDialog();
 
-            if (DialogResult.OK.Equals(result))
-            {
-                try
-                {
-                    this.CurrentProgram = programDialog.FileName;
-
-                    await this.LoadProgram()
-                        .ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    this.Logger.LogError(ex, "{programPath}", programDialog.SafeFileName);
-
-                    _ = MessageBox.Show(
-                        "Could not load program, check log for more information",
-                        "Open program",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
-            else
+            if (!DialogResult.OK.Equals(result))
             {
                 _ = MessageBox.Show(
                     "No program was loaded, keeping current machine state",
                     "Open program",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
+
+                return;
+            }
+
+            try
+            {
+                await this.LoadProgram(programDialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                this.Logger.LogError(ex, "{programPath}", programDialog.SafeFileName);
+
+                _ = MessageBox.Show(
+                    "Could not load program, check log for more information",
+                    "Open program",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -176,13 +175,8 @@ namespace Cpu.Forms
             {
                 try
                 {
-                    var state = await Serializer.LoadState(programDialog.FileName)
-                        .ConfigureAwait(false);
-
-                    this.CurrentProgram = state.ProgramPath;
-                    this.Machine.Load(state.State);
-
-                    this.Invoke(() => this.EnableProgramExecution());
+                    var state = await Serializer.LoadState(programDialog.FileName);
+                    this.EnableProgramExecution(state.State, state.ProgramPath);
 
                     _ = MessageBox.Show(
                         $"Loaded state from '{programDialog.FileName}'",
@@ -220,7 +214,6 @@ namespace Cpu.Forms
                 {
                     cycling = false;
                 }
-
             } while (cycling);
         }
 
@@ -232,11 +225,9 @@ namespace Cpu.Forms
                            MessageBoxButtons.OKCancel,
                            MessageBoxIcon.Question);
 
-            if (DialogResult.OK.Equals(result))
-            {
-                await this.LoadProgram()
-                    .ConfigureAwait(false);
-            }
+            await (!DialogResult.OK.Equals(result)
+                ? Task.CompletedTask
+                : this.LoadProgram(this.CurrentProgram));
         }
 
         private void TriggerInterruptButton_Click(object sender, EventArgs e)
@@ -257,29 +248,45 @@ namespace Cpu.Forms
             });
         }
 
-        private async Task LoadProgram()
+        private async Task LoadProgram(string programName)
         {
-            await Serializer.LoadProgram(this.Machine, this.CurrentProgram);
-            this.EnableProgramExecution();
+            var bytes = await Serializer.LoadProgram(programName);
+            this.EnableProgramExecution(bytes, programName);
 
             _ = MessageBox.Show(
-                $"Program '{this.CurrentProgram}' loaded",
+                $"Program '{programName}' loaded",
                 "Open program",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
 
-        private void EnableProgramExecution()
+        private void EnableProgramExecution(IEnumerable<byte> bytes, string programName)
         {
-            this.UpdateControls();
+            this.CurrentProgram = programName;
 
+            this.ShowProgramContent(bytes);
             this.executionContent.Text = string.Empty;
 
             this.clockButton.Enabled = true;
             this.resetButton.Enabled = true;
             this.instructionButton.Enabled = true;
-
             this.saveStateToolStripMenuItem.Enabled = true;
+
+            this.Machine.Load(bytes);
+            this.UpdateControls();
+        }
+
+        private void ShowProgramContent(IEnumerable<byte> program)
+        {
+            var builder = new StringBuilder(program.Count() * 4);
+
+            foreach (var value in program.Skip(ICpuState.MemoryStateOffset))
+            {
+                _ = builder.AppendLine(value.AsHex());
+            }
+
+            this.programText.Text = builder.ToString();
+            _ = builder.Clear();
         }
     }
 }

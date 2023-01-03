@@ -53,6 +53,7 @@
             this.programCounterInput = new System.Windows.Forms.TextBox();
             this.programCounterLabel = new System.Windows.Forms.Label();
             this.stateGroup = new System.Windows.Forms.GroupBox();
+            this.triggerInterruptButton = new System.Windows.Forms.Button();
             this.softwareInterruptFlag = new System.Windows.Forms.CheckBox();
             this.hardwareInterruptFlag = new System.Windows.Forms.CheckBox();
             this.opcodeInput = new System.Windows.Forms.TextBox();
@@ -60,11 +61,11 @@
             this.cyclesInput = new System.Windows.Forms.TextBox();
             this.cyclesLabel = new System.Windows.Forms.Label();
             this.executionGroup = new System.Windows.Forms.GroupBox();
+            this.programText = new System.Windows.Forms.TextBox();
             this.resetButton = new System.Windows.Forms.Button();
             this.executionContent = new System.Windows.Forms.TextBox();
             this.instructionButton = new System.Windows.Forms.Button();
             this.clockButton = new System.Windows.Forms.Button();
-            this.triggerInterruptButton = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.flagGroup.SuspendLayout();
             this.registerGroup.SuspendLayout();
@@ -327,6 +328,16 @@
             this.stateGroup.TabStop = false;
             this.stateGroup.Text = "State";
             // 
+            // triggerInterruptButton
+            // 
+            this.triggerInterruptButton.Location = new System.Drawing.Point(6, 122);
+            this.triggerInterruptButton.Name = "triggerInterruptButton";
+            this.triggerInterruptButton.Size = new System.Drawing.Size(130, 23);
+            this.triggerInterruptButton.TabIndex = 6;
+            this.triggerInterruptButton.Text = "Trigger HW Interrupt";
+            this.triggerInterruptButton.UseVisualStyleBackColor = true;
+            this.triggerInterruptButton.Click += new System.EventHandler(this.TriggerInterruptButton_Click);
+            // 
             // softwareInterruptFlag
             // 
             this.softwareInterruptFlag.AutoSize = true;
@@ -385,6 +396,7 @@
             // 
             // executionGroup
             // 
+            this.executionGroup.Controls.Add(this.programText);
             this.executionGroup.Controls.Add(this.resetButton);
             this.executionGroup.Controls.Add(this.executionContent);
             this.executionGroup.Controls.Add(this.instructionButton);
@@ -395,6 +407,14 @@
             this.executionGroup.TabIndex = 4;
             this.executionGroup.TabStop = false;
             this.executionGroup.Text = "Execution";
+            // 
+            // programText
+            // 
+            this.programText.Location = new System.Drawing.Point(6, 51);
+            this.programText.Multiline = true;
+            this.programText.Name = "programText";
+            this.programText.Size = new System.Drawing.Size(96, 311);
+            this.programText.TabIndex = 4;
             // 
             // resetButton
             // 
@@ -409,10 +429,10 @@
             // 
             // executionContent
             // 
-            this.executionContent.Location = new System.Drawing.Point(6, 51);
+            this.executionContent.Location = new System.Drawing.Point(108, 51);
             this.executionContent.Multiline = true;
             this.executionContent.Name = "executionContent";
-            this.executionContent.Size = new System.Drawing.Size(481, 311);
+            this.executionContent.Size = new System.Drawing.Size(379, 311);
             this.executionContent.TabIndex = 2;
             // 
             // instructionButton
@@ -436,16 +456,6 @@
             this.clockButton.Text = "Cycle clock";
             this.clockButton.UseVisualStyleBackColor = true;
             this.clockButton.Click += new System.EventHandler(this.ClockButton_Click);
-            // 
-            // triggerInterruptButton
-            // 
-            this.triggerInterruptButton.Location = new System.Drawing.Point(6, 122);
-            this.triggerInterruptButton.Name = "triggerInterruptButton";
-            this.triggerInterruptButton.Size = new System.Drawing.Size(130, 23);
-            this.triggerInterruptButton.TabIndex = 6;
-            this.triggerInterruptButton.Text = "Trigger HW Interrupt";
-            this.triggerInterruptButton.UseVisualStyleBackColor = true;
-            this.triggerInterruptButton.Click += new System.EventHandler(this.TriggerInterruptButton_Click);
             // 
             // CpuView
             // 
@@ -516,5 +526,6 @@
         private ToolStripMenuItem saveStateToolStripMenuItem;
         private ToolStripMenuItem loadStateToolStripMenuItem;
         private Button triggerInterruptButton;
+        private TextBox programText;
     }
 }

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net7</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
@@ -11,7 +11,7 @@
 		<owners>Zeh</owners>
 		<Authors>Zeh</Authors>
 		<NeutralLanguage>en-US</NeutralLanguage>
-		<description>6502 CPU Emulator Unit tests</description>
+		<description>6502 CPU Emulator Integration tests</description>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -23,6 +23,8 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
         <PackageReference Include="Moq" Version="4.18.4" />
         <PackageReference Include="ReportGenerator" Version="5.1.13" />
@@ -59,17 +61,38 @@
     <ItemGroup>
         <ProjectReference Include="..\Cpu\Cpu.csproj" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <DirsToClean Include="TestResults" />
     </ItemGroup>
-    
+
+    <ItemGroup>
+      <Compile Update="Files\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Files\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Files\ADC\" />
+      <Folder Include="Files\Interrupts\" />
+      <Folder Include="Files\SBC\" />
+    </ItemGroup>
+
     <ItemGroup>
       <None Update="test.runsettings">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
-    
+
     <Target Name="ClearTestReports" AfterTargets="Build">
         <RemoveDir Directories="@(DirsToClean)" />
     </Target>

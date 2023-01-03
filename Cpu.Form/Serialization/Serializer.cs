@@ -5,7 +5,7 @@ namespace Cpu.Forms.Serialization
 {
     internal static class Serializer
     {
-        public static async Task LoadProgram(IMachine machine, string programPath, CancellationToken token = default)
+        public static async Task<byte[]> LoadProgram(string programPath, CancellationToken token = default)
         {
             var state = new byte[ICpuState.Length];
 
@@ -17,7 +17,7 @@ namespace Cpu.Forms.Serialization
             state[ICpuState.MemoryStateOffset + 0xFFFE] = 0xFF;
             state[ICpuState.MemoryStateOffset + 0xFFFF] = 0xFF;
 
-            machine.Load(state);
+            return state;
         }
 
         public static Task<EmulatorState> LoadState(string programPath)
