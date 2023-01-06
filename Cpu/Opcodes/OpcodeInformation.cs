@@ -1,5 +1,6 @@
 ﻿using Cpu.Instructions;
 using Cpu.Instructions.Exceptions;
+using System.Text.Json.Serialization;
 
 namespace Cpu.Opcodes
 {
@@ -30,6 +31,8 @@ namespace Cpu.Opcodes
         /// </summary>
         public byte MaximumCycles { get; }
 
+        public string? InstructionQualifier { get; }
+
         /// <summary>
         /// Instruction to be executed by the Opcode
         /// </summary>
@@ -53,22 +56,25 @@ namespace Cpu.Opcodes
 
             this.MinimumCycles = cycles;
             this.MaximumCycles = cycles;
+
+            this.InstructionQualifier = null;
         }
 
         /// <summary>
         /// Instantiates a new Opcode Information
         /// </summary>
         /// <param name="opcode">Opcode of reference</param>
-        /// <param name="minimumCycles">Minimum cycles the opcode can take</param>
-        /// <param name="maximumCycles">Maximum cycles the opcode can take</param>
         /// <param name="bytes">Length of the opcode</param>
         /// <param name="instructionQualifier">Name of the instruction associated with the opcode</param>
+        /// <param name="minimumCycles">Minimum cycles the opcode can take</param>
+        /// <param name="maximumCycles">Maximum cycles the opcode can take</param>
+        [JsonConstructor]
         public OpcodeInformation(
             byte opcode,
             byte bytes,
             string instructionQualifier,
             byte minimumCycles,
-            byte maximumCycles = 0)
+            byte maximumCycles)
         {
             ArgumentException.ThrowIfNullOrEmpty(instructionQualifier, nameof(instructionQualifier));
 
@@ -81,7 +87,8 @@ namespace Cpu.Opcodes
                 ? maximumCycles
                 : minimumCycles;
 
-            this.ApplyInstruction(instructionQualifier);
+            this.InstructionQualifier = instructionQualifier;
+            this.ApplyInstruction();
         }
         #endregion
 
@@ -128,19 +135,19 @@ namespace Cpu.Opcodes
             return this;
         }
 
-        private void ApplyInstruction(string instructionQualifier)
+        private void ApplyInstruction()
         {
             var target = this.GetType().Assembly.FullName
                 ?? throw new Exception("Could not qualify assembly");
 
             var handle = Activator.CreateInstance(
                 target,
-                instructionQualifier)
-                ?? throw new UnknownInstructionException(instructionQualifier);
+                this.InstructionQualifier)
+                ?? throw new UnknownInstructionException(this.InstructionQualifier);
 
             if (handle.Unwrap() is not IInstruction instruction)
             {
-                throw new UnknownInstructionException(instructionQualifier);
+                throw new UnknownInstructionException(this.InstructionQualifier);
             }
 
             _ = this.SetInstruction(instruction);

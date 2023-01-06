@@ -1,50 +1,58 @@
 [
     {
-        "opcode": "0x69",
+        "opcode": 105,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 2,
-        "bytes": 2,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "maxmimumCycles": 0
     },
     {
-        "opcode": "0x65",
+        "opcode": 101,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 3,
-        "bytes": 2,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "maxmimumCycles": 0
     },
     {
-        "opcode": "0x75",
+        "opcode": 117,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 4,
-        "bytes": 2,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "maxmimumCycles": 0
     },
     {
-        "opcode": "0x6D",
+        "opcode": 109,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 4,
-        "bytes": 3,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "maxmimumCycles": 0
     },
     {
-        "opcode": "0x7D",
+        "opcode": 125,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 5,
-        "bytes": 3,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "maxmimumCycles": 0
     },
     {
-        "opcode": "0x79",
+        "opcode": 121,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 5,
-        "bytes": 3,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "maxmimumCycles": 0
     },
     {
-        "opcode": "0x61",
-        "minimumCycles": 6,
+        "opcode": 97,
         "bytes": 2,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
+        "minimumCycles": 6,
+        "maxmimumCycles": 0
     },
     {
-        "opcode": "0x71",
-        "minimumCycles": 6,
+        "opcode": 113,
         "bytes": 2,
-        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
+        "minimumCycles": 6,
+        "maxmimumCycles": 0
     }
 ]
