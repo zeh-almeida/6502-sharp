@@ -65,7 +65,8 @@ namespace Test.Unit.Cpu.Execution
             Assert.NotNull(result);
 
             Assert.Equal(instruction, result.Instruction);
-            Assert.Equal(opcodeInfo.Cycles, result.Cycles);
+            Assert.Equal(opcodeInfo.MinimumCycles, result.Cycles);
+            Assert.Equal(opcodeInfo.MaximumCycles, result.Cycles);
             Assert.Equal(0, result.ValueParameter);
         }
 
@@ -106,7 +107,8 @@ namespace Test.Unit.Cpu.Execution
             Assert.NotNull(result);
 
             Assert.Equal(instruction, result.Instruction);
-            Assert.Equal(opcodeInfo.Cycles, result.Cycles);
+            Assert.Equal(opcodeInfo.MinimumCycles, result.Cycles);
+            Assert.Equal(opcodeInfo.MaximumCycles, result.Cycles);
             Assert.Equal(paramValue, result.ValueParameter);
         }
 
@@ -139,7 +141,8 @@ namespace Test.Unit.Cpu.Execution
             Assert.NotNull(result);
 
             Assert.Equal(instruction, result.Instruction);
-            Assert.Equal(opcodeInfo.Cycles, result.Cycles);
+            Assert.Equal(opcodeInfo.MinimumCycles, result.Cycles);
+            Assert.Equal(opcodeInfo.MaximumCycles, result.Cycles);
             Assert.Equal(paramByte, result.ValueParameter);
         }
     }

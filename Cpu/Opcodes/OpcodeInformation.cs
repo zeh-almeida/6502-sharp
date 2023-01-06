@@ -1,4 +1,5 @@
 ﻿using Cpu.Instructions;
+using Cpu.Instructions.Exceptions;
 
 namespace Cpu.Opcodes
 {
@@ -15,14 +16,19 @@ namespace Cpu.Opcodes
         public byte Opcode { get; }
 
         /// <summary>
-        /// Number of Cycles to run the instruction
-        /// </summary>
-        public byte Cycles { get; }
-
-        /// <summary>
         /// Number of bytes that make the operand for the instruction
         /// </summary>
         public byte Bytes { get; }
+
+        /// <summary>
+        /// Minimum amount of Cycles the instruction can take to execute
+        /// </summary>
+        public byte MinimumCycles { get; }
+
+        /// <summary>
+        /// Maximum amount of Cycles the instruction can take to execute
+        /// </summary>
+        public byte MaximumCycles { get; }
 
         /// <summary>
         /// Instruction to be executed by the Opcode
@@ -43,8 +49,39 @@ namespace Cpu.Opcodes
             byte bytes)
         {
             this.Bytes = bytes;
-            this.Cycles = cycles;
             this.Opcode = opcode;
+
+            this.MinimumCycles = cycles;
+            this.MaximumCycles = cycles;
+        }
+
+        /// <summary>
+        /// Instantiates a new Opcode Information
+        /// </summary>
+        /// <param name="opcode">Opcode of reference</param>
+        /// <param name="minimumCycles">Minimum cycles the opcode can take</param>
+        /// <param name="maximumCycles">Maximum cycles the opcode can take</param>
+        /// <param name="bytes">Length of the opcode</param>
+        /// <param name="instructionQualifier">Name of the instruction associated with the opcode</param>
+        public OpcodeInformation(
+            byte opcode,
+            byte bytes,
+            string instructionQualifier,
+            byte minimumCycles,
+            byte maximumCycles = 0)
+        {
+            ArgumentException.ThrowIfNullOrEmpty(instructionQualifier, nameof(instructionQualifier));
+
+            this.Bytes = bytes;
+            this.Opcode = opcode;
+
+            this.MinimumCycles = minimumCycles;
+
+            this.MaximumCycles = maximumCycles > minimumCycles
+                ? maximumCycles
+                : minimumCycles;
+
+            this.ApplyInstruction(instructionQualifier);
         }
         #endregion
 
@@ -89,6 +126,24 @@ namespace Cpu.Opcodes
 
             this.Instruction = instruction;
             return this;
+        }
+
+        private void ApplyInstruction(string instructionQualifier)
+        {
+            var target = this.GetType().Assembly.FullName
+                ?? throw new Exception("Could not qualify assembly");
+
+            var handle = Activator.CreateInstance(
+                target,
+                instructionQualifier)
+                ?? throw new UnknownInstructionException(instructionQualifier);
+
+            if (handle.Unwrap() is not IInstruction instruction)
+            {
+                throw new UnknownInstructionException(instructionQualifier);
+            }
+
+            _ = this.SetInstruction(instruction);
         }
     }
 }

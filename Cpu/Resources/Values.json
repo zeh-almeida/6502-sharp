@@ -1,0 +1,50 @@
+[
+    {
+        "opcode": "0x69",
+        "minimumCycles": 2,
+        "bytes": 2,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    },
+    {
+        "opcode": "0x65",
+        "minimumCycles": 3,
+        "bytes": 2,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    },
+    {
+        "opcode": "0x75",
+        "minimumCycles": 4,
+        "bytes": 2,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    },
+    {
+        "opcode": "0x6D",
+        "minimumCycles": 4,
+        "bytes": 3,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    },
+    {
+        "opcode": "0x7D",
+        "minimumCycles": 5,
+        "bytes": 3,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    },
+    {
+        "opcode": "0x79",
+        "minimumCycles": 5,
+        "bytes": 3,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    },
+    {
+        "opcode": "0x61",
+        "minimumCycles": 6,
+        "bytes": 2,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    },
+    {
+        "opcode": "0x71",
+        "minimumCycles": 6,
+        "bytes": 2,
+        "instruction": "Cpu.Instructions.Arithmetic.AddWithCarry"
+    }
+]

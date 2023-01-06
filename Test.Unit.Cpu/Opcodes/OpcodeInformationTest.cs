@@ -10,7 +10,9 @@ public sealed record OpcodeInformationTest
     #region Constants
     private const byte Opcode = 0x01;
 
-    private const int Cycles = 1;
+    private const int MinimumCycles = 1;
+
+    private const int MaximumCycles = 2;
 
     private const int Bytes = 2;
     #endregion
@@ -22,10 +24,29 @@ public sealed record OpcodeInformationTest
     #region Constructors
     public OpcodeInformationTest()
     {
-        this.Subject = new OpcodeInformation(Opcode, Cycles, Bytes)
+        this.Subject = new OpcodeInformation(Opcode, MinimumCycles, Bytes)
             .SetInstruction(new InclusiveOr());
     }
     #endregion
+
+    [Fact]
+    public void Different_Cycles_Constructor_Instantiates()
+    {
+        var target = typeof(InclusiveOr).FullName ?? throw new Exception("Error qualifying instruction");
+
+        var subject = new OpcodeInformation(
+            Opcode,
+            Bytes,
+            target,
+            MinimumCycles,
+            MaximumCycles);
+
+        Assert.Equal(MinimumCycles, subject.MinimumCycles);
+        Assert.Equal(MaximumCycles, subject.MaximumCycles);
+
+        Assert.NotNull(subject.Instruction);
+        Assert.Equal(target, subject.Instruction.GetType().FullName);
+    }
 
     [Fact]
     public void HashCode_Matches_True()
@@ -58,7 +79,8 @@ public sealed record OpcodeInformationTest
     [Fact]
     public void Cycles_Equals_Defined()
     {
-        Assert.Equal(Cycles, this.Subject.Cycles);
+        Assert.Equal(MinimumCycles, this.Subject.MinimumCycles);
+        Assert.Equal(MinimumCycles, this.Subject.MaximumCycles);
     }
 
     [Fact]
