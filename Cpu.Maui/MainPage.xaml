@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cpu.Maui.MainPage"
+             x:DataType="ContentPage"
+             xmlns:local="clr-namespace:Cpu.Maui.Models">
+
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="File">
+            <MenuFlyoutItem Text="Open..." 
+                            Clicked="OnOpen"/>
+
+            <MenuFlyoutItem x:Name="SaveStateButton"
+                            Text="Save State..."
+                            Clicked="OnSaveState"/>
+
+            <MenuFlyoutItem Text="Load State..."
+                            Clicked="OnLoadState"/>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+    <ContentPage.BindingContext>
+        <local:FlagModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <Grid  x:Name="FlagGrid"
+               Padding="30,0"
+              VerticalOptions="Center">
+
+            <Label Text="" />
+        </Grid>
+    </ScrollView>
+</ContentPage>
