@@ -50,7 +50,7 @@ namespace Cpu.Instructions.Illegal
             currentState.Flags.IsZero = operation.IsZero();
             currentState.Flags.IsNegative = isNegative;
 
-            currentState.Registers.Accumulator = ((byte)operation);
+            currentState.Registers.Accumulator = (byte)operation;
         }
 
         private static byte Load(ICpuState currentState, ushort address)

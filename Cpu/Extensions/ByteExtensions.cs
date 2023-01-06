@@ -173,12 +173,9 @@
         /// <see href="https://github.com/amensch/e6502/blob/master/e6502CPU/Utility/CPUMath.cs"/>
         public static byte ToBCD(this byte value)
         {
-            if ((value & 0x0f) > 0x09)
-            {
-                throw new InvalidOperationException($"Invalid BCD number: {value:X2}");
-            }
-
-            return (byte)(((value >> 4) * 10) + (value & 0x0f));
+            return (value & 0x0f) > 0x09
+                ? throw new InvalidOperationException($"Invalid BCD number: {value:X2}")
+                : (byte)(((value >> 4) * 10) + (value & 0x0f));
         }
 
         /// <summary>

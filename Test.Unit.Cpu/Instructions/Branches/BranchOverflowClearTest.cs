@@ -64,7 +64,7 @@ namespace Test.Unit.Cpu.Instructions.Branches
             this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.ProgramCounter, Times.Never());
-            stateMock.VerifySet(state => state.Registers.ProgramCounter = (It.IsAny<ushort>()), Times.Never());
+            stateMock.VerifySet(state => state.Registers.ProgramCounter = It.IsAny<ushort>(), Times.Never());
         }
 
         [Fact]

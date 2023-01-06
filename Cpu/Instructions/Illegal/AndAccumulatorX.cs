@@ -36,8 +36,8 @@ namespace Cpu.Instructions.Illegal
 
             var andValue = (byte)(accumulator & registerX & value);
 
-            currentState.Flags.IsZero = (andValue.IsZero());
-            currentState.Flags.IsNegative = (andValue.IsLastBitSet());
+            currentState.Flags.IsZero = andValue.IsZero();
+            currentState.Flags.IsNegative = andValue.IsLastBitSet();
 
             currentState.Registers.Accumulator = andValue;
         }

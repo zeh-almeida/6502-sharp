@@ -37,8 +37,8 @@ namespace Cpu.Instructions.Illegal
 
             var operation = (byte)(loadValue & stackPointer);
 
-            currentState.Flags.IsZero = (operation.IsZero());
-            currentState.Flags.IsNegative = (operation.IsLastBitSet());
+            currentState.Flags.IsZero = operation.IsZero();
+            currentState.Flags.IsNegative = operation.IsLastBitSet();
 
             currentState.Registers.IndexX = operation;
             currentState.Registers.Accumulator = operation;

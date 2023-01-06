@@ -52,13 +52,13 @@ namespace Cpu.Instructions.Illegal
             var shifted = loadValue.RotateRight(oldCarry);
             var operation = (ushort)(accumulator + shifted + rotateCarry);
 
-            currentState.Flags.IsCarry = (operation.IsBitSet(8));
-            currentState.Flags.IsOverflow = (accumulator >> 7 != operation >> 7);
+            currentState.Flags.IsCarry = operation.IsBitSet(8);
+            currentState.Flags.IsOverflow = accumulator >> 7 != operation >> 7;
 
-            currentState.Flags.IsZero = (operation.IsZero());
-            currentState.Flags.IsNegative = (operation.IsSeventhBitSet());
+            currentState.Flags.IsZero = operation.IsZero();
+            currentState.Flags.IsNegative = operation.IsSeventhBitSet();
 
-            currentState.Registers.Accumulator = ((byte)operation);
+            currentState.Registers.Accumulator = (byte)operation;
             Write(currentState, value, (byte)operation);
         }
 

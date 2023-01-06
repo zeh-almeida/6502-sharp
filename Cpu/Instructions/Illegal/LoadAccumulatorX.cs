@@ -43,8 +43,8 @@ namespace Cpu.Instructions.Illegal
         {
             var loadValue = Load(currentState, value);
 
-            currentState.Flags.IsZero = (loadValue.IsZero());
-            currentState.Flags.IsNegative = (loadValue.IsLastBitSet());
+            currentState.Flags.IsZero = loadValue.IsZero();
+            currentState.Flags.IsNegative = loadValue.IsLastBitSet();
 
             currentState.Registers.Accumulator = loadValue;
             currentState.Registers.IndexX = loadValue;

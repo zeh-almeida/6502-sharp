@@ -39,10 +39,10 @@ namespace Cpu.Instructions.Illegal
             var is6thBitSet = ((byte)(andValue >> 6)).IsFirstBitSet();
 
             currentState.Flags.IsCarry = is7thBitSet;
-            currentState.Flags.IsOverflow = ((is7thBitSet || is6thBitSet) && !(is7thBitSet && is6thBitSet));
+            currentState.Flags.IsOverflow = (is7thBitSet || is6thBitSet) && !(is7thBitSet && is6thBitSet);
 
-            currentState.Flags.IsNegative = (shifted.IsLastBitSet());
-            currentState.Flags.IsZero = (0.Equals(shifted));
+            currentState.Flags.IsNegative = shifted.IsLastBitSet();
+            currentState.Flags.IsZero = 0.Equals(shifted);
 
             currentState.Registers.Accumulator = shifted;
         }

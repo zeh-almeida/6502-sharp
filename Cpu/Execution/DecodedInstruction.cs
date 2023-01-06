@@ -16,9 +16,9 @@ namespace Cpu.Execution
         public ushort ValueParameter { get; }
 
         /// <summary>
-        /// Number of Cycles to run the instruction
+        /// Minimum number of Cycles to run the instruction
         /// </summary>
-        /// <see cref="OpcodeInformation.Cycles"/>
+        /// <see cref="OpcodeInformation.MinimumCycles"/>
         public byte Cycles { get; }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Cpu.Execution
             }
 
             this.Bytes = opcodeInformation.Bytes;
-            this.Cycles = opcodeInformation.Cycles;
             this.Opcode = opcodeInformation.Opcode;
+            this.Cycles = opcodeInformation.MinimumCycles;
             this.Instruction = opcodeInformation.Instruction;
         }
         #endregion

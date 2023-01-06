@@ -47,7 +47,7 @@ namespace Cpu.Instructions.Illegal
             currentState.Flags.IsZero = operation.IsZero();
             currentState.Flags.IsNegative = isNegative;
 
-            currentState.Registers.Accumulator = ((byte)operation);
+            currentState.Registers.Accumulator = (byte)operation;
         }
     }
 }
