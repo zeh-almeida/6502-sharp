@@ -27,8 +27,8 @@ namespace Cpu.Instructions.Logic
         /// </summary>
         public BitTest()
             : base(
-            new OpcodeInformation(0x24, 3, 2),
-                      new OpcodeInformation(0x2C, 4, 3))
+                new OpcodeInformation(0x24, 3, 2),
+                new OpcodeInformation(0x2C, 4, 3))
         { }
         #endregion
 

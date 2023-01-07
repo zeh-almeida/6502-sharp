@@ -1,0 +1,16 @@
+[
+    {
+        "opcode": 36,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Logic.BitTest",
+        "minimumCycles": 3,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 44,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Logic.BitTest",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    }
+]

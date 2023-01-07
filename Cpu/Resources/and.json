@@ -1,0 +1,58 @@
+[
+    {
+        "opcode": 41,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 37,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 3,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 53,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 45,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 61,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 57,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 33,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 49,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Logic.LogicAnd",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    }
+]

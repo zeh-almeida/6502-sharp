@@ -29,14 +29,14 @@ namespace Cpu.Instructions.Logic
         /// </summary>
         public LogicAnd()
             : base(
-            new OpcodeInformation(0x29, 2, 2),
-                      new OpcodeInformation(0x25, 3, 2),
-                      new OpcodeInformation(0x35, 4, 2),
-                      new OpcodeInformation(0x2D, 4, 3),
-                      new OpcodeInformation(0x3D, 5, 3),
-                      new OpcodeInformation(0x39, 5, 3),
-                      new OpcodeInformation(0x21, 6, 2),
-                      new OpcodeInformation(0x31, 6, 2))
+                new OpcodeInformation(0x29, 2, 2),
+                new OpcodeInformation(0x25, 3, 2),
+                new OpcodeInformation(0x35, 4, 2),
+                new OpcodeInformation(0x2D, 4, 3),
+                new OpcodeInformation(0x3D, 5, 3),
+                new OpcodeInformation(0x39, 5, 3),
+                new OpcodeInformation(0x21, 6, 2),
+                new OpcodeInformation(0x31, 6, 2))
         { }
         #endregion
 

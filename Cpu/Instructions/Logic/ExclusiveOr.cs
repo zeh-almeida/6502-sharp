@@ -29,14 +29,14 @@ namespace Cpu.Instructions.Logic
         /// </summary>
         public ExclusiveOr()
             : base(
-            new OpcodeInformation(0x49, 2, 2),
-                      new OpcodeInformation(0x45, 3, 2),
-                      new OpcodeInformation(0x55, 4, 2),
-                      new OpcodeInformation(0x4D, 4, 3),
-                      new OpcodeInformation(0x5D, 5, 3),
-                      new OpcodeInformation(0x59, 5, 3),
-                      new OpcodeInformation(0x41, 6, 2),
-                      new OpcodeInformation(0x51, 6, 2))
+                new OpcodeInformation(0x49, 2, 2),
+                new OpcodeInformation(0x45, 3, 2),
+                new OpcodeInformation(0x55, 4, 2),
+                new OpcodeInformation(0x4D, 4, 3),
+                new OpcodeInformation(0x5D, 5, 3),
+                new OpcodeInformation(0x59, 5, 3),
+                new OpcodeInformation(0x41, 6, 2),
+                new OpcodeInformation(0x51, 6, 2))
         { }
         #endregion
 
