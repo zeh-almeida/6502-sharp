@@ -17,7 +17,7 @@ namespace Cpu.Instructions.Branches
     {
         #region Constructors
         /// <summary>
-        /// Instantiates a new <see cref="BranchCarryClear"/> instruction
+        /// Instantiates a new <see cref="BranchCarrySet"/> instruction
         /// </summary>
         public BranchCarrySet()
             : base(new OpcodeInformation(0xB0, 5, 2))
