@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 200,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Increments.IncrementRegisterY",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]
