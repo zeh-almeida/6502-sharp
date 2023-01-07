@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 208,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Branches.BranchNotEqual",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    }
+]

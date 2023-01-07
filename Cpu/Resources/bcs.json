@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 176,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Branches.BranchCarrySet",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    }
+]
