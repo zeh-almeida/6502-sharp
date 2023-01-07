@@ -23,7 +23,7 @@ namespace Cpu.Instructions.Jumps
         public Jump()
             : base(
                 new OpcodeInformation(0x4C, 3, 3),
-                          new OpcodeInformation(0x6C, 5, 3))
+                new OpcodeInformation(0x6C, 5, 3))
         { }
         #endregion
 

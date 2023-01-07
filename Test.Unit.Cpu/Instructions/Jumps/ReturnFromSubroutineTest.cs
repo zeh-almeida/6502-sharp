@@ -1,6 +1,6 @@
 ﻿
 using Cpu.Instructions.Exceptions;
-using Cpu.Instructions.ReturnFromSubroutines;
+using Cpu.Instructions.Jumps;
 using Moq;
 using Test.Unit.Cpu.Utils;
 using Xunit;

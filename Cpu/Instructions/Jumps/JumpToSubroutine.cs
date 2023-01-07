@@ -1,7 +1,7 @@
 ﻿using Cpu.Opcodes;
 using Cpu.States;
 
-namespace Cpu.Instructions.JumpToSubroutines
+namespace Cpu.Instructions.Jumps
 {
     /// <summary>
     /// <para>Jump To Subroutine instruction (JSR)</para>

@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 96,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Jumps.ReturnFromSubroutine",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    }
+]

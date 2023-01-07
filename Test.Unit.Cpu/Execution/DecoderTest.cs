@@ -2,7 +2,7 @@
 using Cpu.Instructions;
 using Cpu.Instructions.Branches;
 using Cpu.Instructions.Exceptions;
-using Cpu.Instructions.JumpToSubroutines;
+using Cpu.Instructions.Jumps;
 using Cpu.Instructions.StatusChanges;
 using Cpu.States;
 using Moq;

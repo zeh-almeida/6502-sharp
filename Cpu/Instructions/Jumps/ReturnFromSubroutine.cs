@@ -1,7 +1,7 @@
 ﻿using Cpu.Opcodes;
 using Cpu.States;
 
-namespace Cpu.Instructions.ReturnFromSubroutines
+namespace Cpu.Instructions.Jumps
 {
     /// <summary>
     /// <para>Return From Subroutine instruction (RTS)</para>

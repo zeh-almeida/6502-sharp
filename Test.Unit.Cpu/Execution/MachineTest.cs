@@ -1,5 +1,5 @@
 ﻿using Cpu.Execution;
-using Cpu.Instructions.JumpToSubroutines;
+using Cpu.Instructions.Jumps;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
 using Moq;
