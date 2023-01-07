@@ -39,14 +39,14 @@ namespace Cpu.Instructions.Arithmetic
         /// </summary>
         public AddWithCarry()
             : base(
-            new OpcodeInformation(0x69, 2, 2),
-                      new OpcodeInformation(0x65, 3, 2),
-                      new OpcodeInformation(0x75, 4, 2),
-                      new OpcodeInformation(0x6D, 4, 3),
-                      new OpcodeInformation(0x7D, 5, 3),
-                      new OpcodeInformation(0x79, 5, 3),
-                      new OpcodeInformation(0x61, 6, 2),
-                      new OpcodeInformation(0x71, 6, 2))
+                new OpcodeInformation(0x69, 2, 2),
+                new OpcodeInformation(0x65, 3, 2),
+                new OpcodeInformation(0x75, 4, 2),
+                new OpcodeInformation(0x6D, 4, 3),
+                new OpcodeInformation(0x7D, 5, 3),
+                new OpcodeInformation(0x79, 5, 3),
+                new OpcodeInformation(0x61, 6, 2),
+                new OpcodeInformation(0x71, 6, 2))
         { }
         #endregion
 

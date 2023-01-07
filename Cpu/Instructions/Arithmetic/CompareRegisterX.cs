@@ -24,9 +24,9 @@ namespace Cpu.Instructions.Arithmetic
         /// </summary>
         public CompareRegisterX()
             : base(
-            new OpcodeInformation(0xE0, 2, 2),
-                      new OpcodeInformation(0xE4, 3, 2),
-                      new OpcodeInformation(0xEC, 4, 3))
+                new OpcodeInformation(0xE0, 2, 2),
+                new OpcodeInformation(0xE4, 3, 2),
+                new OpcodeInformation(0xEC, 4, 3))
         { }
         #endregion
 

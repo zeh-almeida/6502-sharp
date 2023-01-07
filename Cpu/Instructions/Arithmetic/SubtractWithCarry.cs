@@ -37,14 +37,14 @@ namespace Cpu.Instructions.Arithmetic
         /// </summary>
         public SubtractWithCarry()
             : base(
-            new OpcodeInformation(0xE9, 2, 2),
-                      new OpcodeInformation(0xE5, 3, 2),
-                      new OpcodeInformation(0xF5, 4, 2),
-                      new OpcodeInformation(0xED, 4, 3),
-                      new OpcodeInformation(0xFD, 5, 3),
-                      new OpcodeInformation(0xF9, 5, 3),
-                      new OpcodeInformation(0xE1, 6, 2),
-                      new OpcodeInformation(0xF1, 6, 2))
+                new OpcodeInformation(0xE9, 2, 2),
+                new OpcodeInformation(0xE5, 3, 2),
+                new OpcodeInformation(0xF5, 4, 2),
+                new OpcodeInformation(0xED, 4, 3),
+                new OpcodeInformation(0xFD, 5, 3),
+                new OpcodeInformation(0xF9, 5, 3),
+                new OpcodeInformation(0xE1, 6, 2),
+                new OpcodeInformation(0xF1, 6, 2))
         { }
         #endregion
 
