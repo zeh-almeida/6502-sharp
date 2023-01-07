@@ -25,11 +25,11 @@ namespace Cpu.Instructions.Load
         /// </summary>
         public LoadRegisterX()
             : base(
-            new OpcodeInformation(0xA2, 2, 2),
-                      new OpcodeInformation(0xA6, 3, 2),
-                      new OpcodeInformation(0xB6, 4, 2),
-                      new OpcodeInformation(0xAE, 4, 3),
-                      new OpcodeInformation(0xBE, 5, 3))
+                new OpcodeInformation(0xA2, 2, 2),
+                new OpcodeInformation(0xA6, 3, 2),
+                new OpcodeInformation(0xB6, 4, 2),
+                new OpcodeInformation(0xAE, 4, 3),
+                new OpcodeInformation(0xBE, 5, 3))
         { }
         #endregion
 

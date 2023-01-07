@@ -28,14 +28,14 @@ namespace Cpu.Instructions.Load
         /// </summary>
         public LoadAccumulator()
             : base(
-            new OpcodeInformation(0xA9, 2, 2),
-                      new OpcodeInformation(0xA5, 3, 2),
-                      new OpcodeInformation(0xB5, 4, 2),
-                      new OpcodeInformation(0xAD, 4, 3),
-                      new OpcodeInformation(0xBD, 5, 3),
-                      new OpcodeInformation(0xB9, 5, 3),
-                      new OpcodeInformation(0xA1, 6, 2),
-                      new OpcodeInformation(0xB1, 6, 2))
+                new OpcodeInformation(0xA9, 2, 2),
+                new OpcodeInformation(0xA5, 3, 2),
+                new OpcodeInformation(0xB5, 4, 2),
+                new OpcodeInformation(0xAD, 4, 3),
+                new OpcodeInformation(0xBD, 5, 3),
+                new OpcodeInformation(0xB9, 5, 3),
+                new OpcodeInformation(0xA1, 6, 2),
+                new OpcodeInformation(0xB1, 6, 2))
         { }
         #endregion
 

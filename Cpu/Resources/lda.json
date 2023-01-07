@@ -1,0 +1,58 @@
+[
+    {
+        "opcode": 169,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 165,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 3,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 181,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 173,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 189,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 186,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 161,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 177,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    }
+]
