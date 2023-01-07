@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 202,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Decrements.DecrementRegisterX",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]

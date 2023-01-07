@@ -25,10 +25,10 @@ namespace Cpu.Instructions.Decrements
         /// </summary>
         public DecrementMemory()
             : base(
-            new OpcodeInformation(0xC6, 5, 2),
-                      new OpcodeInformation(0xD6, 6, 2),
-                      new OpcodeInformation(0xCE, 6, 2),
-                      new OpcodeInformation(0xDE, 7, 3))
+                  new OpcodeInformation(0xC6, 5, 2),
+                  new OpcodeInformation(0xD6, 6, 2),
+                  new OpcodeInformation(0xCE, 6, 2),
+                  new OpcodeInformation(0xDE, 7, 3))
         { }
         #endregion
 

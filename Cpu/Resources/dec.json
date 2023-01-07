@@ -1,0 +1,30 @@
+[
+    {
+        "opcode": 198,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Decrements.DecrementMemory",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 214,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Decrements.DecrementMemory",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 206,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Decrements.DecrementMemory",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 222,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Decrements.DecrementMemory",
+        "minimumCycles": 7,
+        "maximumCycles": 0
+    }
+]
