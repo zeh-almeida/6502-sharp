@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 184,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.StatusChanges.ClearOverflowFlag",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]

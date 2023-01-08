@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 248,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.StatusChanges.SetDecimalFlag",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]
