@@ -33,11 +33,11 @@ namespace Cpu.Instructions.Shifts
         /// </summary>
         public ArithmeticShiftLeft()
             : base(
-            new OpcodeInformation(0x0A, 2, 1),
-                      new OpcodeInformation(0x06, 5, 2),
-                      new OpcodeInformation(0x16, 6, 2),
-                      new OpcodeInformation(0x0E, 6, 3),
-                      new OpcodeInformation(0x1E, 7, 3))
+                new OpcodeInformation(0x0A, 2, 1),
+                new OpcodeInformation(0x06, 5, 2),
+                new OpcodeInformation(0x16, 6, 2),
+                new OpcodeInformation(0x0E, 6, 3),
+                new OpcodeInformation(0x1E, 7, 3))
         { }
         #endregion
 

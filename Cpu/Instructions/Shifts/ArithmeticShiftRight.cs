@@ -29,11 +29,11 @@ namespace Cpu.Instructions.Shifts
         /// </summary>
         public ArithmeticShiftRight()
             : base(
-            new OpcodeInformation(0x4A, 2, 1),
-                      new OpcodeInformation(0x46, 5, 2),
-                      new OpcodeInformation(0x56, 6, 2),
-                      new OpcodeInformation(0x4E, 6, 3),
-                      new OpcodeInformation(0x5E, 7, 3))
+                new OpcodeInformation(0x4A, 2, 1),
+                new OpcodeInformation(0x46, 5, 2),
+                new OpcodeInformation(0x56, 6, 2),
+                new OpcodeInformation(0x4E, 6, 3),
+                new OpcodeInformation(0x5E, 7, 3))
         { }
         #endregion
 

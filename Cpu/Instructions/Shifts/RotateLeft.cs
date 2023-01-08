@@ -29,11 +29,11 @@ namespace Cpu.Instructions.Shifts
         /// </summary>
         public RotateLeft()
             : base(
-            new OpcodeInformation(0x2A, 2, 1),
-                      new OpcodeInformation(0x26, 5, 2),
-                      new OpcodeInformation(0x36, 6, 2),
-                      new OpcodeInformation(0x2E, 6, 3),
-                      new OpcodeInformation(0x3E, 7, 3))
+                new OpcodeInformation(0x2A, 2, 1),
+                new OpcodeInformation(0x26, 5, 2),
+                new OpcodeInformation(0x36, 6, 2),
+                new OpcodeInformation(0x2E, 6, 3),
+                new OpcodeInformation(0x3E, 7, 3))
         { }
         #endregion
 

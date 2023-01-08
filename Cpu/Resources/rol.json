@@ -1,0 +1,37 @@
+[
+    {
+        "opcode": 42,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Shifts.RotateLeft",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 38,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Shifts.RotateLeft",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 54,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Shifts.RotateLeft",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 46,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Shifts.RotateLeft",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 62,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Shifts.RotateLeft",
+        "minimumCycles": 7,
+        "maximumCycles": 0
+    }
+]
