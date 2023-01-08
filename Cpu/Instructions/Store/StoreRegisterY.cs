@@ -23,9 +23,9 @@ namespace Cpu.Instructions.Store
         /// </summary>
         public StoreRegisterY()
             : base(
-            new OpcodeInformation(0x84, 3, 2),
-                      new OpcodeInformation(0x94, 4, 2),
-                      new OpcodeInformation(0x8C, 4, 3))
+                new OpcodeInformation(0x84, 3, 2),
+                new OpcodeInformation(0x94, 4, 2),
+                new OpcodeInformation(0x8C, 4, 3))
         { }
         #endregion
 

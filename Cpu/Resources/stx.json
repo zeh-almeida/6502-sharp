@@ -1,0 +1,23 @@
+[
+    {
+        "opcode": 134,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Store.StoreRegisterX",
+        "minimumCycles": 3,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 150,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Store.StoreRegisterX",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 142,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Store.StoreRegisterX",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    }
+]
