@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 152,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Transfers.TransferYAccumulator",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]
