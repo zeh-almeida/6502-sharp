@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 72,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Stack.PushAccumulator",
+        "minimumCycles": 3,
+        "maximumCycles": 0
+    }
+]

@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 186,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Stack.TransferStackX",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]

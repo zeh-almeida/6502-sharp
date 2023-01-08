@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 104,
+        "bytes": 1,
+        "instructionQualifier": "Cpu.Instructions.Stack.PullAccumulator",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    }
+]
