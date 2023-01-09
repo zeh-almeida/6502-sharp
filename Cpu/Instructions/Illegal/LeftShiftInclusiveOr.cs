@@ -30,13 +30,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public LeftShiftInclusiveOr()
             : base(
-                  new OpcodeInformation(0x07, 5, 2),
-                            new OpcodeInformation(0x17, 6, 2),
-                            new OpcodeInformation(0x0F, 6, 3),
-                            new OpcodeInformation(0x1F, 7, 3),
-                            new OpcodeInformation(0x1B, 7, 3),
-                            new OpcodeInformation(0x03, 8, 2),
-                            new OpcodeInformation(0x13, 8, 2))
+                new OpcodeInformation(0x07, 5, 2),
+                new OpcodeInformation(0x17, 6, 2),
+                new OpcodeInformation(0x0F, 6, 3),
+                new OpcodeInformation(0x1F, 7, 3),
+                new OpcodeInformation(0x1B, 7, 3),
+                new OpcodeInformation(0x03, 8, 2),
+                new OpcodeInformation(0x13, 8, 2))
         { }
         #endregion
 

@@ -19,7 +19,7 @@ namespace Cpu.Instructions.Illegal
     /// <c>0x53</c>
     /// </para>
     /// </summary>
-    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#SLO"/>
+    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#SRE"/>
     /// <seealso cref="Shifts.ArithmeticShiftLeft"/>
     /// <seealso cref="Logic.ExclusiveOr"/>
     public sealed class LeftShiftExclusiveOr : BaseInstruction
@@ -30,13 +30,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public LeftShiftExclusiveOr()
             : base(
-                  new OpcodeInformation(0x47, 5, 2),
-                            new OpcodeInformation(0x57, 6, 2),
-                            new OpcodeInformation(0x4F, 6, 3),
-                            new OpcodeInformation(0x5F, 7, 3),
-                            new OpcodeInformation(0x5B, 7, 3),
-                            new OpcodeInformation(0x43, 8, 2),
-                            new OpcodeInformation(0x53, 8, 2))
+                new OpcodeInformation(0x47, 5, 2),
+                new OpcodeInformation(0x57, 6, 2),
+                new OpcodeInformation(0x4F, 6, 3),
+                new OpcodeInformation(0x5F, 7, 3),
+                new OpcodeInformation(0x5B, 7, 3),
+                new OpcodeInformation(0x43, 8, 2),
+                new OpcodeInformation(0x53, 8, 2))
         { }
         #endregion
 

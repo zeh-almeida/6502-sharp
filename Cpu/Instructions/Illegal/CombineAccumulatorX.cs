@@ -26,10 +26,10 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public CombineAccumulatorX()
             : base(
-                  new OpcodeInformation(0x87, 3, 2),
-                            new OpcodeInformation(0x97, 4, 2),
-                            new OpcodeInformation(0x8F, 4, 3),
-                            new OpcodeInformation(0x83, 6, 2))
+                new OpcodeInformation(0x87, 3, 2),
+                new OpcodeInformation(0x97, 4, 2),
+                new OpcodeInformation(0x8F, 4, 3),
+                new OpcodeInformation(0x83, 6, 2))
         { }
         #endregion
 

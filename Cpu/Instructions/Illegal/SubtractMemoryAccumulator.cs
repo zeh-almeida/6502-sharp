@@ -9,7 +9,7 @@ namespace Cpu.Instructions.Illegal
     /// <para>Increment Memory and Subtract Accumulator instruction (ISC/ISB/INS)</para>
     /// <para>Illegal, increments memory then decrements it from accumulator</para>
     /// </summary>
-    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#DCP"/>
+    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#ISC"/>
     /// <seealso cref="Increments.IncrementMemory"/>
     /// <seealso cref="Arithmetic.SubtractWithCarry"/>
     public sealed class SubtractMemoryAccumulator : BaseInstruction
@@ -20,13 +20,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public SubtractMemoryAccumulator()
             : base(
-                  new OpcodeInformation(0xE7, 5, 2),
-                            new OpcodeInformation(0xF7, 6, 2),
-                            new OpcodeInformation(0xEF, 6, 3),
-                            new OpcodeInformation(0xFF, 7, 3),
-                            new OpcodeInformation(0xFB, 7, 3),
-                            new OpcodeInformation(0xE3, 8, 2),
-                            new OpcodeInformation(0xF3, 4, 2))
+                new OpcodeInformation(0xE7, 5, 2),
+                new OpcodeInformation(0xF7, 6, 2),
+                new OpcodeInformation(0xEF, 6, 3),
+                new OpcodeInformation(0xFF, 7, 3),
+                new OpcodeInformation(0xFB, 7, 3),
+                new OpcodeInformation(0xE3, 8, 2),
+                new OpcodeInformation(0xF3, 4, 2))
         { }
         #endregion
 

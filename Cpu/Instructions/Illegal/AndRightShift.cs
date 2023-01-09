@@ -12,7 +12,7 @@ namespace Cpu.Instructions.Illegal
     /// <c>0x6B</c>
     /// </para>
     /// </summary>
-    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#ALR"/>
+    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#ARR"/>
     /// <seealso cref="Logic.LogicAnd"/>
     /// <seealso cref="Shifts.ArithmeticShiftRight"/>
     public sealed class AndRightShift : BaseInstruction

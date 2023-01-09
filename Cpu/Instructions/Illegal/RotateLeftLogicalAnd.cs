@@ -30,13 +30,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public RotateLeftLogicalAnd()
             : base(
-                  new OpcodeInformation(0x27, 5, 2),
-                            new OpcodeInformation(0x37, 6, 2),
-                            new OpcodeInformation(0x2F, 6, 3),
-                            new OpcodeInformation(0x3F, 7, 3),
-                            new OpcodeInformation(0x3B, 7, 3),
-                            new OpcodeInformation(0x23, 8, 2),
-                            new OpcodeInformation(0x33, 8, 2))
+                new OpcodeInformation(0x27, 5, 2),
+                new OpcodeInformation(0x37, 6, 2),
+                new OpcodeInformation(0x2F, 6, 3),
+                new OpcodeInformation(0x3F, 7, 3),
+                new OpcodeInformation(0x3B, 7, 3),
+                new OpcodeInformation(0x23, 8, 2),
+                new OpcodeInformation(0x33, 8, 2))
         { }
         #endregion
 

@@ -29,12 +29,12 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public LoadAccumulatorX()
             : base(
-                  new OpcodeInformation(0xA7, 3, 2),
-                            new OpcodeInformation(0xB7, 4, 2),
-                            new OpcodeInformation(0xAF, 6, 2),
-                            new OpcodeInformation(0xBF, 6, 2),
-                            new OpcodeInformation(0xA3, 4, 3),
-                            new OpcodeInformation(0xB3, 4, 3))
+                new OpcodeInformation(0xA7, 3, 2),
+                new OpcodeInformation(0xB7, 4, 2),
+                new OpcodeInformation(0xAF, 6, 2),
+                new OpcodeInformation(0xBF, 6, 2),
+                new OpcodeInformation(0xA3, 4, 3),
+                new OpcodeInformation(0xB3, 4, 3))
         { }
         #endregion
 

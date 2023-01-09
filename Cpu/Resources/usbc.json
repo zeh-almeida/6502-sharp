@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 235,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalSubtractWithCarry",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]

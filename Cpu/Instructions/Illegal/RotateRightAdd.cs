@@ -30,13 +30,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public RotateRightAdd()
             : base(
-                  new OpcodeInformation(0x67, 5, 2),
-                            new OpcodeInformation(0x77, 6, 2),
-                            new OpcodeInformation(0x6F, 6, 3),
-                            new OpcodeInformation(0x7F, 7, 3),
-                            new OpcodeInformation(0x7B, 7, 3),
-                            new OpcodeInformation(0x63, 8, 2),
-                            new OpcodeInformation(0x73, 8, 2))
+                new OpcodeInformation(0x67, 5, 2),
+                new OpcodeInformation(0x77, 6, 2),
+                new OpcodeInformation(0x6F, 6, 3),
+                new OpcodeInformation(0x7F, 7, 3),
+                new OpcodeInformation(0x7B, 7, 3),
+                new OpcodeInformation(0x63, 8, 2),
+                new OpcodeInformation(0x73, 8, 2))
         { }
         #endregion
 

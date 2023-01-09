@@ -1,0 +1,51 @@
+[
+    {
+        "opcode": 103,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.RotateRightAdd",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 119,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.RotateRightAdd",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 111,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Illegal.RotateRightAdd",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 127,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Illegal.RotateRightAdd",
+        "minimumCycles": 7,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 123,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Illegal.RotateRightAdd",
+        "minimumCycles": 7,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 99,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.RotateRightAdd",
+        "minimumCycles": 8,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 115,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.RotateRightAdd",
+        "minimumCycles": 8,
+        "maximumCycles": 0
+    }
+]

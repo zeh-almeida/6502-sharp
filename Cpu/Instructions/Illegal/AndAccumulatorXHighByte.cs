@@ -28,8 +28,8 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public AndAccumulatorXHighByte()
             : base(
-                  new OpcodeInformation(0x93, 6, 2),
-                            new OpcodeInformation(0x9F, 5, 3))
+                new OpcodeInformation(0x93, 6, 2),
+                new OpcodeInformation(0x9F, 5, 3))
         { }
         #endregion
 

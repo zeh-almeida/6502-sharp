@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 139,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.AndAccumulatorX",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]

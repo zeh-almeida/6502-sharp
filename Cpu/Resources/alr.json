@@ -1,0 +1,9 @@
+[
+    {
+        "opcode": 75,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.AndLeftShift",
+        "minimumCycles": 2,
+        "maximumCycles": 0
+    }
+]

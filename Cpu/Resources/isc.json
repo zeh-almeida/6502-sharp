@@ -1,0 +1,51 @@
+[
+    {
+        "opcode": 231,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.SubtractMemoryAccumulator",
+        "minimumCycles": 5,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 247,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.SubtractMemoryAccumulator",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 239,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Illegal.SubtractMemoryAccumulator",
+        "minimumCycles": 6,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 255,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Illegal.SubtractMemoryAccumulator",
+        "minimumCycles": 7,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 251,
+        "bytes": 3,
+        "instructionQualifier": "Cpu.Instructions.Illegal.SubtractMemoryAccumulator",
+        "minimumCycles": 7,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 227,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.SubtractMemoryAccumulator",
+        "minimumCycles": 8,
+        "maximumCycles": 0
+    },
+    {
+        "opcode": 243,
+        "bytes": 2,
+        "instructionQualifier": "Cpu.Instructions.Illegal.SubtractMemoryAccumulator",
+        "minimumCycles": 4,
+        "maximumCycles": 0
+    }
+]

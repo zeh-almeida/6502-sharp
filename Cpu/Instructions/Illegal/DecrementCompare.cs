@@ -30,13 +30,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public DecrementCompare()
             : base(
-                  new OpcodeInformation(0xC7, 5, 2),
-                            new OpcodeInformation(0xD7, 6, 2),
-                            new OpcodeInformation(0xCF, 6, 3),
-                            new OpcodeInformation(0xDF, 7, 3),
-                            new OpcodeInformation(0xDB, 7, 3),
-                            new OpcodeInformation(0xC3, 8, 2),
-                            new OpcodeInformation(0xD3, 8, 2))
+                new OpcodeInformation(0xC7, 5, 2),
+                new OpcodeInformation(0xD7, 6, 2),
+                new OpcodeInformation(0xCF, 6, 3),
+                new OpcodeInformation(0xDF, 7, 3),
+                new OpcodeInformation(0xDB, 7, 3),
+                new OpcodeInformation(0xC3, 8, 2),
+                new OpcodeInformation(0xD3, 8, 2))
         { }
         #endregion
 
