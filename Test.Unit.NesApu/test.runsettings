@@ -10,9 +10,6 @@
 		<!-- Path relative to directory that contains .runsettings file-->
 		<ResultsDirectory>.\TestResults</ResultsDirectory>
 
-		<!-- Path to Test Adapters -->
-		<TestAdaptersPaths>%SystemDrive%\Temp\foo;%SystemDrive%\Temp\bar</TestAdaptersPaths>
-
 		<!-- Specify timeout in milliseconds. A valid value should be greater than 0 -->
 		<TestSessionTimeout>10000</TestSessionTimeout>
 
@@ -31,23 +28,9 @@
 					<CodeCoverage>
 						<ModulePaths>
 							<Exclude>
-								<ModulePath>Cpu.InstructionDefinition\..*</ModulePath>
-								<ModulePath>Cpu.InstructionDefinition</ModulePath>
-
-								<ModulePath>*Test\..*</ModulePath>
-								<ModulePath>*Test.*</ModulePath>
+								<ModulePath>Test\..*</ModulePath>
 							</Exclude>
 						</ModulePaths>
-
-						<Functions>
-							<Exclude>
-								<Function>^Test.*</Function>
-								<Function>^Cpu\.InstructionDefinition.*</Function>
-
-								<Function>Test.*</Function>
-								<Function>Cpu\.InstructionDefinition.*</Function>
-							</Exclude>
-						</Functions>
 
 						<!-- We recommend you do not change the following values: -->
 						<UseVerifiableInstrumentation>True</UseVerifiableInstrumentation>
