@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Collections;
+using System.Globalization;
+using System.Text.Json;
 
 namespace Cpu.Opcodes
 {
@@ -7,6 +9,10 @@ namespace Cpu.Opcodes
     /// </summary>
     public sealed record OpcodeLoader
     {
+        #region Constants
+        private const int OpcodeAmount = byte.MaxValue;
+        #endregion
+
         #region Properties
         /// <summary>
         /// Loaded Opcodes. May be empty.
@@ -31,23 +37,48 @@ namespace Cpu.Opcodes
         /// <returns>Current instance for method chaining</returns>
         public async Task<OpcodeLoader> LoadAsync()
         {
-            await this.LoadJsonData();
+            await this.ReadAll();
             return this;
         }
 
-        private async Task LoadJsonData()
+        private async Task ReadAll()
         {
-            var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+            var resourceSet = InstructionDefinition
+                .ResourceManager
+                .GetResourceSet(CultureInfo.CurrentUICulture, true, true);
 
-            using var stream = new MemoryStream(InstructionDefinition.Values);
-            var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options);
-
-            if (result is null)
+            if (resourceSet is null)
             {
-                throw new Exception();
+                return;
             }
 
-            this.Opcodes = result.ToArray();
+            var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+            var foundValues = new HashSet<OpcodeInformation>(OpcodeAmount);
+
+            foreach (DictionaryEntry item in resourceSet)
+            {
+                if (item.Value is not byte[] bytes || !bytes.Any())
+                {
+                    throw new Exception();
+                }
+
+                using var stream = new MemoryStream(bytes);
+
+                var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options)
+                    ?? throw new Exception();
+
+                foreach (var opcode in result)
+                {
+                    if (foundValues.Contains(opcode))
+                    {
+                        throw new Exception();
+                    }
+
+                    _ = foundValues.Add(opcode);
+                }
+            }
+
+            this.Opcodes = foundValues;
         }
     }
 }

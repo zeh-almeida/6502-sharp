@@ -118,7 +118,235 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Values" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Values.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="adc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\adc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="alr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\alr.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="anc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\anc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="and" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\and.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ane" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ane.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="arr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\arr.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="asl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\asl.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bcc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bcc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bcs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bcs.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="beq" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\beq.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bit.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bmi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bmi.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bne" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bne.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bpl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bpl.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="brk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\brk.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bvc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bvc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="bvs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bvs.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="clc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\clc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cld" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\cld.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cli" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\cli.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="clv" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\clv.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cmp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\cmp.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cpx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\cpx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cpy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\cpy.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dcp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dcp.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dec" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dec.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dex" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dex.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\dey.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="eor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\eor.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="inc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\inc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="inop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\inop.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="inx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\inx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="iny" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\iny.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="isc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\isc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="jmp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\jmp.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="jsr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\jsr.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="las" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\las.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lax" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\lax.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lda" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\lda.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ldx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ldx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ldy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ldy.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lsr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\lsr.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lxa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\lxa.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="nop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\nop.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ora" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ora.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\pha.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="php" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\php.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="pla" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\pla.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="plp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\plp.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rla" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\rla.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rol" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\rol.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ror" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\ror.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\rra.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rti" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\rti.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\rts.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sax" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sax.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sbc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sbc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sbx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sbx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sec" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sec.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sed.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sei" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sei.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sha" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sha.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\shx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\shy.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="slo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\slo.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sre" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sre.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sta" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sta.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="stx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\stx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="sty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\sty.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tas.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tax" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tax.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tay" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tay.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tsx.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\txa.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="txs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\txs.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tya" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tya.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="usbc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\usbc.json;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
