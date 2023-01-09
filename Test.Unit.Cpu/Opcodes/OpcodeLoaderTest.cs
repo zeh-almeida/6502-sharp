@@ -67,6 +67,28 @@ public sealed record OpcodeLoaderTest
     }
 
     [Fact]
+    public async Task LoadAsync_Bad_Resource_Type_Throws()
+    {
+        var sets = new Mock<ResourceSet>();
+        var loader = new Mock<ResourceLoader>();
+
+        var enumerator = new Dictionary<object, object>() {
+            { "Test", "Not a Byte Array" },
+        } as IDictionary;
+
+        _ = sets
+            .Setup(m => m.GetEnumerator())
+            .Returns(enumerator.GetEnumerator());
+
+        _ = loader
+            .Setup(m => m.Load(It.IsAny<ResourceManager>()))
+            .Returns(sets.Object);
+
+        var subject = new OpcodeLoader(loader.Object);
+        _ = await Assert.ThrowsAsync<MisconfiguredOpcodeException>(() => subject.LoadAsync());
+    }
+
+    [Fact]
     public async Task LoadAsync_Duplicate_Opcode_Throws()
     {
         var sets = new Mock<ResourceSet>();
