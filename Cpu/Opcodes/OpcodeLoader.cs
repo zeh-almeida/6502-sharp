@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cpu.Opcodes.Exceptions;
+using System.Collections;
 using System.Globalization;
 using System.Text.Json;
 
@@ -59,7 +60,10 @@ namespace Cpu.Opcodes
             {
                 if (item.Value is not byte[] bytes || !bytes.Any())
                 {
-                    throw new Exception();
+                    var value = item.Key.ToString()
+                        ?? throw new KeyNotFoundException("Cannot load resource");
+
+                    throw new MisconfiguredOpcodeException(value);
                 }
 
                 using var stream = new MemoryStream(bytes);
@@ -71,7 +75,7 @@ namespace Cpu.Opcodes
                 {
                     if (foundValues.Contains(opcode))
                     {
-                        throw new Exception();
+                        throw new DuplicateOpcodeException(opcode.Opcode);
                     }
 
                     _ = foundValues.Add(opcode);

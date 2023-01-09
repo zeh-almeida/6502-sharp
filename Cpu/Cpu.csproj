@@ -45,21 +45,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="InstructionDefinition.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>InstructionDefinition.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="InstructionDefinition.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>InstructionDefinition.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="InstructionDefinition.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>InstructionDefinition.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="InstructionDefinition.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>InstructionDefinition.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\" />
+		<Folder Include="Resources\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+		</AssemblyAttribute>
 	</ItemGroup>
 </Project>

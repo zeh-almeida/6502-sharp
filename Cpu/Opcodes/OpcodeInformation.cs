@@ -31,6 +31,9 @@ namespace Cpu.Opcodes
         /// </summary>
         public byte MaximumCycles { get; }
 
+        /// <summary>
+        /// Full assembly name of the Target Instruction of this Opcode
+        /// </summary>
         public string? InstructionQualifier { get; }
 
         /// <summary>
@@ -137,12 +140,15 @@ namespace Cpu.Opcodes
 
         private void ApplyInstruction()
         {
+            if (string.IsNullOrWhiteSpace(this.InstructionQualifier))
+            {
+                throw new Exception("Could not qualify instruction");
+            }
+
             var target = this.GetType().Assembly.FullName
                 ?? throw new Exception("Could not qualify assembly");
 
-            var handle = Activator.CreateInstance(
-                target,
-                this.InstructionQualifier)
+            var handle = Activator.CreateInstance(target, this.InstructionQualifier)
                 ?? throw new UnknownInstructionException(this.InstructionQualifier);
 
             if (handle.Unwrap() is not IInstruction instruction)
