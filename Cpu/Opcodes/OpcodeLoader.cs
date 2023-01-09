@@ -1,6 +1,5 @@
 ﻿using Cpu.Opcodes.Exceptions;
 using System.Collections;
-using System.Globalization;
 using System.Text.Json;
 
 namespace Cpu.Opcodes
@@ -20,6 +19,8 @@ namespace Cpu.Opcodes
         /// <see cref="OpcodeInformation"/>
         /// </summary>
         public IEnumerable<OpcodeInformation> Opcodes { get; private set; }
+
+        private ResourceLoader Loader { get; }
         #endregion
 
         #region Constructors
@@ -27,8 +28,18 @@ namespace Cpu.Opcodes
         /// Initializes the loader
         /// </summary>
         public OpcodeLoader()
+            : this(new ResourceLoader())
+        {
+        }
+
+        /// <summary>
+        /// Initializes the loader
+        /// </summary>
+        /// <param name="loader"><see cref="ResourceLoader"/> to read from</param>
+        public OpcodeLoader(ResourceLoader loader)
         {
             this.Opcodes = Array.Empty<OpcodeInformation>();
+            this.Loader = loader;
         }
         #endregion
 
@@ -38,20 +49,15 @@ namespace Cpu.Opcodes
         /// <returns>Current instance for method chaining</returns>
         public async Task<OpcodeLoader> LoadAsync()
         {
-            await this.ReadAll();
+            await this.ReadResourcesAsync();
             return this;
         }
 
-        private async Task ReadAll()
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8604 // Possible null reference argument.
+        private async Task ReadResourcesAsync()
         {
-            var resourceSet = InstructionDefinition
-                .ResourceManager
-                .GetResourceSet(CultureInfo.CurrentUICulture, true, true);
-
-            if (resourceSet is null)
-            {
-                return;
-            }
+            var resourceSet = this.Loader.LoadInstructions();
 
             var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
             var foundValues = new HashSet<OpcodeInformation>(OpcodeAmount);
@@ -60,29 +66,30 @@ namespace Cpu.Opcodes
             {
                 if (item.Value is not byte[] bytes || !bytes.Any())
                 {
-                    var value = item.Key.ToString()
-                        ?? throw new KeyNotFoundException("Cannot load resource");
-
+                    var value = item.Key.ToString();
                     throw new MisconfiguredOpcodeException(value);
                 }
 
                 using var stream = new MemoryStream(bytes);
-
-                var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options)
-                    ?? throw new Exception();
+                var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options);
 
                 foreach (var opcode in result)
                 {
-                    if (foundValues.Contains(opcode))
+                    if (!foundValues.Add(opcode))
                     {
                         throw new DuplicateOpcodeException(opcode.Opcode);
                     }
-
-                    _ = foundValues.Add(opcode);
                 }
+            }
+
+            if (!foundValues.Any())
+            {
+                throw new MisconfiguredOpcodeException(nameof(resourceSet));
             }
 
             this.Opcodes = foundValues;
         }
+#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 }
