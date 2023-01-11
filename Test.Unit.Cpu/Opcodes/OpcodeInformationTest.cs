@@ -24,8 +24,15 @@ public sealed record OpcodeInformationTest
     #region Constructors
     public OpcodeInformationTest()
     {
+#pragma warning disable CS8601 // Possible null reference assignment.
         this.Subject = new OpcodeInformation(Opcode, MinimumCycles, Bytes)
             .SetInstruction(new InclusiveOr()) as OpcodeInformation;
+
+        if (this.Subject is null)
+        {
+            throw new Exception("Should never happen");
+        }
+#pragma warning restore CS8601 // Possible null reference assignment.
     }
     #endregion
 

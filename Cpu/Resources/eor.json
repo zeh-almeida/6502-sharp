@@ -31,15 +31,15 @@
         "opcode": 93,
         "bytes": 3,
         "instructionQualifier": "Cpu.Instructions.Logic.ExclusiveOr",
-        "minimumCycles": 5,
-        "maximumCycles": 0
+        "minimumCycles": 4,
+        "maximumCycles": 5
     },
     {
         "opcode": 89,
         "bytes": 3,
         "instructionQualifier": "Cpu.Instructions.Logic.ExclusiveOr",
-        "minimumCycles": 5,
-        "maximumCycles": 0
+        "minimumCycles": 4,
+        "maximumCycles": 5
     },
     {
         "opcode": 65,
@@ -52,7 +52,7 @@
         "opcode": 81,
         "bytes": 2,
         "instructionQualifier": "Cpu.Instructions.Logic.ExclusiveOr",
-        "minimumCycles": 6,
-        "maximumCycles": 0
+        "minimumCycles": 5,
+        "maximumCycles": 6
     }
 ]

@@ -6,6 +6,9 @@
     public interface IRegisterManager
     {
         #region Constants
+        /// <summary>
+        /// Amount of bytes it takes to store the register data
+        /// </summary>
         public const int RegisterLengthBytes = 6;
         #endregion
 

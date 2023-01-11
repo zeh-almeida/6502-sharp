@@ -31,15 +31,15 @@
         "opcode": 221,
         "bytes": 3,
         "instructionQualifier": "Cpu.Instructions.Arithmetic.CompareAccumulator",
-        "minimumCycles": 5,
-        "maximumCycles": 0
+        "minimumCycles": 4,
+        "maximumCycles": 5
     },
     {
         "opcode": 217,
         "bytes": 3,
         "instructionQualifier": "Cpu.Instructions.Arithmetic.CompareAccumulator",
-        "minimumCycles": 5,
-        "maximumCycles": 0
+        "minimumCycles": 4,
+        "maximumCycles": 5
     },
     {
         "opcode": 193,
@@ -52,7 +52,7 @@
         "opcode": 209,
         "bytes": 2,
         "instructionQualifier": "Cpu.Instructions.Arithmetic.CompareAccumulator",
-        "minimumCycles": 6,
-        "maximumCycles": 0
+        "minimumCycles": 5,
+        "maximumCycles": 6
     }
 ]

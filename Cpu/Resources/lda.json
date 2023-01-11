@@ -31,15 +31,15 @@
         "opcode": 189,
         "bytes": 3,
         "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
-        "minimumCycles": 5,
-        "maximumCycles": 0
+        "minimumCycles": 4,
+        "maximumCycles": 5
     },
     {
         "opcode": 185,
         "bytes": 3,
         "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
-        "minimumCycles": 5,
-        "maximumCycles": 0
+        "minimumCycles": 4,
+        "maximumCycles": 5
     },
     {
         "opcode": 161,
@@ -52,7 +52,7 @@
         "opcode": 177,
         "bytes": 2,
         "instructionQualifier": "Cpu.Instructions.Load.LoadAccumulator",
-        "minimumCycles": 6,
-        "maximumCycles": 0
+        "minimumCycles": 5,
+        "maximumCycles": 6
     }
 ]
