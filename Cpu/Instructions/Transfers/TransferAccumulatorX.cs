@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Transfers
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Transfers
         /// Instantiates a new <see cref="TransferAccumulatorX"/>
         /// </summary>
         public TransferAccumulatorX()
-            : base(new OpcodeInformation(0xAA, 2, 1))
+            : base(0xAA)
         { }
         #endregion
 

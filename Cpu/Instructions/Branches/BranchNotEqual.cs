@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Branches
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Branches
         /// Instantiates a new <see cref="BranchNotEqual"/> instruction
         /// </summary>
         public BranchNotEqual()
-            : base(new OpcodeInformation(0xD0, 5, 2))
+            : base(0xD0)
         { }
         #endregion
 

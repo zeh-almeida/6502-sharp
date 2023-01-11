@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Arithmetic
@@ -24,9 +23,9 @@ namespace Cpu.Instructions.Arithmetic
         /// </summary>
         public CompareRegisterY()
             : base(
-                new OpcodeInformation(0xC0, 2, 2),
-                new OpcodeInformation(0xC4, 3, 2),
-                new OpcodeInformation(0xCC, 4, 3))
+                0xC0,
+                0xC4,
+                0xCC)
         { }
         #endregion
 

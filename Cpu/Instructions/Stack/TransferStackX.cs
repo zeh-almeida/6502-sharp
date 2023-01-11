@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Stack
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Stack
         /// Instantiates a new <see cref="TransferStackX"/>
         /// </summary>
         public TransferStackX()
-            : base(new OpcodeInformation(0xBA, 2, 1))
+            : base(0xBA)
         { }
         #endregion
 

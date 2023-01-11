@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Logic
@@ -29,14 +28,14 @@ namespace Cpu.Instructions.Logic
         /// </summary>
         public InclusiveOr()
             : base(
-                new OpcodeInformation(0x09, 2, 2),
-                new OpcodeInformation(0x05, 3, 2),
-                new OpcodeInformation(0x15, 4, 2),
-                new OpcodeInformation(0x0D, 4, 3),
-                new OpcodeInformation(0x1D, 5, 3),
-                new OpcodeInformation(0x19, 5, 3),
-                new OpcodeInformation(0x01, 6, 2),
-                new OpcodeInformation(0x11, 6, 2))
+                0x09,
+                0x05,
+                0x15,
+                0x0D,
+                0x1D,
+                0x19,
+                0x01,
+                0x11)
         { }
         #endregion
 

@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -29,14 +28,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="RotateLeftLogicalAnd"/>
         /// </summary>
         public RotateLeftLogicalAnd()
-            : base(
-                new OpcodeInformation(0x27, 5, 2),
-                new OpcodeInformation(0x37, 6, 2),
-                new OpcodeInformation(0x2F, 6, 3),
-                new OpcodeInformation(0x3F, 7, 3),
-                new OpcodeInformation(0x3B, 7, 3),
-                new OpcodeInformation(0x23, 8, 2),
-                new OpcodeInformation(0x33, 8, 2))
+            : base(0x27, 0x37, 0x2F, 0x3F, 0x3B, 0x23, 0x33)
         { }
         #endregion
 

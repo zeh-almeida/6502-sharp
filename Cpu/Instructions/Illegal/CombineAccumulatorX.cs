@@ -1,5 +1,4 @@
 ﻿using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -26,10 +25,10 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public CombineAccumulatorX()
             : base(
-                new OpcodeInformation(0x87, 3, 2),
-                new OpcodeInformation(0x97, 4, 2),
-                new OpcodeInformation(0x8F, 4, 3),
-                new OpcodeInformation(0x83, 6, 2))
+                0x87,
+                0x97,
+                0x8F,
+                0x83)
         { }
         #endregion
 

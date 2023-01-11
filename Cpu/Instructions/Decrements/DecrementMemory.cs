@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Decrements
@@ -25,10 +24,10 @@ namespace Cpu.Instructions.Decrements
         /// </summary>
         public DecrementMemory()
             : base(
-                  new OpcodeInformation(0xC6, 5, 2),
-                  new OpcodeInformation(0xD6, 6, 2),
-                  new OpcodeInformation(0xCE, 6, 2),
-                  new OpcodeInformation(0xDE, 7, 3))
+                  0xC6,
+                  0xD6,
+                  0xCE,
+                  0xDE)
         { }
         #endregion
 

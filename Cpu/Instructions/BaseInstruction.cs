@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions
 {
@@ -14,15 +13,6 @@ namespace Cpu.Instructions
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Instantiates the base class
-        /// </summary>
-        /// <param name="opcodeInfos">Allowed opcode and their respective information</param>
-        protected BaseInstruction(params IOpcodeInformation[] opcodeInfos)
-            : this(opcodeInfos.Select(info => info.Opcode).ToArray())
-        {
-        }
-
         /// <summary>
         /// Instantiates the base class
         /// </summary>

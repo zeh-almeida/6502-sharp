@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -24,8 +23,8 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public AndCarry()
             : base(
-                new OpcodeInformation(0x0B, 2, 2),
-                new OpcodeInformation(0x2B, 2, 2))
+                0x0B,
+                0x2B)
         { }
         #endregion
 

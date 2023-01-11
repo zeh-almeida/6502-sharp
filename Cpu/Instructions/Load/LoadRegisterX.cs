@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Load
@@ -25,11 +24,11 @@ namespace Cpu.Instructions.Load
         /// </summary>
         public LoadRegisterX()
             : base(
-                new OpcodeInformation(0xA2, 2, 2),
-                new OpcodeInformation(0xA6, 3, 2),
-                new OpcodeInformation(0xB6, 4, 2),
-                new OpcodeInformation(0xAE, 4, 3),
-                new OpcodeInformation(0xBE, 5, 3))
+                0xA2,
+                0xA6,
+                0xB6,
+                0xAE,
+                0xBE)
         { }
         #endregion
 

@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -25,7 +24,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="IllegalSubtractWithCarry"/>
         /// </summary>
         public IllegalSubtractWithCarry()
-            : base(new OpcodeInformation(0xEB, 2, 2))
+            : base(0xEB)
         { }
         #endregion
 

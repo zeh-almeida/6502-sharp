@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.SystemFunctions
@@ -25,7 +24,7 @@ namespace Cpu.Instructions.SystemFunctions
         /// Instantiates a new <see cref="ForceInterrupt"/>
         /// </summary>
         public ForceInterrupt()
-            : base(new OpcodeInformation(0x00, 7, 1))
+            : base(0x00)
         { }
         #endregion
 

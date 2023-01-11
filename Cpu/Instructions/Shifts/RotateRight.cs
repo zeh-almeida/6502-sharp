@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Shifts
@@ -29,11 +28,11 @@ namespace Cpu.Instructions.Shifts
         /// </summary>
         public RotateRight()
             : base(
-                new OpcodeInformation(0x6A, 2, 1),
-                new OpcodeInformation(0x66, 5, 2),
-                new OpcodeInformation(0x76, 6, 2),
-                new OpcodeInformation(0x6E, 6, 3),
-                new OpcodeInformation(0x7E, 7, 3))
+                0x6A,
+                0x66,
+                0x76,
+                0x6E,
+                0x7E)
         { }
         #endregion
 

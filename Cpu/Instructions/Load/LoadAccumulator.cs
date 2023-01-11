@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Load
@@ -27,15 +26,7 @@ namespace Cpu.Instructions.Load
         /// Instantiates a new <see cref="LoadAccumulator"/>
         /// </summary>
         public LoadAccumulator()
-            : base(
-                new OpcodeInformation(0xA9, 2, 2),
-                new OpcodeInformation(0xA5, 3, 2),
-                new OpcodeInformation(0xB5, 4, 2),
-                new OpcodeInformation(0xAD, 4, 3),
-                new OpcodeInformation(0xBD, 5, 3),
-                new OpcodeInformation(0xB9, 5, 3),
-                new OpcodeInformation(0xA1, 6, 2),
-                new OpcodeInformation(0xB1, 6, 2))
+            : base(0xA9, 0xA5, 0xB5, 0xAD, 0xBD, 0xB9, 0xA1, 0xB1)
         { }
         #endregion
 

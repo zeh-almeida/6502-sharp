@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Shifts
@@ -28,12 +27,7 @@ namespace Cpu.Instructions.Shifts
         /// Instantiates a new <see cref="RotateLeft"/>
         /// </summary>
         public RotateLeft()
-            : base(
-                new OpcodeInformation(0x2A, 2, 1),
-                new OpcodeInformation(0x26, 5, 2),
-                new OpcodeInformation(0x36, 6, 2),
-                new OpcodeInformation(0x2E, 6, 3),
-                new OpcodeInformation(0x3E, 7, 3))
+            : base(0x2A, 0x26, 0x36, 0x2E, 0x3E)
         { }
         #endregion
 

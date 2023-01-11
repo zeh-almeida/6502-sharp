@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Increments
@@ -25,10 +24,10 @@ namespace Cpu.Instructions.Increments
         /// </summary>
         public IncrementMemory()
             : base(
-                new OpcodeInformation(0xE6, 5, 2),
-                new OpcodeInformation(0xF6, 6, 2),
-                new OpcodeInformation(0xEE, 6, 2),
-                new OpcodeInformation(0xFE, 7, 3))
+                0xE6,
+                0xF6,
+                0xEE,
+                0xFE)
         { }
         #endregion
 

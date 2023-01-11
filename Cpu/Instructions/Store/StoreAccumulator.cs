@@ -1,5 +1,4 @@
 ﻿using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Store
@@ -27,13 +26,13 @@ namespace Cpu.Instructions.Store
         /// </summary>
         public StoreAccumulator()
             : base(
-                new OpcodeInformation(0x85, 3, 2),
-                new OpcodeInformation(0x95, 4, 2),
-                new OpcodeInformation(0x8D, 4, 3),
-                new OpcodeInformation(0x9D, 5, 3),
-                new OpcodeInformation(0x99, 5, 3),
-                new OpcodeInformation(0x81, 6, 2),
-                new OpcodeInformation(0x91, 6, 2))
+                0x85,
+                0x95,
+                0x8D,
+                0x9D,
+                0x99,
+                0x81,
+                0x91)
         { }
         #endregion
 

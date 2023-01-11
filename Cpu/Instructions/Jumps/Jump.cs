@@ -1,5 +1,4 @@
 ﻿using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Jumps
@@ -22,8 +21,8 @@ namespace Cpu.Instructions.Jumps
         /// </summary>
         public Jump()
             : base(
-                new OpcodeInformation(0x4C, 3, 3),
-                new OpcodeInformation(0x6C, 5, 3))
+                0x4C,
+                0x6C)
         { }
         #endregion
 

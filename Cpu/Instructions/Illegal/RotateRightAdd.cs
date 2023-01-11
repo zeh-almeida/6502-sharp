@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -29,14 +28,13 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="RotateRightAdd"/>
         /// </summary>
         public RotateRightAdd()
-            : base(
-                new OpcodeInformation(0x67, 5, 2),
-                new OpcodeInformation(0x77, 6, 2),
-                new OpcodeInformation(0x6F, 6, 3),
-                new OpcodeInformation(0x7F, 7, 3),
-                new OpcodeInformation(0x7B, 7, 3),
-                new OpcodeInformation(0x63, 8, 2),
-                new OpcodeInformation(0x73, 8, 2))
+            : base(0x67,
+                  0x77,
+                  0x6F,
+                  0x7F,
+                  0x7B,
+                  0x63,
+                  0x73)
         { }
         #endregion
 

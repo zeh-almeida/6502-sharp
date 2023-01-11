@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.StatusChanges
 {
@@ -18,7 +17,7 @@ namespace Cpu.Instructions.StatusChanges
         /// Instantiates a new <see cref="SetInterruptDisable"/>
         /// </summary>
         public SetInterruptDisable()
-            : base(new OpcodeInformation(0x78, 2, 1))
+            : base(0x78)
         { }
         #endregion
 

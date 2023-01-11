@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.StatusChanges
 {
@@ -18,7 +17,7 @@ namespace Cpu.Instructions.StatusChanges
         /// Instantiates a new <see cref="SetDecimalFlag"/>
         /// </summary>
         public SetDecimalFlag()
-            : base(new OpcodeInformation(0xF8, 2, 1))
+            : base(0xF8)
         { }
         #endregion
 

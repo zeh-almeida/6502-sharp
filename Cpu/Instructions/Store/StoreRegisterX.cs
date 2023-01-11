@@ -1,5 +1,4 @@
 ﻿using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Store
@@ -23,9 +22,9 @@ namespace Cpu.Instructions.Store
         /// </summary>
         public StoreRegisterX()
             : base(
-                new OpcodeInformation(0x86, 3, 2),
-                new OpcodeInformation(0x96, 4, 2),
-                new OpcodeInformation(0x8E, 4, 3))
+                0x86,
+                0x96,
+                0x8E)
         { }
         #endregion
 

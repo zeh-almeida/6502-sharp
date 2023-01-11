@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Branches
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Branches
         /// Instantiates a new <see cref="BranchCarrySet"/> instruction
         /// </summary>
         public BranchCarrySet()
-            : base(new OpcodeInformation(0xB0, 5, 2))
+            : base(0xB0)
         { }
         #endregion
 

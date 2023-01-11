@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Decrements
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Decrements
         /// Instantiates a new <see cref="DecrementRegisterX"/>
         /// </summary>
         public DecrementRegisterX()
-            : base(new OpcodeInformation(0xCA, 2, 1))
+            : base(0xCA)
         { }
         #endregion
 

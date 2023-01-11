@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -23,7 +22,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="AndOperandAccumulatorX"/>
         /// </summary>
         public AndOperandAccumulatorX()
-            : base(new OpcodeInformation(0xAB, 2, 2))
+            : base(0xAB)
         { }
         #endregion
 

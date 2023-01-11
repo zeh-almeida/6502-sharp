@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
 {
@@ -24,7 +23,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="AndXHighByte"/>
         /// </summary>
         public AndXHighByte()
-            : base(new OpcodeInformation(0x9E, 5, 3))
+            : base(0x9E)
         { }
         #endregion
 

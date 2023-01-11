@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
 {
@@ -29,7 +28,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="AndXAccumulatorStack"/>
         /// </summary>
         public AndXAccumulatorStack()
-            : base(new OpcodeInformation(0x9B, 5, 3))
+            : base(0x9B)
         { }
         #endregion
 

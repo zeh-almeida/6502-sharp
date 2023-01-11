@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Logic
@@ -28,15 +27,7 @@ namespace Cpu.Instructions.Logic
         /// Instantiates a new <see cref="LogicAnd"/>
         /// </summary>
         public LogicAnd()
-            : base(
-                new OpcodeInformation(0x29, 2, 2),
-                new OpcodeInformation(0x25, 3, 2),
-                new OpcodeInformation(0x35, 4, 2),
-                new OpcodeInformation(0x2D, 4, 3),
-                new OpcodeInformation(0x3D, 5, 3),
-                new OpcodeInformation(0x39, 5, 3),
-                new OpcodeInformation(0x21, 6, 2),
-                new OpcodeInformation(0x31, 6, 2))
+            : base(0x29, 0x25, 0x35, 0x2D, 0x3D, 0x39, 0x21, 0x31)
         { }
         #endregion
 

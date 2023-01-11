@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Load
@@ -25,11 +24,11 @@ namespace Cpu.Instructions.Load
         /// </summary>
         public LoadRegisterY()
             : base(
-                new OpcodeInformation(0xA0, 2, 2),
-                new OpcodeInformation(0xA4, 3, 2),
-                new OpcodeInformation(0xB4, 4, 2),
-                new OpcodeInformation(0xAC, 4, 3),
-                new OpcodeInformation(0xBC, 5, 3))
+                0xA0,
+                0xA4,
+                0xB4,
+                0xAC,
+                0xBC)
         { }
         #endregion
 

@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.SystemFunctions
 {
@@ -22,7 +21,7 @@ namespace Cpu.Instructions.SystemFunctions
         /// Instantiates a new <see cref="ReturnFromInterrupt"/>
         /// </summary>
         public ReturnFromInterrupt()
-            : base(new OpcodeInformation(0x40, 6, 1))
+            : base(0x40)
         { }
         #endregion
 

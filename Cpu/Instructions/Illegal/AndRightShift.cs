@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -22,7 +21,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="AndRightShift"/>
         /// </summary>
         public AndRightShift()
-            : base(new OpcodeInformation(0x6B, 2, 2))
+            : base(0x6B)
         { }
         #endregion
 

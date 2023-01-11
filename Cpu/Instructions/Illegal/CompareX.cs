@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -22,7 +21,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="CompareX"/>
         /// </summary>
         public CompareX()
-            : base(new OpcodeInformation(0xCB, 2, 2))
+            : base(0xCB)
         { }
         #endregion
 

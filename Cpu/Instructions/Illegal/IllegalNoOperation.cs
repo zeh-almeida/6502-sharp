@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
 {
@@ -49,33 +48,33 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public IllegalNoOperation()
             : base(
-                new OpcodeInformation(0x1A, 2, 1),
-                new OpcodeInformation(0x3A, 2, 1),
-                new OpcodeInformation(0x5A, 2, 1),
-                new OpcodeInformation(0x7A, 2, 1),
-                new OpcodeInformation(0xDA, 2, 1),
-                new OpcodeInformation(0xFA, 2, 1),
-                new OpcodeInformation(0x80, 2, 2),
-                new OpcodeInformation(0x82, 2, 2),
-                new OpcodeInformation(0x89, 2, 2),
-                new OpcodeInformation(0xC2, 2, 2),
-                new OpcodeInformation(0xE2, 2, 2),
-                new OpcodeInformation(0x04, 3, 2),
-                new OpcodeInformation(0x44, 3, 2),
-                new OpcodeInformation(0x64, 3, 2),
-                new OpcodeInformation(0x14, 4, 2),
-                new OpcodeInformation(0x34, 4, 2),
-                new OpcodeInformation(0x54, 4, 2),
-                new OpcodeInformation(0x74, 4, 2),
-                new OpcodeInformation(0xD4, 4, 2),
-                new OpcodeInformation(0xF4, 4, 2),
-                new OpcodeInformation(0x0C, 4, 3),
-                new OpcodeInformation(0x1C, 5, 3),
-                new OpcodeInformation(0x3C, 5, 3),
-                new OpcodeInformation(0x5C, 5, 3),
-                new OpcodeInformation(0x7C, 5, 3),
-                new OpcodeInformation(0xDC, 5, 3),
-                new OpcodeInformation(0xFC, 5, 3))
+                0x1A,
+                0x3A,
+                0x5A,
+                0x7A,
+                0xDA,
+                0xFA,
+                0x80,
+                0x82,
+                0x89,
+                0xC2,
+                0xE2,
+                0x04,
+                0x44,
+                0x64,
+                0x14,
+                0x34,
+                0x54,
+                0x74,
+                0xD4,
+                0xF4,
+                0x0C,
+                0x1C,
+                0x3C,
+                0x5C,
+                0x7C,
+                0xDC,
+                0xFC)
         { }
         #endregion
 

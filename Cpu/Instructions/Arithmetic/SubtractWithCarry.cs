@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Arithmetic
@@ -37,14 +36,14 @@ namespace Cpu.Instructions.Arithmetic
         /// </summary>
         public SubtractWithCarry()
             : base(
-                new OpcodeInformation(0xE9, 2, 2),
-                new OpcodeInformation(0xE5, 3, 2),
-                new OpcodeInformation(0xF5, 4, 2),
-                new OpcodeInformation(0xED, 4, 3),
-                new OpcodeInformation(0xFD, 5, 3),
-                new OpcodeInformation(0xF9, 5, 3),
-                new OpcodeInformation(0xE1, 6, 2),
-                new OpcodeInformation(0xF1, 6, 2))
+                0xE9,
+                0xE5,
+                0xF5,
+                0xED,
+                0xFD,
+                0xF9,
+                0xE1,
+                0xF1)
         { }
         #endregion
 

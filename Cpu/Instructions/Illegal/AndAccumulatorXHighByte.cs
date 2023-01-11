@@ -1,5 +1,4 @@
 ﻿using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -28,8 +27,8 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public AndAccumulatorXHighByte()
             : base(
-                new OpcodeInformation(0x93, 6, 2),
-                new OpcodeInformation(0x9F, 5, 3))
+                0x93,
+                0x9F)
         { }
         #endregion
 

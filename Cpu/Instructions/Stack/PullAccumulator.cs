@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Stack
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Stack
         /// Instantiates a new <see cref="PullAccumulator"/>
         /// </summary>
         public PullAccumulator()
-            : base(new OpcodeInformation(0x68, 4, 1))
+            : base(0x68)
         { }
         #endregion
 

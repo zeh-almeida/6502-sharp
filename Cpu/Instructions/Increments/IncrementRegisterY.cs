@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Increments
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Increments
         /// Instantiates a new <see cref="IncrementRegisterY"/>
         /// </summary>
         public IncrementRegisterY()
-            : base(new OpcodeInformation(0xC8, 2, 1))
+            : base(0xC8)
         { }
         #endregion
 

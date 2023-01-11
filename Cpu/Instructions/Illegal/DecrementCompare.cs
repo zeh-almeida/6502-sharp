@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -30,13 +29,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public DecrementCompare()
             : base(
-                new OpcodeInformation(0xC7, 5, 2),
-                new OpcodeInformation(0xD7, 6, 2),
-                new OpcodeInformation(0xCF, 6, 3),
-                new OpcodeInformation(0xDF, 7, 3),
-                new OpcodeInformation(0xDB, 7, 3),
-                new OpcodeInformation(0xC3, 8, 2),
-                new OpcodeInformation(0xD3, 8, 2))
+                0xC7,
+                0xD7,
+                0xCF,
+                0xDF,
+                0xDB,
+                0xC3,
+                0xD3)
         { }
         #endregion
 

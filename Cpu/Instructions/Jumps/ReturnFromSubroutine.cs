@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.Jumps
 {
@@ -19,7 +18,7 @@ namespace Cpu.Instructions.Jumps
         /// Instantiates a new <see cref="ReturnFromSubroutine"/>
         /// </summary>
         public ReturnFromSubroutine()
-            : base(new OpcodeInformation(0x60, 6, 1))
+            : base(0x60)
         { }
         #endregion
 

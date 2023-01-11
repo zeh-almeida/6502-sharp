@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.Stack
 {
@@ -22,7 +21,7 @@ namespace Cpu.Instructions.Stack
         /// Instantiates a new <see cref="PullProcessorStatus"/>
         /// </summary>
         public PullProcessorStatus()
-            : base(new OpcodeInformation(0x28, 4, 1))
+            : base(0x28)
         { }
         #endregion
 

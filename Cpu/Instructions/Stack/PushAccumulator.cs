@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.Stack
 {
@@ -19,7 +18,7 @@ namespace Cpu.Instructions.Stack
         /// Instantiates a new <see cref="PushAccumulator"/>
         /// </summary>
         public PushAccumulator()
-            : base(new OpcodeInformation(0x48, 3, 1))
+            : base(0x48)
         { }
         #endregion
 

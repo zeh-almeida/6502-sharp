@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Branches
@@ -20,7 +19,7 @@ namespace Cpu.Instructions.Branches
         /// Instantiates a new <see cref="BranchOverflowClear"/> instruction
         /// </summary>
         public BranchOverflowClear()
-            : base(new OpcodeInformation(0x50, 5, 2))
+            : base(0x50)
         { }
         #endregion
 

@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -20,13 +19,13 @@ namespace Cpu.Instructions.Illegal
         /// </summary>
         public SubtractMemoryAccumulator()
             : base(
-                new OpcodeInformation(0xE7, 5, 2),
-                new OpcodeInformation(0xF7, 6, 2),
-                new OpcodeInformation(0xEF, 6, 3),
-                new OpcodeInformation(0xFF, 7, 3),
-                new OpcodeInformation(0xFB, 7, 3),
-                new OpcodeInformation(0xE3, 8, 2),
-                new OpcodeInformation(0xF3, 4, 2))
+                0xE7,
+                0xF7,
+                0xEF,
+                0xFF,
+                0xFB,
+                0xE3,
+                0xF3)
         { }
         #endregion
 

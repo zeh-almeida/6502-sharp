@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Shifts
@@ -32,12 +31,7 @@ namespace Cpu.Instructions.Shifts
         /// Instantiates a new <see cref="ArithmeticShiftLeft"/>
         /// </summary>
         public ArithmeticShiftLeft()
-            : base(
-                new OpcodeInformation(0x0A, 2, 1),
-                new OpcodeInformation(0x06, 5, 2),
-                new OpcodeInformation(0x16, 6, 2),
-                new OpcodeInformation(0x0E, 6, 3),
-                new OpcodeInformation(0x1E, 7, 3))
+            : base(0x0A, 0x06, 0x16, 0x0E, 0x1E)
         { }
         #endregion
 

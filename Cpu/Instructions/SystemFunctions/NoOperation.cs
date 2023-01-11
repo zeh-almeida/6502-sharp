@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.SystemFunctions
 {
@@ -19,7 +18,7 @@ namespace Cpu.Instructions.SystemFunctions
         /// Instantiates a new <see cref="NoOperation"/>
         /// </summary>
         public NoOperation()
-            : base(new OpcodeInformation(0xEA, 2, 1))
+            : base(0xEA)
         { }
         #endregion
 

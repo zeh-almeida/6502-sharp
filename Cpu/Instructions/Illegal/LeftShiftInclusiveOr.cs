@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -29,14 +28,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="LeftShiftInclusiveOr"/>
         /// </summary>
         public LeftShiftInclusiveOr()
-            : base(
-                new OpcodeInformation(0x07, 5, 2),
-                new OpcodeInformation(0x17, 6, 2),
-                new OpcodeInformation(0x0F, 6, 3),
-                new OpcodeInformation(0x1F, 7, 3),
-                new OpcodeInformation(0x1B, 7, 3),
-                new OpcodeInformation(0x03, 8, 2),
-                new OpcodeInformation(0x13, 8, 2))
+            : base(0x07, 0x17, 0x0F, 0x1F, 0x1B, 0x03, 0x13)
         { }
         #endregion
 

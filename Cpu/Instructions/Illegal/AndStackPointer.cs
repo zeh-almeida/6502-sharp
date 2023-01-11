@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Illegal
@@ -25,7 +24,7 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="AndStackPointer"/>
         /// </summary>
         public AndStackPointer()
-            : base(new OpcodeInformation(0xBB, 5, 3))
+            : base(0xBB)
         { }
         #endregion
 

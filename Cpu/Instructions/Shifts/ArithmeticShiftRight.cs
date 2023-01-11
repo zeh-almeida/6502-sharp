@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Shifts
@@ -28,12 +27,7 @@ namespace Cpu.Instructions.Shifts
         /// Instantiates a  new <see cref="ArithmeticShiftRight"/>
         /// </summary>
         public ArithmeticShiftRight()
-            : base(
-                new OpcodeInformation(0x4A, 2, 1),
-                new OpcodeInformation(0x46, 5, 2),
-                new OpcodeInformation(0x56, 6, 2),
-                new OpcodeInformation(0x4E, 6, 3),
-                new OpcodeInformation(0x5E, 7, 3))
+            : base(0x4A, 0x46, 0x56, 0x4E, 0x5E)
         { }
         #endregion
 

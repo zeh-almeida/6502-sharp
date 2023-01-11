@@ -1,6 +1,5 @@
 ﻿using Cpu.Extensions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions.Logic
@@ -27,8 +26,8 @@ namespace Cpu.Instructions.Logic
         /// </summary>
         public BitTest()
             : base(
-                new OpcodeInformation(0x24, 3, 2),
-                new OpcodeInformation(0x2C, 4, 3))
+                0x24,
+                0x2C)
         { }
         #endregion
 
