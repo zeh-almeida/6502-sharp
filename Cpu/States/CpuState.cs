@@ -104,7 +104,7 @@ namespace Cpu.States
 
             var registerState = data
                 .Skip(ICpuState.RegisterOffset)
-                .Take(6)
+                .Take(IRegisterManager.RegisterLengthBytes)
                 .ToArray();
 
             var flagState = data
@@ -138,27 +138,37 @@ namespace Cpu.States
         }
 
         /// <inheritdoc/>
-        public void CountCycle()
+        public void DecrementCycle()
         {
             this.CyclesLeft--;
         }
 
         /// <inheritdoc/>
+        public void IncrementCycles(int amount)
+        {
+            if (amount < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(amount), "Must be greater or equal to 0");
+            }
+
+            this.CyclesLeft += amount;
+        }
+
+        /// <inheritdoc/>
         public void SetCycleInterrupt()
         {
-            this.CyclesLeft += 6;
+            this.CyclesLeft += ICpuState.InterruptCycleCount;
         }
+        #endregion
 
         /// <inheritdoc/>
         public void SetExecutingInstruction(DecodedInstruction decoded)
         {
             this.DecodedInstruction = decoded;
-
             this.ExecutingOpcode = decoded.Opcode;
-            this.CyclesLeft += decoded.Cycles;
 
-            this.CountCycle();
+            this.IncrementCycles(decoded.Cycles);
+            this.DecrementCycle();
         }
-        #endregion
     }
 }

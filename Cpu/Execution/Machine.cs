@@ -51,7 +51,7 @@ namespace Cpu.Execution
         {
             if (this.State.CyclesLeft > 0)
             {
-                this.State.CountCycle();
+                this.State.DecrementCycle();
                 return true;
             }
             else
@@ -188,7 +188,7 @@ namespace Cpu.Execution
                 this.State.SetExecutingInstruction(decoded);
 
                 decoded.Instruction.Execute(this.State, decoded.ValueParameter);
-                this.State.CountCycle();
+                this.State.DecrementCycle();
 
                 this.Logger.LogInformation(MachineEvents.OnFlags, "{flagState}", this.State.Flags.ToString());
                 this.Logger.LogInformation(MachineEvents.OnRegisters, "{registerState}", this.State.Registers.ToString());

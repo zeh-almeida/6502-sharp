@@ -80,7 +80,7 @@ public sealed record CpuStateTest
     [Fact]
     public void CountCycle_Executes()
     {
-        this.Subject.CountCycle();
+        this.Subject.DecrementCycle();
 
         Assert.Equal(-1, this.Subject.CyclesLeft);
     }

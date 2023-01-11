@@ -27,6 +27,11 @@ namespace Cpu.States
         public const ushort FlagOffset = 2;
 
         /// <summary>
+        /// Amount of cycles to add because of a triggered interrupt 
+        /// </summary>
+        public const int InterruptCycleCount = 6;
+
+        /// <summary>
         /// CPU State size when serialized
         /// </summary>
         public const int Length = ushort.MaxValue + MemoryStateOffset + 1;
@@ -105,8 +110,8 @@ namespace Cpu.States
         /// bits 13-forward = CPU Memory
         /// </summary>
         /// <param name="data">To read values from</param>
-        /// <exception cref="System.ArgumentNullException">if <paramref name="data"/> is null</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
+        /// <exception cref="ArgumentNullException">if <paramref name="data"/> is null</exception>
+        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
         void Load(IEnumerable<byte> data);
         #endregion
 
@@ -119,7 +124,16 @@ namespace Cpu.States
         /// <summary>
         /// Decrements the cycle count by one
         /// </summary>
-        void CountCycle();
+        void DecrementCycle();
+
+        /// <summary>
+        /// Increases the remaining cycles as desired.
+        /// May happen when crossing memory boundaries
+        /// or other special conditions.
+        /// </summary>
+        /// <param name="amount">Cycles to be added</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the amount is less than zero</exception>
+        void IncrementCycles(int amount);
 
         /// <summary>
         /// Sets cycles for an interrupt execution

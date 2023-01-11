@@ -5,6 +5,10 @@
     /// </summary>
     public interface IRegisterManager
     {
+        #region Constants
+        public const int RegisterLengthBytes = 6;
+        #endregion
+
         #region Properties
         /// <summary>
         /// 16-bit register, points to the next memory address to read opcodes from

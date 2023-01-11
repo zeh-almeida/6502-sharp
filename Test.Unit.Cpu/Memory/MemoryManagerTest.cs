@@ -5,8 +5,8 @@ using Moq;
 using Xunit;
 
 namespace Test.Unit.Cpu.Memory;
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
 
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
 public sealed record MemoryManagerTest
 {
     #region Properties
