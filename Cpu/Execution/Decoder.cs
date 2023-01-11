@@ -1,5 +1,4 @@
 ﻿using Cpu.Extensions;
-using Cpu.Instructions;
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
@@ -32,9 +31,7 @@ namespace Cpu.Execution
         public DecodedInstruction Decode(ICpuState currentState)
         {
             var opcode = ReadNextOpcode(currentState);
-
-            var instruction = this.FetchInstruction(opcode);
-            var opcodeInfo = instruction.GatherInformation(opcode);
+            var opcodeInfo = this.FetchOpcode(opcode);
 
             var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
             var result = new DecodedInstruction(opcodeInfo, instructionValue);
@@ -43,12 +40,12 @@ namespace Cpu.Execution
             return result;
         }
 
-        private IInstruction FetchInstruction(byte opcode)
+        private OpcodeInformation FetchOpcode(byte opcode)
         {
             var opcodeData = this.Opcodes
                 .FirstOrDefault(ins => opcode.Equals(ins.Opcode));
 
-            return opcodeData?.Instruction
+            return opcodeData
                 ?? throw new UnknownOpcodeException(opcode);
         }
 
