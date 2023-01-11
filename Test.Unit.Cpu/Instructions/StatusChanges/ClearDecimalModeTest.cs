@@ -23,14 +23,7 @@ namespace Test.Unit.Cpu.Instructions.StatusChanges
         [InlineData(0xD8)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));
-            Assert.NotNull(this.Subject.GatherInformation(opcode));
-        }
-
-        [Fact]
-        public void GatherInformation_NoMatch_Throws()
-        {
-            _ = Assert.Throws<UnknownOpcodeException>(() => this.Subject.GatherInformation(0xFF));
+            Assert.True(this.Subject.HasOpcode(opcode));            
         }
 
         [Fact]

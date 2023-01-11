@@ -1,5 +1,4 @@
-﻿using Cpu.Opcodes;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions
 {
@@ -11,9 +10,9 @@ namespace Cpu.Instructions
     {
         #region Properties
         /// <summary>
-        /// <see cref="IOpcodeInformation"/> this instruction supports
+        /// Opcode bytes this instruction supports
         /// </summary>
-        IEnumerable<IOpcodeInformation> Opcodes { get; }
+        IEnumerable<byte> Opcodes { get; }
         #endregion
 
         /// <summary>
@@ -31,13 +30,5 @@ namespace Cpu.Instructions
         /// <param name="opcode">To verify</param>
         /// <returns>True if supported, false otherwise</returns>
         bool HasOpcode(byte opcode);
-
-        /// <summary>
-        /// Returns the necessary information for a specific supported opcode
-        /// </summary>
-        /// <param name="opcode">To verify</param>
-        /// <returns>Known opcode information</returns>
-        /// <exception cref="Exceptions.UnknownOpcodeException">thrown if opcode is not supported by this instruction</exception>
-        IOpcodeInformation GatherInformation(byte opcode);
     }
 }

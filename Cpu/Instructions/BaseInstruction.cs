@@ -1,6 +1,4 @@
-﻿using Cpu.Extensions;
-using Cpu.Instructions.Exceptions;
-using Cpu.Opcodes;
+﻿using Cpu.Opcodes;
 using Cpu.States;
 
 namespace Cpu.Instructions
@@ -12,7 +10,7 @@ namespace Cpu.Instructions
     {
         #region Properties
         /// <inheritdoc/>
-        public IEnumerable<IOpcodeInformation> Opcodes { get; }
+        public IEnumerable<byte> Opcodes { get; }
         #endregion
 
         #region Constructors
@@ -21,10 +19,17 @@ namespace Cpu.Instructions
         /// </summary>
         /// <param name="opcodeInfos">Allowed opcode and their respective information</param>
         protected BaseInstruction(params IOpcodeInformation[] opcodeInfos)
+            : this(opcodeInfos.Select(info => info.Opcode).ToArray())
         {
-            this.Opcodes = opcodeInfos
-                .Select(info => info.SetInstruction(this))
-                .ToHashSet();
+        }
+
+        /// <summary>
+        /// Instantiates the base class
+        /// </summary>
+        /// <param name="opcodes">Allowed opcode and their respective information</param>
+        protected BaseInstruction(params byte[] opcodes)
+        {
+            this.Opcodes = new HashSet<byte>(opcodes);
         }
         #endregion
 
@@ -54,18 +59,7 @@ namespace Cpu.Instructions
         /// <inheritdoc/>
         public bool HasOpcode(byte opcode)
         {
-            return this.Opcodes
-                .Any(info => info.Opcode.Equals(opcode));
-        }
-
-        /// <inheritdoc/>
-        public IOpcodeInformation GatherInformation(byte opcode)
-        {
-            var result = this.Opcodes
-                .FirstOrDefault(info => info.Opcode.Equals(opcode));
-
-            return result
-                ?? throw new UnknownOpcodeException(opcode, $"{this.GetType().Name} does not handle opcode {opcode.AsHex()}");
+            return this.Opcodes.Contains(opcode);
         }
     }
 }

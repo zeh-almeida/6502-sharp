@@ -1,6 +1,4 @@
-﻿using Cpu.Extensions;
-
-namespace Cpu.Opcodes.Exceptions
+﻿namespace Cpu.Opcodes.Exceptions
 {
     /// <summary>
     /// Represents errors that occur when an instruction is asked to run an incompatible opcode.

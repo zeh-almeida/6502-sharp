@@ -31,14 +31,14 @@ namespace Cpu.Instructions.Arithmetic
         /// </summary>
         public CompareAccumulator()
             : base(
-                new OpcodeInformation(0xC9, 2, 2),
-                new OpcodeInformation(0xC5, 3, 2),
-                new OpcodeInformation(0xD5, 4, 2),
-                new OpcodeInformation(0xCD, 4, 3),
-                new OpcodeInformation(0xDD, 5, 3),
-                new OpcodeInformation(0xD9, 5, 3),
-                new OpcodeInformation(0xC1, 6, 2),
-                new OpcodeInformation(0xD1, 6, 2))
+                0xC9,
+                0xC5,
+                0xD5,
+                0xCD,
+                0xDD,
+                0xD9,
+                0xC1,
+                0xD1)
         { }
         #endregion
 
