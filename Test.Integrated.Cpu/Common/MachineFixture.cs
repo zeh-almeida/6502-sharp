@@ -1,8 +1,8 @@
 ﻿using Cpu.Execution;
 using Cpu.Extensions;
 using Cpu.Flags;
-using Cpu.Instructions;
 using Cpu.Memory;
+using Cpu.Opcodes;
 using Cpu.Registers;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
@@ -24,7 +24,8 @@ namespace Test.Integrated.Cpu.Common
         public MachineFixture()
         {
             this.LogFactory = BuildLogFactory();
-            var instructions = LoadInstructions();
+
+            var opcodes = LoadOpcodes();
 
             var machineLogger = this.LogFactory.CreateLogger<Machine>();
             var memoryLogger = this.LogFactory.CreateLogger<MemoryManager>();
@@ -36,7 +37,8 @@ namespace Test.Integrated.Cpu.Common
             var stackManager = new StackManager(memoryManager, registerManager);
 
             var state = new CpuState(flagManager, stackManager, memoryManager, registerManager);
-            var decoder = new Decoder(instructions as IEnumerable<IInstruction>);
+
+            var decoder = new Decoder(opcodes as IEnumerable<OpcodeInformation>);
 
             this.Subject = new Machine(machineLogger, state, decoder);
         }
@@ -143,18 +145,12 @@ namespace Test.Integrated.Cpu.Common
             return state;
         }
 
-        private static IEnumerable<IInstruction?> LoadInstructions()
+        private static IEnumerable<OpcodeInformation?> LoadOpcodes()
         {
-            var instructionType = typeof(IInstruction);
+            var loader = new OpcodeLoader();
+            loader.LoadAsync().Wait();
 
-            return AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .Where(t => instructionType.IsAssignableFrom(t)
-                                      && !t.IsInterface
-                                      && !t.IsAbstract)
-                .Select(t => Activator.CreateInstance(t) as IInstruction)
-                .ToArray();
+            return loader.Opcodes;
         }
 
         private static ILoggerFactory BuildLogFactory()

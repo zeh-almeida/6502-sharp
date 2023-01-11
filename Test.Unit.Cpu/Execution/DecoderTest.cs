@@ -1,9 +1,9 @@
 ﻿using Cpu.Execution;
-using Cpu.Instructions;
 using Cpu.Instructions.Branches;
 using Cpu.Instructions.Exceptions;
 using Cpu.Instructions.Jumps;
 using Cpu.Instructions.StatusChanges;
+using Cpu.Opcodes;
 using Cpu.States;
 using Moq;
 using Test.Unit.Cpu.Utils;
@@ -38,7 +38,7 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcAddress))
                 .Returns(streamByte);
 
-            var subject = new Decoder(Array.Empty<IInstruction>());
+            var subject = new Decoder(Array.Empty<OpcodeInformation>());
             _ = Assert.Throws<UnknownOpcodeException>(() => subject.Decode(this.StateMock.Object));
         }
 
@@ -59,7 +59,9 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcAddress))
                 .Returns(streamByte);
 
-            var subject = new Decoder(new IInstruction[] { instruction });
+            var subject = new Decoder(
+                new OpcodeInformation[] { instruction.GatherInformation(streamByte) });
+
             var result = subject.Decode(this.StateMock.Object);
 
             Assert.NotNull(result);
@@ -101,7 +103,10 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcParam2Address))
                 .Returns(secondParamByte);
 
-            var subject = new Decoder(new IInstruction[] { instruction });
+
+            var subject = new Decoder(
+                new OpcodeInformation[] { instruction.GatherInformation(streamByte) });
+
             var result = subject.Decode(this.StateMock.Object);
 
             Assert.NotNull(result);
@@ -135,7 +140,9 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcParamAddress))
                 .Returns(paramByte);
 
-            var subject = new Decoder(new IInstruction[] { instruction });
+            var subject = new Decoder(
+                new OpcodeInformation[] { instruction.GatherInformation(streamByte) });
+
             var result = subject.Decode(this.StateMock.Object);
 
             Assert.NotNull(result);
