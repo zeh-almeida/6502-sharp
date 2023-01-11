@@ -13,15 +13,15 @@ namespace Cpu.Execution
     public sealed record Decoder : IDecoder
     {
         #region Properties
-        private IEnumerable<OpcodeInformation> Opcodes { get; }
+        private IEnumerable<IOpcodeInformation> Opcodes { get; }
         #endregion
 
         #region Constructors
         /// <summary>
         /// Instantiates a new <see cref="IDecoder"/> with the instruction set
         /// </summary>
-        /// <param name="opcodes"><see cref="OpcodeInformation"/> enumeration for instruction metadata</param>
-        public Decoder(IEnumerable<OpcodeInformation> opcodes)
+        /// <param name="opcodes"><see cref="IOpcodeInformation"/> enumeration for instruction metadata</param>
+        public Decoder(IEnumerable<IOpcodeInformation> opcodes)
         {
             this.Opcodes = opcodes.ToHashSet();
         }
@@ -40,7 +40,7 @@ namespace Cpu.Execution
             return result;
         }
 
-        private OpcodeInformation FetchOpcode(byte opcode)
+        private IOpcodeInformation FetchOpcode(byte opcode)
         {
             var opcodeData = this.Opcodes
                 .FirstOrDefault(ins => opcode.Equals(ins.Opcode));
@@ -49,7 +49,7 @@ namespace Cpu.Execution
                 ?? throw new UnknownOpcodeException(opcode);
         }
 
-        private static ushort ReadOpcodeParameter(ICpuState currentState, OpcodeInformation opcodeInfo)
+        private static ushort ReadOpcodeParameter(ICpuState currentState, IOpcodeInformation opcodeInfo)
         {
             var pc = currentState.Registers.ProgramCounter;
 

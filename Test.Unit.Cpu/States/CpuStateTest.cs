@@ -2,6 +2,7 @@
 using Cpu.Flags;
 using Cpu.Instructions.StatusChanges;
 using Cpu.Memory;
+using Cpu.Opcodes;
 using Cpu.Registers;
 using Cpu.States;
 using Moq;
@@ -96,11 +97,27 @@ public sealed record CpuStateTest
     public void SetExecutingInstruction_Executes()
     {
         const int streamByte = 0x38;
+        const int cycles = 2;
+        const int bytes = 1;
 
-        var instruction = new SetCarryFlag();
-        var opcodeInfo = instruction.GatherInformation(streamByte);
-        var decoded = new DecodedInstruction(opcodeInfo, 0x00);
+        var opcodeMock = new Mock<IOpcodeInformation>();
 
+        _ = opcodeMock.Setup(m => m.Instruction)
+            .Returns(new SetCarryFlag());
+
+        _ = opcodeMock.Setup(m => m.Opcode)
+            .Returns(streamByte);
+
+        _ = opcodeMock.Setup(m => m.Bytes)
+            .Returns(bytes);
+
+        _ = opcodeMock.Setup(m => m.MinimumCycles)
+            .Returns(cycles);
+
+        _ = opcodeMock.Setup(m => m.MaximumCycles)
+            .Returns(cycles);
+
+        var decoded = new DecodedInstruction(opcodeMock.Object, 0x00);
         this.Subject.SetExecutingInstruction(decoded);
 
         Assert.Equal(decoded.Cycles - 1, this.Subject.CyclesLeft);

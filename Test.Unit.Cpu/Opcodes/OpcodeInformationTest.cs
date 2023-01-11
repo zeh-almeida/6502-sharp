@@ -25,7 +25,7 @@ public sealed record OpcodeInformationTest
     public OpcodeInformationTest()
     {
         this.Subject = new OpcodeInformation(Opcode, MinimumCycles, Bytes)
-            .SetInstruction(new InclusiveOr());
+            .SetInstruction(new InclusiveOr()) as OpcodeInformation;
     }
     #endregion
 

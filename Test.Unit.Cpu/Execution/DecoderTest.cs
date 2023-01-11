@@ -1,8 +1,6 @@
 ﻿using Cpu.Execution;
-using Cpu.Instructions.Branches;
+using Cpu.Instructions;
 using Cpu.Instructions.Exceptions;
-using Cpu.Instructions.Jumps;
-using Cpu.Instructions.StatusChanges;
 using Cpu.Opcodes;
 using Cpu.States;
 using Moq;
@@ -46,10 +44,17 @@ namespace Test.Unit.Cpu.Execution
         public void InstructionNoParam_Decode_Successful()
         {
             const ushort pcAddress = 1;
-            const int streamByte = 0x38;
 
-            var instruction = new SetCarryFlag();
-            var opcodeInfo = instruction.GatherInformation(streamByte);
+            const int streamByte = 0x38;
+            const int cycles = 2;
+            const int bytes = 1;
+
+            var opcodeMock = new Mock<IOpcodeInformation>();
+            var instructionMock = new Mock<IInstruction>();
+
+            var state = this.StateMock.Object;
+            var opcodeInfo = opcodeMock.Object;
+            var instruction = instructionMock.Object;
 
             _ = this.StateMock
                 .Setup(mock => mock.Registers.ProgramCounter)
@@ -59,16 +64,30 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcAddress))
                 .Returns(streamByte);
 
+            _ = opcodeMock.Setup(m => m.Opcode)
+                .Returns(streamByte);
+
+            _ = opcodeMock.Setup(m => m.Bytes)
+                .Returns(bytes);
+
+            _ = opcodeMock.Setup(m => m.MinimumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.MaximumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.Instruction)
+                .Returns(instruction);
+
             var subject = new Decoder(
-                new OpcodeInformation[] { instruction.GatherInformation(streamByte) });
+                new IOpcodeInformation[] { opcodeInfo });
 
             var result = subject.Decode(this.StateMock.Object);
 
             Assert.NotNull(result);
 
-            Assert.Equal(instruction, result.Instruction);
-            Assert.Equal(opcodeInfo.MinimumCycles, result.Cycles);
-            Assert.Equal(opcodeInfo.MaximumCycles, result.Cycles);
+            Assert.Equal(cycles, result.Cycles);
+            Assert.Equal(cycles, result.Cycles);
             Assert.Equal(0, result.ValueParameter);
         }
 
@@ -78,14 +97,21 @@ namespace Test.Unit.Cpu.Execution
             const ushort pcAddress = 1;
             const ushort pcParam1Address = 2;
             const ushort pcParam2Address = 3;
+
             const int streamByte = 0x20;
+            const int cycles = 6;
+            const int bytes = 3;
 
             const int firstParamByte = 0b_0000_1111;
             const int secondParamByte = 0b_1111_0000;
             const ushort paramValue = 0b_1111_0000_0000_1111;
 
-            var instruction = new JumpToSubroutine();
-            var opcodeInfo = instruction.GatherInformation(streamByte);
+            var opcodeMock = new Mock<IOpcodeInformation>();
+            var instructionMock = new Mock<IInstruction>();
+
+            var state = this.StateMock.Object;
+            var opcodeInfo = opcodeMock.Object;
+            var instruction = instructionMock.Object;
 
             _ = this.StateMock
                 .Setup(mock => mock.Registers.ProgramCounter)
@@ -103,17 +129,30 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcParam2Address))
                 .Returns(secondParamByte);
 
+            _ = opcodeMock.Setup(m => m.Opcode)
+                .Returns(streamByte);
+
+            _ = opcodeMock.Setup(m => m.Bytes)
+                .Returns(bytes);
+
+            _ = opcodeMock.Setup(m => m.MinimumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.MaximumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.Instruction)
+                .Returns(instruction);
 
             var subject = new Decoder(
-                new OpcodeInformation[] { instruction.GatherInformation(streamByte) });
+                new IOpcodeInformation[] { opcodeInfo });
 
             var result = subject.Decode(this.StateMock.Object);
 
             Assert.NotNull(result);
 
-            Assert.Equal(instruction, result.Instruction);
-            Assert.Equal(opcodeInfo.MinimumCycles, result.Cycles);
-            Assert.Equal(opcodeInfo.MaximumCycles, result.Cycles);
+            Assert.Equal(cycles, result.Cycles);
+            Assert.Equal(cycles, result.Cycles);
             Assert.Equal(paramValue, result.ValueParameter);
         }
 
@@ -122,11 +161,18 @@ namespace Test.Unit.Cpu.Execution
         {
             const ushort pcAddress = 1;
             const ushort pcParamAddress = 2;
-            const int streamByte = 0xB0;
             const int paramByte = 0b_0000_1111;
 
-            var instruction = new BranchCarrySet();
-            var opcodeInfo = instruction.GatherInformation(streamByte);
+            const int streamByte = 0xB0;
+            const int cycles = 5;
+            const int bytes = 2;
+
+            var opcodeMock = new Mock<IOpcodeInformation>();
+            var instructionMock = new Mock<IInstruction>();
+
+            var state = this.StateMock.Object;
+            var opcodeInfo = opcodeMock.Object;
+            var instruction = instructionMock.Object;
 
             _ = this.StateMock
                 .Setup(mock => mock.Registers.ProgramCounter)
@@ -140,16 +186,30 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcParamAddress))
                 .Returns(paramByte);
 
-            var subject = new Decoder(
-                new OpcodeInformation[] { instruction.GatherInformation(streamByte) });
+            _ = opcodeMock.Setup(m => m.Opcode)
+                .Returns(streamByte);
 
-            var result = subject.Decode(this.StateMock.Object);
+            _ = opcodeMock.Setup(m => m.Bytes)
+                .Returns(bytes);
+
+            _ = opcodeMock.Setup(m => m.MinimumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.MaximumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.Instruction)
+                .Returns(instruction);
+
+            var subject = new Decoder(
+                new IOpcodeInformation[] { opcodeInfo });
+
+            var result = subject.Decode(state);
 
             Assert.NotNull(result);
 
-            Assert.Equal(instruction, result.Instruction);
-            Assert.Equal(opcodeInfo.MinimumCycles, result.Cycles);
-            Assert.Equal(opcodeInfo.MaximumCycles, result.Cycles);
+            Assert.Equal(cycles, result.Cycles);
+            Assert.Equal(cycles, result.Cycles);
             Assert.Equal(paramByte, result.ValueParameter);
         }
     }

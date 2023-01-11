@@ -11,9 +11,9 @@ namespace Cpu.Instructions
     {
         #region Properties
         /// <summary>
-        /// <see cref="OpcodeInformation"/> this instruction supports
+        /// <see cref="IOpcodeInformation"/> this instruction supports
         /// </summary>
-        IEnumerable<OpcodeInformation> Opcodes { get; }
+        IEnumerable<IOpcodeInformation> Opcodes { get; }
         #endregion
 
         /// <summary>
@@ -38,6 +38,6 @@ namespace Cpu.Instructions
         /// <param name="opcode">To verify</param>
         /// <returns>Known opcode information</returns>
         /// <exception cref="Exceptions.UnknownOpcodeException">thrown if opcode is not supported by this instruction</exception>
-        OpcodeInformation GatherInformation(byte opcode);
+        IOpcodeInformation GatherInformation(byte opcode);
     }
 }

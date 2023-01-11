@@ -5,40 +5,27 @@ using System.Text.Json.Serialization;
 namespace Cpu.Opcodes
 {
     /// <summary>
-    /// Contains all the necessary information about a instruction such as:
-    /// <para>Opcode to execute, number of cycles to execute, bytes to read, if any and the <see cref="IInstruction"/> implementation to execute</para>
+    /// Implements <see cref="IOpcodeInformation"/>
     /// </summary>
-    public sealed class OpcodeInformation : IEquatable<OpcodeInformation>
+    public sealed class OpcodeInformation : IOpcodeInformation
     {
         #region Properties
-        /// <summary>
-        /// Value for the instruction Operand code
-        /// </summary>
+        /// <inheritdoc/>
         public byte Opcode { get; }
 
-        /// <summary>
-        /// Number of bytes that make the operand for the instruction
-        /// </summary>
+        /// <inheritdoc/>
         public byte Bytes { get; }
 
-        /// <summary>
-        /// Minimum amount of Cycles the instruction can take to execute
-        /// </summary>
+        /// <inheritdoc/>
         public byte MinimumCycles { get; }
 
-        /// <summary>
-        /// Maximum amount of Cycles the instruction can take to execute
-        /// </summary>
+        /// <inheritdoc/>
         public byte MaximumCycles { get; }
 
-        /// <summary>
-        /// Full assembly name of the Target Instruction of this Opcode
-        /// </summary>
+        /// <inheritdoc/>
         public string? InstructionQualifier { get; }
 
-        /// <summary>
-        /// Instruction to be executed by the Opcode
-        /// </summary>
+        /// <inheritdoc/>
         public IInstruction? Instruction { get; private set; }
         #endregion
 
@@ -96,7 +83,7 @@ namespace Cpu.Opcodes
         #endregion
 
         /// <inheritdoc/>
-        public bool Equals(OpcodeInformation? other)
+        public bool Equals(IOpcodeInformation? other)
         {
             return other is not null
                 && this.Opcode.Equals(other.Opcode);
@@ -115,14 +102,8 @@ namespace Cpu.Opcodes
             return this.Opcode.GetHashCode();
         }
 
-        /// <summary>
-        /// Sets the <see cref="IInstruction"/> reference for this opcode
-        /// </summary>
-        /// <param name="instruction"> reference</param>
-        /// <returns>Current instance</returns>
-        /// <exception cref="ArgumentNullException">If <paramref name="instruction"/> is null</exception>
-        /// <exception cref="ArgumentException">If reference is already set</exception>
-        public OpcodeInformation SetInstruction(IInstruction instruction)
+        /// <inheritdoc/>
+        public IOpcodeInformation SetInstruction(IInstruction instruction)
         {
             if (instruction is null)
             {

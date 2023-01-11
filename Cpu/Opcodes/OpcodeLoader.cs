@@ -16,7 +16,7 @@ namespace Cpu.Opcodes
         #region Properties
         /// <summary>
         /// Loaded Opcodes. May be empty.
-        /// <see cref="OpcodeInformation"/>
+        /// <see cref="IOpcodeInformation"/>
         /// </summary>
         public IEnumerable<OpcodeInformation> Opcodes { get; private set; }
 

@@ -18,25 +18,25 @@ namespace Cpu.Execution
         /// <summary>
         /// Minimum number of Cycles to run the instruction
         /// </summary>
-        /// <see cref="OpcodeInformation.MinimumCycles"/>
+        /// <see cref="IOpcodeInformation.MinimumCycles"/>
         public byte Cycles { get; }
 
         /// <summary>
         /// Number of bytes that make the operand for the instruction
         /// </summary>
-        /// <see cref="OpcodeInformation.Bytes"/>
+        /// <see cref="IOpcodeInformation.Bytes"/>
         public byte Bytes { get; }
 
         /// <summary>
         /// Byte representing the instruction to be executed
         /// </summary>
-        /// <see cref="OpcodeInformation.Opcode"/>
+        /// <see cref="IOpcodeInformation.Opcode"/>
         public byte Opcode { get; }
 
         /// <summary>
         /// Decoded <see cref="IInstruction"/>
         /// </summary>
-        /// <see cref="OpcodeInformation.Instruction"/>
+        /// <see cref="IOpcodeInformation.Instruction"/>
         public IInstruction Instruction { get; }
         #endregion
 
@@ -47,7 +47,7 @@ namespace Cpu.Execution
         /// <param name="opcodeInformation">Information about the decoded opcode, including instruction, size and cycles</param>
         /// <param name="valueParameter">Value to use as operand for the decoded instruction</param>
         public DecodedInstruction(
-            OpcodeInformation opcodeInformation,
+            IOpcodeInformation opcodeInformation,
             ushort valueParameter)
         {
             this.ValueParameter = valueParameter;

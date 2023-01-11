@@ -22,17 +22,36 @@ namespace Test.Unit.Cpu.Execution
         public void Instruction_Equals_Defined()
         {
             var instructionMock = new Mock<IInstruction>();
-            var instruction = instructionMock.Object;
-
-            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes)
-                .SetInstruction(instruction);
+            var opcodeMock = new Mock<IOpcodeInformation>();
 
             _ = instructionMock
                 .Setup(mock => mock.GetHashCode())
                 .Returns(1);
 
-            var subject = new DecodedInstruction(opcodeInfo, Value);
+            _ = opcodeMock
+                .Setup(mock => mock.Opcode)
+                .Returns(Opcode);
 
+            _ = opcodeMock
+                .Setup(mock => mock.MaximumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MinimumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Bytes)
+                .Returns(Bytes);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Instruction)
+                .Returns(instructionMock.Object);
+
+            var instruction = instructionMock.Object;
+            var opcodeInfo = opcodeMock.Object;
+
+            var subject = new DecodedInstruction(opcodeInfo, Value);
             Assert.Equal(instruction.GetHashCode(), subject.Instruction?.GetHashCode());
         }
 

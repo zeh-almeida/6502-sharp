@@ -1,5 +1,6 @@
 ﻿using Cpu.Execution;
 using Cpu.Instructions.Jumps;
+using Cpu.Opcodes;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -29,15 +30,32 @@ namespace Test.Unit.Cpu.Execution
         #region Constructors
         public MachineTest()
         {
+            const int cycles = 6;
+            const int bytes = 3;
+
+            var opcodeMock = new Mock<IOpcodeInformation>();
+
+            _ = opcodeMock.Setup(m => m.Instruction)
+                .Returns(new JumpToSubroutine());
+
+            _ = opcodeMock.Setup(m => m.Opcode)
+                .Returns(StreamByte);
+
+            _ = opcodeMock.Setup(m => m.Bytes)
+                .Returns(bytes);
+
+            _ = opcodeMock.Setup(m => m.MinimumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.MaximumCycles)
+                .Returns(cycles);
+
             this.StateMock = TestUtils.GenerateStateMock();
 
             this.DecoderMock = new Mock<IDecoder>();
             this.LoggerMock = new Mock<ILogger<Machine>>();
 
-            var instruction = new JumpToSubroutine();
-            var opcodeInfo = instruction.GatherInformation(StreamByte);
-
-            this.Decoded = new DecodedInstruction(opcodeInfo, 65535);
+            this.Decoded = new DecodedInstruction(opcodeMock.Object, 65535);
             this.Subject = new Machine(this.LoggerMock.Object, this.StateMock.Object, this.DecoderMock.Object);
         }
         #endregion

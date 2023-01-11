@@ -12,7 +12,7 @@ namespace Cpu.Instructions
     {
         #region Properties
         /// <inheritdoc/>
-        public IEnumerable<OpcodeInformation> Opcodes { get; }
+        public IEnumerable<IOpcodeInformation> Opcodes { get; }
         #endregion
 
         #region Constructors
@@ -20,7 +20,7 @@ namespace Cpu.Instructions
         /// Instantiates the base class
         /// </summary>
         /// <param name="opcodeInfos">Allowed opcode and their respective information</param>
-        protected BaseInstruction(params OpcodeInformation[] opcodeInfos)
+        protected BaseInstruction(params IOpcodeInformation[] opcodeInfos)
         {
             this.Opcodes = opcodeInfos
                 .Select(info => info.SetInstruction(this))
@@ -59,7 +59,7 @@ namespace Cpu.Instructions
         }
 
         /// <inheritdoc/>
-        public OpcodeInformation GatherInformation(byte opcode)
+        public IOpcodeInformation GatherInformation(byte opcode)
         {
             var result = this.Opcodes
                 .FirstOrDefault(info => info.Opcode.Equals(opcode));
