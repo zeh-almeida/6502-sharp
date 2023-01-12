@@ -36,7 +36,6 @@ namespace Cpu.Execution
         /// <summary>
         /// Decoded <see cref="IInstruction"/>
         /// </summary>
-        /// <see cref="IOpcodeInformation.Instruction"/>
         public IInstruction Instruction { get; }
         #endregion
 
@@ -44,23 +43,20 @@ namespace Cpu.Execution
         /// <summary>
         /// Instantiates a new container for the decoded information
         /// </summary>
-        /// <param name="opcodeInformation">Information about the decoded opcode, including instruction, size and cycles</param>
+        /// <param name="opcodeInformation">Information about the decoded opcode, size and cycles</param>
+        /// <param name="instruction">Instruction representation of the opcode</param>
         /// <param name="valueParameter">Value to use as operand for the decoded instruction</param>
         public DecodedInstruction(
             IOpcodeInformation opcodeInformation,
+            IInstruction instruction,
             ushort valueParameter)
         {
             this.ValueParameter = valueParameter;
-
-            if (opcodeInformation.Instruction is null)
-            {
-                throw new ArgumentNullException(nameof(opcodeInformation), "Instruction is null");
-            }
+            this.Instruction = instruction;
 
             this.Bytes = opcodeInformation.Bytes;
             this.Opcode = opcodeInformation.Opcode;
             this.Cycles = opcodeInformation.MinimumCycles;
-            this.Instruction = opcodeInformation.Instruction;
         }
         #endregion
 

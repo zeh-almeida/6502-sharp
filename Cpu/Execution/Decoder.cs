@@ -1,4 +1,5 @@
 ﻿using Cpu.Extensions;
+using Cpu.Instructions;
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
@@ -14,6 +15,8 @@ namespace Cpu.Execution
     {
         #region Properties
         private IEnumerable<IOpcodeInformation> Opcodes { get; }
+
+        private IEnumerable<IInstruction> Instructions { get; }
         #endregion
 
         #region Constructors
@@ -21,9 +24,13 @@ namespace Cpu.Execution
         /// Instantiates a new <see cref="IDecoder"/> with the instruction set
         /// </summary>
         /// <param name="opcodes"><see cref="IOpcodeInformation"/> enumeration for instruction metadata</param>
-        public Decoder(IEnumerable<IOpcodeInformation> opcodes)
+        /// <param name="instructions"><see cref="IInstruction"/> enumeration for instruction executors</param>
+        public Decoder(
+            IEnumerable<IOpcodeInformation> opcodes,
+            IEnumerable<IInstruction> instructions)
         {
             this.Opcodes = opcodes.ToHashSet();
+            this.Instructions = instructions.ToHashSet();
         }
         #endregion
 
@@ -32,9 +39,10 @@ namespace Cpu.Execution
         {
             var opcode = ReadNextOpcode(currentState);
             var opcodeInfo = this.FetchOpcode(opcode);
+            var instruction = this.FetchInstruction(opcode);
 
             var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
-            var result = new DecodedInstruction(opcodeInfo, instructionValue);
+            var result = new DecodedInstruction(opcodeInfo, instruction, instructionValue);
 
             Debug.WriteLine($"{result} @ {currentState.Registers.ProgramCounter.AsHex()}");
             return result;
@@ -42,10 +50,19 @@ namespace Cpu.Execution
 
         private IOpcodeInformation FetchOpcode(byte opcode)
         {
-            var opcodeData = this.Opcodes
-                .FirstOrDefault(ins => opcode.Equals(ins.Opcode));
+            var result = this.Opcodes
+                .FirstOrDefault(item => opcode.Equals(item.Opcode));
 
-            return opcodeData
+            return result
+                ?? throw new UnknownOpcodeException(opcode);
+        }
+
+        private IInstruction FetchInstruction(byte opcode)
+        {
+            var result = this.Instructions
+                .FirstOrDefault(item => item.HasOpcode(opcode));
+
+            return result
                 ?? throw new UnknownOpcodeException(opcode);
         }
 

@@ -36,7 +36,10 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Memory.ReadAbsolute(pcAddress))
                 .Returns(streamByte);
 
-            var subject = new Decoder(Array.Empty<OpcodeInformation>());
+            var subject = new Decoder(
+                Array.Empty<IOpcodeInformation>(),
+                Array.Empty<IInstruction>());
+
             _ = Assert.Throws<UnknownOpcodeException>(() => subject.Decode(this.StateMock.Object));
         }
 
@@ -76,11 +79,9 @@ namespace Test.Unit.Cpu.Execution
             _ = opcodeMock.Setup(m => m.MaximumCycles)
                 .Returns(cycles);
 
-            _ = opcodeMock.Setup(m => m.Instruction)
-                .Returns(instruction);
-
             var subject = new Decoder(
-                new IOpcodeInformation[] { opcodeInfo });
+                new IOpcodeInformation[] { opcodeInfo },
+                new IInstruction[] { instruction });
 
             var result = subject.Decode(this.StateMock.Object);
 
@@ -141,11 +142,9 @@ namespace Test.Unit.Cpu.Execution
             _ = opcodeMock.Setup(m => m.MaximumCycles)
                 .Returns(cycles);
 
-            _ = opcodeMock.Setup(m => m.Instruction)
-                .Returns(instruction);
-
             var subject = new Decoder(
-                new IOpcodeInformation[] { opcodeInfo });
+                new IOpcodeInformation[] { opcodeInfo },
+                new IInstruction[] { instruction });
 
             var result = subject.Decode(this.StateMock.Object);
 
@@ -198,11 +197,9 @@ namespace Test.Unit.Cpu.Execution
             _ = opcodeMock.Setup(m => m.MaximumCycles)
                 .Returns(cycles);
 
-            _ = opcodeMock.Setup(m => m.Instruction)
-                .Returns(instruction);
-
             var subject = new Decoder(
-                new IOpcodeInformation[] { opcodeInfo });
+                new IOpcodeInformation[] { opcodeInfo },
+                new IInstruction[] { instruction });
 
             var result = subject.Decode(state);
 

@@ -35,9 +35,6 @@ namespace Test.Unit.Cpu.Execution
 
             var opcodeMock = new Mock<IOpcodeInformation>();
 
-            _ = opcodeMock.Setup(m => m.Instruction)
-                .Returns(new JumpToSubroutine());
-
             _ = opcodeMock.Setup(m => m.Opcode)
                 .Returns(StreamByte);
 
@@ -55,7 +52,7 @@ namespace Test.Unit.Cpu.Execution
             this.DecoderMock = new Mock<IDecoder>();
             this.LoggerMock = new Mock<ILogger<Machine>>();
 
-            this.Decoded = new DecodedInstruction(opcodeMock.Object, 65535);
+            this.Decoded = new DecodedInstruction(opcodeMock.Object, new JumpToSubroutine(), 65535);
             this.Subject = new Machine(this.LoggerMock.Object, this.StateMock.Object, this.DecoderMock.Object);
         }
         #endregion

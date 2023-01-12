@@ -44,14 +44,10 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Bytes)
                 .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Instruction)
-                .Returns(instructionMock.Object);
-
             var instruction = instructionMock.Object;
             var opcodeInfo = opcodeMock.Object;
 
-            var subject = new DecodedInstruction(opcodeInfo, Value);
+            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
             Assert.Equal(instruction.GetHashCode(), subject.Instruction?.GetHashCode());
         }
 
@@ -81,14 +77,10 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Bytes)
                 .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Instruction)
-                .Returns(instructionMock.Object);
-
             var instruction = instructionMock.Object;
             var opcodeInfo = opcodeMock.Object;
 
-            var subject = new DecodedInstruction(opcodeInfo, Value);
+            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
             Assert.Equal(Cycles, subject.Cycles);
         }
@@ -119,14 +111,10 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Bytes)
                 .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Instruction)
-                .Returns(instructionMock.Object);
-
             var instruction = instructionMock.Object;
             var opcodeInfo = opcodeMock.Object;
 
-            var subject = new DecodedInstruction(opcodeInfo, Value);
+            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
             Assert.Equal(Value, subject.ValueParameter);
         }
@@ -157,46 +145,12 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Bytes)
                 .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Instruction)
-                .Returns(instructionMock.Object);
-
             var instruction = instructionMock.Object;
             var opcodeInfo = opcodeMock.Object;
 
-            var subject = new DecodedInstruction(opcodeInfo, Value);
+            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
             Assert.Equal("0x01 (0x0001)", subject.ToString());
-        }
-
-        [Fact]
-        public void Instruction_Null_Throws()
-        {
-            var opcodeMock = new Mock<IOpcodeInformation>();
-
-            _ = opcodeMock
-                .Setup(mock => mock.Opcode)
-                .Returns(Opcode);
-
-            _ = opcodeMock
-                .Setup(mock => mock.MaximumCycles)
-                .Returns(Cycles);
-
-            _ = opcodeMock
-                .Setup(mock => mock.MinimumCycles)
-                .Returns(Cycles);
-
-            _ = opcodeMock
-                .Setup(mock => mock.Bytes)
-                .Returns(Bytes);
-
-            _ = opcodeMock
-                .Setup(mock => mock.Instruction)
-                .Returns(null as IInstruction);
-
-            var opcodeInfo = opcodeMock.Object;
-
-            _ = Assert.Throws<ArgumentNullException>(() => new DecodedInstruction(opcodeInfo, Value));
         }
     }
 }

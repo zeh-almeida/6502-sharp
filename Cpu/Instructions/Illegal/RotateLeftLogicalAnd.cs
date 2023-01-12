@@ -28,7 +28,14 @@ namespace Cpu.Instructions.Illegal
         /// Instantiates a new <see cref="RotateLeftLogicalAnd"/>
         /// </summary>
         public RotateLeftLogicalAnd()
-            : base(0x27, 0x37, 0x2F, 0x3F, 0x3B, 0x23, 0x33)
+            : base(
+                0x27,
+                0x37,
+                0x2F,
+                0x3F,
+                0x3B,
+                0x23,
+                0x33)
         { }
         #endregion
 

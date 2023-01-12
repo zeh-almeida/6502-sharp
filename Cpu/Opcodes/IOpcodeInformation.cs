@@ -29,11 +29,6 @@ namespace Cpu.Opcodes
         /// Maximum amount of Cycles the instruction can take to execute
         /// </summary>
         public byte MaximumCycles { get; }
-
-        /// <summary>
-        /// Instruction to be executed by the Opcode
-        /// </summary>
-        public IInstruction? Instruction { get; }
         #endregion
     }
 }

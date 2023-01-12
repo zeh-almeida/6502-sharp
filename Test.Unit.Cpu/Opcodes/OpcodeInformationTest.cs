@@ -1,9 +1,7 @@
-﻿using Cpu.Instructions.Logic;
-using Cpu.Opcodes;
+﻿using Cpu.Opcodes;
 using Xunit;
 
 namespace Test.Unit.Cpu.Opcodes;
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
 
 public sealed record OpcodeInformationTest
 {
@@ -24,12 +22,9 @@ public sealed record OpcodeInformationTest
     #region Constructors
     public OpcodeInformationTest()
     {
-        var target = typeof(InclusiveOr).FullName ?? throw new Exception("Error qualifying instruction");
-
         this.Subject = new OpcodeInformation(
             Opcode,
             Bytes,
-            target,
             MinimumCycles,
             MaximumCycles);
     }
@@ -38,13 +33,8 @@ public sealed record OpcodeInformationTest
     [Fact]
     public void Different_Cycles_Constructor_Instantiates()
     {
-        var target = typeof(InclusiveOr).FullName;
-
         Assert.Equal(MinimumCycles, this.Subject.MinimumCycles);
         Assert.Equal(MaximumCycles, this.Subject.MaximumCycles);
-
-        Assert.NotNull(this.Subject.Instruction);
-        Assert.Equal(target, this.Subject.Instruction.GetType().FullName);
     }
 
     [Fact]
@@ -87,11 +77,4 @@ public sealed record OpcodeInformationTest
     {
         Assert.Equal(Bytes, this.Subject.Bytes);
     }
-
-    [Fact]
-    public void Instruction_Is_Set()
-    {
-        Assert.NotNull(this.Subject.Instruction);
-    }
 }
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.

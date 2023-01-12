@@ -102,9 +102,6 @@ public sealed record CpuStateTest
 
         var opcodeMock = new Mock<IOpcodeInformation>();
 
-        _ = opcodeMock.Setup(m => m.Instruction)
-            .Returns(new SetCarryFlag());
-
         _ = opcodeMock.Setup(m => m.Opcode)
             .Returns(streamByte);
 
@@ -117,7 +114,7 @@ public sealed record CpuStateTest
         _ = opcodeMock.Setup(m => m.MaximumCycles)
             .Returns(cycles);
 
-        var decoded = new DecodedInstruction(opcodeMock.Object, 0x00);
+        var decoded = new DecodedInstruction(opcodeMock.Object, new SetCarryFlag(), 0x00);
         this.Subject.SetExecutingInstruction(decoded);
 
         Assert.Equal(decoded.Cycles - 1, this.Subject.CyclesLeft);

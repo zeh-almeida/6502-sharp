@@ -1,6 +1,4 @@
-﻿using Cpu.Instructions;
-using Cpu.Instructions.Exceptions;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Cpu.Opcodes
 {
@@ -21,9 +19,6 @@ namespace Cpu.Opcodes
 
         /// <inheritdoc/>
         public byte MaximumCycles { get; }
-
-        /// <inheritdoc/>
-        public IInstruction? Instruction { get; private set; }
         #endregion
 
         #region Constructors
@@ -32,19 +27,15 @@ namespace Cpu.Opcodes
         /// </summary>
         /// <param name="opcode">Opcode of reference</param>
         /// <param name="bytes">Length of the opcode</param>
-        /// <param name="instructionQualifier">Name of the instruction associated with the opcode</param>
         /// <param name="minimumCycles">Minimum cycles the opcode can take</param>
         /// <param name="maximumCycles">Maximum cycles the opcode can take</param>
         [JsonConstructor]
         public OpcodeInformation(
             byte opcode,
             byte bytes,
-            string instructionQualifier,
             byte minimumCycles,
             byte maximumCycles)
         {
-            ArgumentException.ThrowIfNullOrEmpty(instructionQualifier, nameof(instructionQualifier));
-
             this.Bytes = bytes;
             this.Opcode = opcode;
 
@@ -53,8 +44,6 @@ namespace Cpu.Opcodes
             this.MaximumCycles = maximumCycles > minimumCycles
                 ? maximumCycles
                 : minimumCycles;
-
-            this.ApplyInstruction(instructionQualifier);
         }
         #endregion
 
@@ -76,22 +65,6 @@ namespace Cpu.Opcodes
         public override int GetHashCode()
         {
             return this.Opcode.GetHashCode();
-        }
-
-        private void ApplyInstruction(string instructionQualifier)
-        {
-            var target = this.GetType().Assembly.FullName
-                ?? throw new Exception("Could not qualify assembly");
-
-            var handle = Activator.CreateInstance(target, instructionQualifier)
-                ?? throw new UnknownInstructionException(instructionQualifier);
-
-            if (handle.Unwrap() is not IInstruction instruction)
-            {
-                throw new UnknownInstructionException(instructionQualifier);
-            }
-
-            this.Instruction = instruction;
         }
     }
 }
