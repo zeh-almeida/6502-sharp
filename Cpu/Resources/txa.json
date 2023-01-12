@@ -2,7 +2,6 @@
     {
         "opcode": 138,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Transfers.TransferXAccumulator",
         "minimumCycles": 2,
         "maximumCycles": 0
     }

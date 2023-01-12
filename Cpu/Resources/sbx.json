@@ -2,7 +2,6 @@
     {
         "opcode": 203,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.CompareX",
         "minimumCycles": 3,
         "maximumCycles": 0
     }

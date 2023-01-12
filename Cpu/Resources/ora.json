@@ -2,56 +2,48 @@
     {
         "opcode": 9,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 5,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 21,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 13,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 29,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 4,
         "maximumCycles": 5
     },
     {
         "opcode": 25,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 4,
         "maximumCycles": 5
     },
     {
         "opcode": 1,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 17,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Logic.InclusiveOr",
         "minimumCycles": 5,
         "maximumCycles": 6
     }

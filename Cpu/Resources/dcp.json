@@ -2,49 +2,42 @@
     {
         "opcode": 199,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.DecrementCompare",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 215,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.DecrementCompare",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 207,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.DecrementCompare",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 223,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.DecrementCompare",
         "minimumCycles": 7,
         "maximumCycles": 0
     },
     {
         "opcode": 219,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.DecrementCompare",
         "minimumCycles": 7,
         "maximumCycles": 0
     },
     {
         "opcode": 195,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.DecrementCompare",
         "minimumCycles": 8,
         "maximumCycles": 0
     },
     {
         "opcode": 211,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.DecrementCompare",
         "minimumCycles": 8,
         "maximumCycles": 0
     }

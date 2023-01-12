@@ -2,49 +2,42 @@
     {
         "opcode": 71,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LeftShiftExclusiveOr",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 87,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LeftShiftExclusiveOr",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 79,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LeftShiftExclusiveOr",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 95,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LeftShiftExclusiveOr",
         "minimumCycles": 7,
         "maximumCycles": 0
     },
     {
         "opcode": 91,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LeftShiftExclusiveOr",
         "minimumCycles": 7,
         "maximumCycles": 0
     },
     {
         "opcode": 67,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LeftShiftExclusiveOr",
         "minimumCycles": 8,
         "maximumCycles": 0
     },
     {
         "opcode": 83,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LeftShiftExclusiveOr",
         "minimumCycles": 8,
         "maximumCycles": 0
     }

@@ -2,7 +2,6 @@
     {
         "opcode": 234,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.SystemFunctions.NoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     }

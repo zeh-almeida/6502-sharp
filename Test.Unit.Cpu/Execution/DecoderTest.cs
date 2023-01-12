@@ -79,6 +79,9 @@ namespace Test.Unit.Cpu.Execution
             _ = opcodeMock.Setup(m => m.MaximumCycles)
                 .Returns(cycles);
 
+            _ = instructionMock.Setup(m => m.HasOpcode(It.IsAny<byte>()))
+                .Returns(true);
+
             var subject = new Decoder(
                 new IOpcodeInformation[] { opcodeInfo },
                 new IInstruction[] { instruction });
@@ -142,6 +145,9 @@ namespace Test.Unit.Cpu.Execution
             _ = opcodeMock.Setup(m => m.MaximumCycles)
                 .Returns(cycles);
 
+            _ = instructionMock.Setup(m => m.HasOpcode(It.IsAny<byte>()))
+                .Returns(true);
+
             var subject = new Decoder(
                 new IOpcodeInformation[] { opcodeInfo },
                 new IInstruction[] { instruction });
@@ -196,6 +202,9 @@ namespace Test.Unit.Cpu.Execution
 
             _ = opcodeMock.Setup(m => m.MaximumCycles)
                 .Returns(cycles);
+
+            _ = instructionMock.Setup(m => m.HasOpcode(It.IsAny<byte>()))
+                .Returns(true);
 
             var subject = new Decoder(
                 new IOpcodeInformation[] { opcodeInfo },

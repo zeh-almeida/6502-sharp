@@ -2,7 +2,6 @@
     {
         "opcode": 120,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.StatusChanges.SetInterruptDisable",
         "minimumCycles": 2,
         "maximumCycles": 0
     }

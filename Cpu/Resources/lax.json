@@ -2,42 +2,36 @@
     {
         "opcode": 167,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LoadAccumulatorX",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 183,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LoadAccumulatorX",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 175,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LoadAccumulatorX",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 191,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LoadAccumulatorX",
         "minimumCycles": 4,
         "maximumCycles": 5
     },
     {
         "opcode": 163,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LoadAccumulatorX",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 179,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.LoadAccumulatorX",
         "minimumCycles": 5,
         "maximumCycles": 6
     }

@@ -2,7 +2,6 @@
     {
         "opcode": 232,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Increments.IncrementRegisterX",
         "minimumCycles": 2,
         "maximumCycles": 0
     }

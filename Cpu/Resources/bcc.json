@@ -2,7 +2,6 @@
     {
         "opcode": 144,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Branches.BranchCarryClear",
         "minimumCycles": 2,
         "maximumCycles": 4
     }

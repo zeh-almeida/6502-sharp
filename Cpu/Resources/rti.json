@@ -2,7 +2,6 @@
     {
         "opcode": 64,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.SystemFunctions.ReturnFromInterrupt",
         "minimumCycles": 6,
         "maximumCycles": 0
     }

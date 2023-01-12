@@ -2,7 +2,6 @@
     {
         "opcode": 112,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Branches.BranchOverflowSet",
         "minimumCycles": 2,
         "maximumCycles": 4
     }

@@ -2,7 +2,6 @@
     {
         "opcode": 187,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.AndStackPointer",
         "minimumCycles": 4,
         "maximumCycles": 5
     }

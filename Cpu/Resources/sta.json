@@ -2,49 +2,42 @@
     {
         "opcode": 133,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreAccumulator",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 149,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreAccumulator",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 141,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreAccumulator",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 157,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreAccumulator",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 153,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreAccumulator",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 129,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreAccumulator",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 145,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreAccumulator",
         "minimumCycles": 6,
         "maximumCycles": 0
     }

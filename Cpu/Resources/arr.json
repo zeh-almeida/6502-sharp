@@ -2,7 +2,6 @@
     {
         "opcode": 107,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.AndRightShift",
         "minimumCycles": 2,
         "maximumCycles": 0
     }

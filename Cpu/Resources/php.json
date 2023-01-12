@@ -2,7 +2,6 @@
     {
         "opcode": 8,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Stack.PushProcessorStatus",
         "minimumCycles": 3,
         "maximumCycles": 0
     }

@@ -2,21 +2,18 @@
     {
         "opcode": 132,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreRegisterY",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 148,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreRegisterY",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 140,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Store.StoreRegisterY",
         "minimumCycles": 4,
         "maximumCycles": 0
     }

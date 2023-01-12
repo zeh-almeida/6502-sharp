@@ -2,56 +2,48 @@
     {
         "opcode": 105,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 101,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 117,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 109,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 125,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 4,
         "maximumCycles": 5
     },
     {
         "opcode": 121,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 4,
         "maximumCycles": 5
     },
     {
         "opcode": 97,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 6,
         "maximumCycles": 0
     },
     {
         "opcode": 113,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Arithmetic.AddWithCarry",
         "minimumCycles": 5,
         "maximumCycles": 6
     }

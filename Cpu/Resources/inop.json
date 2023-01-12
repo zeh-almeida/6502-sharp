@@ -2,189 +2,162 @@
     {
         "opcode": 26,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 58,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 90,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 122,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 218,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 250,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 128,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 130,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 137,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 194,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 226,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 4,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 68,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 100,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 3,
         "maximumCycles": 0
     },
     {
         "opcode": 20,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 52,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 84,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 116,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 212,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 244,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 12,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 4,
         "maximumCycles": 0
     },
     {
         "opcode": 28,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 60,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 92,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 124,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 220,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 5,
         "maximumCycles": 0
     },
     {
         "opcode": 252,
         "bytes": 3,
-        "instructionQualifier": "Cpu.Instructions.Illegal.IllegalNoOperation",
         "minimumCycles": 5,
         "maximumCycles": 0
     }

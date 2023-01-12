@@ -2,14 +2,12 @@
     {
         "opcode": 11,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.AndCarry",
         "minimumCycles": 2,
         "maximumCycles": 0
     },
     {
         "opcode": 43,
         "bytes": 2,
-        "instructionQualifier": "Cpu.Instructions.Illegal.AndCarry",
         "minimumCycles": 2,
         "maximumCycles": 0
     }

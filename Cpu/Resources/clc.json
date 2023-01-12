@@ -2,7 +2,6 @@
     {
         "opcode": 24,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.StatusChanges.ClearCarryFlag",
         "minimumCycles": 2,
         "maximumCycles": 0
     }

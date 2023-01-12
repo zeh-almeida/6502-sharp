@@ -2,7 +2,6 @@
     {
         "opcode": 40,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.Stack.PullProcessorStatus",
         "minimumCycles": 4,
         "maximumCycles": 0
     }

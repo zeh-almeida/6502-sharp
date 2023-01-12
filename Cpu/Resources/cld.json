@@ -2,7 +2,6 @@
     {
         "opcode": 216,
         "bytes": 1,
-        "instructionQualifier": "Cpu.Instructions.StatusChanges.ClearDecimalMode",
         "minimumCycles": 2,
         "maximumCycles": 0
     }
