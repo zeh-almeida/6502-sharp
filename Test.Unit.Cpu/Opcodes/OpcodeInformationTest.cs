@@ -24,35 +24,27 @@ public sealed record OpcodeInformationTest
     #region Constructors
     public OpcodeInformationTest()
     {
-#pragma warning disable CS8601 // Possible null reference assignment.
-        this.Subject = new OpcodeInformation(Opcode, MinimumCycles, Bytes)
-            .SetInstruction(new InclusiveOr()) as OpcodeInformation;
+        var target = typeof(InclusiveOr).FullName ?? throw new Exception("Error qualifying instruction");
 
-        if (this.Subject is null)
-        {
-            throw new Exception("Should never happen");
-        }
-#pragma warning restore CS8601 // Possible null reference assignment.
+        this.Subject = new OpcodeInformation(
+            Opcode,
+            Bytes,
+            target,
+            MinimumCycles,
+            MaximumCycles);
     }
     #endregion
 
     [Fact]
     public void Different_Cycles_Constructor_Instantiates()
     {
-        var target = typeof(InclusiveOr).FullName ?? throw new Exception("Error qualifying instruction");
+        var target = typeof(InclusiveOr).FullName;
 
-        var subject = new OpcodeInformation(
-            Opcode,
-            Bytes,
-            target,
-            MinimumCycles,
-            MaximumCycles);
+        Assert.Equal(MinimumCycles, this.Subject.MinimumCycles);
+        Assert.Equal(MaximumCycles, this.Subject.MaximumCycles);
 
-        Assert.Equal(MinimumCycles, subject.MinimumCycles);
-        Assert.Equal(MaximumCycles, subject.MaximumCycles);
-
-        Assert.NotNull(subject.Instruction);
-        Assert.Equal(target, subject.Instruction.GetType().FullName);
+        Assert.NotNull(this.Subject.Instruction);
+        Assert.Equal(target, this.Subject.Instruction.GetType().FullName);
     }
 
     [Fact]
@@ -87,7 +79,7 @@ public sealed record OpcodeInformationTest
     public void Cycles_Equals_Defined()
     {
         Assert.Equal(MinimumCycles, this.Subject.MinimumCycles);
-        Assert.Equal(MinimumCycles, this.Subject.MaximumCycles);
+        Assert.Equal(MaximumCycles, this.Subject.MaximumCycles);
     }
 
     [Fact]
@@ -100,18 +92,6 @@ public sealed record OpcodeInformationTest
     public void Instruction_Is_Set()
     {
         Assert.NotNull(this.Subject.Instruction);
-    }
-
-    [Fact]
-    public void Instruction_SetNull_Throws()
-    {
-        _ = Assert.Throws<ArgumentNullException>(() => this.Subject.SetInstruction(null));
-    }
-
-    [Fact]
-    public void Instruction_AlreadySet_Throws()
-    {
-        _ = Assert.Throws<ArgumentException>(() => this.Subject.SetInstruction(new InclusiveOr()));
     }
 }
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.

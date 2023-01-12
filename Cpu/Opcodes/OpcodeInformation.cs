@@ -23,33 +23,10 @@ namespace Cpu.Opcodes
         public byte MaximumCycles { get; }
 
         /// <inheritdoc/>
-        public string? InstructionQualifier { get; }
-
-        /// <inheritdoc/>
         public IInstruction? Instruction { get; private set; }
         #endregion
 
         #region Constructors
-        /// <summary>
-        /// Instantiates a new Opcode Information
-        /// </summary>
-        /// <param name="opcode">Opcode of reference</param>
-        /// <param name="cycles">Cycles of the opcode</param>
-        /// <param name="bytes">Length of the opcode</param>
-        public OpcodeInformation(
-            byte opcode,
-            byte cycles,
-            byte bytes)
-        {
-            this.Bytes = bytes;
-            this.Opcode = opcode;
-
-            this.MinimumCycles = cycles;
-            this.MaximumCycles = cycles;
-
-            this.InstructionQualifier = null;
-        }
-
         /// <summary>
         /// Instantiates a new Opcode Information
         /// </summary>
@@ -77,8 +54,7 @@ namespace Cpu.Opcodes
                 ? maximumCycles
                 : minimumCycles;
 
-            this.InstructionQualifier = instructionQualifier;
-            this.ApplyInstruction();
+            this.ApplyInstruction(instructionQualifier);
         }
         #endregion
 
@@ -102,42 +78,20 @@ namespace Cpu.Opcodes
             return this.Opcode.GetHashCode();
         }
 
-        /// <inheritdoc/>
-        public IOpcodeInformation SetInstruction(IInstruction instruction)
+        private void ApplyInstruction(string instructionQualifier)
         {
-            if (instruction is null)
-            {
-                throw new ArgumentNullException(nameof(instruction), "Cannot be null");
-            }
-
-            if (this.Instruction is not null)
-            {
-                throw new ArgumentException("Instruction is already set", nameof(instruction));
-            }
-
-            this.Instruction = instruction;
-            return this;
-        }
-
-        private void ApplyInstruction()
-        {
-            if (string.IsNullOrWhiteSpace(this.InstructionQualifier))
-            {
-                throw new Exception("Could not qualify instruction");
-            }
-
             var target = this.GetType().Assembly.FullName
                 ?? throw new Exception("Could not qualify assembly");
 
-            var handle = Activator.CreateInstance(target, this.InstructionQualifier)
-                ?? throw new UnknownInstructionException(this.InstructionQualifier);
+            var handle = Activator.CreateInstance(target, instructionQualifier)
+                ?? throw new UnknownInstructionException(instructionQualifier);
 
             if (handle.Unwrap() is not IInstruction instruction)
             {
-                throw new UnknownInstructionException(this.InstructionQualifier);
+                throw new UnknownInstructionException(instructionQualifier);
             }
 
-            _ = this.SetInstruction(instruction);
+            this.Instruction = instruction;
         }
     }
 }

@@ -59,8 +59,34 @@ namespace Test.Unit.Cpu.Execution
         public void Cycles_Equals_Defined()
         {
             var instructionMock = new Mock<IInstruction>();
-            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes)
-                .SetInstruction(instructionMock.Object);
+            var opcodeMock = new Mock<IOpcodeInformation>();
+
+            _ = instructionMock
+                .Setup(mock => mock.GetHashCode())
+                .Returns(1);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Opcode)
+                .Returns(Opcode);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MaximumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MinimumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Bytes)
+                .Returns(Bytes);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Instruction)
+                .Returns(instructionMock.Object);
+
+            var instruction = instructionMock.Object;
+            var opcodeInfo = opcodeMock.Object;
 
             var subject = new DecodedInstruction(opcodeInfo, Value);
 
@@ -71,8 +97,34 @@ namespace Test.Unit.Cpu.Execution
         public void Bytes_Equals_Defined()
         {
             var instructionMock = new Mock<IInstruction>();
-            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes)
-                .SetInstruction(instructionMock.Object);
+            var opcodeMock = new Mock<IOpcodeInformation>();
+
+            _ = instructionMock
+                .Setup(mock => mock.GetHashCode())
+                .Returns(1);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Opcode)
+                .Returns(Opcode);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MaximumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MinimumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Bytes)
+                .Returns(Bytes);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Instruction)
+                .Returns(instructionMock.Object);
+
+            var instruction = instructionMock.Object;
+            var opcodeInfo = opcodeMock.Object;
 
             var subject = new DecodedInstruction(opcodeInfo, Value);
 
@@ -83,8 +135,34 @@ namespace Test.Unit.Cpu.Execution
         public void ToString_IsFormatted()
         {
             var instructionMock = new Mock<IInstruction>();
-            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes)
-                .SetInstruction(instructionMock.Object);
+            var opcodeMock = new Mock<IOpcodeInformation>();
+
+            _ = instructionMock
+                .Setup(mock => mock.GetHashCode())
+                .Returns(1);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Opcode)
+                .Returns(Opcode);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MaximumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MinimumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Bytes)
+                .Returns(Bytes);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Instruction)
+                .Returns(instructionMock.Object);
+
+            var instruction = instructionMock.Object;
+            var opcodeInfo = opcodeMock.Object;
 
             var subject = new DecodedInstruction(opcodeInfo, Value);
 
@@ -94,7 +172,30 @@ namespace Test.Unit.Cpu.Execution
         [Fact]
         public void Instruction_Null_Throws()
         {
-            var opcodeInfo = new OpcodeInformation(Opcode, Cycles, Bytes);
+            var opcodeMock = new Mock<IOpcodeInformation>();
+
+            _ = opcodeMock
+                .Setup(mock => mock.Opcode)
+                .Returns(Opcode);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MaximumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.MinimumCycles)
+                .Returns(Cycles);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Bytes)
+                .Returns(Bytes);
+
+            _ = opcodeMock
+                .Setup(mock => mock.Instruction)
+                .Returns(null as IInstruction);
+
+            var opcodeInfo = opcodeMock.Object;
+
             _ = Assert.Throws<ArgumentNullException>(() => new DecodedInstruction(opcodeInfo, Value));
         }
     }

@@ -31,23 +31,9 @@ namespace Cpu.Opcodes
         public byte MaximumCycles { get; }
 
         /// <summary>
-        /// Full assembly name of the Target Instruction of this Opcode
-        /// </summary>
-        public string? InstructionQualifier { get; }
-
-        /// <summary>
         /// Instruction to be executed by the Opcode
         /// </summary>
         public IInstruction? Instruction { get; }
         #endregion
-
-        /// <summary>
-        /// Sets the <see cref="IInstruction"/> reference for this opcode
-        /// </summary>
-        /// <param name="instruction"> reference</param>
-        /// <returns>Current instance</returns>
-        /// <exception cref="ArgumentNullException">If <paramref name="instruction"/> is null</exception>
-        /// <exception cref="ArgumentException">If reference is already set</exception>
-        IOpcodeInformation SetInstruction(IInstruction instruction);
     }
 }
