@@ -23,7 +23,7 @@ namespace Test.Unit.Cpu.Execution
         #endregion
 
         [Fact]
-        public void InstructionNotFound_Decode_Fails()
+        public void NoOpcode_NoInstruction_Decode_Fails()
         {
             const ushort pcAddress = 1;
             const int streamByte = 0x38;
@@ -39,6 +39,72 @@ namespace Test.Unit.Cpu.Execution
             var subject = new Decoder(
                 Array.Empty<IOpcodeInformation>(),
                 Array.Empty<IInstruction>());
+
+            _ = Assert.Throws<UnknownOpcodeException>(() => subject.Decode(this.StateMock.Object));
+        }
+
+        [Fact]
+        public void Opcode_NoInstruction_Decode_Fails()
+        {
+            const ushort pcAddress = 1;
+
+            const int streamByte = 0x38;
+            const int cycles = 2;
+            const int bytes = 1;
+
+            var opcodeMock = new Mock<IOpcodeInformation>();
+            var opcodeInfo = opcodeMock.Object;
+
+            _ = this.StateMock
+                .Setup(mock => mock.Registers.ProgramCounter)
+                .Returns(pcAddress);
+
+            _ = this.StateMock
+                .Setup(mock => mock.Memory.ReadAbsolute(pcAddress))
+                .Returns(streamByte);
+
+            _ = opcodeMock.Setup(m => m.Opcode)
+                .Returns(streamByte);
+
+            _ = opcodeMock.Setup(m => m.Bytes)
+                .Returns(bytes);
+
+            _ = opcodeMock.Setup(m => m.MinimumCycles)
+                .Returns(cycles);
+
+            _ = opcodeMock.Setup(m => m.MaximumCycles)
+                .Returns(cycles);
+
+            var subject = new Decoder(
+                new IOpcodeInformation[] { opcodeInfo },
+                Array.Empty<IInstruction>());
+
+            _ = Assert.Throws<UnknownOpcodeException>(() => subject.Decode(this.StateMock.Object));
+        }
+
+        [Fact]
+        public void NoOpcode_Instruction_Decode_Fails()
+        {
+            const ushort pcAddress = 1;
+            const int streamByte = 0x38;
+
+            var instructionMock = new Mock<IInstruction>();
+            var instruction = instructionMock.Object;
+
+            _ = this.StateMock
+                .Setup(mock => mock.Registers.ProgramCounter)
+                .Returns(pcAddress);
+
+            _ = this.StateMock
+                .Setup(mock => mock.Memory.ReadAbsolute(pcAddress))
+                .Returns(streamByte);
+
+            _ = instructionMock.Setup(m => m.HasOpcode(It.IsAny<byte>()))
+                .Returns(true);
+
+            var subject = new Decoder(
+                Array.Empty<IOpcodeInformation>(),
+                new IInstruction[] { instruction });
 
             _ = Assert.Throws<UnknownOpcodeException>(() => subject.Decode(this.StateMock.Object));
         }

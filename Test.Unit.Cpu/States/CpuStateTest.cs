@@ -78,11 +78,27 @@ public sealed record CpuStateTest
     }
 
     [Fact]
-    public void CountCycle_Executes()
+    public void DecrementCycle_Executes()
     {
         this.Subject.DecrementCycle();
 
         Assert.Equal(-1, this.Subject.CyclesLeft);
+    }
+
+    [Fact]
+    public void IncrementCycle_Executes()
+    {
+        const int target = 1;
+        this.Subject.IncrementCycles(target);
+
+        Assert.Equal(target, this.Subject.CyclesLeft);
+    }
+
+    [Fact]
+    public void IncrementCycle_Negative_Throws()
+    {
+        const int target = -1;
+        _ = Assert.Throws<ArgumentOutOfRangeException>(() => this.Subject.IncrementCycles(target));
     }
 
     [Fact]
