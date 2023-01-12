@@ -11,32 +11,19 @@ namespace Cpu.Execution
     {
         #region Properties
         /// <summary>
-        /// Value for the instruction Operand code
+        /// Value for the instruction parameter
         /// </summary>
         public ushort ValueParameter { get; }
-
-        /// <summary>
-        /// Minimum number of Cycles to run the instruction
-        /// </summary>
-        /// <see cref="IOpcodeInformation.MinimumCycles"/>
-        public byte Cycles { get; }
-
-        /// <summary>
-        /// Number of bytes that make the operand for the instruction
-        /// </summary>
-        /// <see cref="IOpcodeInformation.Bytes"/>
-        public byte Bytes { get; }
-
-        /// <summary>
-        /// Byte representing the instruction to be executed
-        /// </summary>
-        /// <see cref="IOpcodeInformation.Opcode"/>
-        public byte Opcode { get; }
 
         /// <summary>
         /// Decoded <see cref="IInstruction"/>
         /// </summary>
         public IInstruction Instruction { get; }
+
+        /// <summary>
+        /// <see cref="IOpcodeInformation"/> about the instruction
+        /// </summary>
+        public IOpcodeInformation Information { get; }
         #endregion
 
         #region Constructors
@@ -51,19 +38,16 @@ namespace Cpu.Execution
             IInstruction instruction,
             ushort valueParameter)
         {
+            this.Information = opcodeInformation;
             this.ValueParameter = valueParameter;
             this.Instruction = instruction;
-
-            this.Bytes = opcodeInformation.Bytes;
-            this.Opcode = opcodeInformation.Opcode;
-            this.Cycles = opcodeInformation.MinimumCycles;
         }
         #endregion
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{this.Opcode.AsHex()} ({this.ValueParameter.AsHex()})";
+            return $"{this.Information.Opcode.AsHex()} ({this.ValueParameter.AsHex()})";
         }
     }
 }

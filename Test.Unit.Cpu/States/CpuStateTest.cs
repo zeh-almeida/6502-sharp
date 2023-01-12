@@ -133,8 +133,8 @@ public sealed record CpuStateTest
         var decoded = new DecodedInstruction(opcodeMock.Object, new SetCarryFlag(), 0x00);
         this.Subject.SetExecutingInstruction(decoded);
 
-        Assert.Equal(decoded.Cycles - 1, this.Subject.CyclesLeft);
-        Assert.Equal(decoded.Opcode, this.Subject.ExecutingOpcode);
+        Assert.Equal(decoded.Information.MinimumCycles - 1, this.Subject.CyclesLeft);
+        Assert.Equal(decoded.Information.Opcode, this.Subject.ExecutingOpcode);
     }
     #endregion
 

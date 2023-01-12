@@ -165,9 +165,9 @@ namespace Cpu.States
         public void SetExecutingInstruction(DecodedInstruction decoded)
         {
             this.DecodedInstruction = decoded;
-            this.ExecutingOpcode = decoded.Opcode;
+            this.ExecutingOpcode = decoded.Information.Opcode;
 
-            this.IncrementCycles(decoded.Cycles);
+            this.IncrementCycles(decoded.Information.MinimumCycles);
             this.DecrementCycle();
         }
     }

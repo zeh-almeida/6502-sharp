@@ -156,8 +156,7 @@ namespace Test.Unit.Cpu.Execution
 
             Assert.NotNull(result);
 
-            Assert.Equal(cycles, result.Cycles);
-            Assert.Equal(cycles, result.Cycles);
+            Assert.Equal(cycles, result.Information.MinimumCycles);
             Assert.Equal(0, result.ValueParameter);
         }
 
@@ -222,8 +221,7 @@ namespace Test.Unit.Cpu.Execution
 
             Assert.NotNull(result);
 
-            Assert.Equal(cycles, result.Cycles);
-            Assert.Equal(cycles, result.Cycles);
+            Assert.Equal(cycles, result.Information.MinimumCycles);
             Assert.Equal(paramValue, result.ValueParameter);
         }
 
@@ -280,8 +278,7 @@ namespace Test.Unit.Cpu.Execution
 
             Assert.NotNull(result);
 
-            Assert.Equal(cycles, result.Cycles);
-            Assert.Equal(cycles, result.Cycles);
+            Assert.Equal(cycles, result.Information.MinimumCycles);
             Assert.Equal(paramByte, result.ValueParameter);
         }
     }

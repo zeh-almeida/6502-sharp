@@ -201,7 +201,7 @@ namespace Cpu.Execution
 
         private void AdvanceProgramCount(DecodedInstruction decoded)
         {
-            this.State.Registers.ProgramCounter += decoded.Bytes;
+            this.State.Registers.ProgramCounter += decoded.Information.Bytes;
         }
 
         private bool IsProgramRunning()

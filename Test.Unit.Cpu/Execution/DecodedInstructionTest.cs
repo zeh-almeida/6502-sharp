@@ -82,7 +82,7 @@ namespace Test.Unit.Cpu.Execution
 
             var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
-            Assert.Equal(Cycles, subject.Cycles);
+            Assert.Equal(Cycles, subject.Information.MinimumCycles);
         }
 
         [Fact]
