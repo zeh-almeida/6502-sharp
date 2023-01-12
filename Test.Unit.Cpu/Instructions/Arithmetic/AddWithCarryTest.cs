@@ -328,7 +328,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             _ = stateMock
                 .Setup(s => s.Memory.ReadAbsoluteX(address))
-                .Returns(value);
+                .Returns((false, value));
 
             this.Subject.Execute(stateMock.Object, address);
 
@@ -349,7 +349,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             _ = stateMock
                 .Setup(s => s.Memory.ReadAbsoluteY(address))
-                .Returns(value);
+                .Returns((false, value));
 
             this.Subject.Execute(stateMock.Object, address);
 
@@ -391,7 +391,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
 
             _ = stateMock
                 .Setup(s => s.Memory.ReadIndirectY(address))
-                .Returns(value);
+                .Returns((false, value));
 
             this.Subject.Execute(stateMock.Object, address);
 

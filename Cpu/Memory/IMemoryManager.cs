@@ -10,6 +10,11 @@
         /// Available system memory length in bytes
         /// </summary>
         public const int Length = ushort.MaxValue + 1;
+
+        /// <summary>
+        /// Size of a memory page
+        /// </summary>
+        public const int PageBoundary = 0xFF;
         #endregion
 
         #region Write
@@ -107,6 +112,7 @@
         /// <para>Because the address is a 16-bit value, if it exceeds <c>0xFF</c> it will wrap around</para>
         /// </summary>
         /// <param name="address">8-bit address</param>
+        /// <returns>Value at the desired address</returns>
         byte ReadZeroPage(ushort address);
 
         /// <summary>
@@ -117,6 +123,7 @@
         /// <see cref="Registers.IRegisterManager.IndexX"/>
         /// </summary>
         /// <param name="address">8-bit address</param>
+        /// <returns>Value at the desired address</returns>
         byte ReadZeroPageX(ushort address);
 
         /// <summary>
@@ -127,12 +134,14 @@
         /// <see cref="Registers.IRegisterManager.IndexY"/>
         /// </summary>
         /// <param name="address">8-bit address</param>
+        /// <returns>Value at the desired address</returns>
         byte ReadZeroPageY(ushort address);
 
         /// <summary>
         /// Writes an 8-bit value using an 16-bit address which must point to any address in the 16-bit space
         /// </summary>
         /// <param name="address">16-bit address</param>
+        /// <returns>Value at the desired address</returns>
         byte ReadAbsolute(ushort address);
 
         /// <summary>
@@ -141,7 +150,8 @@
         /// <see cref="Registers.IRegisterManager.IndexX"/>
         /// </summary>
         /// <param name="address">16-bit address</param>
-        byte ReadAbsoluteX(ushort address);
+        /// <returns>Indication of page crossing and value at the desired address</returns>
+        (bool, byte) ReadAbsoluteX(ushort address);
 
         /// <summary>
         /// <para>Reads an 8-bit value using an 16-bit address which must point to any address in the 16-bit space</para>
@@ -149,7 +159,8 @@
         /// <see cref="Registers.IRegisterManager.IndexY"/>
         /// </summary>
         /// <param name="address">16-bit address</param>
-        byte ReadAbsoluteY(ushort address);
+        /// <returns>Indication of page crossing and value at the desired address</returns>
+        (bool, byte) ReadAbsoluteY(ushort address);
 
         /// <summary>
         /// <para>Based on the supplied address, reads the zero page for the real address</para>
@@ -157,6 +168,7 @@
         /// <para>Reads an 8-bit value from the calculated address</para>
         /// </summary>
         /// <param name="address">16-bit address pointing to the zero page</param>
+        /// <returns>Value at the desired address</returns>
         byte ReadIndirect(ushort address);
 
         /// <summary>
@@ -167,6 +179,7 @@
         /// <see cref="Registers.IRegisterManager.IndexX"/>
         /// </summary>
         /// <param name="address">16-bit address pointing to the zero page</param>
+        /// <returns>Value at the desired address</returns>
         byte ReadIndirectX(ushort address);
 
         /// <summary>
@@ -177,9 +190,11 @@
         /// <see cref="Registers.IRegisterManager.IndexX"/>
         /// </summary>
         /// <param name="address">16-bit address pointing to the zero page</param>
-        byte ReadIndirectY(ushort address);
+        /// <returns>Indication of page crossing and value at the desired address</returns>
+        (bool, byte) ReadIndirectY(ushort address);
         #endregion
 
+        #region Save/Load
         /// <summary>
         /// Serializes the current memory resulting in a byte array.
         /// <see cref="Length"/> holds the final length.
@@ -195,5 +210,6 @@
         /// <exception cref="System.ArgumentNullException">if <paramref name="data"/> is null</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
         void Load(IEnumerable<byte> data);
+        #endregion
     }
 }

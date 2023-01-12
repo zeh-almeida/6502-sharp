@@ -106,10 +106,10 @@ namespace Cpu.Instructions.Arithmetic
                 0xE5 => currentState.Memory.ReadZeroPage(address),
                 0xF5 => currentState.Memory.ReadZeroPageX(address),
                 0xED => currentState.Memory.ReadAbsolute(address),
-                0xFD => currentState.Memory.ReadAbsoluteX(address),
-                0xF9 => currentState.Memory.ReadAbsoluteY(address),
+                0xFD => currentState.Memory.ReadAbsoluteX(address).Item2,
+                0xF9 => currentState.Memory.ReadAbsoluteY(address).Item2,
                 0xE1 => currentState.Memory.ReadIndirectX(address),
-                0xF1 => currentState.Memory.ReadIndirectY(address),
+                0xF1 => currentState.Memory.ReadIndirectY(address).Item2,
                 _ => throw new UnknownOpcodeException(currentState.ExecutingOpcode),
             };
         }

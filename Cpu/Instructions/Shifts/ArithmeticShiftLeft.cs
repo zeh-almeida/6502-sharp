@@ -56,7 +56,7 @@ namespace Cpu.Instructions.Shifts
                 0x06 => currentState.Memory.ReadZeroPage(address),
                 0x16 => currentState.Memory.ReadZeroPageX(address),
                 0x0E => currentState.Memory.ReadAbsolute(address),
-                0x1E => currentState.Memory.ReadAbsoluteX(address),
+                0x1E => currentState.Memory.ReadAbsoluteX(address).Item2,
                 _ => throw new UnknownOpcodeException(currentState.ExecutingOpcode),
             };
         }

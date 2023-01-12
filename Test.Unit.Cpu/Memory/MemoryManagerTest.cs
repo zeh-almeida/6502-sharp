@@ -29,7 +29,6 @@ public sealed record MemoryManagerTest
     }
     #endregion
 
-    #region 8bit
     [Fact]
     public void WriteRead_Absolute_Successful()
     {
@@ -58,7 +57,28 @@ public sealed record MemoryManagerTest
         var result = this.Subject.ReadAbsoluteX(address);
 
         this.RegisterMock.Verify(state => state.IndexX, Times.Exactly(2));
-        Assert.Equal(value, result);
+        Assert.False(result.Item1);
+        Assert.Equal(value, result.Item2);
+    }
+
+    [Fact]
+    public void WriteRead_AbsoluteX_CrossesPages()
+    {
+        const ushort address = 0xFE;
+        const byte registerX = 2;
+
+        const byte value = 1;
+
+        _ = this.RegisterMock
+            .Setup(s => s.IndexX)
+            .Returns(registerX);
+
+        this.Subject.WriteAbsoluteX(address, value);
+        var result = this.Subject.ReadAbsoluteX(address);
+
+        this.RegisterMock.Verify(state => state.IndexX, Times.Exactly(2));
+        Assert.True(result.Item1);
+        Assert.Equal(value, result.Item2);
     }
 
     [Fact]
@@ -77,7 +97,28 @@ public sealed record MemoryManagerTest
         var result = this.Subject.ReadAbsoluteY(address);
 
         this.RegisterMock.Verify(state => state.IndexY, Times.Exactly(2));
-        Assert.Equal(value, result);
+        Assert.False(result.Item1);
+        Assert.Equal(value, result.Item2);
+    }
+
+    [Fact]
+    public void WriteRead_AbsoluteY_CrossesPages()
+    {
+        const ushort address = 0xFE;
+        const byte registerY = 2;
+
+        const byte value = 1;
+
+        _ = this.RegisterMock
+            .Setup(s => s.IndexY)
+            .Returns(registerY);
+
+        this.Subject.WriteAbsoluteY(address, value);
+        var result = this.Subject.ReadAbsoluteY(address);
+
+        this.RegisterMock.Verify(state => state.IndexY, Times.Exactly(2));
+        Assert.True(result.Item1);
+        Assert.Equal(value, result.Item2);
     }
 
     [Fact]
@@ -134,7 +175,34 @@ public sealed record MemoryManagerTest
         var result = this.Subject.ReadIndirectY(address);
 
         this.RegisterMock.Verify(state => state.IndexY, Times.Exactly(2));
-        Assert.Equal(value, result);
+        Assert.False(result.Item1);
+        Assert.Equal(value, result.Item2);
+    }
+
+    [Fact]
+    public void WriteRead_IndirectY_CrossesPages()
+    {
+        const ushort indirectAddress = 2;
+        const ushort finalAddress = 0x0100;
+
+        const byte registerY = 2;
+
+        const byte indirectValue = 0xFE;
+        const byte finalValue = 0xFE;
+
+        _ = this.RegisterMock
+            .SetupSequence(s => s.IndexY)
+            .Returns(registerY)
+            .Returns(registerY);
+
+        this.Subject.WriteIndirectY(indirectAddress - 1, indirectValue);
+        this.Subject.WriteAbsolute(finalAddress, finalValue);
+
+        var result = this.Subject.ReadIndirectY(indirectAddress);
+
+        this.RegisterMock.Verify(state => state.IndexY, Times.Exactly(2));
+        Assert.True(result.Item1);
+        Assert.Equal(finalValue, result.Item2);
     }
 
     [Fact]
@@ -220,7 +288,6 @@ public sealed record MemoryManagerTest
 
         Assert.Equal(value, result);
     }
-    #endregion
 
     #region Save/Load
     [Fact]

@@ -176,7 +176,7 @@ namespace Test.Unit.Cpu.Instructions.Load
 
             _ = stateMock
                 .Setup(s => s.Memory.ReadAbsoluteY(address))
-                .Returns(value);
+                .Returns((false, value));
 
             this.Subject.Execute(stateMock.Object, address);
 

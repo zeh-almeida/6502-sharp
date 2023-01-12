@@ -62,10 +62,10 @@ namespace Cpu.Instructions.Illegal
                 0xC7 => currentState.Memory.ReadZeroPage(address),
                 0xD7 => currentState.Memory.ReadZeroPageX(address),
                 0xCF => currentState.Memory.ReadAbsolute(address),
-                0xDF => currentState.Memory.ReadAbsoluteX(address),
-                0xDB => currentState.Memory.ReadAbsoluteY(address),
+                0xDF => currentState.Memory.ReadAbsoluteX(address).Item2,
+                0xDB => currentState.Memory.ReadAbsoluteY(address).Item2,
                 0xC3 => currentState.Memory.ReadIndirectX(address),
-                0xD3 => currentState.Memory.ReadIndirectY(address),
+                0xD3 => currentState.Memory.ReadIndirectY(address).Item2,
                 _ => throw new UnknownOpcodeException(currentState.ExecutingOpcode),
             };
         }

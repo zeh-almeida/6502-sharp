@@ -51,7 +51,7 @@ namespace Cpu.Instructions.Load
                 0xA6 => currentState.Memory.ReadZeroPage(address),
                 0xB6 => currentState.Memory.ReadZeroPageY(address),
                 0xAE => currentState.Memory.ReadAbsolute(address),
-                0xBE => currentState.Memory.ReadAbsoluteY(address),
+                0xBE => currentState.Memory.ReadAbsoluteY(address).Item2,
                 _ => throw new UnknownOpcodeException(currentState.ExecutingOpcode),
             };
         }

@@ -73,7 +73,7 @@ namespace Cpu.Instructions.Increments
                 0xE6 => currentState.Memory.ReadZeroPage(address),
                 0xF6 => currentState.Memory.ReadZeroPageX(address),
                 0xEE => currentState.Memory.ReadAbsolute(address),
-                0xFE => currentState.Memory.ReadAbsoluteX(address),
+                0xFE => currentState.Memory.ReadAbsoluteX(address).Item2,
                 _ => throw new UnknownOpcodeException(currentState.ExecutingOpcode),
             };
         }

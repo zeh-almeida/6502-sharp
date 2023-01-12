@@ -145,17 +145,21 @@ namespace Cpu.Memory
         }
 
         /// <inheritdoc/>
-        public byte ReadAbsoluteX(ushort address)
+        public (bool, byte) ReadAbsoluteX(ushort address)
         {
-            var addressX = (ushort)(address + this.RegisterManager.IndexX);
-            return this.ReadAbsolute(addressX);
+            var finalAddress = (ushort)(address + this.RegisterManager.IndexX);
+
+            var pageCrossed = CheckPageCrossed(address, finalAddress);
+            return (pageCrossed, this.ReadAbsolute(finalAddress));
         }
 
         /// <inheritdoc/>
-        public byte ReadAbsoluteY(ushort address)
+        public (bool, byte) ReadAbsoluteY(ushort address)
         {
-            var addressY = (ushort)(address + this.RegisterManager.IndexY);
-            return this.ReadAbsolute(addressY);
+            var finalAddress = (ushort)(address + this.RegisterManager.IndexY);
+
+            var pageCrossed = CheckPageCrossed(address, finalAddress);
+            return (pageCrossed, this.ReadAbsolute(finalAddress));
         }
 
         /// <inheritdoc/>
@@ -175,12 +179,13 @@ namespace Cpu.Memory
         }
 
         /// <inheritdoc/>
-        public byte ReadIndirectY(ushort address)
+        public (bool, byte) ReadIndirectY(ushort address)
         {
             var realAddress = this.ReadWord(address);
-            var addressY = (ushort)(realAddress + this.RegisterManager.IndexY);
+            var finalAddress = (ushort)(realAddress + this.RegisterManager.IndexY);
 
-            return this.ReadAbsolute(addressY);
+            var pageCrossed = CheckPageCrossed(realAddress, finalAddress);
+            return (pageCrossed, this.ReadAbsolute(finalAddress));
         }
         #endregion
 
@@ -215,6 +220,14 @@ namespace Cpu.Memory
             var addressMsb = this.ReadAbsolute((ushort)(address + 1));
 
             return addressLsb.CombineBytes(addressMsb);
+        }
+
+        private static bool CheckPageCrossed(ushort previousAddress, ushort currentAddress)
+        {
+            var previousBoundary = previousAddress.MostSignificantBits();
+            var currentBoundary = currentAddress.MostSignificantBits();
+
+            return !previousBoundary.Equals(currentBoundary);
         }
 
         private static ushort WrapZeroPageAddress(ushort address)

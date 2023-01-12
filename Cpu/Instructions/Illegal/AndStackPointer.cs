@@ -31,7 +31,7 @@ namespace Cpu.Instructions.Illegal
         /// <inheritdoc/>
         public override void Execute(ICpuState currentState, ushort value)
         {
-            var loadValue = currentState.Memory.ReadAbsoluteY(value);
+            var loadValue = currentState.Memory.ReadAbsoluteY(value).Item2;
             var stackPointer = currentState.Registers.StackPointer;
 
             var operation = (byte)(loadValue & stackPointer);

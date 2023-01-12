@@ -16,5 +16,11 @@ namespace Cpu.Memory
         /// Signifies data being written from memory
         /// </summary>
         public static EventId OnWrite { get; } = new EventId(2100, "Write memory");
+
+        /// <summary>
+        /// Signifies a operation which has crossed a Page Boundary
+        /// </summary>
+        /// <see cref="IMemoryManager.PageBoundary"/>
+        public static EventId PageCrossed { get; } = new EventId(2200, "Crossed Boundary");
     }
 }
