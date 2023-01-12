@@ -51,5 +51,25 @@ namespace Cpu.Instructions
         {
             return this.Opcodes.Contains(opcode);
         }
+
+        /// <summary>
+        /// Increases the total execution cycles when a memory operation crosses boundaries
+        /// </summary>
+        /// <param name="currentState"><see cref="ICpuState"/> reference to increase cycles</param>
+        /// <param name="result">If marked as true, must increase the cycles</param>
+        /// <param name="additionalCycles">Number of cycles to add</param>
+        /// <returns>The value read from memory</returns>
+        protected static ushort LoadExtraCycle(
+            ICpuState currentState,
+            (bool, byte) result,
+            int additionalCycles = 1)
+        {
+            if (result.Item1)
+            {
+                currentState.IncrementCycles(additionalCycles);
+            }
+
+            return result.Item2;
+        }
     }
 }
