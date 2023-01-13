@@ -167,6 +167,14 @@ namespace Test.Unit.Cpu.Extensions
         }
 
         [Theory]
+        [InlineData(0x0001, 0x00FE, false)]
+        [InlineData(0x0001, 0x0100, true)]
+        public void CheckPageCrossed_Executes(ushort initialValue, ushort compareValue, bool expected)
+        {
+            Assert.Equal(expected, initialValue.CheckPageCrossed(compareValue));
+        }
+
+        [Theory]
         [ClassData(typeof(SignificantBitsData))]
         public void SignificantBits_Returns(ushort value, Tuple<byte, byte> expected)
         {

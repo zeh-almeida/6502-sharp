@@ -149,7 +149,7 @@ namespace Cpu.Memory
         {
             var finalAddress = (ushort)(address + this.RegisterManager.IndexX);
 
-            var pageCrossed = CheckPageCrossed(address, finalAddress);
+            var pageCrossed = address.CheckPageCrossed(finalAddress);
             return (pageCrossed, this.ReadAbsolute(finalAddress));
         }
 
@@ -158,7 +158,7 @@ namespace Cpu.Memory
         {
             var finalAddress = (ushort)(address + this.RegisterManager.IndexY);
 
-            var pageCrossed = CheckPageCrossed(address, finalAddress);
+            var pageCrossed = address.CheckPageCrossed(finalAddress);
             return (pageCrossed, this.ReadAbsolute(finalAddress));
         }
 
@@ -184,7 +184,7 @@ namespace Cpu.Memory
             var realAddress = this.ReadWord(address);
             var finalAddress = (ushort)(realAddress + this.RegisterManager.IndexY);
 
-            var pageCrossed = CheckPageCrossed(realAddress, finalAddress);
+            var pageCrossed = realAddress.CheckPageCrossed(finalAddress);
             return (pageCrossed, this.ReadAbsolute(finalAddress));
         }
         #endregion
@@ -220,14 +220,6 @@ namespace Cpu.Memory
             var addressMsb = this.ReadAbsolute((ushort)(address + 1));
 
             return addressLsb.CombineBytes(addressMsb);
-        }
-
-        private static bool CheckPageCrossed(ushort previousAddress, ushort currentAddress)
-        {
-            var previousBoundary = previousAddress.MostSignificantBits();
-            var currentBoundary = currentAddress.MostSignificantBits();
-
-            return !previousBoundary.Equals(currentBoundary);
         }
 
         private static ushort WrapZeroPageAddress(ushort address)

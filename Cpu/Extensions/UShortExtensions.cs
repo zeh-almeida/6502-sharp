@@ -175,5 +175,20 @@
                  ? (ushort)(value + offset)
                  : (ushort)(value - (0xFF - offset) - 1);
         }
+
+        /// <summary>
+        /// Checks if the new address has crossed a page when compared to the current address.
+        /// Pages are sets of 8-bit values and when crosses, may incur in extra cycles for the CPU.
+        /// </summary>
+        /// <param name="currentAddress">Current address being looked</param>
+        /// <param name="newAddress">Final address to be checked against</param>
+        /// <returns>True if the page was crossed, false otherwise</returns>
+        public static bool CheckPageCrossed(this ushort currentAddress, ushort newAddress)
+        {
+            var previousBoundary = currentAddress.MostSignificantBits();
+            var currentBoundary = newAddress.MostSignificantBits();
+
+            return !previousBoundary.Equals(currentBoundary);
+        }
     }
 }
