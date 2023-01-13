@@ -28,7 +28,15 @@ namespace Cpu.Instructions.Branches
         {
             if (!currentState.Flags.IsZero)
             {
-                currentState.Registers.ProgramCounter = currentState.Registers.ProgramCounter.BranchAddress((byte)value);
+                var currentAddress = currentState.Registers.ProgramCounter;
+                var address = currentAddress.BranchAddress((byte)value);
+
+                var additionalCycles = currentAddress.CheckPageCrossed((ushort)(currentAddress + value))
+                    ? 2
+                    : 1;
+
+                currentState.Registers.ProgramCounter = address;
+                currentState.IncrementCycles(additionalCycles);
             }
         }
     }

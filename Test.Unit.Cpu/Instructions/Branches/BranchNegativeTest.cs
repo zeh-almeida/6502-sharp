@@ -45,18 +45,20 @@ namespace Test.Unit.Cpu.Instructions.Branches
             Assert.False(this.Subject.Equals(1));
         }
 
-        [Fact]
-        public void Execute_FlagIsTrue_WritesProgramCounter()
+        [Theory]
+        [InlineData(0x00FE, 1, 0x00FF, 1)]
+        [InlineData(0x00FE, 2, 0x0100, 2)]
+        public void Execute_FlagIsTrue_WritesProgramCounter(
+            ushort counter,
+            ushort value,
+            ushort result,
+            int cycles)
         {
-            const ushort value = 248;
-            const ushort counter = 8;
-            const ushort result = 0;
-
             var stateMock = SetupMock(true, counter);
 
             this.Subject.Execute(stateMock.Object, value);
 
-            stateMock.Verify(state => state.Registers.ProgramCounter, Times.Once());
+            stateMock.Verify(state => state.IncrementCycles(cycles), Times.Once());
             stateMock.VerifySet(state => state.Registers.ProgramCounter = result, Times.Once());
         }
 
@@ -71,6 +73,7 @@ namespace Test.Unit.Cpu.Instructions.Branches
             this.Subject.Execute(stateMock.Object, value);
 
             stateMock.Verify(state => state.Registers.ProgramCounter, Times.Never());
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
             stateMock.VerifySet(state => state.Registers.ProgramCounter = It.IsAny<ushort>(), Times.Never());
         }
 
