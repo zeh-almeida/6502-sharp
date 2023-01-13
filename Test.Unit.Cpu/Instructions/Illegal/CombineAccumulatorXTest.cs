@@ -27,7 +27,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
         [InlineData(0x83)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

@@ -27,7 +27,7 @@ namespace Test.Unit.Cpu.Instructions.Decrements
         [InlineData(0xDE)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

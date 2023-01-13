@@ -1,5 +1,4 @@
 ﻿using Cpu.Instructions.Branches;
-using Cpu.Instructions.Exceptions;
 using Cpu.States;
 using Moq;
 using Test.Unit.Cpu.Utils;
@@ -24,7 +23,7 @@ namespace Test.Unit.Cpu.Instructions.Branches
         [InlineData(0xD0)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

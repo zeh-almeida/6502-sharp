@@ -1,5 +1,4 @@
-﻿using Cpu.Instructions.Exceptions;
-using Cpu.Instructions.Illegal;
+﻿using Cpu.Instructions.Illegal;
 using Test.Unit.Cpu.Utils;
 using Xunit;
 
@@ -48,7 +47,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
         [InlineData(0xFC)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

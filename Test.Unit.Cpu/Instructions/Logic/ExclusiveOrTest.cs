@@ -31,7 +31,7 @@ namespace Test.Unit.Cpu.Instructions.Logic
         [InlineData(0x51)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]
@@ -196,6 +196,32 @@ namespace Test.Unit.Cpu.Instructions.Logic
 
             this.Subject.Execute(stateMock.Object, address);
 
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+
+            stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
+            stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_AbsoluteX_AdditionalCycles()
+        {
+            const ushort address = 2;
+
+            const byte value = 0b_0000_0011;
+            const byte accumulator = 0b_0000_1100;
+            const byte result = 0b_0000_1111;
+
+            var stateMock = SetupMock(0x5D, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Memory.ReadAbsoluteX(address))
+                .Returns((true, value));
+
+            this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
+
             stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
             stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
@@ -217,6 +243,32 @@ namespace Test.Unit.Cpu.Instructions.Logic
                 .Returns((false, value));
 
             this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+
+            stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
+            stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_AbsoluteY_AdditionalCycles()
+        {
+            const ushort address = 2;
+
+            const byte value = 0b_0000_0011;
+            const byte accumulator = 0b_0000_1100;
+            const byte result = 0b_0000_1111;
+
+            var stateMock = SetupMock(0x59, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Memory.ReadAbsoluteY(address))
+                .Returns((true, value));
+
+            this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
@@ -261,6 +313,32 @@ namespace Test.Unit.Cpu.Instructions.Logic
                 .Returns((false, value));
 
             this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+
+            stateMock.Verify(state => state.Memory.ReadIndirectY(address), Times.Once());
+            stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_IndirectY_AdditionalCycles()
+        {
+            const ushort address = 0;
+
+            const byte value = 0b_0000_0011;
+            const byte accumulator = 0b_0000_1100;
+            const byte result = 0b_0000_1111;
+
+            var stateMock = SetupMock(0x51, accumulator);
+
+            _ = stateMock
+                .Setup(s => s.Memory.ReadIndirectY(address))
+                .Returns((true, value));
+
+            this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
 
             stateMock.Verify(state => state.Memory.ReadIndirectY(address), Times.Once());
             stateMock.Verify(state => state.Registers.Accumulator, Times.Once());

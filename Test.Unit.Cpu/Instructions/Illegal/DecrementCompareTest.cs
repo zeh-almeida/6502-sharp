@@ -30,7 +30,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
         [InlineData(0xD3)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

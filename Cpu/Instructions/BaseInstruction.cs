@@ -59,7 +59,7 @@ namespace Cpu.Instructions
         /// <param name="result">If marked as true, must increase the cycles</param>
         /// <param name="additionalCycles">Number of cycles to add</param>
         /// <returns>The value read from memory</returns>
-        protected static ushort LoadExtraCycle(
+        protected static byte LoadExtraCycle(
             ICpuState currentState,
             (bool, byte) result,
             int additionalCycles = 1)

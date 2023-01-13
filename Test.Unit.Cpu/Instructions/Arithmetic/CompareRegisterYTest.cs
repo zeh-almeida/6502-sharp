@@ -26,7 +26,7 @@ namespace Test.Unit.Cpu.Instructions.Arithmetic
         [InlineData(0xCC)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

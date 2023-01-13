@@ -1,5 +1,4 @@
-﻿using Cpu.Instructions.Exceptions;
-using Cpu.Instructions.StatusChanges;
+﻿using Cpu.Instructions.StatusChanges;
 using Moq;
 using Test.Unit.Cpu.Utils;
 using Xunit;
@@ -23,7 +22,7 @@ namespace Test.Unit.Cpu.Instructions.StatusChanges
         [InlineData(0x38)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

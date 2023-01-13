@@ -1,6 +1,4 @@
-﻿
-using Cpu.Instructions.Exceptions;
-using Cpu.Instructions.Stack;
+﻿using Cpu.Instructions.Stack;
 using Moq;
 using Test.Unit.Cpu.Utils;
 using Xunit;
@@ -24,7 +22,7 @@ namespace Test.Unit.Cpu.Instructions.Stack
         [InlineData(0x08)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]

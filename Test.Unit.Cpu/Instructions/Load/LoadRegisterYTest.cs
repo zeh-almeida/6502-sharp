@@ -28,7 +28,7 @@ namespace Test.Unit.Cpu.Instructions.Load
         [InlineData(0xBC)]
         public void HasOpcode_Matches_True(byte opcode)
         {
-            Assert.True(this.Subject.HasOpcode(opcode));            
+            Assert.True(this.Subject.HasOpcode(opcode));
         }
 
         [Fact]
@@ -178,6 +178,30 @@ namespace Test.Unit.Cpu.Instructions.Load
                 .Returns((false, value));
 
             this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+
+            stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
+            stateMock.VerifySet(state => state.Registers.IndexY = result, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_AbsoluteX_AdditionalCycles()
+        {
+            const ushort address = 2;
+
+            const byte value = 0b_0000_0011;
+            const byte result = 0b_0000_0011;
+
+            var stateMock = SetupMock(0xBC);
+
+            _ = stateMock
+                .Setup(s => s.Memory.ReadAbsoluteX(address))
+                .Returns((true, value));
+
+            this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
 
             stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
             stateMock.VerifySet(state => state.Registers.IndexY = result, Times.Once());
