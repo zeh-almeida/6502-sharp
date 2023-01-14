@@ -1,14 +1,16 @@
 [
-    {
-        "opcode": 36,
-        "bytes": 2,
-        "minimumCycles": 3,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 44,
-        "bytes": 3,
-        "minimumCycles": 4,
-        "maximumCycles": 0
-    }
+	{
+		"opcode": 36,
+		"bytes": 2,
+		"minimumCycles": 3,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 44,
+		"bytes": 3,
+		"minimumCycles": 4,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	}
 ]

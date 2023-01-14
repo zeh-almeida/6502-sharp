@@ -1,20 +1,23 @@
 [
-    {
-        "opcode": 224,
-        "bytes": 2,
-        "minimumCycles": 2,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 228,
-        "bytes": 2,
-        "minimumCycles": 3,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 236,
-        "bytes": 3,
-        "minimumCycles": 4,
-        "maximumCycles": 0
-    }
+	{
+		"opcode": 224,
+		"bytes": 2,
+		"minimumCycles": 2,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 228,
+		"bytes": 2,
+		"minimumCycles": 3,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 236,
+		"bytes": 3,
+		"minimumCycles": 4,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	}
 ]

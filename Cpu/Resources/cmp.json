@@ -1,50 +1,58 @@
 [
-    {
-        "opcode": 201,
-        "bytes": 2,
-        "minimumCycles": 2,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 197,
-        "bytes": 2,
-        "minimumCycles": 3,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 213,
-        "bytes": 2,
-        "minimumCycles": 4,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 205,
-        "bytes": 3,
-        "minimumCycles": 4,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 221,
-        "bytes": 3,
-        "minimumCycles": 4,
-        "maximumCycles": 5
-    },
-    {
-        "opcode": 217,
-        "bytes": 3,
-        "minimumCycles": 4,
-        "maximumCycles": 5
-    },
-    {
-        "opcode": 193,
-        "bytes": 2,
-        "minimumCycles": 6,
-        "maximumCycles": 0
-    },
-    {
-        "opcode": 209,
-        "bytes": 2,
-        "minimumCycles": 5,
-        "maximumCycles": 6
-    }
+	{
+		"opcode": 201,
+		"bytes": 2,
+		"minimumCycles": 2,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 197,
+		"bytes": 2,
+		"minimumCycles": 3,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 213,
+		"bytes": 2,
+		"minimumCycles": 4,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 205,
+		"bytes": 3,
+		"minimumCycles": 4,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 221,
+		"bytes": 3,
+		"minimumCycles": 4,
+		"maximumCycles": 5,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 217,
+		"bytes": 3,
+		"minimumCycles": 4,
+		"maximumCycles": 5,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 193,
+		"bytes": 2,
+		"minimumCycles": 6,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	},
+	{
+		"opcode": 209,
+		"bytes": 2,
+		"minimumCycles": 5,
+		"maximumCycles": 6,
+		"mnemonic": ""
+	}
 ]

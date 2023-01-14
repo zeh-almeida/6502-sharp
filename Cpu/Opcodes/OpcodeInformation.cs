@@ -19,6 +19,9 @@ namespace Cpu.Opcodes
 
         /// <inheritdoc/>
         public byte MaximumCycles { get; }
+
+        /// <inheritdoc/>
+        public string Mnemonic { get; }
         #endregion
 
         #region Constructors
@@ -29,15 +32,18 @@ namespace Cpu.Opcodes
         /// <param name="bytes">Length of the opcode</param>
         /// <param name="minimumCycles">Minimum cycles the opcode can take</param>
         /// <param name="maximumCycles">Maximum cycles the opcode can take</param>
+        /// <param name="mnemonic">Visual representation of the opcode in Assembly</param>
         [JsonConstructor]
         public OpcodeInformation(
             byte opcode,
             byte bytes,
             byte minimumCycles,
-            byte maximumCycles)
+            byte maximumCycles,
+            string mnemonic)
         {
             this.Bytes = bytes;
             this.Opcode = opcode;
+            this.Mnemonic = mnemonic;
 
             this.MinimumCycles = minimumCycles;
 

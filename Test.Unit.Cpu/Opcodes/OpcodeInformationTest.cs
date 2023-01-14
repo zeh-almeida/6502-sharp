@@ -13,6 +13,8 @@ public sealed record OpcodeInformationTest
     private const int MaximumCycles = 2;
 
     private const int Bytes = 2;
+
+    private const string Mnemonic = "Mnemonic";
     #endregion
 
     #region Properties
@@ -26,7 +28,8 @@ public sealed record OpcodeInformationTest
             Opcode,
             Bytes,
             MinimumCycles,
-            MaximumCycles);
+            MaximumCycles,
+            Mnemonic);
     }
     #endregion
 
@@ -76,5 +79,11 @@ public sealed record OpcodeInformationTest
     public void Bytes_Equals_Defined()
     {
         Assert.Equal(Bytes, this.Subject.Bytes);
+    }
+
+    [Fact]
+    public void Mnemonic_Equals_Defined()
+    {
+        Assert.Equal(Mnemonic, this.Subject.Mnemonic);
     }
 }

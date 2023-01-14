@@ -1,8 +1,9 @@
 [
-    {
-        "opcode": 203,
-        "bytes": 2,
-        "minimumCycles": 3,
-        "maximumCycles": 0
-    }
+	{
+		"opcode": 203,
+		"bytes": 2,
+		"minimumCycles": 3,
+		"maximumCycles": 0,
+		"mnemonic": ""
+	}
 ]

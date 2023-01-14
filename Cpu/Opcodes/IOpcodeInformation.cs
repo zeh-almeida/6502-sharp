@@ -29,6 +29,11 @@ namespace Cpu.Opcodes
         /// Maximum amount of Cycles the instruction can take to execute
         /// </summary>
         public byte MaximumCycles { get; }
+
+        /// <summary>
+        /// Mnemonic representation of the opcode in Assembly
+        /// </summary>
+        public string Mnemonic { get; }
         #endregion
     }
 }
