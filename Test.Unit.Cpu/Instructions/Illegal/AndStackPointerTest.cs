@@ -62,6 +62,33 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             this.Subject.Execute(stateMock.Object, address);
 
+            stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+
+            stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
+            stateMock.Verify(state => state.Registers.StackPointer, Times.Once());
+
+            stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
+
+            stateMock.VerifySet(state => state.Registers.IndexX = result, Times.Once());
+            stateMock.VerifySet(state => state.Registers.Accumulator = result, Times.Once());
+            stateMock.VerifySet(state => state.Registers.StackPointer = result, Times.Once());
+        }
+
+        [Fact]
+        public void Execute_WritesZeroFlag_IncreaseCycle()
+        {
+            const ushort address = 0b_0000_0000;
+            const byte value = 0b_0000_0000;
+            const byte stackPointer = 0b_0000_0000;
+
+            const byte result = 0b_0000_0000;
+
+            var stateMock = SetupMock(stackPointer, address, value, true);
+
+            this.Subject.Execute(stateMock.Object, address);
+
+            stateMock.Verify(state => state.IncrementCycles(1), Times.Once());
+
             stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
             stateMock.Verify(state => state.Registers.StackPointer, Times.Once());
 
@@ -95,7 +122,11 @@ namespace Test.Unit.Cpu.Instructions.Illegal
             stateMock.VerifySet(state => state.Registers.StackPointer = result, Times.Once());
         }
 
-        private static Mock<ICpuState> SetupMock(byte stackPointer, ushort address, byte value)
+        private static Mock<ICpuState> SetupMock(
+            byte stackPointer,
+            ushort address,
+            byte value,
+            bool crossPage = false)
         {
             var stateMock = TestUtils.GenerateStateMock();
 
@@ -109,7 +140,7 @@ namespace Test.Unit.Cpu.Instructions.Illegal
 
             _ = stateMock
                 .Setup(s => s.Memory.ReadAbsoluteY(address))
-                .Returns((false, value));
+                .Returns((crossPage, value));
 
             return stateMock;
         }
