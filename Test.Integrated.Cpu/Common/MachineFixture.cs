@@ -26,7 +26,7 @@ namespace Test.Integrated.Cpu.Common
         {
             this.LogFactory = BuildLogFactory();
 
-            var opcodes = LoadOpcodes() as IEnumerable<OpcodeInformation>;
+            var opcodes = LoadOpcodes() as IEnumerable<IOpcodeInformation>;
             var instructions = LoadInstructions() as IEnumerable<IInstruction>;
 
             var machineLogger = this.LogFactory.CreateLogger<Machine>();
@@ -146,7 +146,7 @@ namespace Test.Integrated.Cpu.Common
             return state;
         }
 
-        private static IEnumerable<OpcodeInformation?> LoadOpcodes()
+        private static IEnumerable<IOpcodeInformation?> LoadOpcodes()
         {
             var loader = new OpcodeLoader();
             loader.LoadAsync().Wait();

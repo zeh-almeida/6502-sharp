@@ -145,12 +145,16 @@ namespace Test.Unit.Cpu.Execution
                 .Setup(mock => mock.Bytes)
                 .Returns(Bytes);
 
+            _ = opcodeMock
+                .Setup(mock => mock.ToString())
+                .Returns("ORA (oper,X)");
+
             var instruction = instructionMock.Object;
             var opcodeInfo = opcodeMock.Object;
 
             var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
-            Assert.Equal("0x01 (0x0001)", subject.ToString());
+            Assert.Equal("ORA ($01,X)", subject.ToString());
         }
     }
 }

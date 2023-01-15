@@ -2,6 +2,7 @@
 using Cpu.Flags;
 using Cpu.Instructions;
 using Cpu.Memory;
+using Cpu.Opcodes;
 using Cpu.Registers;
 using Cpu.States;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,8 @@ namespace Cpu.DependencyInjection
     {
         #region Constants
         private static Type InstructionType { get; } = typeof(IInstruction);
+
+        private static Type OpcodeType { get; } = typeof(IOpcodeInformation);
         #endregion
 
         /// <summary>
@@ -25,6 +28,7 @@ namespace Cpu.DependencyInjection
         public static IServiceCollection Add6502Cpu(this IServiceCollection collection)
         {
             var instructions = LoadInstructionTypes();
+            var opcodes = LoadOpcodes();
 
             _ = collection
                 .AddScoped<IMachine, Machine>()
@@ -40,6 +44,8 @@ namespace Cpu.DependencyInjection
                 _ = collection.AddScoped(InstructionType, instruction);
             }
 
+            _ = collection.AddScoped(_ => opcodes);
+
             return collection;
         }
 
@@ -52,6 +58,14 @@ namespace Cpu.DependencyInjection
                                       && !t.IsInterface
                                       && !t.IsAbstract)
                 .ToArray();
+        }
+
+        private static IEnumerable<IOpcodeInformation> LoadOpcodes()
+        {
+            var loader = new OpcodeLoader();
+            loader.LoadAsync().Wait();
+
+            return loader.Opcodes;
         }
     }
 }

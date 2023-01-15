@@ -72,7 +72,7 @@ namespace Cpu.Opcodes
         /// <inheritdoc/>
         public override bool Equals(object? other)
         {
-            return other is OpcodeInformation info
+            return other is IOpcodeInformation info
                 && this.Equals(info);
         }
 

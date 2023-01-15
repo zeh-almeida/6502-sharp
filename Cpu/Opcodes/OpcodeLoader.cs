@@ -18,7 +18,7 @@ namespace Cpu.Opcodes
         /// Loaded Opcodes. May be empty.
         /// <see cref="IOpcodeInformation"/>
         /// </summary>
-        public IEnumerable<OpcodeInformation> Opcodes { get; private set; }
+        public IEnumerable<IOpcodeInformation> Opcodes { get; private set; }
 
         private ResourceLoader Loader { get; }
         #endregion
@@ -38,7 +38,7 @@ namespace Cpu.Opcodes
         /// <param name="loader"><see cref="ResourceLoader"/> to read from</param>
         public OpcodeLoader(ResourceLoader loader)
         {
-            this.Opcodes = Array.Empty<OpcodeInformation>();
+            this.Opcodes = Array.Empty<IOpcodeInformation>();
             this.Loader = loader;
         }
         #endregion
@@ -60,7 +60,7 @@ namespace Cpu.Opcodes
             var resourceSet = this.Loader.LoadInstructions();
 
             var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-            var foundValues = new HashSet<OpcodeInformation>(OpcodeAmount);
+            var foundValues = new HashSet<IOpcodeInformation>(OpcodeAmount);
 
             foreach (DictionaryEntry item in resourceSet)
             {
@@ -71,6 +71,8 @@ namespace Cpu.Opcodes
                 }
 
                 using var stream = new MemoryStream(bytes);
+
+                // Must use concrete type when deserializing because you cannot instantiate interfaces
                 var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options);
 
                 foreach (var opcode in result)
