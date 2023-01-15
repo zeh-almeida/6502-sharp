@@ -157,7 +157,7 @@ namespace Cpu.Execution
             }
             catch (ProgramExecutionExeption ex)
             {
-                this.Logger.LogError(MachineEvents.OnExecute, ex, "Failed to clock");
+                this.Logger.LogError(MachineEvents.OnExecute, ex, "Failed to execute clock");
                 result = false;
             }
 

@@ -82,7 +82,7 @@ namespace Cpu.Forms
         {
             if (0.Equals(this.Machine.State.CyclesLeft))
             {
-                this.executionContent.AppendText($"Decoded: {this.Machine.State.DecodedInstruction}{Environment.NewLine}");
+                this.executionContent.AppendText($"{this.Machine.State.DecodedInstruction}{Environment.NewLine}");
             }
         }
         #endregion

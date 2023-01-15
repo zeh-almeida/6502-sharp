@@ -153,13 +153,23 @@
         }
 
         /// <summary>
-        /// Formats the byte as an hexadecimal value, 0X0000
+        /// Formats the byte as an hexadecimal value, 0x0000
         /// </summary>
         /// <param name="opcode"> opcode to format</param>
         /// <returns>Formatted value</returns>
         public static string AsHex(this ushort opcode)
         {
             return $"0x{opcode:X4}";
+        }
+
+        /// <summary>
+        /// Formats the byte as an assembly hexadecimal value, $0000
+        /// </summary>
+        /// <param name="opcode"> opcode to format</param>
+        /// <returns>Formatted value</returns>
+        public static string AsAssembly(this ushort opcode)
+        {
+            return $"${opcode:X4}";
         }
 
         /// <summary>

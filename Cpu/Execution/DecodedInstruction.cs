@@ -47,7 +47,11 @@ namespace Cpu.Execution
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{this.Information.Opcode.AsHex()} ({this.ValueParameter.AsHex()})";
+            var value = this.Information.Bytes > 2
+                ? this.ValueParameter.AsAssembly()
+                : ((byte)this.ValueParameter).AsAssembly();
+
+            return this.Information.ToString().Replace("oper", value);
         }
     }
 }
