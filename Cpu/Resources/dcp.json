@@ -4,48 +4,48 @@
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "DCP oper"
 	},
 	{
 		"opcode": 215,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "DCP oper,X"
 	},
 	{
 		"opcode": 207,
 		"bytes": 3,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "DCP oper"
 	},
 	{
 		"opcode": 223,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "DCP oper,X"
 	},
 	{
 		"opcode": 219,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "DCP oper,Y"
 	},
 	{
 		"opcode": 195,
 		"bytes": 2,
 		"minimumCycles": 8,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "DCP (oper,X)"
 	},
 	{
 		"opcode": 211,
 		"bytes": 2,
 		"minimumCycles": 8,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "DCP (oper),Y"
 	}
 ]

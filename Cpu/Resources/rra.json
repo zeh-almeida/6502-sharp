@@ -4,48 +4,48 @@
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "RRA oper"
 	},
 	{
 		"opcode": 119,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "RRA oper,X"
 	},
 	{
 		"opcode": 111,
 		"bytes": 3,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "RRA oper"
 	},
 	{
 		"opcode": 127,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "RRA oper,X"
 	},
 	{
 		"opcode": 123,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "RRA oper,Y"
 	},
 	{
 		"opcode": 99,
 		"bytes": 2,
 		"minimumCycles": 8,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "RRA (oper,X)"
 	},
 	{
 		"opcode": 115,
 		"bytes": 2,
 		"minimumCycles": 8,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "RRA (oper),Y"
 	}
 ]

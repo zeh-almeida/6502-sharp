@@ -4,188 +4,188 @@
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 58,
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 90,
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 122,
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 218,
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 250,
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 128,
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 130,
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 137,
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 194,
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 226,
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 4,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 68,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 100,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 20,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 52,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 84,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 116,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 212,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 244,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 12,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 28,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 60,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 92,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 124,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 220,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	},
 	{
 		"opcode": 252,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "INOP"
 	}
 ]

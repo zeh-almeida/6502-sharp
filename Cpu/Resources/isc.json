@@ -4,48 +4,48 @@
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ISC oper"
 	},
 	{
 		"opcode": 247,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ISC oper,X"
 	},
 	{
 		"opcode": 239,
 		"bytes": 3,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ISC oper"
 	},
 	{
 		"opcode": 255,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ISC oper,X"
 	},
 	{
 		"opcode": 251,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ISC oper,Y"
 	},
 	{
 		"opcode": 227,
 		"bytes": 2,
 		"minimumCycles": 8,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ISC (oper,X)"
 	},
 	{
 		"opcode": 243,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ISC (oper),Y"
 	}
 ]

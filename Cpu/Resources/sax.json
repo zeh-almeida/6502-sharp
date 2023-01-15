@@ -4,27 +4,27 @@
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SAX oper"
 	},
 	{
 		"opcode": 151,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SAX oper,Y"
 	},
 	{
 		"opcode": 143,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SAX oper"
 	},
 	{
 		"opcode": 131,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SAX (oper,X)"
 	}
 ]
