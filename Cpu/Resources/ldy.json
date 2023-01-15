@@ -4,34 +4,34 @@
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDY #oper"
 	},
 	{
 		"opcode": 164,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDY oper"
 	},
 	{
 		"opcode": 180,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDY oper,X"
 	},
 	{
 		"opcode": 172,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDY oper"
 	},
 	{
 		"opcode": 188,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "LDY oper,X"
 	}
 ]

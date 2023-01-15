@@ -4,13 +4,13 @@
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "BIT oper"
 	},
 	{
 		"opcode": 44,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "BIT oper"
 	}
 ]

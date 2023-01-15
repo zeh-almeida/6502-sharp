@@ -4,20 +4,20 @@
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "STX oper"
 	},
 	{
 		"opcode": 150,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "STX oper,Y"
 	},
 	{
 		"opcode": 142,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "STX oper"
 	}
 ]

@@ -4,55 +4,55 @@
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ORA #oper"
 	},
 	{
 		"opcode": 5,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ORA oper"
 	},
 	{
 		"opcode": 21,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ORA oper,X"
 	},
 	{
 		"opcode": 13,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ORA oper"
 	},
 	{
 		"opcode": 29,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "ORA oper,X"
 	},
 	{
 		"opcode": 25,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "ORA oper,Y"
 	},
 	{
 		"opcode": 1,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ORA (oper,X)"
 	},
 	{
 		"opcode": 17,
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 6,
-		"mnemonic": ""
+		"mnemonic": "ORA (oper),Y"
 	}
 ]

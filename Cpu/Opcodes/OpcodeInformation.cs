@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Cpu.Extensions;
+using System.Text.Json.Serialization;
 
 namespace Cpu.Opcodes
 {
@@ -22,6 +23,12 @@ namespace Cpu.Opcodes
 
         /// <inheritdoc/>
         public string Mnemonic { get; }
+
+        /// <summary>
+        /// Representation of the Opcode as string.
+        /// Is calculated when constructed.
+        /// </summary>
+        private string AsString { get; }
         #endregion
 
         #region Constructors
@@ -50,6 +57,8 @@ namespace Cpu.Opcodes
             this.MaximumCycles = maximumCycles > minimumCycles
                 ? maximumCycles
                 : minimumCycles;
+
+            this.AsString = $"{this.Opcode.AsHex()}: {this.Mnemonic}";
         }
         #endregion
 
@@ -71,6 +80,12 @@ namespace Cpu.Opcodes
         public override int GetHashCode()
         {
             return this.Opcode.GetHashCode();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return this.AsString;
         }
     }
 }

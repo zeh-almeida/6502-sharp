@@ -4,55 +4,55 @@
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDA #oper"
 	},
 	{
 		"opcode": 165,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDA oper"
 	},
 	{
 		"opcode": 181,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDA oper,X"
 	},
 	{
 		"opcode": 173,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDA oper"
 	},
 	{
 		"opcode": 189,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "LDA oper,X"
 	},
 	{
 		"opcode": 185,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "LDA oper,Y"
 	},
 	{
 		"opcode": 161,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "LDA (oper,X)"
 	},
 	{
 		"opcode": 177,
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 6,
-		"mnemonic": ""
+		"mnemonic": "LDA (oper),Y\t"
 	}
 ]

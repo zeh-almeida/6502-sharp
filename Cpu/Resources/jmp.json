@@ -4,13 +4,13 @@
 		"bytes": 3,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "JMP oper"
 	},
 	{
 		"opcode": 108,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "JMP (oper)"
 	}
 ]

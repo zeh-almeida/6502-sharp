@@ -4,6 +4,6 @@
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 4,
-		"mnemonic": ""
+		"mnemonic": "BPL oper"
 	}
 ]

@@ -4,34 +4,34 @@
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ROR A"
 	},
 	{
 		"opcode": 102,
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ROR oper"
 	},
 	{
 		"opcode": 118,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ROR oper,X"
 	},
 	{
 		"opcode": 110,
 		"bytes": 3,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ROR oper"
 	},
 	{
 		"opcode": 126,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ROR oper,X"
 	}
 ]

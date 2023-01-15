@@ -4,34 +4,34 @@
 		"bytes": 1,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ASL A"
 	},
 	{
 		"opcode": 6,
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ASL oper"
 	},
 	{
 		"opcode": 22,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ASL oper,X"
 	},
 	{
 		"opcode": 14,
 		"bytes": 3,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ASL oper"
 	},
 	{
 		"opcode": 30,
 		"bytes": 3,
 		"minimumCycles": 7,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "ASL oper,X"
 	}
 ]

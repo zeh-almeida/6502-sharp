@@ -4,55 +4,55 @@
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "CMP #oper"
 	},
 	{
 		"opcode": 197,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "CMP oper"
 	},
 	{
 		"opcode": 213,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "CMP oper,X"
 	},
 	{
 		"opcode": 205,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "CMP oper"
 	},
 	{
 		"opcode": 221,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "CMP oper,X"
 	},
 	{
 		"opcode": 217,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "CMP oper,Y"
 	},
 	{
 		"opcode": 193,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "CMP (oper,X)"
 	},
 	{
 		"opcode": 209,
 		"bytes": 2,
 		"minimumCycles": 5,
 		"maximumCycles": 6,
-		"mnemonic": ""
+		"mnemonic": "CMP (oper),Y"
 	}
 ]

@@ -4,55 +4,55 @@
 		"bytes": 2,
 		"minimumCycles": 2,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SBC #oper"
 	},
 	{
 		"opcode": 229,
 		"bytes": 2,
 		"minimumCycles": 3,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SBC oper"
 	},
 	{
 		"opcode": 245,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SBC oper,X"
 	},
 	{
 		"opcode": 237,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SBC oper"
 	},
 	{
 		"opcode": 253,
 		"bytes": 3,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "SBC oper,X"
 	},
 	{
 		"opcode": 249,
 		"bytes": 2,
 		"minimumCycles": 4,
 		"maximumCycles": 5,
-		"mnemonic": ""
+		"mnemonic": "SBC oper,Y"
 	},
 	{
 		"opcode": 225,
 		"bytes": 2,
 		"minimumCycles": 6,
 		"maximumCycles": 0,
-		"mnemonic": ""
+		"mnemonic": "SBC (oper,X)"
 	},
 	{
 		"opcode": 241,
 		"bytes": 3,
 		"minimumCycles": 5,
 		"maximumCycles": 6,
-		"mnemonic": ""
+		"mnemonic": "SBC (oper),Y"
 	}
 ]
