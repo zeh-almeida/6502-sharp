@@ -99,7 +99,7 @@ namespace Cpu.States
         /// </para>
         /// </summary>
         /// <returns>bit array representing current CPU state</returns>
-        IEnumerable<byte> Save();
+        ReadOnlyMemory<byte> Save();
 
         /// <summary>
         /// Loads a bit array and parses its content into the state.
@@ -112,7 +112,7 @@ namespace Cpu.States
         /// <param name="data">To read values from</param>
         /// <exception cref="ArgumentNullException">if <paramref name="data"/> is null</exception>
         /// <exception cref="ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
-        void Load(IEnumerable<byte> data);
+        void Load(ReadOnlyMemory<byte> data);
         #endregion
 
         #region Cycles

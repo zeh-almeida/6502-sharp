@@ -62,7 +62,7 @@ namespace Cpu.States
 
         #region Save/Load
         /// <inheritdoc/>
-        public IEnumerable<byte> Save()
+        public ReadOnlyMemory<byte> Save()
         {
             var registerState = this.Registers.Save();
             var memoryState = this.Memory.Save();
@@ -78,49 +78,52 @@ namespace Cpu.States
                 this.ExecutingOpcode,
             };
 
-            return currentState
-                .Concat(flagState)
-                .Concat(registerState)
-                .Concat(memoryState)
-                .ToArray();
+            var index = 0;
+            var status = new Memory<byte>(new byte[ICpuState.Length]);
+
+            currentState.CopyTo(status.Slice(index, currentState.Length));
+            index += currentState.Length;
+
+            flagState.CopyTo(status.Slice(index, flagState.Length));
+            index += flagState.Length;
+
+            registerState.CopyTo(status.Slice(index, registerState.Length));
+            index += registerState.Length;
+
+            memoryState.CopyTo(status.Slice(index, memoryState.Length));
+            // index += memoryState.Length;
+
+            return status;
         }
 
         /// <inheritdoc/>
-        public void Load(IEnumerable<byte> data)
+        public void Load(ReadOnlyMemory<byte> data)
         {
-            if (data is null)
+            if (data.IsEmpty)
             {
                 throw new ArgumentNullException(nameof(data));
             }
 
-            var dataLength = data.Count();
+            var dataLength = data.Length;
 
             if (!ICpuState.Length.Equals(dataLength))
             {
                 throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {ICpuState.Length}, was {dataLength}");
             }
 
-            var dataArr = data.ToArray();
+            var flagState = data.Slice(ICpuState.FlagOffset, 1).Span[0];
+
+            var memoryState = data[ICpuState.MemoryStateOffset..];
 
             var registerState = data
-                .Skip(ICpuState.RegisterOffset)
-                .Take(IRegisterManager.RegisterLengthBytes)
-                .ToArray();
-
-            var flagState = data
-                .Skip(ICpuState.FlagOffset)
-                .FirstOrDefault();
-
-            var memoryState = data
-                .Skip(ICpuState.MemoryStateOffset)
-                .ToArray();
+                .Slice(ICpuState.RegisterOffset, IRegisterManager.RegisterLengthBytes);
 
             this.Flags.Load(flagState);
             this.Memory.Load(memoryState);
             this.Registers.Load(registerState);
 
-            this.CyclesLeft = dataArr[0];
-            this.ExecutingOpcode = dataArr[1];
+            this.CyclesLeft = data.Span[0];
+            this.ExecutingOpcode = data.Span[1];
 
             this.IsHardwareInterrupt = false;
             this.IsSoftwareInterrupt = false;

@@ -200,7 +200,7 @@
         /// <see cref="Length"/> holds the final length.
         /// </summary>
         /// <returns>Current memory content</returns>
-        IEnumerable<byte> Save();
+        ReadOnlyMemory<byte> Save();
 
         /// <summary>
         /// Loads a <see cref="Length"/>-long byte array into memory
@@ -209,7 +209,7 @@
         /// <param name="data">To read values from</param>
         /// <exception cref="System.ArgumentNullException">if <paramref name="data"/> is null</exception>
         /// <exception cref="System.ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
-        void Load(IEnumerable<byte> data);
+        void Load(ReadOnlyMemory<byte> data);
         #endregion
     }
 }

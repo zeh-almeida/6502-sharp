@@ -99,7 +99,7 @@ public sealed record RegisterManagerTest
 
         var result = this.Subject.Save();
 
-        Assert.Equal(expected, result);
+        Assert.Equal(expected.ToArray(), result.ToArray());
     }
 
     [Fact]

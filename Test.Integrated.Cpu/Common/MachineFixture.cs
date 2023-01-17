@@ -45,7 +45,7 @@ namespace Test.Integrated.Cpu.Common
         }
         #endregion
 
-        public byte[] Compute(IEnumerable<byte> data)
+        public byte[] Compute(ReadOnlyMemory<byte> data)
         {
             this.Subject.Load(data);
 
@@ -61,7 +61,7 @@ namespace Test.Integrated.Cpu.Common
                 .ToArray();
         }
 
-        public byte[] Compute(IEnumerable<byte> data, Action<ICpuState> cycleAction)
+        public byte[] Compute(ReadOnlyMemory<byte> data, Action<ICpuState> cycleAction)
         {
             this.Subject.Load(data);
 
@@ -111,7 +111,7 @@ namespace Test.Integrated.Cpu.Common
             return new ValueTask(Task.Run(() => this.Dispose()));
         }
 
-        private static IEnumerable<byte> BuildProgramStream(string programName)
+        private static ReadOnlyMemory<byte> BuildProgramStream(string programName)
         {
             var state = new byte[ICpuState.Length];
 
@@ -128,7 +128,7 @@ namespace Test.Integrated.Cpu.Common
             return state;
         }
 
-        private static IEnumerable<byte> BuildProgramStream(string programName, ushort offset)
+        private static ReadOnlyMemory<byte> BuildProgramStream(string programName, ushort offset)
         {
             var state = new byte[ICpuState.Length];
 

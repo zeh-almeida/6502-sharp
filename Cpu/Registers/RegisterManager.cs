@@ -39,7 +39,7 @@ namespace Cpu.Registers
 
         #region Load/Save
         /// <inheritdoc/>
-        public IEnumerable<byte> Save()
+        public ReadOnlyMemory<byte> Save()
         {
             (var lsb, var msb) = this.ProgramCounter.SignificantBits();
 
@@ -55,25 +55,25 @@ namespace Cpu.Registers
         }
 
         /// <inheritdoc/>
-        public void Load(IEnumerable<byte> data)
+        public void Load(ReadOnlyMemory<byte> data)
         {
-            if (data is null)
+            if (data.IsEmpty)
             {
                 throw new ArgumentNullException(nameof(data));
             }
 
-            if (data.Count() != StateLength)
+            if (data.Length != StateLength)
             {
                 throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {StateLength}");
             }
 
-            var dataArr = data.ToArray();
+            var span = data.Span;
 
-            this.ProgramCounter = dataArr[0].CombineBytes(dataArr[1]);
-            this.StackPointer = dataArr[2];
-            this.Accumulator = dataArr[3];
-            this.IndexX = dataArr[4];
-            this.IndexY = dataArr[5];
+            this.ProgramCounter = span[0].CombineBytes(span[1]);
+            this.StackPointer = span[2];
+            this.Accumulator = span[3];
+            this.IndexX = span[4];
+            this.IndexY = span[5];
         }
         #endregion
 

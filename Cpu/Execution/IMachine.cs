@@ -40,15 +40,15 @@ namespace Cpu.Execution
         /// <param name="data">Program data</param>
         /// <exception cref="ArgumentNullException"> thrown if the program supplied is null</exception>
         /// <exception cref="ArgumentOutOfRangeException">thrown if the program supplied has an invalid length</exception>
-        /// <see cref="ICpuState.Load(IEnumerable{byte})"/>
-        void Load(IEnumerable<byte> data);
+        /// <see cref="ICpuState.Load(ReadOnlyMemory{byte})"/>
+        void Load(ReadOnlyMemory<byte> data);
 
         /// <summary>
         /// Saves the current machine state into bytes
         /// Contains all the registers, flags and memory data
         /// </summary>
         /// <returns>Current state as bytes</returns>
-        IEnumerable<byte> Save();
+        ReadOnlyMemory<byte> Save();
         #endregion
 
         #region Interrupts

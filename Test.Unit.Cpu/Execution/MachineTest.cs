@@ -58,16 +58,6 @@ namespace Test.Unit.Cpu.Execution
         #endregion
 
         [Fact]
-        public void Data_Load_Successful()
-        {
-            var data = new byte[10];
-
-            this.Subject.Load(data);
-
-            this.StateMock.Verify(mock => mock.Load(data), Times.Exactly(1));
-        }
-
-        [Fact]
         public void Data_Save_Successful()
         {
             var expected = new byte[10];

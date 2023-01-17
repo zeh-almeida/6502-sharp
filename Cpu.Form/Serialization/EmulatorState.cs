@@ -5,7 +5,7 @@
         #region Properties
         public string ProgramPath { get; set; }
 
-        public IEnumerable<byte> State { get; set; }
+        public Memory<byte> State { get; set; }
         #endregion
 
         #region Constructors

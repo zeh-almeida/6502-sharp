@@ -33,7 +33,7 @@ namespace Test.Integrated.Cpu
             Assert.Equal(value, finalState[xLocation]);
         }
 
-        private static IEnumerable<byte> BuildProgramStream()
+        private static ReadOnlyMemory<byte> BuildProgramStream()
         {
             var state = new byte[ICpuState.Length];
 

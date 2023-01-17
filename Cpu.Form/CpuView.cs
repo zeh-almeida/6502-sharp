@@ -260,11 +260,11 @@ namespace Cpu.Forms
                 MessageBoxIcon.Information);
         }
 
-        private void EnableProgramExecution(IEnumerable<byte> bytes, string programName)
+        private void EnableProgramExecution(ReadOnlyMemory<byte> bytes, string programName)
         {
             this.CurrentProgram = programName;
 
-            this.ShowProgramContent(bytes);
+            this.ShowProgramContent(bytes.Span);
             this.executionContent.Text = string.Empty;
 
             this.clockButton.Enabled = true;
@@ -276,11 +276,11 @@ namespace Cpu.Forms
             this.UpdateControls();
         }
 
-        private void ShowProgramContent(IEnumerable<byte> program)
+        private void ShowProgramContent(ReadOnlySpan<byte> program)
         {
-            var builder = new StringBuilder(program.Count() * 4);
+            var builder = new StringBuilder(program.Length * 4);
 
-            foreach (var value in program.Skip(ICpuState.MemoryStateOffset))
+            foreach (var value in program[ICpuState.MemoryStateOffset..])
             {
                 _ = builder.AppendLine(value.AsHex());
             }

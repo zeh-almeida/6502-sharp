@@ -305,7 +305,7 @@ public sealed record MemoryManagerTest
         Assert.Equal(value, result);
 
         var saved = this.Subject.Save();
-        Assert.Equal(memory, saved);
+        Assert.Equal(memory.ToArray(), saved.ToArray());
     }
 
     [Fact]

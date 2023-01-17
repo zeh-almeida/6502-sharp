@@ -14,7 +14,7 @@ namespace Cpu.Memory
 
         private IRegisterManager RegisterManager { get; }
 
-        private byte[] MemoryArea { get; }
+        private Memory<byte> MemoryArea { get; }
         #endregion
 
         #region Constructors
@@ -32,7 +32,7 @@ namespace Cpu.Memory
             this.Logger = logger;
             this.RegisterManager = registerManager;
 
-            this.MemoryArea = new byte[IMemoryManager.Length];
+            this.MemoryArea = new Memory<byte>(new byte[IMemoryManager.Length]);
         }
         #endregion
 
@@ -66,7 +66,7 @@ namespace Cpu.Memory
         public void WriteAbsolute(ushort address, byte value)
         {
             this.Logger.LogInformation(MemoryEvents.OnWrite, "{value:X2} @ {address:X4}", value, address);
-            this.MemoryArea[address] = value;
+            this.MemoryArea.Span[address] = value;
         }
 
         /// <inheritdoc/>
@@ -138,7 +138,7 @@ namespace Cpu.Memory
         /// <inheritdoc/>
         public byte ReadAbsolute(ushort address)
         {
-            var value = this.MemoryArea[address];
+            var value = this.MemoryArea.Span[address];
             this.Logger.LogInformation(MemoryEvents.OnRead, "{value:X2} @ {address:X4}", value, address);
 
             return value;
@@ -191,26 +191,25 @@ namespace Cpu.Memory
 
         #region Save/Load
         /// <inheritdoc/>
-        public IEnumerable<byte> Save()
+        public ReadOnlyMemory<byte> Save()
         {
-            return (byte[])this.MemoryArea.Clone();
+            return this.MemoryArea;
         }
 
         /// <inheritdoc/>
-        public void Load(IEnumerable<byte> data)
+        public void Load(ReadOnlyMemory<byte> data)
         {
-            if (data is null)
+            if (data.IsEmpty)
             {
                 throw new ArgumentNullException(nameof(data));
             }
 
-            if (!IMemoryManager.Length.Equals(data.Count()))
+            if (!IMemoryManager.Length.Equals(data.Length))
             {
                 throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {IMemoryManager.Length}");
             }
 
-            var dataArr = data.ToArray();
-            Array.Copy(dataArr, this.MemoryArea, IMemoryManager.Length);
+            data.CopyTo(this.MemoryArea);
         }
         #endregion
 

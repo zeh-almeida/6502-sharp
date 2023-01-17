@@ -53,7 +53,7 @@
         /// The last 2 bits are unused.
         /// </summary>
         /// <returns>6-bit number representing current register values</returns>
-        IEnumerable<byte> Save();
+        ReadOnlyMemory<byte> Save();
 
         /// <summary>
         /// Loads the flag values from a 6-bit number:
@@ -68,7 +68,7 @@
         /// The last 2 bits are unused.
         /// </summary>
         /// <param name="data">To read values from</param>
-        void Load(IEnumerable<byte> data);
+        void Load(ReadOnlyMemory<byte> data);
         #endregion
     }
 }

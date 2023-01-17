@@ -62,14 +62,14 @@ namespace Cpu.Execution
         }
 
         /// <inheritdoc/>
-        public void Load(IEnumerable<byte> data)
+        public void Load(ReadOnlyMemory<byte> data)
         {
-            this.Logger.LogInformation(MachineEvents.OnLoadData, "{dataLength}", data.Count());
+            this.Logger.LogInformation(MachineEvents.OnLoadData, "{dataLength}", data.Length);
             this.State.Load(data);
         }
 
         /// <inheritdoc/>
-        public IEnumerable<byte> Save()
+        public ReadOnlyMemory<byte> Save()
         {
             this.Logger.LogInformation(MachineEvents.OnSaveData, "Save state");
             return this.State.Save();

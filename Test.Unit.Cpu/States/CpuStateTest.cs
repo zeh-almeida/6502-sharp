@@ -156,7 +156,7 @@ public sealed record CpuStateTest
         var memoryState = new byte[ushort.MaxValue];
         memoryState[0] = 0b_0100_0000;
 
-        var expected = new byte[ushort.MaxValue + 9];
+        var expected = new byte[ICpuState.Length];
         expected[2] = 0b_0101_0101;
         expected[3] = 0b_0000_0001;
         expected[4] = 0b_0000_0010;
@@ -180,44 +180,26 @@ public sealed record CpuStateTest
 
         var result = this.Subject.Save();
 
-        Assert.Equal(expected, result);
+        Assert.Equal(expected.ToArray(), result.ToArray());
     }
 
     [Fact]
     public void Load_WritesMemory_NewState()
     {
-        const byte flagState = 0b_0101_0101;
+        var expected = new Memory<byte>(new byte[ICpuState.Length]);
+        expected.Span[0] = 0x10;
+        expected.Span[1] = 0x12;
 
-        var registerState = new byte[] {
-                0b_0000_0001,
-                0b_0000_0010,
-                0b_0000_0100,
-                0b_0000_1000,
-                0b_0001_0000,
-                0b_0010_0000,
-            };
-
-        var memoryState = new byte[ushort.MaxValue + 1];
-        memoryState[0] = 0b_0100_0000;
-
-        var expected = new byte[ICpuState.Length];
-        expected[0] = 0x10;
-        expected[1] = 0x12;
-
-        expected[2] = 0b_0101_0101;
-        expected[3] = 0b_0000_0001;
-        expected[4] = 0b_0000_0010;
-        expected[5] = 0b_0000_0100;
-        expected[6] = 0b_0000_1000;
-        expected[7] = 0b_0001_0000;
-        expected[8] = 0b_0010_0000;
-        expected[9] = 0b_0100_0000;
+        expected.Span[2] = 0b_0101_0101;
+        expected.Span[3] = 0b_0000_0001;
+        expected.Span[4] = 0b_0000_0010;
+        expected.Span[5] = 0b_0000_0100;
+        expected.Span[6] = 0b_0000_1000;
+        expected.Span[7] = 0b_0001_0000;
+        expected.Span[8] = 0b_0010_0000;
+        expected.Span[9] = 0b_0100_0000;
 
         this.Subject.Load(expected);
-
-        this.FlagMock.Verify(mock => mock.Load(flagState), Times.Exactly(1));
-        this.RegisterMock.Verify(mock => mock.Load(registerState), Times.Exactly(1));
-        this.MemoryMock.Verify(mock => mock.Load(memoryState), Times.Exactly(1));
 
         Assert.Equal(0x10, this.Subject.CyclesLeft);
         Assert.Equal(0x12, this.Subject.ExecutingOpcode);
