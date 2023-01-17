@@ -186,6 +186,8 @@ public sealed record CpuStateTest
     [Fact]
     public void Load_WritesMemory_NewState()
     {
+        const byte flagState = 0b_0101_0101;
+
         var expected = new Memory<byte>(new byte[ICpuState.Length]);
         expected.Span[0] = 0x10;
         expected.Span[1] = 0x12;
@@ -199,7 +201,17 @@ public sealed record CpuStateTest
         expected.Span[8] = 0b_0010_0000;
         expected.Span[9] = 0b_0100_0000;
 
+        var memoryState = expected[ICpuState.MemoryStateOffset..];
+
+        var registerState = expected.Slice(ICpuState.RegisterOffset,
+                                           IRegisterManager.RegisterLengthBytes);
+
         this.Subject.Load(expected);
+
+        this.FlagMock.Verify(mock => mock.Load(flagState), Times.Exactly(1));
+        this.MemoryMock.Verify(mock => mock.Load(memoryState), Times.Exactly(1));
+        this.RegisterMock.Verify(mock => mock.Load(registerState), Times.Exactly(1));
+
 
         Assert.Equal(0x10, this.Subject.CyclesLeft);
         Assert.Equal(0x12, this.Subject.ExecutingOpcode);

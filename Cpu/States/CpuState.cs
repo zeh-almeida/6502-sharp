@@ -115,8 +115,8 @@ namespace Cpu.States
 
             var memoryState = data[ICpuState.MemoryStateOffset..];
 
-            var registerState = data
-                .Slice(ICpuState.RegisterOffset, IRegisterManager.RegisterLengthBytes);
+            var registerState = data.Slice(ICpuState.RegisterOffset,
+                                           IRegisterManager.RegisterLengthBytes);
 
             this.Flags.Load(flagState);
             this.Memory.Load(memoryState);
