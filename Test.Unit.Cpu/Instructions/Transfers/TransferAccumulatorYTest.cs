@@ -4,102 +4,101 @@ using Moq;
 using Test.Unit.Cpu.Utils;
 using Xunit;
 
-namespace Test.Unit.Cpu.Instructions.Transfers
+namespace Test.Unit.Cpu.Instructions.Transfers;
+
+public sealed record TransferAccumulatorYTest
 {
-    public sealed record TransferAccumulatorYTest
+    #region Properties
+    private TransferAccumulatorY Subject { get; }
+    #endregion
+
+    #region Constructors
+    public TransferAccumulatorYTest()
     {
-        #region Properties
-        private TransferAccumulatorY Subject { get; }
-        #endregion
+        this.Subject = new TransferAccumulatorY();
+    }
+    #endregion
 
-        #region Constructors
-        public TransferAccumulatorYTest()
-        {
-            this.Subject = new TransferAccumulatorY();
-        }
-        #endregion
+    [Theory]
+    [InlineData(0xA8)]
+    public void HasOpcode_Matches_True(byte opcode)
+    {
+        Assert.True(this.Subject.HasOpcode(opcode));
+    }
 
-        [Theory]
-        [InlineData(0xA8)]
-        public void HasOpcode_Matches_True(byte opcode)
-        {
-            Assert.True(this.Subject.HasOpcode(opcode));
-        }
+    [Fact]
+    public void HashCode_Matches_True()
+    {
+        Assert.Equal(this.Subject.GetHashCode(), this.Subject.Opcodes.GetHashCode());
+    }
 
-        [Fact]
-        public void HashCode_Matches_True()
-        {
-            Assert.Equal(this.Subject.GetHashCode(), this.Subject.Opcodes.GetHashCode());
-        }
+    [Fact]
+    public void Equals_Object_IsTrueForInstruction()
+    {
+        Assert.True(this.Subject.Equals(this.Subject));
+        Assert.True(this.Subject.Equals(this.Subject as object));
+    }
 
-        [Fact]
-        public void Equals_Object_IsTrueForInstruction()
-        {
-            Assert.True(this.Subject.Equals(this.Subject));
-            Assert.True(this.Subject.Equals(this.Subject as object));
-        }
+    [Fact]
+    public void Equals_Object_IsFalseForNonInstructions()
+    {
+        Assert.False(this.Subject.Equals(1));
+    }
 
-        [Fact]
-        public void Equals_Object_IsFalseForNonInstructions()
-        {
-            Assert.False(this.Subject.Equals(1));
-        }
+    [Fact]
+    public void Execute_ZeroAccumulator_ChangesZeroFlag()
+    {
+        const byte value = 0;
+        var stateMock = SetupMock(value);
 
-        [Fact]
-        public void Execute_ZeroAccumulator_ChangesZeroFlag()
-        {
-            const byte value = 0;
-            var stateMock = SetupMock(value);
+        this.Subject.Execute(stateMock.Object, 0);
 
-            this.Subject.Execute(stateMock.Object, 0);
+        BasicExecutionAssertion(stateMock, value);
 
-            BasicExecutionAssertion(stateMock, value);
+        stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
+    }
 
-            stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
-        }
+    [Fact]
+    public void Execute_NegativeAccumulator_ChangesNegativeFlag()
+    {
+        const byte value = 0b_1000_0000;
+        var stateMock = SetupMock(value);
 
-        [Fact]
-        public void Execute_NegativeAccumulator_ChangesNegativeFlag()
-        {
-            const byte value = 0b_1000_0000;
-            var stateMock = SetupMock(value);
+        this.Subject.Execute(stateMock.Object, 0);
 
-            this.Subject.Execute(stateMock.Object, 0);
+        BasicExecutionAssertion(stateMock, value);
 
-            BasicExecutionAssertion(stateMock, value);
+        stateMock.VerifySet(state => state.Flags.IsNegative = true, Times.Once());
+    }
 
-            stateMock.VerifySet(state => state.Flags.IsNegative = true, Times.Once());
-        }
+    [Fact]
+    public void Execute_PositiveAccumulator_WritesRegister()
+    {
+        const byte value = 1;
+        var stateMock = SetupMock(value);
 
-        [Fact]
-        public void Execute_PositiveAccumulator_WritesRegister()
-        {
-            const byte value = 1;
-            var stateMock = SetupMock(value);
+        this.Subject.Execute(stateMock.Object, 0);
 
-            this.Subject.Execute(stateMock.Object, 0);
+        BasicExecutionAssertion(stateMock, value);
 
-            BasicExecutionAssertion(stateMock, value);
+        stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
+        stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
+    }
 
-            stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
-            stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
-        }
+    private static Mock<ICpuState> SetupMock(byte value)
+    {
+        var stateMock = TestUtils.GenerateStateMock();
 
-        private static Mock<ICpuState> SetupMock(byte value)
-        {
-            var stateMock = TestUtils.GenerateStateMock();
+        _ = stateMock
+            .Setup(s => s.Registers.Accumulator)
+            .Returns(value);
 
-            _ = stateMock
-                .Setup(s => s.Registers.Accumulator)
-                .Returns(value);
+        return stateMock;
+    }
 
-            return stateMock;
-        }
-
-        private static void BasicExecutionAssertion(Mock<ICpuState> stateMock, byte value)
-        {
-            stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
-            stateMock.VerifySet(state => state.Registers.IndexY = value, Times.Once());
-        }
+    private static void BasicExecutionAssertion(Mock<ICpuState> stateMock, byte value)
+    {
+        stateMock.Verify(state => state.Registers.Accumulator, Times.Once());
+        stateMock.VerifySet(state => state.Registers.IndexY = value, Times.Once());
     }
 }

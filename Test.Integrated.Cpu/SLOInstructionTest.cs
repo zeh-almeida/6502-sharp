@@ -1,32 +1,31 @@
 ﻿using Test.Integrated.Cpu.Common;
 using Xunit;
 
-namespace Test.Integrated.Cpu
+namespace Test.Integrated.Cpu;
+
+public sealed record SLOInstructionTest : IClassFixture<MachineFixture>
 {
-    public sealed record SLOInstructionTest : IClassFixture<MachineFixture>
+    #region Properties
+    private MachineFixture Fixture { get; }
+    #endregion
+
+    #region Constructors
+    public SLOInstructionTest(MachineFixture fixture)
     {
-        #region Properties
-        private MachineFixture Fixture { get; }
-        #endregion
+        this.Fixture = fixture;
+    }
+    #endregion
 
-        #region Constructors
-        public SLOInstructionTest(MachineFixture fixture)
-        {
-            this.Fixture = fixture;
-        }
-        #endregion
-
-        [Theory]
-        [InlineData("asoa")]
-        [InlineData("asoax")]
-        [InlineData("asoay")]
-        [InlineData("asoix")]
-        [InlineData("asoiy")]
-        [InlineData("asoz")]
-        [InlineData("asozx")]
-        public void Illegal_Instruction_Computes(string programName)
-        {
-            _ = this.Fixture.Compute(programName);
-        }
+    [Theory]
+    [InlineData("asoa")]
+    [InlineData("asoax")]
+    [InlineData("asoay")]
+    [InlineData("asoix")]
+    [InlineData("asoiy")]
+    [InlineData("asoz")]
+    [InlineData("asozx")]
+    public void Illegal_Instruction_Computes(string programName)
+    {
+        _ = this.Fixture.Compute(programName);
     }
 }

@@ -4,157 +4,156 @@ using Cpu.Opcodes;
 using Moq;
 using Xunit;
 
-namespace Test.Unit.Cpu.Execution
+namespace Test.Unit.Cpu.Execution;
+
+public sealed record DecodedInstructionTest
 {
-    public sealed record DecodedInstructionTest
+    #region Constants
+    private const ushort Value = 0x01;
+
+    private const int Cycles = 1;
+
+    private const byte Opcode = 0x01;
+
+    private const byte Bytes = 1;
+    #endregion
+
+    [Fact]
+    public void Instruction_Equals_Defined()
     {
-        #region Constants
-        private const ushort Value = 0x01;
+        var instructionMock = new Mock<IInstruction>();
+        var opcodeMock = new Mock<IOpcodeInformation>();
 
-        private const int Cycles = 1;
+        _ = instructionMock
+            .Setup(mock => mock.GetHashCode())
+            .Returns(1);
 
-        private const byte Opcode = 0x01;
+        _ = opcodeMock
+            .Setup(mock => mock.Opcode)
+            .Returns(Opcode);
 
-        private const byte Bytes = 1;
-        #endregion
+        _ = opcodeMock
+            .Setup(mock => mock.MaximumCycles)
+            .Returns(Cycles);
 
-        [Fact]
-        public void Instruction_Equals_Defined()
-        {
-            var instructionMock = new Mock<IInstruction>();
-            var opcodeMock = new Mock<IOpcodeInformation>();
+        _ = opcodeMock
+            .Setup(mock => mock.MinimumCycles)
+            .Returns(Cycles);
 
-            _ = instructionMock
-                .Setup(mock => mock.GetHashCode())
-                .Returns(1);
+        _ = opcodeMock
+            .Setup(mock => mock.Bytes)
+            .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Opcode)
-                .Returns(Opcode);
+        var instruction = instructionMock.Object;
+        var opcodeInfo = opcodeMock.Object;
 
-            _ = opcodeMock
-                .Setup(mock => mock.MaximumCycles)
-                .Returns(Cycles);
+        var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
+        Assert.Equal(instruction.GetHashCode(), subject.Instruction?.GetHashCode());
+    }
 
-            _ = opcodeMock
-                .Setup(mock => mock.MinimumCycles)
-                .Returns(Cycles);
+    [Fact]
+    public void Cycles_Equals_Defined()
+    {
+        var instructionMock = new Mock<IInstruction>();
+        var opcodeMock = new Mock<IOpcodeInformation>();
 
-            _ = opcodeMock
-                .Setup(mock => mock.Bytes)
-                .Returns(Bytes);
+        _ = instructionMock
+            .Setup(mock => mock.GetHashCode())
+            .Returns(1);
 
-            var instruction = instructionMock.Object;
-            var opcodeInfo = opcodeMock.Object;
+        _ = opcodeMock
+            .Setup(mock => mock.Opcode)
+            .Returns(Opcode);
 
-            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
-            Assert.Equal(instruction.GetHashCode(), subject.Instruction?.GetHashCode());
-        }
+        _ = opcodeMock
+            .Setup(mock => mock.MaximumCycles)
+            .Returns(Cycles);
 
-        [Fact]
-        public void Cycles_Equals_Defined()
-        {
-            var instructionMock = new Mock<IInstruction>();
-            var opcodeMock = new Mock<IOpcodeInformation>();
+        _ = opcodeMock
+            .Setup(mock => mock.MinimumCycles)
+            .Returns(Cycles);
 
-            _ = instructionMock
-                .Setup(mock => mock.GetHashCode())
-                .Returns(1);
+        _ = opcodeMock
+            .Setup(mock => mock.Bytes)
+            .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Opcode)
-                .Returns(Opcode);
+        var instruction = instructionMock.Object;
+        var opcodeInfo = opcodeMock.Object;
 
-            _ = opcodeMock
-                .Setup(mock => mock.MaximumCycles)
-                .Returns(Cycles);
+        var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
-            _ = opcodeMock
-                .Setup(mock => mock.MinimumCycles)
-                .Returns(Cycles);
+        Assert.Equal(Cycles, subject.Information.MinimumCycles);
+    }
 
-            _ = opcodeMock
-                .Setup(mock => mock.Bytes)
-                .Returns(Bytes);
+    [Fact]
+    public void Bytes_Equals_Defined()
+    {
+        var instructionMock = new Mock<IInstruction>();
+        var opcodeMock = new Mock<IOpcodeInformation>();
 
-            var instruction = instructionMock.Object;
-            var opcodeInfo = opcodeMock.Object;
+        _ = instructionMock
+            .Setup(mock => mock.GetHashCode())
+            .Returns(1);
 
-            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
+        _ = opcodeMock
+            .Setup(mock => mock.Opcode)
+            .Returns(Opcode);
 
-            Assert.Equal(Cycles, subject.Information.MinimumCycles);
-        }
+        _ = opcodeMock
+            .Setup(mock => mock.MaximumCycles)
+            .Returns(Cycles);
 
-        [Fact]
-        public void Bytes_Equals_Defined()
-        {
-            var instructionMock = new Mock<IInstruction>();
-            var opcodeMock = new Mock<IOpcodeInformation>();
+        _ = opcodeMock
+            .Setup(mock => mock.MinimumCycles)
+            .Returns(Cycles);
 
-            _ = instructionMock
-                .Setup(mock => mock.GetHashCode())
-                .Returns(1);
+        _ = opcodeMock
+            .Setup(mock => mock.Bytes)
+            .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Opcode)
-                .Returns(Opcode);
+        var instruction = instructionMock.Object;
+        var opcodeInfo = opcodeMock.Object;
 
-            _ = opcodeMock
-                .Setup(mock => mock.MaximumCycles)
-                .Returns(Cycles);
+        var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
-            _ = opcodeMock
-                .Setup(mock => mock.MinimumCycles)
-                .Returns(Cycles);
+        Assert.Equal(Value, subject.ValueParameter);
+    }
 
-            _ = opcodeMock
-                .Setup(mock => mock.Bytes)
-                .Returns(Bytes);
+    [Fact]
+    public void ToString_IsFormatted()
+    {
+        var instructionMock = new Mock<IInstruction>();
+        var opcodeMock = new Mock<IOpcodeInformation>();
 
-            var instruction = instructionMock.Object;
-            var opcodeInfo = opcodeMock.Object;
+        _ = instructionMock
+            .Setup(mock => mock.GetHashCode())
+            .Returns(1);
 
-            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
+        _ = opcodeMock
+            .Setup(mock => mock.Opcode)
+            .Returns(Opcode);
 
-            Assert.Equal(Value, subject.ValueParameter);
-        }
+        _ = opcodeMock
+            .Setup(mock => mock.MaximumCycles)
+            .Returns(Cycles);
 
-        [Fact]
-        public void ToString_IsFormatted()
-        {
-            var instructionMock = new Mock<IInstruction>();
-            var opcodeMock = new Mock<IOpcodeInformation>();
+        _ = opcodeMock
+            .Setup(mock => mock.MinimumCycles)
+            .Returns(Cycles);
 
-            _ = instructionMock
-                .Setup(mock => mock.GetHashCode())
-                .Returns(1);
+        _ = opcodeMock
+            .Setup(mock => mock.Bytes)
+            .Returns(Bytes);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Opcode)
-                .Returns(Opcode);
+        _ = opcodeMock
+            .Setup(mock => mock.ToString())
+            .Returns("ORA (oper,X)");
 
-            _ = opcodeMock
-                .Setup(mock => mock.MaximumCycles)
-                .Returns(Cycles);
+        var instruction = instructionMock.Object;
+        var opcodeInfo = opcodeMock.Object;
 
-            _ = opcodeMock
-                .Setup(mock => mock.MinimumCycles)
-                .Returns(Cycles);
+        var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
 
-            _ = opcodeMock
-                .Setup(mock => mock.Bytes)
-                .Returns(Bytes);
-
-            _ = opcodeMock
-                .Setup(mock => mock.ToString())
-                .Returns("ORA (oper,X)");
-
-            var instruction = instructionMock.Object;
-            var opcodeInfo = opcodeMock.Object;
-
-            var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
-
-            Assert.Equal("ORA ($01,X)", subject.ToString());
-        }
+        Assert.Equal("ORA ($01,X)", subject.ToString());
     }
 }

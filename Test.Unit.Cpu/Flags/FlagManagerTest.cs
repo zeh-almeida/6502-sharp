@@ -1,141 +1,140 @@
 ﻿using Cpu.Flags;
 using Xunit;
 
-namespace Test.Unit.Cpu.Flags
+namespace Test.Unit.Cpu.Flags;
+
+public sealed record FlagManagerTest
 {
-    public sealed record FlagManagerTest
+    #region Properties
+    private FlagManager Subject { get; }
+    #endregion
+
+    #region Constructors
+    public FlagManagerTest()
     {
-        #region Properties
-        private FlagManager Subject { get; }
-        #endregion
+        this.Subject = new FlagManager();
+    }
+    #endregion
 
-        #region Constructors
-        public FlagManagerTest()
-        {
-            this.Subject = new FlagManager();
-        }
-        #endregion
+    [Fact]
+    public void WriteRead_Carry_Successful()
+    {
+        const bool value = true;
 
-        [Fact]
-        public void WriteRead_Carry_Successful()
-        {
-            const bool value = true;
+        this.Subject.IsCarry = value;
+        var result = this.Subject.IsCarry;
 
-            this.Subject.IsCarry = value;
-            var result = this.Subject.IsCarry;
+        Assert.Equal(value, result);
+    }
 
-            Assert.Equal(value, result);
-        }
+    [Fact]
+    public void WriteRead_Zero_Successful()
+    {
+        const bool value = true;
 
-        [Fact]
-        public void WriteRead_Zero_Successful()
-        {
-            const bool value = true;
+        this.Subject.IsZero = value;
+        var result = this.Subject.IsZero;
 
-            this.Subject.IsZero = value;
-            var result = this.Subject.IsZero;
+        Assert.Equal(value, result);
+    }
 
-            Assert.Equal(value, result);
-        }
+    [Fact]
+    public void WriteRead_InterruptDisable_Successful()
+    {
+        const bool value = true;
 
-        [Fact]
-        public void WriteRead_InterruptDisable_Successful()
-        {
-            const bool value = true;
+        this.Subject.IsInterruptDisable = value;
+        var result = this.Subject.IsInterruptDisable;
 
-            this.Subject.IsInterruptDisable = value;
-            var result = this.Subject.IsInterruptDisable;
+        Assert.Equal(value, result);
+    }
 
-            Assert.Equal(value, result);
-        }
+    [Fact]
+    public void WriteRead_DecimalMode_Successful()
+    {
+        const bool value = true;
 
-        [Fact]
-        public void WriteRead_DecimalMode_Successful()
-        {
-            const bool value = true;
+        this.Subject.IsDecimalMode = value;
+        var result = this.Subject.IsDecimalMode;
 
-            this.Subject.IsDecimalMode = value;
-            var result = this.Subject.IsDecimalMode;
+        Assert.Equal(value, result);
+    }
 
-            Assert.Equal(value, result);
-        }
+    [Fact]
+    public void WriteRead_BreakCommand_Successful()
+    {
+        const bool value = true;
 
-        [Fact]
-        public void WriteRead_BreakCommand_Successful()
-        {
-            const bool value = true;
+        this.Subject.IsBreakCommand = value;
+        var result = this.Subject.IsBreakCommand;
 
-            this.Subject.IsBreakCommand = value;
-            var result = this.Subject.IsBreakCommand;
+        Assert.Equal(value, result);
+    }
 
-            Assert.Equal(value, result);
-        }
+    [Fact]
+    public void WriteRead_Overflow_Successful()
+    {
+        const bool value = true;
 
-        [Fact]
-        public void WriteRead_Overflow_Successful()
-        {
-            const bool value = true;
+        this.Subject.IsOverflow = value;
+        var result = this.Subject.IsOverflow;
 
-            this.Subject.IsOverflow = value;
-            var result = this.Subject.IsOverflow;
+        Assert.Equal(value, result);
+    }
 
-            Assert.Equal(value, result);
-        }
+    [Fact]
+    public void WriteRead_Negative_Successful()
+    {
+        const bool value = true;
 
-        [Fact]
-        public void WriteRead_Negative_Successful()
-        {
-            const bool value = true;
+        this.Subject.IsNegative = value;
+        var result = this.Subject.IsNegative;
 
-            this.Subject.IsNegative = value;
-            var result = this.Subject.IsNegative;
+        Assert.Equal(value, result);
+    }
 
-            Assert.Equal(value, result);
-        }
+    #region Save/Load
+    [Fact]
+    public void Serialize_State_Writes()
+    {
+        this.Subject.IsCarry = true;
+        this.Subject.IsZero = true;
+        this.Subject.IsInterruptDisable = true;
+        this.Subject.IsDecimalMode = true;
+        this.Subject.IsBreakCommand = true;
+        this.Subject.IsOverflow = true;
+        this.Subject.IsNegative = true;
 
-        #region Save/Load
-        [Fact]
-        public void Serialize_State_Writes()
-        {
-            this.Subject.IsCarry = true;
-            this.Subject.IsZero = true;
-            this.Subject.IsInterruptDisable = true;
-            this.Subject.IsDecimalMode = true;
-            this.Subject.IsBreakCommand = true;
-            this.Subject.IsOverflow = true;
-            this.Subject.IsNegative = true;
+        var result = this.Subject.Save();
+        Assert.Equal(0x7F, result);
+    }
 
-            var result = this.Subject.Save();
-            Assert.Equal(0x7F, result);
-        }
+    [Fact]
+    public void Deserialize_State_Loads()
+    {
+        this.Subject.Load(0x7F);
 
-        [Fact]
-        public void Deserialize_State_Loads()
-        {
-            this.Subject.Load(0x7F);
+        Assert.True(this.Subject.IsCarry);
+        Assert.True(this.Subject.IsZero);
+        Assert.True(this.Subject.IsInterruptDisable);
+        Assert.True(this.Subject.IsDecimalMode);
+        Assert.True(this.Subject.IsBreakCommand);
+        Assert.True(this.Subject.IsOverflow);
+        Assert.True(this.Subject.IsNegative);
+    }
+    #endregion
 
-            Assert.True(this.Subject.IsCarry);
-            Assert.True(this.Subject.IsZero);
-            Assert.True(this.Subject.IsInterruptDisable);
-            Assert.True(this.Subject.IsDecimalMode);
-            Assert.True(this.Subject.IsBreakCommand);
-            Assert.True(this.Subject.IsOverflow);
-            Assert.True(this.Subject.IsNegative);
-        }
-        #endregion
+    [Fact]
+    public void ToString_Executes()
+    {
+        this.Subject.IsCarry = true;
+        this.Subject.IsZero = true;
+        this.Subject.IsInterruptDisable = true;
+        this.Subject.IsDecimalMode = true;
+        this.Subject.IsBreakCommand = true;
+        this.Subject.IsOverflow = true;
+        this.Subject.IsNegative = true;
 
-        [Fact]
-        public void ToString_Executes()
-        {
-            this.Subject.IsCarry = true;
-            this.Subject.IsZero = true;
-            this.Subject.IsInterruptDisable = true;
-            this.Subject.IsDecimalMode = true;
-            this.Subject.IsBreakCommand = true;
-            this.Subject.IsOverflow = true;
-            this.Subject.IsNegative = true;
-
-            Assert.Equal("N:1;Z:1;C:1;I:1;D:1;V:1", this.Subject.ToString());
-        }
+        Assert.Equal("N:1;Z:1;C:1;I:1;D:1;V:1", this.Subject.ToString());
     }
 }
