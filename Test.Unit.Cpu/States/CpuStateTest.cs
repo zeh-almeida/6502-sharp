@@ -212,7 +212,6 @@ public sealed record CpuStateTest
         this.MemoryMock.Verify(mock => mock.Load(memoryState), Times.Exactly(1));
         this.RegisterMock.Verify(mock => mock.Load(registerState), Times.Exactly(1));
 
-
         Assert.Equal(0x10, this.Subject.CyclesLeft);
         Assert.Equal(0x12, this.Subject.ExecutingOpcode);
     }
