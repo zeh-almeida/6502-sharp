@@ -7,65 +7,64 @@ using Cpu.Registers;
 using Cpu.States;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Cpu.DependencyInjection
+namespace Cpu.DependencyInjection;
+
+/// <summary>
+/// Extends <see cref="IServiceCollection"/> to add CPU dependency injection mechanisms
+/// </summary>
+public static class CpuServiceCollection
 {
+    #region Constants
+    private static Type InstructionType { get; } = typeof(IInstruction);
+
+    private static Type OpcodeType { get; } = typeof(IOpcodeInformation);
+    #endregion
+
     /// <summary>
-    /// Extends <see cref="IServiceCollection"/> to add CPU dependency injection mechanisms
+    /// Registers all necessary components for the CPU
     /// </summary>
-    public static class CpuServiceCollection
+    /// <param name="collection"><see cref="IServiceCollection"/>`to register to</param>
+    /// <returns>Populated registry</returns>
+    public static IServiceCollection Add6502Cpu(this IServiceCollection collection)
     {
-        #region Constants
-        private static Type InstructionType { get; } = typeof(IInstruction);
+        var instructions = LoadInstructionTypes();
+        var opcodes = LoadOpcodes();
 
-        private static Type OpcodeType { get; } = typeof(IOpcodeInformation);
-        #endregion
+        _ = collection
+            .AddScoped<IMachine, Machine>()
+            .AddScoped<IDecoder, Decoder>()
+            .AddScoped<ICpuState, CpuState>()
+            .AddScoped<IFlagManager, FlagManager>()
+            .AddScoped<IStackManager, StackManager>()
+            .AddScoped<IMemoryManager, MemoryManager>()
+            .AddScoped<IRegisterManager, RegisterManager>();
 
-        /// <summary>
-        /// Registers all necessary components for the CPU
-        /// </summary>
-        /// <param name="collection"><see cref="IServiceCollection"/>`to register to</param>
-        /// <returns>Populated registry</returns>
-        public static IServiceCollection Add6502Cpu(this IServiceCollection collection)
+        foreach (var instruction in instructions)
         {
-            var instructions = LoadInstructionTypes();
-            var opcodes = LoadOpcodes();
-
-            _ = collection
-                .AddScoped<IMachine, Machine>()
-                .AddScoped<IDecoder, Decoder>()
-                .AddScoped<ICpuState, CpuState>()
-                .AddScoped<IFlagManager, FlagManager>()
-                .AddScoped<IStackManager, StackManager>()
-                .AddScoped<IMemoryManager, MemoryManager>()
-                .AddScoped<IRegisterManager, RegisterManager>();
-
-            foreach (var instruction in instructions)
-            {
-                _ = collection.AddScoped(InstructionType, instruction);
-            }
-
-            _ = collection.AddScoped(_ => opcodes);
-
-            return collection;
+            _ = collection.AddScoped(InstructionType, instruction);
         }
 
-        private static IEnumerable<Type> LoadInstructionTypes()
-        {
-            return AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(a => a.GetTypes())
-                .Where(t => InstructionType.IsAssignableFrom(t)
-                                      && !t.IsInterface
-                                      && !t.IsAbstract)
-                .ToArray();
-        }
+        _ = collection.AddScoped(_ => opcodes);
 
-        private static IEnumerable<IOpcodeInformation> LoadOpcodes()
-        {
-            var loader = new OpcodeLoader();
-            loader.LoadAsync().Wait();
+        return collection;
+    }
 
-            return loader.Opcodes;
-        }
+    private static IEnumerable<Type> LoadInstructionTypes()
+    {
+        return AppDomain.CurrentDomain
+            .GetAssemblies()
+            .SelectMany(a => a.GetTypes())
+            .Where(t => InstructionType.IsAssignableFrom(t)
+                                  && !t.IsInterface
+                                  && !t.IsAbstract)
+            .ToArray();
+    }
+
+    private static IEnumerable<IOpcodeInformation> LoadOpcodes()
+    {
+        var loader = new OpcodeLoader();
+        loader.LoadAsync().Wait();
+
+        return loader.Opcodes;
     }
 }

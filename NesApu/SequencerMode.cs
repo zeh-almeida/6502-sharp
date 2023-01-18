@@ -1,18 +1,17 @@
-﻿namespace NesApu
+﻿namespace NesApu;
+
+/// <summary>
+/// Types of sequencers for the APU
+/// </summary>
+public enum SequencerMode
 {
     /// <summary>
-    /// Types of sequencers for the APU
+    /// Executes the sequencer in four-step mode
     /// </summary>
-    public enum SequencerMode
-    {
-        /// <summary>
-        /// Executes the sequencer in four-step mode
-        /// </summary>
-        FourStep,
+    FourStep,
 
-        /// <summary>
-        /// Executes the sequencer in five-step mode
-        /// </summary>
-        FiveStep,
-    }
+    /// <summary>
+    /// Executes the sequencer in five-step mode
+    /// </summary>
+    FiveStep,
 }

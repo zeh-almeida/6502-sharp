@@ -2,33 +2,32 @@ using Cpu.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Cpu.Forms
+namespace Cpu.Forms;
+
+public static class Program
 {
-    public static class Program
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    [STAThread]
+    public static void Main()
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        public static void Main()
-        {
-            ApplicationConfiguration.Initialize();
+        ApplicationConfiguration.Initialize();
 
-            var sp = BuildProvider();
-            using var view = sp.GetRequiredService<CpuView>();
+        var sp = BuildProvider();
+        using var view = sp.GetRequiredService<CpuView>();
 
-            Application.Run(view);
-        }
+        Application.Run(view);
+    }
 
-        private static IServiceProvider BuildProvider()
-        {
-            var collection = new ServiceCollection();
+    private static IServiceProvider BuildProvider()
+    {
+        var collection = new ServiceCollection();
 
-            return collection
-                .AddLogging(b => b.AddSimpleConsole())
-                .Add6502Cpu()
-                .AddSingleton<CpuView>()
-                .BuildServiceProvider();
-        }
+        return collection
+            .AddLogging(b => b.AddSimpleConsole())
+            .Add6502Cpu()
+            .AddSingleton<CpuView>()
+            .BuildServiceProvider();
     }
 }
