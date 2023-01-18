@@ -2,79 +2,78 @@
 using Cpu.Instructions.Exceptions;
 using Cpu.States;
 
-namespace Cpu.Instructions.Decrements
+namespace Cpu.Instructions.Decrements;
+
+/// <summary>
+/// <para>Decrement Memory instruction (DEC)</para>
+/// <para>Subtracts one from the value held at a specified memory location setting the zero and negative flags as appropriate.</para>
+/// <para>
+/// Executes the following opcodes:
+/// <c>0xC6</c>,
+/// <c>0xD6</c>,
+/// <c>0xCE</c>,
+/// <c>0xDE</c>
+/// </para>
+/// </summary>
+/// <see href="https://masswerk.at/6502/6502_instruction_set.html#DEC"/>
+public sealed class DecrementMemory : BaseInstruction
 {
+    #region Constructors
     /// <summary>
-    /// <para>Decrement Memory instruction (DEC)</para>
-    /// <para>Subtracts one from the value held at a specified memory location setting the zero and negative flags as appropriate.</para>
-    /// <para>
-    /// Executes the following opcodes:
-    /// <c>0xC6</c>,
-    /// <c>0xD6</c>,
-    /// <c>0xCE</c>,
-    /// <c>0xDE</c>
-    /// </para>
+    /// Instantiates a new <see cref="DecrementMemory"/>
     /// </summary>
-    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#DEC"/>
-    public sealed class DecrementMemory : BaseInstruction
+    public DecrementMemory()
+        : base(
+              0xC6,
+              0xD6,
+              0xCE,
+              0xDE)
+    { }
+    #endregion
+
+    /// <inheritdoc/>
+    public override void Execute(ICpuState currentState, ushort value)
     {
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new <see cref="DecrementMemory"/>
-        /// </summary>
-        public DecrementMemory()
-            : base(
-                  0xC6,
-                  0xD6,
-                  0xCE,
-                  0xDE)
-        { }
-        #endregion
+        var operation = (byte)(Read(currentState, value) - 1);
 
-        /// <inheritdoc/>
-        public override void Execute(ICpuState currentState, ushort value)
+        currentState.Flags.IsZero = operation.IsZero();
+        currentState.Flags.IsNegative = operation.IsLastBitSet();
+
+        Write(currentState, value, operation);
+    }
+
+    private static void Write(ICpuState currentState, ushort address, byte value)
+    {
+        switch (currentState.ExecutingOpcode)
         {
-            var operation = (byte)(Read(currentState, value) - 1);
+            case 0xC6:
+                currentState.Memory.WriteZeroPage(address, value);
+                break;
 
-            currentState.Flags.IsZero = operation.IsZero();
-            currentState.Flags.IsNegative = operation.IsLastBitSet();
+            case 0xD6:
+                currentState.Memory.WriteZeroPageX(address, value);
+                break;
 
-            Write(currentState, value, operation);
+            case 0xCE:
+                currentState.Memory.WriteAbsolute(address, value);
+                break;
+
+            case 0xDE:
+            default:
+                currentState.Memory.WriteAbsoluteX(address, value);
+                break;
         }
+    }
 
-        private static void Write(ICpuState currentState, ushort address, byte value)
+    private static byte Read(ICpuState currentState, ushort address)
+    {
+        return currentState.ExecutingOpcode switch
         {
-            switch (currentState.ExecutingOpcode)
-            {
-                case 0xC6:
-                    currentState.Memory.WriteZeroPage(address, value);
-                    break;
-
-                case 0xD6:
-                    currentState.Memory.WriteZeroPageX(address, value);
-                    break;
-
-                case 0xCE:
-                    currentState.Memory.WriteAbsolute(address, value);
-                    break;
-
-                case 0xDE:
-                default:
-                    currentState.Memory.WriteAbsoluteX(address, value);
-                    break;
-            }
-        }
-
-        private static byte Read(ICpuState currentState, ushort address)
-        {
-            return currentState.ExecutingOpcode switch
-            {
-                0xC6 => currentState.Memory.ReadZeroPage(address),
-                0xD6 => currentState.Memory.ReadZeroPageX(address),
-                0xCE => currentState.Memory.ReadAbsolute(address),
-                0xDE => currentState.Memory.ReadAbsoluteX(address).Item2,
-                _ => throw new UnknownOpcodeException(currentState.ExecutingOpcode),
-            };
-        }
+            0xC6 => currentState.Memory.ReadZeroPage(address),
+            0xD6 => currentState.Memory.ReadZeroPageX(address),
+            0xCE => currentState.Memory.ReadAbsolute(address),
+            0xDE => currentState.Memory.ReadAbsoluteX(address).Item2,
+            _ => throw new UnknownOpcodeException(currentState.ExecutingOpcode),
+        };
     }
 }

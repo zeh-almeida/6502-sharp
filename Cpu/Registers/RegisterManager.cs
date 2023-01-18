@@ -1,86 +1,85 @@
 ﻿using Cpu.Extensions;
 
-namespace Cpu.Registers
+namespace Cpu.Registers;
+
+/// <summary>
+/// Implements <see cref="IRegisterManager"/> to manipulate the CPU state
+/// </summary>
+public sealed record RegisterManager : IRegisterManager
 {
+    #region Constants
+    private const int StateLength = 6;
+    #endregion
+
+    #region Properties
+    /// <inheritdoc/>
+    public ushort ProgramCounter { get; set; }
+
+    /// <inheritdoc/>
+    public byte StackPointer { get; set; }
+
+    /// <inheritdoc/>
+    public byte Accumulator { get; set; }
+
+    /// <inheritdoc/>
+    public byte IndexX { get; set; }
+
+    /// <inheritdoc/>
+    public byte IndexY { get; set; }
+    #endregion
+
+    #region Constructors
     /// <summary>
-    /// Implements <see cref="IRegisterManager"/> to manipulate the CPU state
+    /// Instantiates a new manager
     /// </summary>
-    public sealed record RegisterManager : IRegisterManager
+    public RegisterManager()
     {
-        #region Constants
-        private const int StateLength = 6;
-        #endregion
+    }
+    #endregion
 
-        #region Properties
-        /// <inheritdoc/>
-        public ushort ProgramCounter { get; set; }
+    #region Load/Save
+    /// <inheritdoc/>
+    public ReadOnlyMemory<byte> Save()
+    {
+        (var lsb, var msb) = this.ProgramCounter.SignificantBits();
 
-        /// <inheritdoc/>
-        public byte StackPointer { get; set; }
-
-        /// <inheritdoc/>
-        public byte Accumulator { get; set; }
-
-        /// <inheritdoc/>
-        public byte IndexX { get; set; }
-
-        /// <inheritdoc/>
-        public byte IndexY { get; set; }
-        #endregion
-
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new manager
-        /// </summary>
-        public RegisterManager()
+        return new byte[]
         {
-        }
-        #endregion
+            lsb,
+            msb,
+            this.StackPointer,
+            this.Accumulator,
+            this.IndexX,
+            this.IndexY,
+        };
+    }
 
-        #region Load/Save
-        /// <inheritdoc/>
-        public ReadOnlyMemory<byte> Save()
+    /// <inheritdoc/>
+    public void Load(ReadOnlyMemory<byte> data)
+    {
+        if (data.IsEmpty)
         {
-            (var lsb, var msb) = this.ProgramCounter.SignificantBits();
-
-            return new byte[]
-            {
-                lsb,
-                msb,
-                this.StackPointer,
-                this.Accumulator,
-                this.IndexX,
-                this.IndexY,
-            };
+            throw new ArgumentNullException(nameof(data));
         }
 
-        /// <inheritdoc/>
-        public void Load(ReadOnlyMemory<byte> data)
+        if (data.Length != StateLength)
         {
-            if (data.IsEmpty)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-
-            if (data.Length != StateLength)
-            {
-                throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {StateLength}");
-            }
-
-            var span = data.Span;
-
-            this.ProgramCounter = span[0].CombineBytes(span[1]);
-            this.StackPointer = span[2];
-            this.Accumulator = span[3];
-            this.IndexX = span[4];
-            this.IndexY = span[5];
+            throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {StateLength}");
         }
-        #endregion
 
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"PC:{this.ProgramCounter.AsHex()};SP:{this.StackPointer.AsHex()};A:{this.Accumulator.AsHex()};X:{this.IndexX.AsHex()};Y:{this.IndexY.AsHex()}";
-        }
+        var span = data.Span;
+
+        this.ProgramCounter = span[0].CombineBytes(span[1]);
+        this.StackPointer = span[2];
+        this.Accumulator = span[3];
+        this.IndexX = span[4];
+        this.IndexY = span[5];
+    }
+    #endregion
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        return $"PC:{this.ProgramCounter.AsHex()};SP:{this.StackPointer.AsHex()};A:{this.Accumulator.AsHex()};X:{this.IndexX.AsHex()};Y:{this.IndexY.AsHex()}";
     }
 }

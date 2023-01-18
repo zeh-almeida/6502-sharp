@@ -1,37 +1,36 @@
 ﻿using Cpu.Extensions;
 using Cpu.States;
 
-namespace Cpu.Instructions.Stack
+namespace Cpu.Instructions.Stack;
+
+/// <summary>
+/// <para>Pull Accumulator instruction (PLA)</para>
+/// <para>Pulls an 8 bit value from the stack and into the accumulator. The zero and negative flags are set as appropriate.</para>
+/// <para>
+/// Executes the following opcodes:
+/// <c>0x68</c>
+/// </para>
+/// </summary>
+/// <see href="https://masswerk.at/6502/6502_instruction_set.html#PLA"/>
+public sealed class PullAccumulator : BaseInstruction
 {
+    #region Constructors
     /// <summary>
-    /// <para>Pull Accumulator instruction (PLA)</para>
-    /// <para>Pulls an 8 bit value from the stack and into the accumulator. The zero and negative flags are set as appropriate.</para>
-    /// <para>
-    /// Executes the following opcodes:
-    /// <c>0x68</c>
-    /// </para>
+    /// Instantiates a new <see cref="PullAccumulator"/>
     /// </summary>
-    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#PLA"/>
-    public sealed class PullAccumulator : BaseInstruction
+    public PullAccumulator()
+        : base(0x68)
+    { }
+    #endregion
+
+    /// <inheritdoc/>
+    public override void Execute(ICpuState currentState, ushort _)
     {
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new <see cref="PullAccumulator"/>
-        /// </summary>
-        public PullAccumulator()
-            : base(0x68)
-        { }
-        #endregion
+        var stackValue = currentState.Stack.Pull();
 
-        /// <inheritdoc/>
-        public override void Execute(ICpuState currentState, ushort _)
-        {
-            var stackValue = currentState.Stack.Pull();
+        currentState.Flags.IsZero = stackValue.IsZero();
+        currentState.Flags.IsNegative = stackValue.IsLastBitSet();
 
-            currentState.Flags.IsZero = stackValue.IsZero();
-            currentState.Flags.IsNegative = stackValue.IsLastBitSet();
-
-            currentState.Registers.Accumulator = stackValue;
-        }
+        currentState.Registers.Accumulator = stackValue;
     }
 }

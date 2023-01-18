@@ -5,91 +5,90 @@ using Cpu.Opcodes;
 using Cpu.States;
 using System.Diagnostics;
 
-namespace Cpu.Execution
+namespace Cpu.Execution;
+
+/// <summary>
+/// Decodes an instruction based on a <see cref="ICpuState"/>.
+/// Implements <see cref="IDecoder"/>
+/// </summary>
+public sealed record Decoder : IDecoder
 {
+    #region Properties
+    private IEnumerable<IOpcodeInformation> Opcodes { get; }
+
+    private IEnumerable<IInstruction> Instructions { get; }
+    #endregion
+
+    #region Constructors
     /// <summary>
-    /// Decodes an instruction based on a <see cref="ICpuState"/>.
-    /// Implements <see cref="IDecoder"/>
+    /// Instantiates a new <see cref="IDecoder"/> with the instruction set
     /// </summary>
-    public sealed record Decoder : IDecoder
+    /// <param name="opcodes"><see cref="IOpcodeInformation"/> enumeration for instruction metadata</param>
+    /// <param name="instructions"><see cref="IInstruction"/> enumeration for instruction executors</param>
+    public Decoder(
+        IEnumerable<IOpcodeInformation> opcodes,
+        IEnumerable<IInstruction> instructions)
     {
-        #region Properties
-        private IEnumerable<IOpcodeInformation> Opcodes { get; }
+        this.Opcodes = opcodes.ToHashSet();
+        this.Instructions = instructions.ToHashSet();
+    }
+    #endregion
 
-        private IEnumerable<IInstruction> Instructions { get; }
-        #endregion
+    /// <inheritdoc/>
+    public DecodedInstruction Decode(ICpuState currentState)
+    {
+        var opcode = ReadNextOpcode(currentState);
+        var opcodeInfo = this.FetchOpcode(opcode);
+        var instruction = this.FetchInstruction(opcode);
 
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new <see cref="IDecoder"/> with the instruction set
-        /// </summary>
-        /// <param name="opcodes"><see cref="IOpcodeInformation"/> enumeration for instruction metadata</param>
-        /// <param name="instructions"><see cref="IInstruction"/> enumeration for instruction executors</param>
-        public Decoder(
-            IEnumerable<IOpcodeInformation> opcodes,
-            IEnumerable<IInstruction> instructions)
+        var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
+        var result = new DecodedInstruction(opcodeInfo, instruction, instructionValue);
+
+        Debug.WriteLine($"{result} @ {currentState.Registers.ProgramCounter.AsHex()}");
+        return result;
+    }
+
+    private IOpcodeInformation FetchOpcode(byte opcode)
+    {
+        var result = this.Opcodes
+            .FirstOrDefault(item => opcode.Equals(item.Opcode));
+
+        return result
+            ?? throw new UnknownOpcodeException(opcode);
+    }
+
+    private IInstruction FetchInstruction(byte opcode)
+    {
+        var result = this.Instructions
+            .FirstOrDefault(item => item.HasOpcode(opcode));
+
+        return result
+            ?? throw new UnknownOpcodeException(opcode);
+    }
+
+    private static ushort ReadOpcodeParameter(ICpuState currentState, IOpcodeInformation opcodeInfo)
+    {
+        var pc = currentState.Registers.ProgramCounter;
+
+        if (opcodeInfo.Bytes <= 1)
         {
-            this.Opcodes = opcodes.ToHashSet();
-            this.Instructions = instructions.ToHashSet();
+            return 0;
         }
-        #endregion
-
-        /// <inheritdoc/>
-        public DecodedInstruction Decode(ICpuState currentState)
+        else if (2.Equals(opcodeInfo.Bytes))
         {
-            var opcode = ReadNextOpcode(currentState);
-            var opcodeInfo = this.FetchOpcode(opcode);
-            var instruction = this.FetchInstruction(opcode);
-
-            var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
-            var result = new DecodedInstruction(opcodeInfo, instruction, instructionValue);
-
-            Debug.WriteLine($"{result} @ {currentState.Registers.ProgramCounter.AsHex()}");
-            return result;
+            return currentState.Memory.ReadAbsolute((ushort)(pc + 1));
         }
-
-        private IOpcodeInformation FetchOpcode(byte opcode)
+        else
         {
-            var result = this.Opcodes
-                .FirstOrDefault(item => opcode.Equals(item.Opcode));
+            var lsb = currentState.Memory.ReadAbsolute((ushort)(pc + 1));
+            var msb = currentState.Memory.ReadAbsolute((ushort)(pc + 2));
 
-            return result
-                ?? throw new UnknownOpcodeException(opcode);
+            return lsb.CombineBytes(msb);
         }
+    }
 
-        private IInstruction FetchInstruction(byte opcode)
-        {
-            var result = this.Instructions
-                .FirstOrDefault(item => item.HasOpcode(opcode));
-
-            return result
-                ?? throw new UnknownOpcodeException(opcode);
-        }
-
-        private static ushort ReadOpcodeParameter(ICpuState currentState, IOpcodeInformation opcodeInfo)
-        {
-            var pc = currentState.Registers.ProgramCounter;
-
-            if (opcodeInfo.Bytes <= 1)
-            {
-                return 0;
-            }
-            else if (2.Equals(opcodeInfo.Bytes))
-            {
-                return currentState.Memory.ReadAbsolute((ushort)(pc + 1));
-            }
-            else
-            {
-                var lsb = currentState.Memory.ReadAbsolute((ushort)(pc + 1));
-                var msb = currentState.Memory.ReadAbsolute((ushort)(pc + 2));
-
-                return lsb.CombineBytes(msb);
-            }
-        }
-
-        private static byte ReadNextOpcode(ICpuState currentState)
-        {
-            return currentState.Memory.ReadAbsolute(currentState.Registers.ProgramCounter);
-        }
+    private static byte ReadNextOpcode(ICpuState currentState)
+    {
+        return currentState.Memory.ReadAbsolute(currentState.Registers.ProgramCounter);
     }
 }

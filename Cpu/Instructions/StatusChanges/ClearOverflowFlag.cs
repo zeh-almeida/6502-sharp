@@ -1,30 +1,29 @@
 ﻿using Cpu.States;
 
-namespace Cpu.Instructions.StatusChanges
-{
-    /// <summary>
-    /// <para>Clear Overflow Flag Instruction (CLV)</para>
-    /// <para>Clears the overflow flag.</para>
-    /// <para>
-    /// Executes the following opcodes:
-    /// <c>0xB8</c>
-    /// </para>
-    /// </summary>
-    public sealed class ClearOverflowFlag : BaseInstruction
-    {
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new <see cref="ClearOverflowFlag"/>
-        /// </summary>
-        public ClearOverflowFlag()
-            : base(0xB8)
-        { }
-        #endregion
+namespace Cpu.Instructions.StatusChanges;
 
-        /// <inheritdoc/>
-        public override void Execute(ICpuState currentState, ushort _)
-        {
-            currentState.Flags.IsOverflow = false;
-        }
+/// <summary>
+/// <para>Clear Overflow Flag Instruction (CLV)</para>
+/// <para>Clears the overflow flag.</para>
+/// <para>
+/// Executes the following opcodes:
+/// <c>0xB8</c>
+/// </para>
+/// </summary>
+public sealed class ClearOverflowFlag : BaseInstruction
+{
+    #region Constructors
+    /// <summary>
+    /// Instantiates a new <see cref="ClearOverflowFlag"/>
+    /// </summary>
+    public ClearOverflowFlag()
+        : base(0xB8)
+    { }
+    #endregion
+
+    /// <inheritdoc/>
+    public override void Execute(ICpuState currentState, ushort _)
+    {
+        currentState.Flags.IsOverflow = false;
     }
 }

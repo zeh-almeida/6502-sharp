@@ -1,60 +1,59 @@
 ﻿using Cpu.Instructions.Exceptions;
 using Cpu.States;
 
-namespace Cpu.Instructions.Store
+namespace Cpu.Instructions.Store;
+
+/// <summary>
+/// <para>Store Register X instruction (STX)</para>
+/// <para>Stores the contents of the X register into memory.</para>
+/// <para>
+/// Executes the following opcodes:
+/// <c>0x86</c>,
+/// <c>0x96</c>,
+/// <c>0x8E</c>
+/// </para>
+/// </summary>
+/// <see href="https://masswerk.at/6502/6502_instruction_set.html#STX"/>
+public sealed class StoreRegisterX : BaseInstruction
 {
+    #region Constructors
     /// <summary>
-    /// <para>Store Register X instruction (STX)</para>
-    /// <para>Stores the contents of the X register into memory.</para>
-    /// <para>
-    /// Executes the following opcodes:
-    /// <c>0x86</c>,
-    /// <c>0x96</c>,
-    /// <c>0x8E</c>
-    /// </para>
+    /// Instantiates a new <see cref="StoreRegisterX"/>
     /// </summary>
-    /// <see href="https://masswerk.at/6502/6502_instruction_set.html#STX"/>
-    public sealed class StoreRegisterX : BaseInstruction
+    public StoreRegisterX()
+        : base(
+            0x86,
+            0x96,
+            0x8E)
+    { }
+    #endregion
+
+    /// <inheritdoc/>
+    public override void Execute(ICpuState currentState, ushort value)
     {
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new <see cref="StoreRegisterX"/>
-        /// </summary>
-        public StoreRegisterX()
-            : base(
-                0x86,
-                0x96,
-                0x8E)
-        { }
-        #endregion
+        Write(currentState, value);
+    }
 
-        /// <inheritdoc/>
-        public override void Execute(ICpuState currentState, ushort value)
+    private static void Write(ICpuState currentState, ushort address)
+    {
+        var register = currentState.Registers.IndexX;
+
+        switch (currentState.ExecutingOpcode)
         {
-            Write(currentState, value);
-        }
+            case 0x86:
+                currentState.Memory.WriteZeroPage(address, register);
+                break;
 
-        private static void Write(ICpuState currentState, ushort address)
-        {
-            var register = currentState.Registers.IndexX;
+            case 0x96:
+                currentState.Memory.WriteZeroPageY(address, register);
+                break;
 
-            switch (currentState.ExecutingOpcode)
-            {
-                case 0x86:
-                    currentState.Memory.WriteZeroPage(address, register);
-                    break;
+            case 0x8E:
+                currentState.Memory.WriteAbsolute(address, register);
+                break;
 
-                case 0x96:
-                    currentState.Memory.WriteZeroPageY(address, register);
-                    break;
-
-                case 0x8E:
-                    currentState.Memory.WriteAbsolute(address, register);
-                    break;
-
-                default:
-                    throw new UnknownOpcodeException(currentState.ExecutingOpcode);
-            }
+            default:
+                throw new UnknownOpcodeException(currentState.ExecutingOpcode);
         }
     }
 }

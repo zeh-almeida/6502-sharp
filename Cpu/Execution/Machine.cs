@@ -3,210 +3,209 @@ using Cpu.Extensions;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
 
-namespace Cpu.Execution
+namespace Cpu.Execution;
+
+/// <summary>
+/// Implements the <see cref="IMachine"/> interface
+/// </summary>
+public sealed record Machine : IMachine
 {
+    #region Properties
+    /// <inheritdoc/>
+    public ICpuState State { get; }
+
+    private IDecoder Decoder { get; }
+
+    private ILogger<Machine> Logger { get; }
+    #endregion
+
+    #region Constructors
     /// <summary>
-    /// Implements the <see cref="IMachine"/> interface
+    /// Instantiates a new machine
     /// </summary>
-    public sealed record Machine : IMachine
+    /// <param name="logger"><see cref="ILogger{TCategoryName}"/> to log machine operations</param>
+    /// <param name="state"><see cref="ICpuState"/> to maintain the execution state</param>
+    /// <param name="decoder"><see cref="IDecoder"/> to decode instructions</param>
+    public Machine(
+        ILogger<Machine> logger,
+        ICpuState state,
+        IDecoder decoder)
     {
-        #region Properties
-        /// <inheritdoc/>
-        public ICpuState State { get; }
+        this.State = state;
+        this.Logger = logger;
+        this.Decoder = decoder;
+    }
+    #endregion
 
-        private IDecoder Decoder { get; }
+    /// <inheritdoc/>
+    public bool Cycle(Action<ICpuState> afterCycle)
+    {
+        var result = this.Cycle();
+        afterCycle(this.State);
 
-        private ILogger<Machine> Logger { get; }
-        #endregion
+        return result;
+    }
 
-        #region Constructors
-        /// <summary>
-        /// Instantiates a new machine
-        /// </summary>
-        /// <param name="logger"><see cref="ILogger{TCategoryName}"/> to log machine operations</param>
-        /// <param name="state"><see cref="ICpuState"/> to maintain the execution state</param>
-        /// <param name="decoder"><see cref="IDecoder"/> to decode instructions</param>
-        public Machine(
-            ILogger<Machine> logger,
-            ICpuState state,
-            IDecoder decoder)
+    /// <inheritdoc/>
+    public bool Cycle()
+    {
+        if (this.State.CyclesLeft > 0)
         {
-            this.State = state;
-            this.Logger = logger;
-            this.Decoder = decoder;
+            this.State.DecrementCycle();
+            return true;
         }
-        #endregion
-
-        /// <inheritdoc/>
-        public bool Cycle(Action<ICpuState> afterCycle)
+        else
         {
-            var result = this.Cycle();
-            afterCycle(this.State);
+            return this.IsProgramRunning()
+                && this.Execute();
+        }
+    }
+
+    /// <inheritdoc/>
+    public void Load(ReadOnlyMemory<byte> data)
+    {
+        this.Logger.LogInformation(MachineEvents.OnLoadData, "{dataLength}", data.Length);
+        this.State.Load(data);
+    }
+
+    /// <inheritdoc/>
+    public ReadOnlyMemory<byte> Save()
+    {
+        this.Logger.LogInformation(MachineEvents.OnSaveData, "Save state");
+        return this.State.Save();
+    }
+
+    #region Interrupts
+    /// <inheritdoc/>
+    public void ProcessInterrupts()
+    {
+        this.ProcessHardwareInterrupt();
+        this.ProcessSoftwareInterrupt();
+    }
+
+    private void ProcessHardwareInterrupt()
+    {
+        if (this.State.IsHardwareInterrupt)
+        {
+            this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Hardware");
+
+            this.State.Flags.IsBreakCommand = false;
+            var bits = this.State.Flags.Save();
+
+            this.State.Stack.Push(bits);
+            this.State.Stack.Push16(this.State.Registers.ProgramCounter);
+
+            // Adds cycles of fetching and pushing values.
+            // It is the same amout of cycles used by the 0x00 BRK Instruction,
+            // without the single decode cycle
+            this.State.SetCycleInterrupt();
+            this.State.Flags.IsInterruptDisable = true;
+
+            this.LoadInterruptProgramAddress(0xFFFA);
+            this.State.IsHardwareInterrupt = false;
+            this.State.IsSoftwareInterrupt = false;
+        }
+    }
+
+    private void ProcessSoftwareInterrupt()
+    {
+        if (this.State.IsSoftwareInterrupt && !this.State.Flags.IsInterruptDisable)
+        {
+            this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Software");
+
+            this.State.Flags.IsBreakCommand = true;
+            var bits = this.State.Flags.Save();
+
+            this.State.Stack.Push(bits);
+            this.State.Stack.Push16(this.State.Registers.ProgramCounter);
+
+            // Adds cycles of fetching and pushing values.
+            // It is the same amout of cycles used by the 0x00 BRK Instruction,
+            // without the single decode cycle
+            this.State.SetCycleInterrupt();
+            this.State.Flags.IsInterruptDisable = true;
+
+            this.LoadInterruptProgramAddress(0xFFFE);
+            this.State.IsSoftwareInterrupt = false;
+        }
+    }
+
+    private void LoadInterruptProgramAddress(ushort address)
+    {
+        var upperAddress = (ushort)(address + 1);
+
+        var lsb = this.State.Memory.ReadAbsolute(address);
+        var msb = this.State.Memory.ReadAbsolute(upperAddress);
+
+        this.State.Registers.ProgramCounter = lsb.CombineBytes(msb);
+    }
+    #endregion
+
+    private bool Execute()
+    {
+        var result = true;
+
+        try
+        {
+            this.State.PrepareCycle();
+            this.ProcessInterrupts();
+
+            var decoded = this.DecodeStream();
+
+            this.AdvanceProgramCount(decoded);
+            this.ExecuteDecoded(decoded);
+        }
+        catch (ProgramExecutionExeption ex)
+        {
+            this.Logger.LogError(MachineEvents.OnExecute, ex, "Failed to execute clock");
+            result = false;
+        }
+
+        return result;
+    }
+
+    private DecodedInstruction DecodeStream()
+    {
+        try
+        {
+            var result = this.Decoder.Decode(this.State);
+
+            this.Logger.LogInformation(MachineEvents.OnDecode, "{Instruction} @ {ProgramCounter}",
+                result, this.State.Registers.ProgramCounter.AsHex());
 
             return result;
         }
-
-        /// <inheritdoc/>
-        public bool Cycle()
+        catch (Exception ex)
         {
-            if (this.State.CyclesLeft > 0)
-            {
-                this.State.DecrementCycle();
-                return true;
-            }
-            else
-            {
-                return this.IsProgramRunning()
-                    && this.Execute();
-            }
+            throw new ProgramExecutionExeption("Failed to decode stream", ex);
         }
+    }
 
-        /// <inheritdoc/>
-        public void Load(ReadOnlyMemory<byte> data)
+    private void ExecuteDecoded(DecodedInstruction decoded)
+    {
+        try
         {
-            this.Logger.LogInformation(MachineEvents.OnLoadData, "{dataLength}", data.Length);
-            this.State.Load(data);
-        }
+            this.State.SetExecutingInstruction(decoded);
 
-        /// <inheritdoc/>
-        public ReadOnlyMemory<byte> Save()
+            decoded.Instruction.Execute(this.State, decoded.ValueParameter);
+            this.State.DecrementCycle();
+
+            this.Logger.LogInformation(MachineEvents.OnFlags, "{flagState}", this.State.Flags.ToString());
+            this.Logger.LogInformation(MachineEvents.OnRegisters, "{registerState}", this.State.Registers.ToString());
+        }
+        catch (Exception ex)
         {
-            this.Logger.LogInformation(MachineEvents.OnSaveData, "Save state");
-            return this.State.Save();
+            throw new ProgramExecutionExeption("Failed to execute instruction", ex);
         }
+    }
 
-        #region Interrupts
-        /// <inheritdoc/>
-        public void ProcessInterrupts()
-        {
-            this.ProcessHardwareInterrupt();
-            this.ProcessSoftwareInterrupt();
-        }
+    private void AdvanceProgramCount(DecodedInstruction decoded)
+    {
+        this.State.Registers.ProgramCounter += decoded.Information.Bytes;
+    }
 
-        private void ProcessHardwareInterrupt()
-        {
-            if (this.State.IsHardwareInterrupt)
-            {
-                this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Hardware");
-
-                this.State.Flags.IsBreakCommand = false;
-                var bits = this.State.Flags.Save();
-
-                this.State.Stack.Push(bits);
-                this.State.Stack.Push16(this.State.Registers.ProgramCounter);
-
-                // Adds cycles of fetching and pushing values.
-                // It is the same amout of cycles used by the 0x00 BRK Instruction,
-                // without the single decode cycle
-                this.State.SetCycleInterrupt();
-                this.State.Flags.IsInterruptDisable = true;
-
-                this.LoadInterruptProgramAddress(0xFFFA);
-                this.State.IsHardwareInterrupt = false;
-                this.State.IsSoftwareInterrupt = false;
-            }
-        }
-
-        private void ProcessSoftwareInterrupt()
-        {
-            if (this.State.IsSoftwareInterrupt && !this.State.Flags.IsInterruptDisable)
-            {
-                this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Software");
-
-                this.State.Flags.IsBreakCommand = true;
-                var bits = this.State.Flags.Save();
-
-                this.State.Stack.Push(bits);
-                this.State.Stack.Push16(this.State.Registers.ProgramCounter);
-
-                // Adds cycles of fetching and pushing values.
-                // It is the same amout of cycles used by the 0x00 BRK Instruction,
-                // without the single decode cycle
-                this.State.SetCycleInterrupt();
-                this.State.Flags.IsInterruptDisable = true;
-
-                this.LoadInterruptProgramAddress(0xFFFE);
-                this.State.IsSoftwareInterrupt = false;
-            }
-        }
-
-        private void LoadInterruptProgramAddress(ushort address)
-        {
-            var upperAddress = (ushort)(address + 1);
-
-            var lsb = this.State.Memory.ReadAbsolute(address);
-            var msb = this.State.Memory.ReadAbsolute(upperAddress);
-
-            this.State.Registers.ProgramCounter = lsb.CombineBytes(msb);
-        }
-        #endregion
-
-        private bool Execute()
-        {
-            var result = true;
-
-            try
-            {
-                this.State.PrepareCycle();
-                this.ProcessInterrupts();
-
-                var decoded = this.DecodeStream();
-
-                this.AdvanceProgramCount(decoded);
-                this.ExecuteDecoded(decoded);
-            }
-            catch (ProgramExecutionExeption ex)
-            {
-                this.Logger.LogError(MachineEvents.OnExecute, ex, "Failed to execute clock");
-                result = false;
-            }
-
-            return result;
-        }
-
-        private DecodedInstruction DecodeStream()
-        {
-            try
-            {
-                var result = this.Decoder.Decode(this.State);
-
-                this.Logger.LogInformation(MachineEvents.OnDecode, "{Instruction} @ {ProgramCounter}",
-                    result, this.State.Registers.ProgramCounter.AsHex());
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw new ProgramExecutionExeption("Failed to decode stream", ex);
-            }
-        }
-
-        private void ExecuteDecoded(DecodedInstruction decoded)
-        {
-            try
-            {
-                this.State.SetExecutingInstruction(decoded);
-
-                decoded.Instruction.Execute(this.State, decoded.ValueParameter);
-                this.State.DecrementCycle();
-
-                this.Logger.LogInformation(MachineEvents.OnFlags, "{flagState}", this.State.Flags.ToString());
-                this.Logger.LogInformation(MachineEvents.OnRegisters, "{registerState}", this.State.Registers.ToString());
-            }
-            catch (Exception ex)
-            {
-                throw new ProgramExecutionExeption("Failed to execute instruction", ex);
-            }
-        }
-
-        private void AdvanceProgramCount(DecodedInstruction decoded)
-        {
-            this.State.Registers.ProgramCounter += decoded.Information.Bytes;
-        }
-
-        private bool IsProgramRunning()
-        {
-            return !ushort.MaxValue.Equals(this.State.Registers.ProgramCounter);
-        }
+    private bool IsProgramRunning()
+    {
+        return !ushort.MaxValue.Equals(this.State.Registers.ProgramCounter);
     }
 }
