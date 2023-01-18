@@ -6,55 +6,28 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IRegisterManager"/>
 /// </summary>
-public sealed class RegisterModel : ObservableObject
+public partial class RegisterModel : ObservableObject
 {
     #region Attributes
+    /// <inheritdoc cref="IRegisterManager.ProgramCounter"/>
+    [ObservableProperty]
     private ushort _programCounter;
 
+    /// <inheritdoc cref="IRegisterManager.StackPointer"/>
+    [ObservableProperty]
     private byte _stackPointer;
 
+    /// <inheritdoc cref="IRegisterManager.Accumulator"/>
+    [ObservableProperty]
     private byte _accumulator;
 
+    /// <inheritdoc cref="IRegisterManager.IndexX"/>
+    [ObservableProperty]
     private byte _indexX;
 
-    private byte _indexY;
-    #endregion
-
-    #region Properties
-    /// <inheritdoc cref="IRegisterManager.ProgramCounter"/>
-    public ushort ProgramCounter
-    {
-        get => this._programCounter;
-        set => this.SetProperty(ref this._programCounter, value);
-    }
-
-    /// <inheritdoc cref="IRegisterManager.StackPointer"/>
-    public byte StackPointer
-    {
-        get => this._stackPointer;
-        set => this.SetProperty(ref this._stackPointer, value);
-    }
-
-    /// <inheritdoc cref="IRegisterManager.Accumulator"/>
-    public byte Accumulator
-    {
-        get => this._accumulator;
-        set => this.SetProperty(ref this._accumulator, value);
-    }
-
-    /// <inheritdoc cref="IRegisterManager.IndexX"/>
-    public byte IndexX
-    {
-        get => this._indexX;
-        set => this.SetProperty(ref this._indexX, value);
-    }
-
     /// <inheritdoc cref="IRegisterManager.IndexY"/>
-    public byte IndexY
-    {
-        get => this._indexY;
-        set => this.SetProperty(ref this._indexY, value);
-    }
+    [ObservableProperty]
+    private byte _indexY;
     #endregion
 
     /// <summary>
