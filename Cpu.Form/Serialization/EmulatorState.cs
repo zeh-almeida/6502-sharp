@@ -5,7 +5,7 @@ public sealed record EmulatorState
     #region Properties
     public string ProgramPath { get; set; }
 
-    public Memory<byte> State { get; set; }
+    public ReadOnlyMemory<byte> State { get; set; }
     #endregion
 
     #region Constructors

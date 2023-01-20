@@ -5,17 +5,15 @@ namespace Cpu.Forms.Serialization;
 
 internal static class Serializer
 {
-    public static async Task<byte[]> LoadProgram(string programPath, CancellationToken token = default)
+    public static async Task<ReadOnlyMemory<byte>> LoadProgram(string programPath, CancellationToken token = default)
     {
-        var state = new byte[ICpuState.Length];
+        var state = new Memory<byte>(new byte[ICpuState.Length]);
 
-        var program = await LoadFile(programPath, token)
-            .ConfigureAwait(false);
+        var program = await LoadFile(programPath, token);
+        program.CopyTo(state[ICpuState.MemoryStateOffset..]);
 
-        program.CopyTo(state, ICpuState.MemoryStateOffset);
-
-        state[ICpuState.MemoryStateOffset + 0xFFFE] = 0xFF;
-        state[ICpuState.MemoryStateOffset + 0xFFFF] = 0xFF;
+        state.Span[ICpuState.MemoryStateOffset + 0xFFFE] = 0xFF;
+        state.Span[ICpuState.MemoryStateOffset + 0xFFFF] = 0xFF;
 
         return state;
     }
@@ -44,20 +42,18 @@ internal static class Serializer
         {
             var fileName = $"{destinationPath}/{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_6502.state";
 
-            var machineState = machine
-                .Save()
-                .ToArray();
+            var machineState = machine.Save();
 
             using var stream = File.Open(fileName, FileMode.Create);
             using var writer = new BinaryWriter(stream);
 
             writer.Write(programName);
-            writer.Write(machineState);
+            writer.Write(machineState.Span);
         });
     }
 
-    private static Task<byte[]> LoadFile(string programPath, CancellationToken token = default)
+    private static async Task<ReadOnlyMemory<byte>> LoadFile(string programPath, CancellationToken token = default)
     {
-        return File.ReadAllBytesAsync(programPath, token);
+        return await File.ReadAllBytesAsync(programPath, token);
     }
 }
