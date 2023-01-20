@@ -24,6 +24,8 @@ public partial class CpuView : Form
     private StateModel StateView { get; }
 
     private FlagModel FlagView { get; }
+
+    private RegisterModel RegisterView { get; }
     #endregion
 
     #region Constructors
@@ -37,6 +39,7 @@ public partial class CpuView : Form
 
         this.FlagView = new FlagModel();
         this.StateView = new StateModel();
+        this.RegisterView = new RegisterModel();
 
         this.MachineView = new MachineModel(machine);
 
@@ -46,12 +49,17 @@ public partial class CpuView : Form
         this.InitializeComponent();
         this.BindState();
         this.BindFlags();
+        this.BindRegisters();
     }
     #endregion
 
     #region Updates
     private void BindState()
     {
+        this.triggerInterruptButton.BindTo(
+                this.StateView,
+                nameof(StateModel.IsHardwareInterrupt));
+
         this.cyclesInput.BindTo(
                 this.StateView,
                 nameof(StateModel.CyclesLeft));
@@ -69,11 +77,6 @@ public partial class CpuView : Form
                 nameof(StateModel.IsSoftwareInterrupt));
     }
 
-    private void UpdateControls()
-    {
-        this.UpdateRegisters();
-    }
-
     private void BindFlags()
     {
         this.zeroFlag.BindTo(this.FlagView, nameof(FlagModel.IsZero));
@@ -85,15 +88,13 @@ public partial class CpuView : Form
         this.interruptFlag.BindTo(this.FlagView, nameof(FlagModel.IsInterruptDisable));
     }
 
-    private void UpdateRegisters()
+    private void BindRegisters()
     {
-        var registers = this.Machine.State.Registers;
-
-        this.xRegisterInput.Text = registers.IndexX.AsHex();
-        this.yRegisterInput.Text = registers.IndexY.AsHex();
-        this.accumulatorInput.Text = registers.Accumulator.AsHex();
-        this.stackPointerInput.Text = registers.StackPointer.AsHex();
-        this.programCounterInput.Text = registers.ProgramCounter.AsHex();
+        this.xRegisterInput.BindTo(this.RegisterView, nameof(RegisterModel.IndexX));
+        this.yRegisterInput.BindTo(this.RegisterView, nameof(RegisterModel.IndexY));
+        this.accumulatorInput.BindTo(this.RegisterView, nameof(RegisterModel.Accumulator));
+        this.stackPointerInput.BindTo(this.RegisterView, nameof(RegisterModel.StackPointer));
+        this.programCounterInput.BindTo(this.RegisterView, nameof(RegisterModel.ProgramCounter));
     }
     #endregion
 
@@ -204,10 +205,6 @@ public partial class CpuView : Form
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-            finally
-            {
-                this.UpdateControls();
-            }
         }
     }
 
@@ -247,9 +244,8 @@ public partial class CpuView : Form
         {
             this.StateView.Update(model.State);
             this.FlagView.Update(model.State.Flags);
+            this.RegisterView.Update(model.State.Registers);
         }
-
-        this.UpdateControls();
     }
 
     private void OnStateUpdate(object? sender, PropertyChangedEventArgs e)
@@ -259,11 +255,8 @@ public partial class CpuView : Form
             if (0.Equals(model.CyclesLeft))
             {
                 this.executionContent.AppendText($"{model.DecodedInstruction}{Environment.NewLine}");
-                this.triggerInterruptButton.Enabled = !model.IsHardwareInterrupt;
             }
         }
-
-        this.UpdateControls();
     }
     #endregion
 
@@ -271,7 +264,6 @@ public partial class CpuView : Form
     {
         var bytes = await Serializer.LoadProgram(programName);
         this.EnableProgramExecution(bytes, programName);
-        this.UpdateControls();
 
         _ = MessageBox.Show(
             $"Program '{programName}' loaded",

@@ -11,6 +11,10 @@ namespace Cpu.MVVM;
 /// </summary>
 public partial class StateModel : ObservableObject
 {
+    #region Constants
+    public const string DefaultOpcode = "-";
+    #endregion
+
     #region Attributes
     /// <inheritdoc cref="ICpuState.IsSoftwareInterrupt"/>
     [ObservableProperty]
@@ -22,7 +26,7 @@ public partial class StateModel : ObservableObject
 
     /// <inheritdoc cref="ICpuState.ExecutingOpcode"/>
     [ObservableProperty]
-    private string _executingOpcode = "";
+    private string _executingOpcode = string.Empty;
 
     /// <inheritdoc cref="ICpuState.CyclesLeft"/>
     [ObservableProperty]
@@ -30,7 +34,14 @@ public partial class StateModel : ObservableObject
 
     /// <inheritdoc cref="ICpuState.DecodedInstruction"/>
     [ObservableProperty]
-    private DecodedInstruction? _decodedInstruction;
+    private DecodedInstruction _decodedInstruction;
+    #endregion
+
+    #region Constructors
+    public StateModel()
+    {
+        this.ExecutingOpcode = DefaultOpcode;
+    }
     #endregion
 
     /// <summary>

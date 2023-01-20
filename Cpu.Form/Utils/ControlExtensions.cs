@@ -25,4 +25,9 @@ public static class ControlExtensions
     {
         control.BindTo(nameof(TextBox.Text), source, sourcePropName);
     }
+
+    public static void BindTo(this Button control, object source, string sourcePropName)
+    {
+        control.BindTo(nameof(Button.Enabled), source, sourcePropName);
+    }
 }

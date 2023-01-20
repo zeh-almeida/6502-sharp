@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Cpu.Extensions;
 using Cpu.Registers;
 
 namespace Cpu.MVVM;
@@ -11,23 +12,37 @@ public partial class RegisterModel : ObservableObject
     #region Attributes
     /// <inheritdoc cref="IRegisterManager.ProgramCounter"/>
     [ObservableProperty]
-    private ushort _programCounter;
+    private string _programCounter = string.Empty;
 
     /// <inheritdoc cref="IRegisterManager.StackPointer"/>
     [ObservableProperty]
-    private byte _stackPointer;
+    private string _stackPointer = string.Empty;
 
     /// <inheritdoc cref="IRegisterManager.Accumulator"/>
     [ObservableProperty]
-    private byte _accumulator;
+    private string _accumulator = string.Empty;
 
     /// <inheritdoc cref="IRegisterManager.IndexX"/>
     [ObservableProperty]
-    private byte _indexX;
+    private string _indexX = string.Empty;
 
     /// <inheritdoc cref="IRegisterManager.IndexY"/>
     [ObservableProperty]
-    private byte _indexY;
+    private string _indexY = string.Empty;
+    #endregion
+
+    #region Constructors
+    public RegisterModel()
+    {
+        const byte value = 0;
+        var hex = value.AsHex();
+
+        this.IndexX = hex;
+        this.IndexY = hex;
+        this.Accumulator = hex;
+        this.StackPointer = hex;
+        this.ProgramCounter = hex;
+    }
     #endregion
 
     /// <summary>
@@ -36,10 +51,10 @@ public partial class RegisterModel : ObservableObject
     /// <param name="source"><see cref="IRegisterManager"/> with the values to update from</param>
     public void Update(IRegisterManager source)
     {
-        this.IndexX = source.IndexX;
-        this.IndexY = source.IndexY;
-        this.Accumulator = source.Accumulator;
-        this.StackPointer = source.StackPointer;
-        this.ProgramCounter = source.ProgramCounter;
+        this.IndexX = source.IndexX.AsHex();
+        this.IndexY = source.IndexY.AsHex();
+        this.Accumulator = source.Accumulator.AsHex();
+        this.StackPointer = source.StackPointer.AsHex();
+        this.ProgramCounter = source.ProgramCounter.AsHex();
     }
 }
