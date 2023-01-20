@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Cpu.Execution;
+using Cpu.Extensions;
 using Cpu.States;
 
 namespace Cpu.MVVM;
@@ -20,11 +22,15 @@ public partial class StateModel : ObservableObject
 
     /// <inheritdoc cref="ICpuState.ExecutingOpcode"/>
     [ObservableProperty]
-    private byte _executingOpcode;
+    private string _executingOpcode = "";
 
     /// <inheritdoc cref="ICpuState.CyclesLeft"/>
     [ObservableProperty]
     private int _cyclesLeft;
+
+    /// <inheritdoc cref="ICpuState.DecodedInstruction"/>
+    [ObservableProperty]
+    private DecodedInstruction? _decodedInstruction;
     #endregion
 
     /// <summary>
@@ -33,8 +39,10 @@ public partial class StateModel : ObservableObject
     /// <param name="source"><see cref="ICpuState"/> with the values to update from</param>
     public void Update(ICpuState source)
     {
+        this.ExecutingOpcode = source.ExecutingOpcode.AsHex();
+
         this.CyclesLeft = source.CyclesLeft;
-        this.ExecutingOpcode = source.ExecutingOpcode;
+        this.DecodedInstruction = source.DecodedInstruction;
         this.IsHardwareInterrupt = source.IsHardwareInterrupt;
         this.IsSoftwareInterrupt = source.IsSoftwareInterrupt;
     }
@@ -43,13 +51,15 @@ public partial class StateModel : ObservableObject
     /// Triggers a Hardware Interrupt in the CPU
     /// </summary>
     /// <param name="source"><see cref="ICpuState"/> to trigger the interrupt</param>
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanTriggerHardwareInterrupt))]
     public void TriggerHardwareInterrupt(ICpuState source)
     {
-        if (!this.IsHardwareInterrupt)
-        {
-            source.IsHardwareInterrupt = true;
-            this.Update(source);
-        }
+        source.IsHardwareInterrupt = true;
+        this.Update(source);
+    }
+
+    public static bool CanTriggerHardwareInterrupt(ICpuState source)
+    {
+        return !source.IsHardwareInterrupt;
     }
 }

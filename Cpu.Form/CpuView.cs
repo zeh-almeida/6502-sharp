@@ -1,8 +1,10 @@
 using Cpu.Execution;
 using Cpu.Extensions;
 using Cpu.Forms.Serialization;
+using Cpu.MVVM;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel;
 using System.Text;
 
 namespace Cpu.Forms;
@@ -15,6 +17,10 @@ public partial class CpuView : Form
     private IMachine Machine { get; }
 
     private string CurrentProgram { get; set; }
+
+    private MachineModel MachineView { get; }
+
+    private StateModel StateView { get; }
     #endregion
 
     #region Constructors
@@ -26,21 +32,49 @@ public partial class CpuView : Form
         this.Machine = machine;
         this.CurrentProgram = string.Empty;
 
+        this.StateView = new StateModel();
+        this.MachineView = new MachineModel(machine);
+
         this.InitializeComponent();
+
+        this.StateView.PropertyChanged += this.OnStateUpdate;
+        this.MachineView.PropertyChanged += this.OnMachineUpdate;
+
+        _ = this.cyclesInput.DataBindings.Add(
+                nameof(TextBox.Text),
+                this.StateView,
+                nameof(StateModel.CyclesLeft),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+        _ = this.opcodeInput.DataBindings.Add(
+                nameof(TextBox.Text),
+                this.StateView,
+                nameof(StateModel.ExecutingOpcode),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+        _ = this.hardwareInterruptFlag.DataBindings.Add(
+                nameof(TextBox.Text),
+                this.StateView,
+                nameof(StateModel.IsHardwareInterrupt),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+
+        _ = this.softwareInterruptFlag.DataBindings.Add(
+                nameof(TextBox.Text),
+                this.StateView,
+                nameof(StateModel.IsSoftwareInterrupt),
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
     }
     #endregion
 
     #region Updates
     private void UpdateControls()
     {
-        this.UpdateState();
         this.UpdateFlags();
         this.UpdateRegisters();
-
-        if (!this.Machine.State.IsHardwareInterrupt)
-        {
-            this.triggerInterruptButton.Enabled = true;
-        }
     }
 
     private void UpdateFlags()
@@ -65,25 +99,6 @@ public partial class CpuView : Form
         this.accumulatorInput.Text = registers.Accumulator.AsHex();
         this.stackPointerInput.Text = registers.StackPointer.AsHex();
         this.programCounterInput.Text = registers.ProgramCounter.AsHex();
-    }
-
-    private void UpdateState()
-    {
-        var state = this.Machine.State;
-
-        this.cyclesInput.Text = state.CyclesLeft.ToString();
-        this.opcodeInput.Text = state.ExecutingOpcode.AsHex();
-
-        this.hardwareInterruptFlag.Checked = state.IsHardwareInterrupt;
-        this.softwareInterruptFlag.Checked = state.IsSoftwareInterrupt;
-    }
-
-    private void UpdateExecution()
-    {
-        if (0.Equals(this.Machine.State.CyclesLeft))
-        {
-            this.executionContent.AppendText($"{this.Machine.State.DecodedInstruction}{Environment.NewLine}");
-        }
     }
     #endregion
 
@@ -194,27 +209,21 @@ public partial class CpuView : Form
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+            finally
+            {
+                this.UpdateControls();
+            }
         }
     }
 
     private void ClockButton_Click(object sender, EventArgs e)
     {
-        _ = this.PerformMachineCycle();
+        this.MachineView.PerformCycleCommand.Execute(null);
     }
 
     private void InstructionButton_Click(object sender, EventArgs e)
     {
-        bool cycling;
-
-        do
-        {
-            cycling = this.PerformMachineCycle();
-
-            if (0.Equals(this.Machine.State.CyclesLeft))
-            {
-                cycling = false;
-            }
-        } while (cycling);
+        this.MachineView.PerformInstructionCommand.Execute(null);
     }
 
     private async void ResetButton_Click(object sender, EventArgs e)
@@ -232,26 +241,40 @@ public partial class CpuView : Form
 
     private void TriggerInterruptButton_Click(object sender, EventArgs e)
     {
-        this.Machine.State.IsHardwareInterrupt = true;
-
-        this.UpdateControls();
-        this.triggerInterruptButton.Enabled = false;
+        this.StateView.TriggerHardwareInterruptCommand.Execute(this.MachineView.State);
     }
     #endregion
 
-    private bool PerformMachineCycle()
+    #region View Model Events
+    private void OnMachineUpdate(object? sender, PropertyChangedEventArgs e)
     {
-        return this.Machine.Cycle(_ =>
+        if (sender is MachineModel model)
         {
-            this.UpdateControls();
-            this.UpdateExecution();
-        });
+            this.StateView.Update(model.State);
+        }
+
+        this.UpdateControls();
     }
+    private void OnStateUpdate(object? sender, PropertyChangedEventArgs e)
+    {
+        if (sender is StateModel model)
+        {
+            if (0.Equals(model.CyclesLeft))
+            {
+                this.executionContent.AppendText($"{model.DecodedInstruction}{Environment.NewLine}");
+                this.triggerInterruptButton.Enabled = !model.IsHardwareInterrupt;
+            }
+        }
+
+        this.UpdateControls();
+    }
+    #endregion
 
     private async Task LoadProgram(string programName)
     {
         var bytes = await Serializer.LoadProgram(programName);
         this.EnableProgramExecution(bytes, programName);
+        this.UpdateControls();
 
         _ = MessageBox.Show(
             $"Program '{programName}' loaded",
@@ -272,8 +295,7 @@ public partial class CpuView : Form
         this.instructionButton.Enabled = true;
         this.saveStateToolStripMenuItem.Enabled = true;
 
-        this.Machine.Load(bytes);
-        this.UpdateControls();
+        this.MachineView.LoadProgramCommand.Execute(bytes);
     }
 
     private void ShowProgramContent(ReadOnlySpan<byte> program)

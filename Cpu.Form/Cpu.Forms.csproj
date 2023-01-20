@@ -44,6 +44,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Cpu.DependencyInjection\Cpu.DependencyInjection.csproj" />
-		<ProjectReference Include="..\Cpu\Cpu.csproj" />
+		<ProjectReference Include="..\Cpu.MVVM\Cpu.MVVM.csproj" />
 	</ItemGroup>
 </Project>
