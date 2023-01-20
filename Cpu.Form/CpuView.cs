@@ -1,6 +1,7 @@
 using Cpu.Execution;
 using Cpu.Extensions;
 using Cpu.Forms.Serialization;
+using Cpu.Forms.Utils;
 using Cpu.MVVM;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
@@ -21,6 +22,8 @@ public partial class CpuView : Form
     private MachineModel MachineView { get; }
 
     private StateModel StateView { get; }
+
+    private FlagModel FlagView { get; }
     #endregion
 
     #region Constructors
@@ -32,62 +35,54 @@ public partial class CpuView : Form
         this.Machine = machine;
         this.CurrentProgram = string.Empty;
 
+        this.FlagView = new FlagModel();
         this.StateView = new StateModel();
-        this.MachineView = new MachineModel(machine);
 
-        this.InitializeComponent();
+        this.MachineView = new MachineModel(machine);
 
         this.StateView.PropertyChanged += this.OnStateUpdate;
         this.MachineView.PropertyChanged += this.OnMachineUpdate;
 
-        _ = this.cyclesInput.DataBindings.Add(
-                nameof(TextBox.Text),
-                this.StateView,
-                nameof(StateModel.CyclesLeft),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
-        _ = this.opcodeInput.DataBindings.Add(
-                nameof(TextBox.Text),
-                this.StateView,
-                nameof(StateModel.ExecutingOpcode),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
-        _ = this.hardwareInterruptFlag.DataBindings.Add(
-                nameof(TextBox.Text),
-                this.StateView,
-                nameof(StateModel.IsHardwareInterrupt),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
-
-        _ = this.softwareInterruptFlag.DataBindings.Add(
-                nameof(TextBox.Text),
-                this.StateView,
-                nameof(StateModel.IsSoftwareInterrupt),
-                false,
-                DataSourceUpdateMode.OnPropertyChanged);
+        this.InitializeComponent();
+        this.BindState();
+        this.BindFlags();
     }
     #endregion
 
     #region Updates
+    private void BindState()
+    {
+        this.cyclesInput.BindTo(
+                this.StateView,
+                nameof(StateModel.CyclesLeft));
+
+        this.opcodeInput.BindTo(
+                this.StateView,
+                nameof(StateModel.ExecutingOpcode));
+
+        this.hardwareInterruptFlag.BindTo(
+                this.StateView,
+                nameof(StateModel.IsHardwareInterrupt));
+
+        this.softwareInterruptFlag.BindTo(
+                this.StateView,
+                nameof(StateModel.IsSoftwareInterrupt));
+    }
+
     private void UpdateControls()
     {
-        this.UpdateFlags();
         this.UpdateRegisters();
     }
 
-    private void UpdateFlags()
+    private void BindFlags()
     {
-        var flags = this.Machine.State.Flags;
-
-        this.zeroFlag.Checked = flags.IsZero;
-        this.carryFlag.Checked = flags.IsCarry;
-        this.overflowFlag.Checked = flags.IsOverflow;
-        this.negativeFlag.Checked = flags.IsNegative;
-        this.breakFlag.Checked = flags.IsBreakCommand;
-        this.decimalFlag.Checked = flags.IsDecimalMode;
-        this.interruptFlag.Checked = flags.IsInterruptDisable;
+        this.zeroFlag.BindTo(this.FlagView, nameof(FlagModel.IsZero));
+        this.carryFlag.BindTo(this.FlagView, nameof(FlagModel.IsCarry));
+        this.overflowFlag.BindTo(this.FlagView, nameof(FlagModel.IsOverflow));
+        this.negativeFlag.BindTo(this.FlagView, nameof(FlagModel.IsNegative));
+        this.breakFlag.BindTo(this.FlagView, nameof(FlagModel.IsBreakCommand));
+        this.decimalFlag.BindTo(this.FlagView, nameof(FlagModel.IsDecimalMode));
+        this.interruptFlag.BindTo(this.FlagView, nameof(FlagModel.IsInterruptDisable));
     }
 
     private void UpdateRegisters()
@@ -251,10 +246,12 @@ public partial class CpuView : Form
         if (sender is MachineModel model)
         {
             this.StateView.Update(model.State);
+            this.FlagView.Update(model.State.Flags);
         }
 
         this.UpdateControls();
     }
+
     private void OnStateUpdate(object? sender, PropertyChangedEventArgs e)
     {
         if (sender is StateModel model)
