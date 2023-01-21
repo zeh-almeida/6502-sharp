@@ -146,4 +146,16 @@ public interface ICpuState
     /// <param name="decoded">information of the new instruction</param>
     void SetExecutingInstruction(DecodedInstruction decoded);
     #endregion
+
+    /// <summary>
+    /// Checks if the program is still running
+    /// </summary>
+    /// <returns>True if running, false otherwise</returns>
+    bool IsProgramRunning();
+
+    /// <summary>
+    /// Advance the program counter based on the decoded instruction
+    /// </summary>
+    /// <param name="decoded">Data to advance the program counter</param>
+    void AdvanceProgramCount(DecodedInstruction decoded);
 }

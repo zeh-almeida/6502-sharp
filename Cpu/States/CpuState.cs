@@ -173,4 +173,16 @@ public sealed record CpuState : ICpuState
         this.IncrementCycles(decoded.Information.MinimumCycles);
         this.DecrementCycle();
     }
+
+    /// <inheritdoc/>
+    public bool IsProgramRunning()
+    {
+        return !ushort.MaxValue.Equals(this.Registers.ProgramCounter);
+    }
+
+    /// <inheritdoc/>
+    public void AdvanceProgramCount(DecodedInstruction decoded)
+    {
+        this.Registers.ProgramCounter += decoded.Information.Bytes;
+    }
 }

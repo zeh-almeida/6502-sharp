@@ -215,7 +215,7 @@ public partial class CpuView : Form
 
     private void InstructionButton_Click(object sender, EventArgs e)
     {
-        this.MachineView.PerformInstructionCommand.Execute(null);
+        this.MachineView.PerformInstruction();
     }
 
     private async void ResetButton_Click(object sender, EventArgs e)

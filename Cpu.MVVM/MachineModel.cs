@@ -51,12 +51,11 @@ public partial class MachineModel : ObservableObject
     /// <summary>
     /// Performs all the cycles of a single instruction execution
     /// </summary>
-    [RelayCommand]
     public void PerformInstruction()
     {
         do
         {
-            this.PerformCycle();
+            this.PerformCycleCommand.Execute(null);
 
             if (0.Equals(this.State.CyclesLeft))
             {

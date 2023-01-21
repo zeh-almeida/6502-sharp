@@ -56,7 +56,7 @@ public sealed record Machine : IMachine
         }
         else
         {
-            return this.IsProgramRunning()
+            return this.State.IsProgramRunning()
                 && this.Execute();
         }
     }
@@ -120,7 +120,7 @@ public sealed record Machine : IMachine
             this.State.Stack.Push16(this.State.Registers.ProgramCounter);
 
             // Adds cycles of fetching and pushing values.
-            // It is the same amout of cycles used by the 0x00 BRK Instruction,
+            // It is the same amount of cycles used by the 0x00 BRK Instruction,
             // without the single decode cycle
             this.State.SetCycleInterrupt();
             this.State.Flags.IsInterruptDisable = true;
@@ -152,7 +152,7 @@ public sealed record Machine : IMachine
 
             var decoded = this.DecodeStream();
 
-            this.AdvanceProgramCount(decoded);
+            this.State.AdvanceProgramCount(decoded);
             this.ExecuteDecoded(decoded);
         }
         catch (ProgramExecutionExeption ex)
@@ -197,15 +197,5 @@ public sealed record Machine : IMachine
         {
             throw new ProgramExecutionExeption("Failed to execute instruction", ex);
         }
-    }
-
-    private void AdvanceProgramCount(DecodedInstruction decoded)
-    {
-        this.State.Registers.ProgramCounter += decoded.Information.Bytes;
-    }
-
-    private bool IsProgramRunning()
-    {
-        return !ushort.MaxValue.Equals(this.State.Registers.ProgramCounter);
     }
 }
