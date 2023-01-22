@@ -34,12 +34,32 @@ public partial class StateModel : ObservableObject
 
     /// <inheritdoc cref="ICpuState.DecodedInstruction"/>
     [ObservableProperty]
-    private DecodedInstruction _decodedInstruction;
+    private DecodedInstruction? _decodedInstruction;
+    #endregion
+
+    #region Properties
+    private ICpuState? LastState { get; set; }
+
+    /// <summary>
+    /// <see cref="FlagModel"/> handling flag changes
+    /// </summary>
+    public FlagModel Flags { get; }
+
+    /// <summary>
+    /// <see cref="RegisterModel"/> handling register changes
+    /// </summary>
+    public RegisterModel Registers { get; }
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Instantiates a new view model
+    /// </summary>
     public StateModel()
     {
+        this.Flags = new FlagModel();
+        this.Registers = new RegisterModel();
+
         this.ExecutingOpcode = DefaultOpcode;
     }
     #endregion
@@ -48,14 +68,19 @@ public partial class StateModel : ObservableObject
     /// Updates the model based on the source
     /// </summary>
     /// <param name="source"><see cref="ICpuState"/> with the values to update from</param>
-    public void Update(ICpuState source)
+    [RelayCommand]
+    protected void Update(ICpuState source)
     {
+        this.LastState = source;
         this.ExecutingOpcode = source.ExecutingOpcode.AsHex();
 
         this.CyclesLeft = source.CyclesLeft;
         this.DecodedInstruction = source.DecodedInstruction;
         this.IsHardwareInterrupt = source.IsHardwareInterrupt;
         this.IsSoftwareInterrupt = source.IsSoftwareInterrupt;
+
+        this.Flags.UpdateCommand.Execute(source.Flags);
+        this.Registers.UpdateCommand.Execute(source.Registers);
     }
 
     /// <summary>
@@ -63,14 +88,18 @@ public partial class StateModel : ObservableObject
     /// </summary>
     /// <param name="source"><see cref="ICpuState"/> to trigger the interrupt</param>
     [RelayCommand(CanExecute = nameof(CanTriggerHardwareInterrupt))]
-    public void TriggerHardwareInterrupt(ICpuState source)
+    protected void TriggerHardwareInterrupt()
     {
-        source.IsHardwareInterrupt = true;
-        this.Update(source);
+        if (this.LastState is not null)
+        {
+            this.LastState.IsHardwareInterrupt = true;
+            this.Update(this.LastState);
+        }
     }
 
-    public static bool CanTriggerHardwareInterrupt(ICpuState source)
+    protected bool CanTriggerHardwareInterrupt()
     {
-        return !source.IsHardwareInterrupt;
+        return this.LastState is not null
+            && !this.LastState.IsHardwareInterrupt;
     }
 }

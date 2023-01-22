@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Cpu.Flags;
 
 namespace Cpu.MVVM;
@@ -42,7 +43,8 @@ public partial class FlagModel : ObservableObject
     /// Updates the model based on the source
     /// </summary>
     /// <param name="source"><see cref="IFlagManager"/> with the values to update from</param>
-    public void Update(IFlagManager source)
+    [RelayCommand]
+    protected void Update(IFlagManager source)
     {
         this.IsZero = source.IsZero;
         this.IsCarry = source.IsCarry;

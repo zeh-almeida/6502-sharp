@@ -5,6 +5,7 @@ using Cpu.Forms.Utils;
 using Cpu.MVVM;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Text;
 
@@ -21,11 +22,7 @@ public partial class CpuView : Form
 
     private MachineModel MachineView { get; }
 
-    private StateModel StateView { get; }
-
-    private FlagModel FlagView { get; }
-
-    private RegisterModel RegisterView { get; }
+    private RunningProgramModel ProgramView { get; }
     #endregion
 
     #region Constructors
@@ -37,14 +34,11 @@ public partial class CpuView : Form
         this.Machine = machine;
         this.CurrentProgram = string.Empty;
 
-        this.FlagView = new FlagModel();
-        this.StateView = new StateModel();
-        this.RegisterView = new RegisterModel();
-
         this.MachineView = new MachineModel(machine);
+        this.ProgramView = new RunningProgramModel();
 
-        this.StateView.PropertyChanged += this.OnStateUpdate;
-        this.MachineView.PropertyChanged += this.OnMachineUpdate;
+        this.MachineView.State.PropertyChanged += this.OnStateUpdate;
+        this.ProgramView.Instructions.CollectionChanged += this.OnProgramUpdate;
 
         this.InitializeComponent();
         this.BindState();
@@ -57,44 +51,78 @@ public partial class CpuView : Form
     private void BindState()
     {
         this.triggerInterruptButton.BindTo(
-                this.StateView,
+                this.MachineView.State,
                 nameof(StateModel.IsHardwareInterrupt));
 
         this.cyclesInput.BindTo(
-                this.StateView,
+                this.MachineView.State,
                 nameof(StateModel.CyclesLeft));
 
         this.opcodeInput.BindTo(
-                this.StateView,
+                this.MachineView.State,
                 nameof(StateModel.ExecutingOpcode));
 
         this.hardwareInterruptFlag.BindTo(
-                this.StateView,
+                this.MachineView.State,
                 nameof(StateModel.IsHardwareInterrupt));
 
         this.softwareInterruptFlag.BindTo(
-                this.StateView,
+                this.MachineView.State,
                 nameof(StateModel.IsSoftwareInterrupt));
     }
 
     private void BindFlags()
     {
-        this.zeroFlag.BindTo(this.FlagView, nameof(FlagModel.IsZero));
-        this.carryFlag.BindTo(this.FlagView, nameof(FlagModel.IsCarry));
-        this.overflowFlag.BindTo(this.FlagView, nameof(FlagModel.IsOverflow));
-        this.negativeFlag.BindTo(this.FlagView, nameof(FlagModel.IsNegative));
-        this.breakFlag.BindTo(this.FlagView, nameof(FlagModel.IsBreakCommand));
-        this.decimalFlag.BindTo(this.FlagView, nameof(FlagModel.IsDecimalMode));
-        this.interruptFlag.BindTo(this.FlagView, nameof(FlagModel.IsInterruptDisable));
+        this.zeroFlag.BindTo(
+            this.MachineView.State.Flags,
+            nameof(FlagModel.IsZero));
+
+        this.carryFlag.BindTo(
+            this.MachineView.State.Flags,
+            nameof(FlagModel.IsCarry));
+
+        this.overflowFlag.BindTo(
+            this.MachineView.State.Flags,
+            nameof(FlagModel.IsOverflow));
+
+        this.negativeFlag.BindTo(
+            this.MachineView.State.Flags,
+            nameof(FlagModel.IsNegative));
+
+        this.breakFlag.BindTo(
+            this.MachineView.State.Flags,
+            nameof(FlagModel.IsBreakCommand));
+
+        this.decimalFlag.BindTo(
+            this.MachineView.State.Flags,
+            nameof(FlagModel.IsDecimalMode));
+
+        this.interruptFlag.BindTo(
+            this.MachineView.State.Flags,
+            nameof(FlagModel.IsInterruptDisable));
     }
 
     private void BindRegisters()
     {
-        this.xRegisterInput.BindTo(this.RegisterView, nameof(RegisterModel.IndexX));
-        this.yRegisterInput.BindTo(this.RegisterView, nameof(RegisterModel.IndexY));
-        this.accumulatorInput.BindTo(this.RegisterView, nameof(RegisterModel.Accumulator));
-        this.stackPointerInput.BindTo(this.RegisterView, nameof(RegisterModel.StackPointer));
-        this.programCounterInput.BindTo(this.RegisterView, nameof(RegisterModel.ProgramCounter));
+        this.xRegisterInput.BindTo(
+            this.MachineView.State.Registers,
+            nameof(RegisterModel.IndexX));
+
+        this.yRegisterInput.BindTo(
+            this.MachineView.State.Registers,
+            nameof(RegisterModel.IndexY));
+
+        this.accumulatorInput.BindTo(
+            this.MachineView.State.Registers,
+            nameof(RegisterModel.Accumulator));
+
+        this.stackPointerInput.BindTo(
+            this.MachineView.State.Registers,
+            nameof(RegisterModel.StackPointer));
+
+        this.programCounterInput.BindTo(
+            this.MachineView.State.Registers,
+            nameof(RegisterModel.ProgramCounter));
     }
     #endregion
 
@@ -215,7 +243,7 @@ public partial class CpuView : Form
 
     private void InstructionButton_Click(object sender, EventArgs e)
     {
-        this.MachineView.PerformInstruction();
+        this.MachineView.PerformInstructionCommand.Execute(null);
     }
 
     private async void ResetButton_Click(object sender, EventArgs e)
@@ -233,28 +261,34 @@ public partial class CpuView : Form
 
     private void TriggerInterruptButton_Click(object sender, EventArgs e)
     {
-        this.StateView.TriggerHardwareInterruptCommand.Execute(this.MachineView.State);
+        this.MachineView.State.TriggerHardwareInterruptCommand.Execute(null);
     }
     #endregion
 
     #region View Model Events
-    private void OnMachineUpdate(object? sender, PropertyChangedEventArgs e)
-    {
-        if (sender is MachineModel model)
-        {
-            this.StateView.Update(model.State);
-            this.FlagView.Update(model.State.Flags);
-            this.RegisterView.Update(model.State.Registers);
-        }
-    }
-
     private void OnStateUpdate(object? sender, PropertyChangedEventArgs e)
     {
         if (sender is StateModel model)
         {
-            if (0.Equals(model.CyclesLeft))
+            if (nameof(StateModel.DecodedInstruction).Equals(e.PropertyName))
             {
-                this.executionContent.AppendText($"{model.DecodedInstruction}{Environment.NewLine}");
+                if (model.DecodedInstruction is not null)
+                {
+                    this.ProgramView.AddInstructionCommand.Execute(model.DecodedInstruction);
+                }
+            }
+        }
+    }
+
+    private void OnProgramUpdate(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (sender is IEnumerable<DecodedInstruction> model)
+        {
+            this.executionContent.Text = string.Empty;
+
+            foreach (var item in model)
+            {
+                this.executionContent.Text += $"{item}{Environment.NewLine}";
             }
         }
     }
@@ -277,14 +311,13 @@ public partial class CpuView : Form
         this.CurrentProgram = programName;
 
         this.ShowProgramContent(bytes.Span);
-        this.executionContent.Text = string.Empty;
-
         this.clockButton.Enabled = true;
         this.resetButton.Enabled = true;
         this.instructionButton.Enabled = true;
         this.saveStateToolStripMenuItem.Enabled = true;
 
         this.MachineView.LoadProgramCommand.Execute(bytes);
+        this.ProgramView.ClearExecutionCommand.Execute(null);
     }
 
     private void ShowProgramContent(ReadOnlySpan<byte> program)

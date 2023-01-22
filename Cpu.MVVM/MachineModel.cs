@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cpu.Execution;
-using Cpu.States;
 
 namespace Cpu.MVVM;
 
@@ -12,10 +11,6 @@ namespace Cpu.MVVM;
 public partial class MachineModel : ObservableObject
 {
     #region Attributes
-    /// <inheritdoc cref="IMachine.State"/>
-    [ObservableProperty]
-    private ICpuState _state;
-
     /// <summary>
     /// Indicates if the last cycle was a success
     /// </summary>
@@ -25,6 +20,11 @@ public partial class MachineModel : ObservableObject
 
     #region Properties
     private IMachine Machine { get; }
+
+    /// <summary>
+    /// <see cref="StateModel"/> handling state changes
+    /// </summary>
+    public StateModel State { get; }
     #endregion
 
     #region Constructors
@@ -35,7 +35,7 @@ public partial class MachineModel : ObservableObject
     public MachineModel(IMachine machine)
     {
         this.Machine = machine;
-        this.State = this.Machine.State;
+        this.State = new StateModel();
     }
     #endregion
 
@@ -43,25 +43,24 @@ public partial class MachineModel : ObservableObject
     /// Performs a CPU Cycle
     /// </summary>
     [RelayCommand]
-    public void PerformCycle()
+    protected void PerformCycle()
     {
-        this.CycleSuccessful = this.Machine.Cycle(state => this.State = state);
+        this.CycleSuccessful = this.Machine.Cycle(state => this.State.UpdateCommand.Execute(state));
     }
 
     /// <summary>
     /// Performs all the cycles of a single instruction execution
     /// </summary>
-    public void PerformInstruction()
+    [RelayCommand]
+    protected void PerformInstruction()
     {
+        bool execute;
+
         do
         {
             this.PerformCycleCommand.Execute(null);
-
-            if (0.Equals(this.State.CyclesLeft))
-            {
-                this.CycleSuccessful = false;
-            }
-        } while (this.CycleSuccessful);
+            execute = !0.Equals(this.State.CyclesLeft);
+        } while (execute);
     }
 
     /// <summary>
@@ -70,10 +69,10 @@ public partial class MachineModel : ObservableObject
     /// <param name="data">Program to be loaded</param>
     /// <see cref="IMachine.Load(ReadOnlyMemory{byte})"/>
     [RelayCommand]
-    public void LoadProgram(ReadOnlyMemory<byte> data)
+    protected void LoadProgram(ReadOnlyMemory<byte> data)
     {
         this.Machine.Load(data);
-        this.State = this.Machine.State;
+        this.State.UpdateCommand.Execute(this.Machine.State);
     }
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

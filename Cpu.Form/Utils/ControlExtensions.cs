@@ -3,10 +3,8 @@
 public static class ControlExtensions
 {
     public static void BindTo(
-        this Control control,
-        string controlPropName,
-        object source,
-        string sourcePropName)
+        this Control control, string controlPropName,
+        object source, string sourcePropName)
     {
         _ = control.DataBindings.Add(
                 controlPropName,

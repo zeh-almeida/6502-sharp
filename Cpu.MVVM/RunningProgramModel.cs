@@ -14,7 +14,7 @@ public partial class RunningProgramModel : ObservableObject
     /// <summary>
     /// Instructions previously executed
     /// </summary>
-    private ObservableCollection<DecodedInstruction> Instructions { get; }
+    public ObservableCollection<DecodedInstruction> Instructions { get; }
     #endregion
 
     #region Constructors
@@ -32,7 +32,7 @@ public partial class RunningProgramModel : ObservableObject
     /// </summary>
     /// <param name="instruction">Instruction to add</param>
     [RelayCommand]
-    public void AddInstruction(DecodedInstruction instruction)
+    protected void AddInstruction(DecodedInstruction instruction)
     {
         this.Instructions.Add(instruction);
     }
@@ -41,7 +41,7 @@ public partial class RunningProgramModel : ObservableObject
     /// Clears the execution list
     /// </summary>
     [RelayCommand]
-    public void ClearExecution()
+    protected void ClearExecution()
     {
         this.Instructions.Clear();
     }

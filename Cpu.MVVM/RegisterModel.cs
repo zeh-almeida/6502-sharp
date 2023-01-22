@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Cpu.Extensions;
 using Cpu.Registers;
 
@@ -32,6 +33,9 @@ public partial class RegisterModel : ObservableObject
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Instantiates a new view model
+    /// </summary>
     public RegisterModel()
     {
         const byte value = 0;
@@ -49,7 +53,8 @@ public partial class RegisterModel : ObservableObject
     /// Updates the model based on the source
     /// </summary>
     /// <param name="source"><see cref="IRegisterManager"/> with the values to update from</param>
-    public void Update(IRegisterManager source)
+    [RelayCommand]
+    protected void Update(IRegisterManager source)
     {
         this.IndexX = source.IndexX.AsHex();
         this.IndexY = source.IndexY.AsHex();

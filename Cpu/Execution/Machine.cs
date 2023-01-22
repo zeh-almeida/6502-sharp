@@ -96,7 +96,7 @@ public sealed record Machine : IMachine
             this.State.Stack.Push16(this.State.Registers.ProgramCounter);
 
             // Adds cycles of fetching and pushing values.
-            // It is the same amout of cycles used by the 0x00 BRK Instruction,
+            // It is the same amount of cycles used by the 0x00 BRK Instruction,
             // without the single decode cycle
             this.State.SetCycleInterrupt();
             this.State.Flags.IsInterruptDisable = true;
