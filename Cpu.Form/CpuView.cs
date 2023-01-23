@@ -1,13 +1,9 @@
 using Cpu.Execution;
-using Cpu.Extensions;
 using Cpu.Forms.Serialization;
 using Cpu.Forms.Utils;
 using Cpu.MVVM;
-using Cpu.States;
 using Microsoft.Extensions.Logging;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Text;
 
 namespace Cpu.Forms;
 
@@ -32,22 +28,32 @@ public partial class CpuView : Form
     {
         this.Logger = logger;
         this.Machine = machine;
-        this.CurrentProgram = string.Empty;
 
         this.MachineView = new MachineModel(machine);
         this.ProgramView = new RunningProgramModel();
 
         this.MachineView.State.PropertyChanged += this.OnStateUpdate;
-        this.ProgramView.Instructions.CollectionChanged += this.OnProgramUpdate;
 
         this.InitializeComponent();
         this.BindState();
         this.BindFlags();
+        this.BindProgram();
         this.BindRegisters();
     }
     #endregion
 
     #region Updates
+    private void BindProgram()
+    {
+        this.programText.BindTo(
+                this.ProgramView,
+                nameof(RunningProgramModel.Bytes));
+
+        this.executionContent.BindTo(
+                this.ProgramView,
+                nameof(RunningProgramModel.Execution));
+    }
+
     private void BindState()
     {
         this.triggerInterruptButton.BindTo(
@@ -178,7 +184,10 @@ public partial class CpuView : Form
         {
             try
             {
-                await Serializer.SaveState(this.CurrentProgram, this.Machine, programDialog.SelectedPath)
+                await Serializer.SaveState(
+                    this.ProgramView.ProgramName,
+                    this.Machine,
+                    programDialog.SelectedPath)
                     .ConfigureAwait(false);
 
                 _ = MessageBox.Show(
@@ -256,7 +265,7 @@ public partial class CpuView : Form
 
         await (!DialogResult.OK.Equals(result)
             ? Task.CompletedTask
-            : this.LoadProgram(this.CurrentProgram));
+            : this.LoadProgram(this.ProgramView.ProgramName));
     }
 
     private void TriggerInterruptButton_Click(object sender, EventArgs e)
@@ -279,19 +288,6 @@ public partial class CpuView : Form
             }
         }
     }
-
-    private void OnProgramUpdate(object? sender, NotifyCollectionChangedEventArgs e)
-    {
-        if (sender is IEnumerable<DecodedInstruction> model)
-        {
-            this.executionContent.Text = string.Empty;
-
-            foreach (var item in model)
-            {
-                this.executionContent.Text += $"{item}{Environment.NewLine}";
-            }
-        }
-    }
     #endregion
 
     private async Task LoadProgram(string programName)
@@ -308,28 +304,14 @@ public partial class CpuView : Form
 
     private void EnableProgramExecution(ReadOnlyMemory<byte> bytes, string programName)
     {
-        this.CurrentProgram = programName;
+        this.ProgramView.SetProgramNameCommand.Execute(programName);
 
-        this.ShowProgramContent(bytes.Span);
+        this.MachineView.LoadProgramCommand.Execute(bytes);
+        this.ProgramView.LoadProgramCommand.Execute(bytes);
+
         this.clockButton.Enabled = true;
         this.resetButton.Enabled = true;
         this.instructionButton.Enabled = true;
         this.saveStateToolStripMenuItem.Enabled = true;
-
-        this.MachineView.LoadProgramCommand.Execute(bytes);
-        this.ProgramView.ClearExecutionCommand.Execute(null);
-    }
-
-    private void ShowProgramContent(ReadOnlySpan<byte> program)
-    {
-        var builder = new StringBuilder(program.Length * 4);
-
-        foreach (var value in program[ICpuState.MemoryStateOffset..])
-        {
-            _ = builder.AppendLine(value.AsHex());
-        }
-
-        this.programText.Text = builder.ToString();
-        _ = builder.Clear();
     }
 }

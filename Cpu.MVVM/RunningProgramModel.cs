@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cpu.Execution;
-using System.Collections.ObjectModel;
+using Cpu.Extensions;
+using Cpu.States;
+using System.Text;
 
 namespace Cpu.MVVM;
 
@@ -10,21 +12,28 @@ namespace Cpu.MVVM;
 /// </summary>
 public partial class RunningProgramModel : ObservableObject
 {
-    #region Properties
-    /// <summary>
-    /// Instructions previously executed
-    /// </summary>
-    public ObservableCollection<DecodedInstruction> Instructions { get; }
+    #region Constants
+    public const int CharsPer8Bit = 4;
     #endregion
 
-    #region Constructors
+    #region Attributes
     /// <summary>
-    /// Instantiates a new view model
+    /// Name of the program loaded
     /// </summary>
-    public RunningProgramModel()
-    {
-        this.Instructions = new ObservableCollection<DecodedInstruction>();
-    }
+    [ObservableProperty]
+    private string _programName = string.Empty;
+
+    /// <summary>
+    /// Representation of the current loaded program
+    /// </summary>
+    [ObservableProperty]
+    private string _bytes = string.Empty;
+
+    /// <summary>
+    /// Representation of the instructions executed so far
+    /// </summary>
+    [ObservableProperty]
+    private string _execution = string.Empty;
     #endregion
 
     /// <summary>
@@ -34,7 +43,7 @@ public partial class RunningProgramModel : ObservableObject
     [RelayCommand]
     protected void AddInstruction(DecodedInstruction instruction)
     {
-        this.Instructions.Add(instruction);
+        this.Execution += $"{instruction}{Environment.NewLine}";
     }
 
     /// <summary>
@@ -43,6 +52,45 @@ public partial class RunningProgramModel : ObservableObject
     [RelayCommand]
     protected void ClearExecution()
     {
-        this.Instructions.Clear();
+        this.Execution = string.Empty;
+    }
+
+    /// <summary>
+    /// Loads the program bytes
+    /// </summary>
+    [RelayCommand]
+    protected void LoadProgram(ReadOnlyMemory<byte> program)
+    {
+        var builder = new StringBuilder(program.Length * CharsPer8Bit);
+        var data = program.Span;
+
+        foreach (var value in data[ICpuState.MemoryStateOffset..])
+        {
+            _ = builder.AppendLine(value.AsHex());
+        }
+
+        this.Bytes = builder.ToString();
+    }
+
+    /// <summary>
+    /// Clears the bytes list
+    /// </summary>
+    [RelayCommand]
+    protected void ClearProgram()
+    {
+        this.Bytes = string.Empty;
+    }
+
+    /// <summary>
+    /// Sets the current program name
+    /// </summary>
+    /// <param name="name">Program name</param>
+    [RelayCommand]
+    protected void SetProgramName(string name)
+    {
+        this.ProgramName = name;
+
+        this.ClearProgramCommand.Execute(null);
+        this.ClearExecutionCommand.Execute(null);
     }
 }
