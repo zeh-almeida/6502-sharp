@@ -41,16 +41,6 @@ public partial class FlagModel : ObservableObject, IRecipient<StateUpdateMessage
     private bool _isNegative;
     #endregion
 
-    #region Constructors
-    /// <summary>
-    /// Instantiates a new view model
-    /// </summary>
-    public FlagModel()
-    {
-        WeakReferenceMessenger.Default.RegisterAll(this);
-    }
-    #endregion
-
     #region Messages
     public void Receive(StateUpdateMessage message)
     {

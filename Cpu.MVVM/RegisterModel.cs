@@ -48,8 +48,6 @@ public partial class RegisterModel : ObservableObject, IRecipient<StateUpdateMes
         this.Accumulator = hex;
         this.StackPointer = hex;
         this.ProgramCounter = hex;
-
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
     #endregion
 

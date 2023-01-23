@@ -1,5 +1,4 @@
-﻿using Cpu.Execution;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Forms.Serialization;
 
@@ -36,13 +35,11 @@ internal static class Serializer
         });
     }
 
-    public static Task SaveState(string programName, IMachine machine, string destinationPath)
+    public static Task SaveState(string programName, ReadOnlyMemory<byte> machineState, string destinationPath)
     {
         return Task.Run(() =>
         {
             var fileName = $"{destinationPath}/{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_6502.state";
-
-            var machineState = machine.Save();
 
             using var stream = File.Open(fileName, FileMode.Create);
             using var writer = new BinaryWriter(stream);

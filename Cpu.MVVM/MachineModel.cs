@@ -23,24 +23,28 @@ public partial class MachineModel : ObservableObject
     #region Properties
     private IMachine Machine { get; }
 
-    /// <summary>
-    /// <see cref="StateModel"/> handling state changes
-    /// </summary>
-    public StateModel State { get; }
+    private IMessenger Messenger { get; }
     #endregion
 
     #region Constructors
     /// <summary>
     /// Instantiates the View Model
     /// </summary>
+    /// <param name="messenger"><see cref="IMessenger"/> to communicate with</param>
     /// <param name="machine"><see cref="IMachine"/> to be represented</param>
-    public MachineModel(IMachine machine)
+    public MachineModel(IMessenger messenger, IMachine machine)
     {
+        this.Messenger = messenger;
         this.Machine = machine;
-        this.State = new StateModel();
     }
     #endregion
 
+    public ReadOnlyMemory<byte> SaveState()
+    {
+        return this.Machine.Save();
+    }
+
+    #region Commands
     /// <summary>
     /// Performs a CPU Cycle
     /// </summary>
@@ -61,7 +65,9 @@ public partial class MachineModel : ObservableObject
         do
         {
             this.PerformCycleCommand.Execute(null);
-            execute = !0.Equals(this.State.CyclesLeft);
+            var cyclesLeft = this.Messenger.Send<CyclesLeftMessage>();
+
+            execute = !0.Equals(cyclesLeft);
         } while (execute);
     }
 
@@ -76,6 +82,7 @@ public partial class MachineModel : ObservableObject
         this.Machine.Load(data);
         SendUpdateMessage(this.Machine.State);
     }
+    #endregion
 
     private static void SendUpdateMessage(ICpuState state)
     {

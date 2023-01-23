@@ -11,7 +11,9 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="ICpuState"/>
 /// </summary>
-public partial class StateModel : ObservableObject, IRecipient<StateUpdateMessage>
+public partial class StateModel : ObservableObject,
+    IRecipient<StateUpdateMessage>,
+    IRecipient<CyclesLeftMessage>
 {
     #region Constants
     public const string DefaultOpcode = "-";
@@ -42,6 +44,8 @@ public partial class StateModel : ObservableObject, IRecipient<StateUpdateMessag
     #region Properties
     private ICpuState? LastState { get; set; }
 
+    private IMessenger Messenger { get; }
+
     /// <summary>
     /// <see cref="FlagModel"/> handling flag changes
     /// </summary>
@@ -63,7 +67,6 @@ public partial class StateModel : ObservableObject, IRecipient<StateUpdateMessag
         this.Registers = new RegisterModel();
 
         this.ExecutingOpcode = DefaultOpcode;
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
     #endregion
 
@@ -71,6 +74,11 @@ public partial class StateModel : ObservableObject, IRecipient<StateUpdateMessag
     public void Receive(StateUpdateMessage message)
     {
         this.UpdateCommand.Execute(message.Value);
+    }
+
+    public void Receive(CyclesLeftMessage message)
+    {
+        message.Reply(this.CyclesLeft);
     }
     #endregion
 
