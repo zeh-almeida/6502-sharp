@@ -28,4 +28,14 @@ public static class ControlExtensions
     {
         control.BindTo(nameof(Button.Enabled), source, sourcePropName);
     }
+
+    public static void BindTo(this ToolStripMenuItem control, object source, string sourcePropName)
+    {
+        _ = control.DataBindings.Add(
+                nameof(Button.Enabled),
+                source,
+                sourcePropName,
+                false,
+                DataSourceUpdateMode.OnPropertyChanged);
+    }
 }

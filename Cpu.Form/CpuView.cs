@@ -14,8 +14,6 @@ public partial class CpuView : Form
 
     private IMachine Machine { get; }
 
-    private string CurrentProgram { get; set; }
-
     private MachineModel MachineView { get; }
 
     private RunningProgramModel ProgramView { get; }
@@ -42,7 +40,7 @@ public partial class CpuView : Form
     }
     #endregion
 
-    #region Updates
+    #region Bindings
     private void BindProgram()
     {
         this.programText.BindTo(
@@ -52,6 +50,22 @@ public partial class CpuView : Form
         this.executionContent.BindTo(
                 this.ProgramView,
                 nameof(RunningProgramModel.Execution));
+
+        this.clockButton.BindTo(
+                this.ProgramView,
+                nameof(RunningProgramModel.ProgramLoaded));
+
+        this.resetButton.BindTo(
+                this.ProgramView,
+                nameof(RunningProgramModel.ProgramLoaded));
+
+        this.instructionButton.BindTo(
+                this.ProgramView,
+                nameof(RunningProgramModel.ProgramLoaded));
+
+        this.saveStateToolStripMenuItem.BindTo(
+                this.ProgramView,
+                nameof(RunningProgramModel.ProgramLoaded));
     }
 
     private void BindState()
@@ -308,10 +322,5 @@ public partial class CpuView : Form
 
         this.MachineView.LoadProgramCommand.Execute(bytes);
         this.ProgramView.LoadProgramCommand.Execute(bytes);
-
-        this.clockButton.Enabled = true;
-        this.resetButton.Enabled = true;
-        this.instructionButton.Enabled = true;
-        this.saveStateToolStripMenuItem.Enabled = true;
     }
 }

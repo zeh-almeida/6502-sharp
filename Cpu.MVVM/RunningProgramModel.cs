@@ -34,6 +34,12 @@ public partial class RunningProgramModel : ObservableObject
     /// </summary>
     [ObservableProperty]
     private string _execution = string.Empty;
+
+    /// <summary>
+    /// Checks if the program is loaded and ready to use
+    /// </summary>
+    [ObservableProperty]
+    private bool _programLoaded = false;
     #endregion
 
     /// <summary>
@@ -61,7 +67,7 @@ public partial class RunningProgramModel : ObservableObject
     [RelayCommand]
     protected void LoadProgram(ReadOnlyMemory<byte> program)
     {
-        var builder = new StringBuilder(program.Length * CharsPer8Bit);
+        var builder = new StringBuilder(1 + (program.Length * CharsPer8Bit));
         var data = program.Span;
 
         foreach (var value in data[ICpuState.MemoryStateOffset..])
@@ -70,6 +76,7 @@ public partial class RunningProgramModel : ObservableObject
         }
 
         this.Bytes = builder.ToString();
+        this.ProgramLoaded = true;
     }
 
     /// <summary>
@@ -79,6 +86,7 @@ public partial class RunningProgramModel : ObservableObject
     protected void ClearProgram()
     {
         this.Bytes = string.Empty;
+        this.ProgramLoaded = false;
     }
 
     /// <summary>
