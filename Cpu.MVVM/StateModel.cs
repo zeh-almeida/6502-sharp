@@ -43,16 +43,6 @@ public partial class StateModel : ObservableRecipient,
 
     #region Properties
     private ICpuState? LastState { get; set; }
-
-    /// <summary>
-    /// <see cref="FlagModel"/> handling flag changes
-    /// </summary>
-    public FlagModel Flags { get; }
-
-    /// <summary>
-    /// <see cref="RegisterModel"/> handling register changes
-    /// </summary>
-    public RegisterModel Registers { get; }
     #endregion
 
     #region Constructors
@@ -61,9 +51,6 @@ public partial class StateModel : ObservableRecipient,
     /// </summary>
     public StateModel(IMessenger messenger) : base(messenger)
     {
-        this.Flags = new FlagModel();
-        this.Registers = new RegisterModel();
-
         this.ExecutingOpcode = DefaultOpcode;
     }
     #endregion
@@ -117,8 +104,7 @@ public partial class StateModel : ObservableRecipient,
     #region Validations
     protected bool CanTriggerHardwareInterrupt()
     {
-        return this.LastState is not null
-            && !this.LastState.IsHardwareInterrupt;
+        return this.LastState?.IsHardwareInterrupt == false;
     }
     #endregion
 }

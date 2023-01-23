@@ -10,7 +10,7 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IMachine"/>
 /// </summary>
-public partial class MachineModel : ObservableObject
+public partial class MachineModel : ObservableRecipient
 {
     #region Attributes
     /// <summary>
@@ -22,8 +22,6 @@ public partial class MachineModel : ObservableObject
 
     #region Properties
     private IMachine Machine { get; }
-
-    private IMessenger Messenger { get; }
     #endregion
 
     #region Constructors
@@ -33,8 +31,8 @@ public partial class MachineModel : ObservableObject
     /// <param name="messenger"><see cref="IMessenger"/> to communicate with</param>
     /// <param name="machine"><see cref="IMachine"/> to be represented</param>
     public MachineModel(IMessenger messenger, IMachine machine)
+        : base(messenger)
     {
-        this.Messenger = messenger;
         this.Machine = machine;
     }
     #endregion
@@ -51,7 +49,7 @@ public partial class MachineModel : ObservableObject
     [RelayCommand]
     protected void PerformCycle()
     {
-        this.CycleSuccessful = this.Machine.Cycle(SendUpdateMessage);
+        this.CycleSuccessful = this.Machine.Cycle(this.SendUpdateMessage);
     }
 
     /// <summary>
@@ -80,12 +78,12 @@ public partial class MachineModel : ObservableObject
     protected void LoadProgram(ReadOnlyMemory<byte> data)
     {
         this.Machine.Load(data);
-        SendUpdateMessage(this.Machine.State);
+        this.SendUpdateMessage(this.Machine.State);
     }
     #endregion
 
-    private static void SendUpdateMessage(ICpuState state)
+    private void SendUpdateMessage(ICpuState state)
     {
-        _ = WeakReferenceMessenger.Default.Send(new StateUpdateMessage(state));
+        _ = this.Messenger.Send(new StateUpdateMessage(state));
     }
 }
