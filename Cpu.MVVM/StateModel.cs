@@ -11,7 +11,7 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="ICpuState"/>
 /// </summary>
-public partial class StateModel : ObservableObject,
+public partial class StateModel : ObservableRecipient,
     IRecipient<StateUpdateMessage>,
     IRecipient<CyclesLeftMessage>
 {
@@ -44,8 +44,6 @@ public partial class StateModel : ObservableObject,
     #region Properties
     private ICpuState? LastState { get; set; }
 
-    private IMessenger Messenger { get; }
-
     /// <summary>
     /// <see cref="FlagModel"/> handling flag changes
     /// </summary>
@@ -61,7 +59,7 @@ public partial class StateModel : ObservableObject,
     /// <summary>
     /// Instantiates a new view model
     /// </summary>
-    public StateModel()
+    public StateModel(IMessenger messenger) : base(messenger)
     {
         this.Flags = new FlagModel();
         this.Registers = new RegisterModel();
@@ -71,6 +69,11 @@ public partial class StateModel : ObservableObject,
     #endregion
 
     #region Messages
+    partial void OnDecodedInstructionChanged(DecodedInstruction? value)
+    {
+        this.Broadcast<DecodedInstruction>(null, value, nameof(StateModel.DecodedInstruction));
+    }
+
     public void Receive(StateUpdateMessage message)
     {
         this.UpdateCommand.Execute(message.Value);

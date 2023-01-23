@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Cpu.Execution;
 using Cpu.Extensions;
 using Cpu.States;
@@ -10,7 +12,9 @@ namespace Cpu.MVVM;
 /// <summary>
 /// Represents the executed instructions in a program
 /// </summary>
-public partial class RunningProgramModel : ObservableObject
+public partial class RunningProgramModel
+    : ObservableObject,
+      IRecipient<PropertyChangedMessage<DecodedInstruction>>
 {
     #region Constants
     public const int CharsPer8Bit = 4;
@@ -42,6 +46,17 @@ public partial class RunningProgramModel : ObservableObject
     private bool _programLoaded = false;
     #endregion
 
+    #region Messages
+    public void Receive(PropertyChangedMessage<DecodedInstruction> message)
+    {
+        if (message.NewValue is not null)
+        {
+            this.AddInstructionCommand.Execute(message.NewValue);
+        }
+    }
+    #endregion
+
+    #region Commands
     /// <summary>
     /// Adds a new executed instruction to the running program
     /// </summary>
@@ -101,4 +116,5 @@ public partial class RunningProgramModel : ObservableObject
         this.ClearProgramCommand.Execute(null);
         this.ClearExecutionCommand.Execute(null);
     }
+    #endregion
 }

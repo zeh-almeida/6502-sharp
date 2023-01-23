@@ -4,7 +4,6 @@ using Cpu.Forms.Serialization;
 using Cpu.Forms.Utils;
 using Cpu.MVVM;
 using Microsoft.Extensions.Logging;
-using System.ComponentModel;
 
 namespace Cpu.Forms;
 
@@ -27,9 +26,8 @@ public partial class CpuView : Form
             WeakReferenceMessenger.Default,
             machine);
 
-        this.CpuModel.State.PropertyChanged += this.OnStateUpdate;
-
         this.InitializeComponent();
+
         this.BindState();
         this.BindFlags();
         this.BindProgram();
@@ -282,22 +280,6 @@ public partial class CpuView : Form
     private void TriggerInterruptButton_Click(object sender, EventArgs e)
     {
         this.CpuModel.State.TriggerHardwareInterruptCommand.Execute(null);
-    }
-    #endregion
-
-    #region View Model Events
-    private void OnStateUpdate(object? sender, PropertyChangedEventArgs e)
-    {
-        if (sender is StateModel model)
-        {
-            if (nameof(StateModel.DecodedInstruction).Equals(e.PropertyName))
-            {
-                if (model.DecodedInstruction is not null)
-                {
-                    this.CpuModel.Program.AddInstructionCommand.Execute(model.DecodedInstruction);
-                }
-            }
-        }
     }
     #endregion
 

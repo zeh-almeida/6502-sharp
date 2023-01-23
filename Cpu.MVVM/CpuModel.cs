@@ -21,14 +21,15 @@ public sealed class CpuModel
     public CpuModel(IMessenger messenger, IMachine machine)
     {
         this.Machine = new MachineModel(messenger, machine);
+        this.State = new StateModel(messenger);
 
         this.Flags = new FlagModel();
-        this.State = new StateModel();
         this.Registers = new RegisterModel();
         this.Program = new RunningProgramModel();
 
         messenger.RegisterAll(this.State);
         messenger.RegisterAll(this.Flags);
+        messenger.RegisterAll(this.Program);
         messenger.RegisterAll(this.Registers);
     }
     #endregion
