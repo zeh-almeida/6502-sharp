@@ -1,4 +1,4 @@
-using Cpu.DependencyInjection;
+using Cpu.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -26,7 +26,7 @@ public static class Program
 
         return collection
             .AddLogging(b => b.AddSimpleConsole())
-            .Add6502Cpu()
+            .Add6502CpuMvvm()
             .AddSingleton<CpuView>()
             .BuildServiceProvider();
     }

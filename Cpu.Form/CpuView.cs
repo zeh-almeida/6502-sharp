@@ -1,5 +1,3 @@
-using CommunityToolkit.Mvvm.Messaging;
-using Cpu.Execution;
 using Cpu.Forms.Serialization;
 using Cpu.Forms.Utils;
 using Cpu.MVVM;
@@ -18,13 +16,10 @@ public partial class CpuView : Form
     #region Constructors
     public CpuView(
         ILogger<CpuModel> logger,
-        IMachine machine)
+        CpuModel cpuModel)
     {
         this.Logger = logger;
-
-        this.CpuModel = new CpuModel(
-            WeakReferenceMessenger.Default,
-            machine);
+        this.CpuModel = cpuModel;
 
         this.InitializeComponent();
 
