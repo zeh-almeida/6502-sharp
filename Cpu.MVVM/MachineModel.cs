@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Cpu.Execution;
+using Cpu.MVVM.Messages;
+using Cpu.States;
 
 namespace Cpu.MVVM;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 /// <summary>
 /// View Model representation of a <see cref="IMachine"/>
 /// </summary>
@@ -45,7 +47,7 @@ public partial class MachineModel : ObservableObject
     [RelayCommand]
     protected void PerformCycle()
     {
-        this.CycleSuccessful = this.Machine.Cycle(state => this.State.UpdateCommand.Execute(state));
+        this.CycleSuccessful = this.Machine.Cycle(SendUpdateMessage);
     }
 
     /// <summary>
@@ -72,7 +74,11 @@ public partial class MachineModel : ObservableObject
     protected void LoadProgram(ReadOnlyMemory<byte> data)
     {
         this.Machine.Load(data);
-        this.State.UpdateCommand.Execute(this.Machine.State);
+        SendUpdateMessage(this.Machine.State);
+    }
+
+    private static void SendUpdateMessage(ICpuState state)
+    {
+        _ = WeakReferenceMessenger.Default.Send(new StateUpdateMessage(state));
     }
 }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

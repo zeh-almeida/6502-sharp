@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Cpu.Execution;
 using Cpu.Extensions;
+using Cpu.MVVM.Messages;
 using Cpu.States;
 
 namespace Cpu.MVVM;
@@ -9,7 +11,7 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="ICpuState"/>
 /// </summary>
-public partial class StateModel : ObservableObject
+public partial class StateModel : ObservableObject, IRecipient<StateUpdateMessage>
 {
     #region Constants
     public const string DefaultOpcode = "-";
@@ -61,9 +63,18 @@ public partial class StateModel : ObservableObject
         this.Registers = new RegisterModel();
 
         this.ExecutingOpcode = DefaultOpcode;
+        WeakReferenceMessenger.Default.RegisterAll(this);
     }
     #endregion
 
+    #region Messages
+    public void Receive(StateUpdateMessage message)
+    {
+        this.UpdateCommand.Execute(message.Value);
+    }
+    #endregion
+
+    #region Commands
     /// <summary>
     /// Updates the model based on the source
     /// </summary>
@@ -96,10 +107,13 @@ public partial class StateModel : ObservableObject
             this.Update(this.LastState);
         }
     }
+    #endregion
 
+    #region Validations
     protected bool CanTriggerHardwareInterrupt()
     {
         return this.LastState is not null
             && !this.LastState.IsHardwareInterrupt;
     }
+    #endregion
 }
