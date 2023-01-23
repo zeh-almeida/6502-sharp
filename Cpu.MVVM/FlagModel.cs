@@ -1,13 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Cpu.Flags;
+using Cpu.MVVM.Messages;
 
 namespace Cpu.MVVM;
 
 /// <summary>
 /// View Model representation of a <see cref="IFlagManager"/>
 /// </summary>
-public partial class FlagModel : ObservableObject
+public partial class FlagModel : ObservableObject, IRecipient<StateUpdateMessage>
 {
     #region Attributes
     /// <inheritdoc cref="IFlagManager.IsCarry"/>
@@ -39,6 +41,24 @@ public partial class FlagModel : ObservableObject
     private bool _isNegative;
     #endregion
 
+    #region Constructors
+    /// <summary>
+    /// Instantiates a new view model
+    /// </summary>
+    public FlagModel()
+    {
+        WeakReferenceMessenger.Default.RegisterAll(this);
+    }
+    #endregion
+
+    #region Messages
+    public void Receive(StateUpdateMessage message)
+    {
+        this.UpdateCommand.Execute(message.Value.Flags);
+    }
+    #endregion
+
+    #region Commands
     /// <summary>
     /// Updates the model based on the source
     /// </summary>
@@ -54,4 +74,5 @@ public partial class FlagModel : ObservableObject
         this.IsBreakCommand = source.IsBreakCommand;
         this.IsInterruptDisable = source.IsInterruptDisable;
     }
+    #endregion
 }

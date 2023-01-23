@@ -89,9 +89,6 @@ public partial class StateModel : ObservableObject, IRecipient<StateUpdateMessag
         this.DecodedInstruction = source.DecodedInstruction;
         this.IsHardwareInterrupt = source.IsHardwareInterrupt;
         this.IsSoftwareInterrupt = source.IsSoftwareInterrupt;
-
-        this.Flags.UpdateCommand.Execute(source.Flags);
-        this.Registers.UpdateCommand.Execute(source.Registers);
     }
 
     /// <summary>
@@ -101,11 +98,8 @@ public partial class StateModel : ObservableObject, IRecipient<StateUpdateMessag
     [RelayCommand(CanExecute = nameof(CanTriggerHardwareInterrupt))]
     protected void TriggerHardwareInterrupt()
     {
-        if (this.LastState is not null)
-        {
-            this.LastState.IsHardwareInterrupt = true;
-            this.Update(this.LastState);
-        }
+        this.LastState.IsHardwareInterrupt = true;
+        this.UpdateCommand.Execute(this.LastState);
     }
     #endregion
 

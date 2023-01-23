@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Cpu.Extensions;
+using Cpu.MVVM.Messages;
 using Cpu.Registers;
 
 namespace Cpu.MVVM;
@@ -8,7 +10,7 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IRegisterManager"/>
 /// </summary>
-public partial class RegisterModel : ObservableObject
+public partial class RegisterModel : ObservableObject, IRecipient<StateUpdateMessage>
 {
     #region Attributes
     /// <inheritdoc cref="IRegisterManager.ProgramCounter"/>
@@ -46,9 +48,19 @@ public partial class RegisterModel : ObservableObject
         this.Accumulator = hex;
         this.StackPointer = hex;
         this.ProgramCounter = hex;
+
+        WeakReferenceMessenger.Default.RegisterAll(this);
     }
     #endregion
 
+    #region Messages
+    public void Receive(StateUpdateMessage message)
+    {
+        this.UpdateCommand.Execute(message.Value.Registers);
+    }
+    #endregion
+
+    #region Commands
     /// <summary>
     /// Updates the model based on the source
     /// </summary>
@@ -62,4 +74,5 @@ public partial class RegisterModel : ObservableObject
         this.StackPointer = source.StackPointer.AsHex();
         this.ProgramCounter = source.ProgramCounter.AsHex();
     }
+    #endregion
 }
