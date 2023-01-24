@@ -112,6 +112,50 @@ public sealed record MachineTest
     }
 
     [Fact]
+    public void DecodeStream_Fails_Catch()
+    {
+        _ = this.StateMock
+            .Setup(mock => mock.CyclesLeft)
+            .Returns(0);
+
+        _ = this.StateMock
+            .Setup(mock => mock.IsProgramRunning())
+            .Returns(true);
+
+        _ = this.DecoderMock
+            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Throws<Exception>();
+
+        var result = this.Subject.Cycle();
+
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void ExecuteDecoded_Fails_Catch()
+    {
+        _ = this.StateMock
+            .Setup(mock => mock.CyclesLeft)
+            .Returns(0);
+
+        _ = this.StateMock
+            .Setup(mock => mock.IsProgramRunning())
+            .Returns(true);
+
+        _ = this.StateMock
+            .Setup(mock => mock.SetExecutingInstruction(It.IsAny<DecodedInstruction>()))
+            .Throws<Exception>();
+
+        _ = this.DecoderMock
+            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Returns(this.Decoded);
+
+        var result = this.Subject.Cycle();
+
+        Assert.False(result);
+    }
+
+    [Fact]
     public void AdvanceProgramCount_Cycle_Successful()
     {
         const ushort initialProgramCounter = 65532;
