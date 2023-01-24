@@ -97,10 +97,10 @@ public sealed record MachineTest
     public void DecodeStream_Cycle_Successful()
     {
         _ = this.StateMock
-            .SetupSequence(mock => mock.Registers.ProgramCounter)
-            .Returns(ushort.MaxValue - 1)
-            .Returns(ushort.MaxValue - 1)
-            .Returns(ushort.MaxValue);
+            .SetupSequence(mock => mock.IsProgramRunning())
+            .Returns(true)
+            .Returns(true)
+            .Returns(false);
 
         _ = this.DecoderMock
             .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
@@ -124,6 +124,12 @@ public sealed record MachineTest
             .Returns(finalProgramCounter);
 
         _ = this.StateMock
+            .SetupSequence(mock => mock.IsProgramRunning())
+            .Returns(true)
+            .Returns(true)
+            .Returns(false);
+
+        _ = this.StateMock
             .Setup(mock => mock.ExecutingOpcode)
             .Returns(StreamByte);
 
@@ -135,29 +141,25 @@ public sealed record MachineTest
 
         Assert.True(result);
 
-        this.StateMock.Verify(mock => mock.Registers.ProgramCounter, Times.AtLeast(3));
+        this.StateMock.Verify(mock => mock.Registers.ProgramCounter, Times.AtLeast(2));
         this.StateMock.VerifySet(mock => mock.Registers.ProgramCounter = finalProgramCounter, Times.AtLeast(1));
     }
 
     [Fact]
     public void RemainingCycles_Count_Successful()
     {
-        const int totalCycleCount = 6;
-        const ushort initialProgramCounter = 65532;
-        const ushort finalProgramCounter = 65535;
+        var totalCycleCount = this.Decoded.Information.MaximumCycles;
 
         _ = this.StateMock
-            .SetupSequence(mock => mock.Registers.ProgramCounter)
-            .Returns(initialProgramCounter)
-            .Returns(initialProgramCounter)
-            .Returns(initialProgramCounter)
-            .Returns(finalProgramCounter)
-            .Returns(finalProgramCounter);
+            .SetupSequence(mock => mock.IsProgramRunning())
+            .Returns(true)
+            .Returns(false);
 
         _ = this.StateMock
             .Setup(mock => mock.ExecutingOpcode)
             .Returns(StreamByte);
 
+        // Counts from 4 because it takes two cycles to read the opcode
         _ = this.StateMock
             .SetupSequence(mock => mock.CyclesLeft)
             .Returns(4)
@@ -188,10 +190,10 @@ public sealed record MachineTest
     public void DecodeStream_Action_Executes()
     {
         _ = this.StateMock
-            .SetupSequence(mock => mock.Registers.ProgramCounter)
-            .Returns(ushort.MaxValue - 1)
-            .Returns(ushort.MaxValue - 1)
-            .Returns(ushort.MaxValue);
+            .SetupSequence(mock => mock.IsProgramRunning())
+            .Returns(true)
+            .Returns(true)
+            .Returns(false);
 
         _ = this.DecoderMock
             .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
