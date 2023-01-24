@@ -30,7 +30,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cpu.Forms", "Cpu.Form\Cpu.F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cpu.Mvvm", "Cpu.MVVM\Cpu.Mvvm.csproj", "{7FB2E60A-9617-4686-9C15-9C1E41CD37A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cpu.Mvvm.DependencyInjection", "Cpu.Mvvm.DependencyInjection\Cpu.Mvvm.DependencyInjection.csproj", "{85C425C4-75B6-47D7-814C-FCB41721BF4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cpu.Mvvm.DependencyInjection", "Cpu.Mvvm.DependencyInjection\Cpu.Mvvm.DependencyInjection.csproj", "{85C425C4-75B6-47D7-814C-FCB41721BF4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cpu.Maui", "Cpu.Maui\Cpu.Maui.csproj", "{E30B32B3-2819-49CB-9353-27D610F8B228}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,12 @@ Global
 		{85C425C4-75B6-47D7-814C-FCB41721BF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85C425C4-75B6-47D7-814C-FCB41721BF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85C425C4-75B6-47D7-814C-FCB41721BF4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E30B32B3-2819-49CB-9353-27D610F8B228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E30B32B3-2819-49CB-9353-27D610F8B228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E30B32B3-2819-49CB-9353-27D610F8B228}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E30B32B3-2819-49CB-9353-27D610F8B228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E30B32B3-2819-49CB-9353-27D610F8B228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E30B32B3-2819-49CB-9353-27D610F8B228}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
