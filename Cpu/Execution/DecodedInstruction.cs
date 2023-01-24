@@ -9,6 +9,10 @@ namespace Cpu.Execution;
 /// </summary>
 public sealed record DecodedInstruction
 {
+    #region Constants
+    private const string Operator = "oper";
+    #endregion
+
     #region Properties
     /// <summary>
     /// Value for the instruction parameter
@@ -52,6 +56,6 @@ public sealed record DecodedInstruction
             : ((byte)this.ValueParameter).AsAssembly();
 
         var content = this.Information.ToString() ?? throw new Exception("Information is null!");
-        return content.Replace("oper", value);
+        return content.Replace(Operator, value);
     }
 }

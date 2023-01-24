@@ -1,5 +1,6 @@
 ﻿using Cpu.Execution;
 using Cpu.Flags;
+using Cpu.Instructions;
 using Cpu.Instructions.StatusChanges;
 using Cpu.Memory;
 using Cpu.Opcodes;
@@ -9,7 +10,6 @@ using Moq;
 using Xunit;
 
 namespace Test.Unit.Cpu.States;
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
 
 public sealed record CpuStateTest
 {
@@ -233,6 +233,50 @@ public sealed record CpuStateTest
     }
     #endregion
 
+    [Theory]
+    [InlineData(ushort.MinValue, true)]
+    [InlineData(ushort.MaxValue - 1, true)]
+    [InlineData(ushort.MaxValue, false)]
+    public void IsProgramRunning_Returns(ushort value, bool expected)
+    {
+        _ = this.RegisterMock
+            .Setup(mock => mock.ProgramCounter)
+            .Returns(value);
+
+        Assert.Equal(expected, this.Subject.IsProgramRunning());
+    }
+
+    [Fact]
+    public void AdvanceProgramCount_Increases_Value()
+    {
+        const int streamByte = 0x38;
+        const int cycles = 2;
+        const int bytes = 1;
+
+        var opcodeMock = new Mock<IOpcodeInformation>();
+        var instructionMock = new Mock<IInstruction>();
+
+        _ = opcodeMock.Setup(m => m.Opcode)
+            .Returns(streamByte);
+
+        _ = opcodeMock.Setup(m => m.Bytes)
+            .Returns(bytes);
+
+        _ = opcodeMock.Setup(m => m.MinimumCycles)
+            .Returns(cycles);
+
+        _ = opcodeMock.Setup(m => m.MaximumCycles)
+            .Returns(cycles);
+
+        var decoded = new DecodedInstruction(
+            opcodeMock.Object,
+            instructionMock.Object,
+            0);
+
+        this.Subject.AdvanceProgramCount(decoded);
+        this.RegisterMock.Verify(m => m.ProgramCounter, Times.Once());
+    }
+
     [Fact]
     public void GetSet_IsHardwareInterrupt_Executes()
     {
@@ -253,4 +297,3 @@ public sealed record CpuStateTest
         Assert.False(this.Subject.IsSoftwareInterrupt);
     }
 }
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
