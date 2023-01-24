@@ -52,6 +52,44 @@ public sealed record DecodedInstructionTest
     }
 
     [Fact]
+    public void Instruction_ToString_Null_Throws()
+    {
+        var instructionMock = new Mock<IInstruction>();
+        var opcodeMock = new Mock<IOpcodeInformation>();
+        const string? expected = null;
+
+        _ = instructionMock
+            .Setup(mock => mock.GetHashCode())
+            .Returns(1);
+
+        _ = opcodeMock
+            .Setup(mock => mock.Opcode)
+            .Returns(Opcode);
+
+        _ = opcodeMock
+            .Setup(mock => mock.MaximumCycles)
+            .Returns(Cycles);
+
+        _ = opcodeMock
+            .Setup(mock => mock.MinimumCycles)
+            .Returns(Cycles);
+
+        _ = opcodeMock
+            .Setup(mock => mock.Bytes)
+            .Returns(Bytes);
+
+        _ = opcodeMock
+            .Setup(mock => mock.ToString())
+            .Returns(expected);
+
+        var instruction = instructionMock.Object;
+        var opcodeInfo = opcodeMock.Object;
+
+        var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
+        _ = Assert.Throws<Exception>(subject.ToString);
+    }
+
+    [Fact]
     public void Cycles_Equals_Defined()
     {
         var instructionMock = new Mock<IInstruction>();
