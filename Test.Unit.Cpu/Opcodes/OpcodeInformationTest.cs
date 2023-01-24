@@ -15,6 +15,8 @@ public sealed record OpcodeInformationTest
     private const int Bytes = 2;
 
     private const string Mnemonic = "Mnemonic";
+
+    private const string AsString = "0x01: Mnemonic";
     #endregion
 
     #region Properties
@@ -85,5 +87,11 @@ public sealed record OpcodeInformationTest
     public void Mnemonic_Equals_Defined()
     {
         Assert.Equal(Mnemonic, this.Subject.Mnemonic);
+    }
+
+    [Fact]
+    public void ToString_Equals_Defined()
+    {
+        Assert.Equal(AsString, this.Subject.ToString());
     }
 }
