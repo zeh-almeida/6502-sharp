@@ -16,23 +16,37 @@
                 HorizontalOptions="Center" />
 
             <Label
-                Text="Hello, World!"
+                x:Name="ProgramText"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
+            <Button
+                x:Name="LoadProgramButton"
+                Text="Load Program"
+                SemanticProperties.Hint="Open and loads a new 6502 Program"
+                Clicked="OnLoadProgram"
                 HorizontalOptions="Center" />
 
             <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
+                x:Name="CycleButton"
+                Text="Run CPU Cycle"
+                SemanticProperties.Hint="Runs a cycle of the CPU"
+                Clicked="OnRunCycle"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="InstructionButton"
+                Text="Execute Instruction"
+                SemanticProperties.Hint="Executes all cycles of an Instruction"
+                Clicked="OnExecuteInstruction"
+                HorizontalOptions="Center" />
+
+            <Button
+                x:Name="InterruptButton"
+                Text="Trigger Interrupt"
+                SemanticProperties.Hint="Triggers a hardware interrupt"
+                Clicked="OnHardwareInterrupt"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>
