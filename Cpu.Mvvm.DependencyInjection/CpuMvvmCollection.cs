@@ -20,6 +20,11 @@ public static class CpuMvvmCollection
         _ = collection
             .Add6502Cpu()
             .AddSingleton<CpuModel>()
+            .AddSingleton<MachineModel>()
+            .AddSingleton<StateModel>()
+            .AddSingleton<FlagModel>()
+            .AddSingleton<RegisterModel>()
+            .AddSingleton<RunningProgramModel>()
             .AddSingleton<IMessenger>(_ => WeakReferenceMessenger.Default);
 
         return collection;

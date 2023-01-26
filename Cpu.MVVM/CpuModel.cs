@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Cpu.Execution;
 
 namespace Cpu.MVVM;
 
@@ -18,17 +17,23 @@ public sealed class CpuModel
     #endregion
 
     #region Constructors
-    public CpuModel(IMessenger messenger, IMachine machine)
+    public CpuModel(
+        IMessenger messenger,
+        MachineModel machine,
+        StateModel state,
+        FlagModel flags,
+        RegisterModel registers,
+        RunningProgramModel program)
     {
-        this.Machine = new MachineModel(messenger, machine);
-        this.State = new StateModel(messenger);
-
-        this.Flags = new FlagModel();
-        this.Registers = new RegisterModel();
-        this.Program = new RunningProgramModel();
+        this.State = state;
+        this.Flags = flags;
+        this.Machine = machine;
+        this.Program = program;
+        this.Registers = registers;
 
         messenger.RegisterAll(this.State);
         messenger.RegisterAll(this.Flags);
+        messenger.RegisterAll(this.Machine);
         messenger.RegisterAll(this.Program);
         messenger.RegisterAll(this.Registers);
     }
