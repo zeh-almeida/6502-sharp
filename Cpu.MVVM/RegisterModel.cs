@@ -10,8 +10,8 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IRegisterManager"/>
 /// </summary>
-public partial class RegisterModel 
-    : ObservableRecipient, 
+public partial class RegisterModel
+    : ObservableRecipient,
     IRecipient<StateUpdateMessage>
 {
     #region Attributes

@@ -10,7 +10,7 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IMachine"/>
 /// </summary>
-public partial class MachineModel 
+public partial class MachineModel
     : ObservableRecipient,
     IRecipient<ProgramLoadedMessage>
 {

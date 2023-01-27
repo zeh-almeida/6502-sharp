@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using Cpu.States;
 
 namespace Cpu.MVVM.Messages;
 
