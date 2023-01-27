@@ -11,7 +11,8 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="ICpuState"/>
 /// </summary>
-public partial class StateModel : ObservableRecipient,
+public partial class StateModel
+    : ObservableRecipient,
     IRecipient<StateUpdateMessage>,
     IRecipient<CyclesLeftMessage>
 {
@@ -49,9 +50,25 @@ public partial class StateModel : ObservableRecipient,
     /// <summary>
     /// Instantiates a new view model
     /// </summary>
-    public StateModel(IMessenger messenger) : base(messenger)
+    public StateModel(IMessenger messenger)
+        : base(messenger)
     {
         this.ExecutingOpcode = DefaultOpcode;
+
+        this.HandleCyclesLeftMessage();
+        this.HandleStateUpdateMessage();
+    }
+    #endregion
+
+    #region Handlers
+    private void HandleStateUpdateMessage()
+    {
+        this.Messenger.Register<StateModel, StateUpdateMessage>(this, static (r, m) => r.Receive(m));
+    }
+
+    private void HandleCyclesLeftMessage()
+    {
+        this.Messenger.Register<StateModel, CyclesLeftMessage>(this, static (r, m) => r.Receive(m));
     }
     #endregion
 

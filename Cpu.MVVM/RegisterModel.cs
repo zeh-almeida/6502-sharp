@@ -10,7 +10,9 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IRegisterManager"/>
 /// </summary>
-public partial class RegisterModel : ObservableObject, IRecipient<StateUpdateMessage>
+public partial class RegisterModel 
+    : ObservableRecipient, 
+    IRecipient<StateUpdateMessage>
 {
     #region Attributes
     /// <inheritdoc cref="IRegisterManager.ProgramCounter"/>
@@ -38,7 +40,8 @@ public partial class RegisterModel : ObservableObject, IRecipient<StateUpdateMes
     /// <summary>
     /// Instantiates a new view model
     /// </summary>
-    public RegisterModel()
+    public RegisterModel(IMessenger messenger)
+        : base(messenger)
     {
         const byte value = 0;
         var hex = value.AsHex();
@@ -48,6 +51,15 @@ public partial class RegisterModel : ObservableObject, IRecipient<StateUpdateMes
         this.Accumulator = hex;
         this.StackPointer = hex;
         this.ProgramCounter = hex;
+
+        this.HandleProgramLoadedMessage();
+    }
+    #endregion
+
+    #region Handlers
+    private void HandleProgramLoadedMessage()
+    {
+        this.Messenger.Register<RegisterModel, StateUpdateMessage>(this, static (r, m) => r.Receive(m));
     }
     #endregion
 

@@ -37,11 +37,8 @@ public partial class CpuModel
         this.Program = program;
         this.Registers = registers;
 
-        messenger.RegisterAll(this.State);
         messenger.RegisterAll(this.Flags);
         messenger.RegisterAll(this.Machine);
-        messenger.RegisterAll(this.Program);
-        messenger.RegisterAll(this.Registers);
     }
     #endregion
 

@@ -228,7 +228,7 @@ public partial class CpuView : Form
             try
             {
                 var state = await Serializer.LoadState(programDialog.FileName);
-                this.EnableProgramExecution(state.State, state.ProgramPath);
+                await this.EnableProgramExecution(state.State, state.ProgramPath);
 
                 _ = MessageBox.Show(
                     $"Loaded state from '{programDialog.FileName}'",
@@ -281,7 +281,7 @@ public partial class CpuView : Form
     private async Task LoadProgram(string programName)
     {
         var bytes = await Serializer.LoadProgram(programName);
-        this.EnableProgramExecution(bytes, programName);
+        await this.EnableProgramExecution(bytes, programName);
 
         _ = MessageBox.Show(
             $"Program '{programName}' loaded",
@@ -290,11 +290,9 @@ public partial class CpuView : Form
             MessageBoxIcon.Information);
     }
 
-    private void EnableProgramExecution(ReadOnlyMemory<byte> bytes, string programName)
+    private async Task EnableProgramExecution(ReadOnlyMemory<byte> bytes, string programName)
     {
         this.CpuModel.Program.SetProgramNameCommand.Execute(programName);
-
-        this.CpuModel.Machine.LoadProgramCommand.Execute(bytes);
-        this.CpuModel.Program.LoadProgramCommand.Execute(bytes);
+        await this.CpuModel.LoadProgramCommand.ExecuteAsync(bytes);
     }
 }

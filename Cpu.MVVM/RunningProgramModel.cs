@@ -14,7 +14,7 @@ namespace Cpu.MVVM;
 /// Represents the executed instructions in a program
 /// </summary>
 public partial class RunningProgramModel
-    : ObservableObject,
+    : ObservableRecipient,
       IRecipient<ProgramLoadedMessage>,
       IRecipient<PropertyChangedMessage<DecodedInstruction>>
 {
@@ -46,6 +46,27 @@ public partial class RunningProgramModel
     /// </summary>
     [ObservableProperty]
     private bool _programLoaded = false;
+    #endregion
+
+    #region Constructors
+    public RunningProgramModel(IMessenger messenger)
+        : base(messenger)
+    {
+        this.HandleProgramLoadedMessage();
+        this.HandleDecodedInstructionMessage();
+    }
+    #endregion
+
+    #region Handlers
+    private void HandleProgramLoadedMessage()
+    {
+        this.Messenger.Register<RunningProgramModel, ProgramLoadedMessage>(this, static (r, m) => r.Receive(m));
+    }
+
+    private void HandleDecodedInstructionMessage()
+    {
+        this.Messenger.Register<RunningProgramModel, PropertyChangedMessage<DecodedInstruction>>(this, static (r, m) => r.Receive(m));
+    }
     #endregion
 
     #region Messages
@@ -89,16 +110,19 @@ public partial class RunningProgramModel
     [RelayCommand]
     protected void LoadProgram(ReadOnlyMemory<byte> program)
     {
-        var builder = new StringBuilder(1 + (program.Length * CharsPer8Bit));
-        var data = program.Span;
-
-        foreach (var value in data[ICpuState.MemoryStateOffset..])
+        lock (this.Bytes)
         {
-            _ = builder.AppendLine(value.AsHex());
-        }
+            var builder = new StringBuilder(1 + (program.Length * CharsPer8Bit));
+            var data = program.Span;
 
-        this.Bytes = builder.ToString();
-        this.ProgramLoaded = true;
+            foreach (var value in data[ICpuState.MemoryStateOffset..])
+            {
+                _ = builder.AppendLine(value.AsHex());
+            }
+
+            this.Bytes = builder.ToString();
+            this.ProgramLoaded = true;
+        }
     }
 
     /// <summary>
@@ -107,8 +131,11 @@ public partial class RunningProgramModel
     [RelayCommand]
     protected void ClearProgram()
     {
-        this.Bytes = string.Empty;
-        this.ProgramLoaded = false;
+        lock (this.Bytes)
+        {
+            this.Bytes = string.Empty;
+            this.ProgramLoaded = false;
+        }
     }
 
     /// <summary>
