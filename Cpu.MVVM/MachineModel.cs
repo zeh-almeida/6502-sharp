@@ -10,7 +10,8 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IMachine"/>
 /// </summary>
-public partial class MachineModel : ObservableRecipient
+public partial class MachineModel : ObservableRecipient,
+    IRecipient<ProgramLoadedMessage>
 {
     #region Attributes
     /// <summary>
@@ -41,6 +42,13 @@ public partial class MachineModel : ObservableRecipient
     {
         return this.Machine.Save();
     }
+
+    #region Messages
+    public void Receive(ProgramLoadedMessage message)
+    {
+        this.LoadProgramCommand.Execute(message.Value);
+    }
+    #endregion
 
     #region Commands
     /// <summary>

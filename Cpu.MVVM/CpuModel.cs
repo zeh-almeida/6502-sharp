@@ -1,8 +1,10 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Cpu.MVVM.Messages;
 
 namespace Cpu.MVVM;
 
-public sealed class CpuModel
+public partial class CpuModel
 {
     #region Properties
     public MachineModel Machine { get; }
@@ -14,6 +16,8 @@ public sealed class CpuModel
     public RegisterModel Registers { get; }
 
     public RunningProgramModel Program { get; }
+
+    private IMessenger Messenger { get; }
     #endregion
 
     #region Constructors
@@ -25,6 +29,8 @@ public sealed class CpuModel
         RegisterModel registers,
         RunningProgramModel program)
     {
+        this.Messenger = messenger;
+
         this.State = state;
         this.Flags = flags;
         this.Machine = machine;
@@ -36,6 +42,17 @@ public sealed class CpuModel
         messenger.RegisterAll(this.Machine);
         messenger.RegisterAll(this.Program);
         messenger.RegisterAll(this.Registers);
+    }
+    #endregion
+
+    #region Commands
+    /// <summary>
+    /// Sends a message for a loaded program
+    /// </summary>
+    [RelayCommand(AllowConcurrentExecutions = false)]
+    protected async Task LoadProgram(ReadOnlyMemory<byte> data)
+    {
+        _ = await Task.Run(() => this.Messenger.Send(new ProgramLoadedMessage(data)));
     }
     #endregion
 }

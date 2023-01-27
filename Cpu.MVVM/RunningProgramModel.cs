@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Cpu.Execution;
 using Cpu.Extensions;
+using Cpu.MVVM.Messages;
 using Cpu.States;
 using System.Text;
 
@@ -14,6 +15,7 @@ namespace Cpu.MVVM;
 /// </summary>
 public partial class RunningProgramModel
     : ObservableObject,
+      IRecipient<ProgramLoadedMessage>,
       IRecipient<PropertyChangedMessage<DecodedInstruction>>
 {
     #region Constants
@@ -47,6 +49,11 @@ public partial class RunningProgramModel
     #endregion
 
     #region Messages
+    public void Receive(ProgramLoadedMessage message)
+    {
+        this.LoadProgramCommand.Execute(message.Value);
+    }
+
     public void Receive(PropertyChangedMessage<DecodedInstruction> message)
     {
         if (message.NewValue is not null)
