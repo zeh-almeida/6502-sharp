@@ -6,6 +6,8 @@
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>10.0</LangVersion>
+		<EnablePreviewFeatures>true</EnablePreviewFeatures>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -14,10 +16,6 @@
 		<Authors>Zeh</Authors>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<description>6502 CPU Emulator View</description>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<EnablePreviewFeatures>true</EnablePreviewFeatures>
 	</PropertyGroup>
 
 	<ItemGroup>
