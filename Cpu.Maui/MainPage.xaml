@@ -3,52 +3,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Cpu.Maui.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Grid Margin="20,35,20,20">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <Label
-                x:Name="ProgramText"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+        <Button
+            Grid.Column="0"
+            Grid.Row="0"
+            x:Name="LoadProgramButton"
+            Text="Load Program"
+            SemanticProperties.Hint="Open and loads a new 6502 Program"
+            Clicked="OnLoadProgram" />
 
-            <Button
-                x:Name="LoadProgramButton"
-                Text="Load Program"
-                SemanticProperties.Hint="Open and loads a new 6502 Program"
-                Clicked="OnLoadProgram"
-                HorizontalOptions="Center" />
+        <Button
+            Grid.Column="0"
+            Grid.Row="1"
+            x:Name="CycleButton"
+            Text="Run CPU Cycle"
+            SemanticProperties.Hint="Runs a cycle of the CPU"
+            Clicked="OnRunCycle" />
 
-            <Button
-                x:Name="CycleButton"
-                Text="Run CPU Cycle"
-                SemanticProperties.Hint="Runs a cycle of the CPU"
-                Clicked="OnRunCycle"
-                HorizontalOptions="Center" />
+        <Button
+            Grid.Column="1"
+            Grid.Row="1"
+            x:Name="InstructionButton"
+            Text="Execute Instruction"
+            SemanticProperties.Hint="Executes all cycles of an Instruction"
+            Clicked="OnExecuteInstruction" />
 
-            <Button
-                x:Name="InstructionButton"
-                Text="Execute Instruction"
-                SemanticProperties.Hint="Executes all cycles of an Instruction"
-                Clicked="OnExecuteInstruction"
-                HorizontalOptions="Center" />
+        <Button
+            Grid.Column="0"
+            Grid.Row="2"
+            x:Name="InterruptButton"
+            Text="Trigger Interrupt"
+            SemanticProperties.Hint="Triggers a hardware interrupt"
+            Clicked="OnHardwareInterrupt" />
 
-            <Button
-                x:Name="InterruptButton"
-                Text="Trigger Interrupt"
-                SemanticProperties.Hint="Triggers a hardware interrupt"
-                Clicked="OnHardwareInterrupt"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
-    </ScrollView>
+        <Editor
+            Grid.Column="0"
+            Grid.Row="3"
+            x:Name="ProgramText"
+            SemanticProperties.HeadingLevel="Level1"
+            HeightRequest="250"
+            AutoSize="TextChanges"
+            IsReadOnly="true" />
+    </Grid>
 </ContentPage>

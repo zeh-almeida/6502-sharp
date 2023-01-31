@@ -28,7 +28,7 @@ public partial class MainPage : ContentPage
     private void BindProgram()
     {
         this.ProgramText.BindingContext = this.CpuModel.Program;
-        this.ProgramText.SetBinding(Label.TextProperty, nameof(RunningProgramModel.Bytes));
+        this.ProgramText.SetBinding(Editor.TextProperty, nameof(RunningProgramModel.Bytes));
     }
 
     private void BindState()
@@ -51,9 +51,7 @@ public partial class MainPage : ContentPage
     private async void OnLoadProgram(object sender, EventArgs e)
     {
         var bytes = await FileSelector.LoadProgram(PickOptions.Default);
-
-        this.CpuModel.Machine.LoadProgramCommand.Execute(bytes);
-        this.CpuModel.Program.LoadProgramCommand.Execute(bytes);
+        await this.CpuModel.LoadProgramCommand.ExecuteAsync(bytes);
     }
 
     private void OnRunCycle(object sender, EventArgs e)
