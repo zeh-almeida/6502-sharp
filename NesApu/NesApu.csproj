@@ -2,9 +2,17 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net7.0-windows</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
+
 		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TieredPGO>true</TieredPGO>
+		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -22,29 +30,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="NAudio" Version="2.1.0" />
+		<PackageReference Include="NAudio" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-		<PackageReference Include="Roslynator.Analyzers" Version="4.2.0">
+		<PackageReference Include="Roslynator.Analyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.2.0">
+		<PackageReference Include="Roslynator.CodeAnalysis.Analyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.2.0">
+		<PackageReference Include="Roslynator.Formatting.Analyzers">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
+		<PackageReference Include="SecurityCodeScan.VS2019">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <ProjectReference Include="..\Cpu\Cpu.csproj" />
+		<ProjectReference Include="..\Cpu\Cpu.csproj" />
 	</ItemGroup>
 </Project>
