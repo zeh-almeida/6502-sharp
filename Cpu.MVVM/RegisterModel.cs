@@ -64,6 +64,10 @@ public partial class RegisterModel
     #endregion
 
     #region Messages
+    /// <summary>
+    /// Receives a <see cref="StateUpdateMessage"/> message
+    /// </summary>
+    /// <param name="message">Message sent</param>
     public void Receive(StateUpdateMessage message)
     {
         this.UpdateCommand.Execute(message.Value.Registers);

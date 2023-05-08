@@ -42,6 +42,10 @@ public partial class FlagModel : ObservableObject, IRecipient<StateUpdateMessage
     #endregion
 
     #region Messages
+    /// <summary>
+    /// Receives a <see cref="StateUpdateMessage"/> message
+    /// </summary>
+    /// <param name="message">Message received</param>
     public void Receive(StateUpdateMessage message)
     {
         this.UpdateCommand.Execute(message.Value.Flags);

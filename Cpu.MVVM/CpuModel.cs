@@ -4,23 +4,53 @@ using Cpu.MVVM.Messages;
 
 namespace Cpu.MVVM;
 
+/// <summary>
+/// MVVM Definition of the full CPU and Machine
+/// </summary>
 public partial class CpuModel
 {
     #region Properties
+    /// <summary>
+    /// MVVM Model for the <see cref="Execution.IMachine"/>
+    /// </summary>
     public MachineModel Machine { get; }
 
+    /// <summary>
+    /// MVVM Model for the <see cref="States.ICpuState"/>
+    /// </summary>
     public StateModel State { get; }
 
+    /// <summary>
+    /// MVVM Model for the <see cref="Flags.IFlagManager"/>
+    /// </summary>
     public FlagModel Flags { get; }
 
+    /// <summary>
+    /// MVVM Model for the <see cref="Registers.IRegisterManager"/>
+    /// </summary>
     public RegisterModel Registers { get; }
 
+    /// <summary>
+    /// MVVM Model for the executing program state
+    /// </summary>
     public RunningProgramModel Program { get; }
 
+    /// <summary>
+    /// Allows sending and receiving messages for MVVM
+    /// </summary>
     private IMessenger Messenger { get; }
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Instantiates a new CpuModel
+    /// </summary>
+    /// <param name="messenger">Messenger for communications</param>
+    /// <param name="machine"><see cref="MachineModel"/> view model</param>
+    /// <param name="state"><see cref="StateModel"/> view model</param>
+    /// <param name="flags"><see cref="FlagModel"/> view model</param>
+    /// <param name="registers"><see cref="RegisterModel"/> view model</param>
+    /// <param name="program"><see cref="RunningProgramModel"/> view model</param>
     public CpuModel(
         IMessenger messenger,
         MachineModel machine,

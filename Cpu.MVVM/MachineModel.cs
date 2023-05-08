@@ -39,12 +39,20 @@ public partial class MachineModel
     }
     #endregion
 
+    /// <summary>
+    /// Saves the current state of the Machine
+    /// </summary>
+    /// <returns>State of the machine</returns>
     public ReadOnlyMemory<byte> SaveState()
     {
         return this.Machine.Save();
     }
 
     #region Messages
+    /// <summary>
+    /// Receives data from a new loaded program
+    /// </summary>
+    /// <param name="message">Contents of the loaded program</param>
     public void Receive(ProgramLoadedMessage message)
     {
         this.LoadProgramCommand.Execute(message.Value);

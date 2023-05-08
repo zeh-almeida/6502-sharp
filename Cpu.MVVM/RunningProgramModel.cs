@@ -19,6 +19,10 @@ public partial class RunningProgramModel
       IRecipient<PropertyChangedMessage<DecodedInstruction>>
 {
     #region Constants
+    /// <summary>
+    /// Amount of characters used to represent 8-bit values in hexadecimal strings
+    /// </summary>
+    /// <example>1111_1111b == 0xFF</example>
     public const int CharsPer8Bit = 4;
     #endregion
 
@@ -49,6 +53,10 @@ public partial class RunningProgramModel
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Instantiates a new RunningProgramModel
+    /// </summary>
+    /// <param name="messenger">used to send and receive messages</param>
     public RunningProgramModel(IMessenger messenger)
         : base(messenger)
     {
@@ -70,11 +78,19 @@ public partial class RunningProgramModel
     #endregion
 
     #region Messages
+    /// <summary>
+    /// receives a message when a program is decoded
+    /// </summary>
+    /// <param name="message">Loaded program data</param>
     public void Receive(ProgramLoadedMessage message)
     {
         this.LoadProgramCommand.Execute(message.Value);
     }
 
+    /// <summary>
+    /// receives a message when a instruction is decoded
+    /// </summary>
+    /// <param name="message">Decoded instruction data</param>
     public void Receive(PropertyChangedMessage<DecodedInstruction> message)
     {
         if (message.NewValue is not null)

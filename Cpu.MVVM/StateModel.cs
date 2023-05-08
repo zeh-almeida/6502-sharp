@@ -17,6 +17,9 @@ public partial class StateModel
     IRecipient<CyclesLeftMessage>
 {
     #region Constants
+    /// <summary>
+    /// Default OPCode to show when initialized
+    /// </summary>
     public const string DefaultOpcode = "-";
     #endregion
 
@@ -75,14 +78,26 @@ public partial class StateModel
     #region Messages
     partial void OnDecodedInstructionChanged(DecodedInstruction? value)
     {
-        this.Broadcast<DecodedInstruction>(null, value, nameof(StateModel.DecodedInstruction));
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+        this.Broadcast<DecodedInstruction>(null, value, nameof(DecodedInstruction));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8604 // Possible null reference argument.
     }
 
+    /// <summary>
+    /// Receives a <see cref="StateUpdateMessage"/>
+    /// </summary>
+    /// <param name="message">Message received</param>
     public void Receive(StateUpdateMessage message)
     {
         this.UpdateCommand.Execute(message.Value);
     }
 
+    /// <summary>
+    /// Receives a <see cref="CyclesLeftMessage"/>
+    /// </summary>
+    /// <param name="message">Message received</param>
     public void Receive(CyclesLeftMessage message)
     {
         message.Reply(this.CyclesLeft);
@@ -109,16 +124,23 @@ public partial class StateModel
     /// <summary>
     /// Triggers a Hardware Interrupt in the CPU
     /// </summary>
-    /// <param name="source"><see cref="ICpuState"/> to trigger the interrupt</param>
     [RelayCommand(CanExecute = nameof(CanTriggerHardwareInterrupt))]
     protected void TriggerHardwareInterrupt()
     {
-        this.LastState.IsHardwareInterrupt = true;
+        if (this.LastState is not null)
+        {
+            this.LastState.IsHardwareInterrupt = true;
+        }
+
         this.UpdateCommand.Execute(this.LastState);
     }
     #endregion
 
     #region Validations
+    /// <summary>
+    /// Checks if it is possible to trigger a hardware interrupt in the <see cref="ICpuState"/>
+    /// </summary>
+    /// <returns>True if possible, false otherwise</returns>
     protected bool CanTriggerHardwareInterrupt()
     {
         return this.LastState?.IsHardwareInterrupt == false;

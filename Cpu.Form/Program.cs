@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Cpu.Forms;
 
+/// <summary>
+/// Starts the Form program
+/// </summary>
 public static class Program
 {
     /// <summary>

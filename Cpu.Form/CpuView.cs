@@ -5,6 +5,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Cpu.Forms;
 
+/// <summary>
+/// <see cref="Form"/> definition to display <see cref="Cpu.MVVM.CpuModel"/> data
+/// </summary>
 public partial class CpuView : Form
 {
     #region Properties
@@ -14,6 +17,11 @@ public partial class CpuView : Form
     #endregion
 
     #region Constructors
+    /// <summary>
+    /// Instantiates a new CpuView
+    /// </summary>
+    /// <param name="logger">Logger for debugging</param>
+    /// <param name="cpuModel">Model to be displayed in the form</param>
     public CpuView(
         ILogger<CpuModel> logger,
         CpuModel cpuModel)
