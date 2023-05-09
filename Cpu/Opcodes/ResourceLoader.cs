@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Cpu.Opcodes.Exceptions;
+using System.Globalization;
 using System.Resources;
 
 namespace Cpu.Opcodes;
@@ -12,7 +13,7 @@ public class ResourceLoader
     /// Reads all available Resources from the Instruction definitions
     /// </summary>
     /// <returns><see cref="ResourceSet"/> referencing all data</returns>
-    /// <exception cref="Exception">Thrown if resources cannot be read</exception>
+    /// <exception cref="MisconfiguredOpcodeException">Thrown if resources cannot be read</exception>
     /// <seealso cref="InstructionDefinition"/>
     public ResourceSet LoadInstructions()
     {
@@ -24,10 +25,12 @@ public class ResourceLoader
     /// </summary>
     /// <param name="manager"><see cref="ResourceManager"/> containing all resource definitions</param>
     /// <returns><see cref="ResourceSet"/> referencing all data</returns>
-    /// <exception cref="Exception">Thrown if resources cannot be read</exception>
+    /// <exception cref="MisconfiguredOpcodeException">Thrown if resources cannot be read</exception>
     public virtual ResourceSet Load(ResourceManager manager)
     {
+        ArgumentNullException.ThrowIfNull(manager, nameof(manager));
+
         return manager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)
-            ?? throw new Exception("Could not load resources");
+            ?? throw new MisconfiguredOpcodeException("Could not load resources");
     }
 }

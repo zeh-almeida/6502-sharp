@@ -49,7 +49,7 @@ public sealed record OpcodeLoader
     /// <returns>Current instance for method chaining</returns>
     public async Task<OpcodeLoader> LoadAsync()
     {
-        await this.ReadResourcesAsync();
+        await this.ReadResourcesAsync().ConfigureAwait(false);
         return this;
     }
 
@@ -73,7 +73,7 @@ public sealed record OpcodeLoader
             using var stream = new MemoryStream(bytes);
 
             // Must use concrete type when deserializing because you cannot instantiate interfaces
-            var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options);
+            var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options).ConfigureAwait(false);
 
             foreach (var opcode in result)
             {

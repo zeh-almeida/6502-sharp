@@ -56,7 +56,10 @@ public sealed record DecodedInstruction
             ? this.ValueParameter.AsAssembly()
             : ((byte)this.ValueParameter).AsAssembly();
 
-        var content = this.Information.ToString() ?? throw new Exception("Information is null!");
-        return content.Replace(Operator, value);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+        // Information is never null
+        return this.Information.ToString()
+                   .Replace(Operator, value, StringComparison.InvariantCultureIgnoreCase);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 }

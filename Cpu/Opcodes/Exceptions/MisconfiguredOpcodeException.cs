@@ -22,7 +22,6 @@ public sealed class MisconfiguredOpcodeException : Exception
     /// </summary>
     /// <param name="opcodeName">name of the resource not configured</param>
     public MisconfiguredOpcodeException(string opcodeName)
-        : base()
     {
         this.OpcodeName = opcodeName;
     }
