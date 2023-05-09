@@ -86,7 +86,7 @@ public sealed record DecodedInstructionTest
         var opcodeInfo = opcodeMock.Object;
 
         var subject = new DecodedInstruction(opcodeInfo, instruction, Value);
-        _ = Assert.Throws<Exception>(subject.ToString);
+        _ = Assert.Throws<NullReferenceException>(subject.ToString);
     }
 
     [Fact]
