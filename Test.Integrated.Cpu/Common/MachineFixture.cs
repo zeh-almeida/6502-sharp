@@ -7,6 +7,7 @@ using Cpu.Opcodes;
 using Cpu.Registers;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
+using System.Globalization;
 using Test.Integrated.Cpu.Files;
 
 namespace Test.Integrated.Cpu.Common;
@@ -113,7 +114,7 @@ public sealed record MachineFixture : IDisposable, IAsyncDisposable
 
     private static ReadOnlyMemory<byte> BuildProgramStream(string programName)
     {
-        if (Resources.ResourceManager.GetObject(programName) is not byte[] program)
+        if (Resources.ResourceManager.GetObject(programName, CultureInfo.CurrentCulture) is not byte[] program)
         {
             throw new ArgumentException("Program not found", nameof(programName));
         }
@@ -130,7 +131,7 @@ public sealed record MachineFixture : IDisposable, IAsyncDisposable
 
     private static ReadOnlyMemory<byte> BuildProgramStream(string programName, ushort offset)
     {
-        if (Resources.ResourceManager.GetObject(programName) is not byte[] program)
+        if (Resources.ResourceManager.GetObject(programName, CultureInfo.CurrentCulture) is not byte[] program)
         {
             throw new ArgumentException("Program not found", nameof(programName));
         }
