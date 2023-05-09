@@ -65,7 +65,7 @@ public sealed record MemoryManager : IMemoryManager
     /// <inheritdoc/>
     public void WriteAbsolute(ushort address, byte value)
     {
-        this.Logger.LogInformation(MemoryEvents.OnWrite, "{value:X2} @ {address:X4}", value, address);
+        this.Logger.LogAction(MemoryEvents.WriteAction, default, value, address);
         this.MemoryArea.Span[address] = value;
     }
 
@@ -139,7 +139,7 @@ public sealed record MemoryManager : IMemoryManager
     public byte ReadAbsolute(ushort address)
     {
         var value = this.MemoryArea.Span[address];
-        this.Logger.LogInformation(MemoryEvents.OnRead, "{value:X2} @ {address:X4}", value, address);
+        this.Logger.LogAction(MemoryEvents.ReadAction, default, value, address);
 
         return value;
     }

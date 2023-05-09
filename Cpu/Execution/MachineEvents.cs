@@ -7,6 +7,7 @@ namespace Cpu.Execution;
 /// </summary>
 internal static class MachineEvents
 {
+    #region Events
     /// <summary>
     /// Signifies data being load into the machine, like a new program
     /// </summary>
@@ -41,6 +42,7 @@ internal static class MachineEvents
     /// Signifies a clock execution
     /// </summary>
     public static EventId OnExecute { get; } = new EventId(1600, "Execution");
+    #endregion
 
     #region Delegates
     public static readonly Action<ILogger, object, Exception?> LoadDataAction = LoggerMessage.Define<object>(

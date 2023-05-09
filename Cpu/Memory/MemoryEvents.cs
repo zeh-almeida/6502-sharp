@@ -7,6 +7,7 @@ namespace Cpu.Memory;
 /// </summary>
 internal static class MemoryEvents
 {
+    #region Events
     /// <summary>
     /// Signifies data being read from memory
     /// </summary>
@@ -22,4 +23,17 @@ internal static class MemoryEvents
     /// </summary>
     /// <see cref="IMemoryManager.PageBoundary"/>
     public static EventId PageCrossed { get; } = new EventId(2200, "Crossed Boundary");
+    #endregion
+
+    #region Delegates
+    public static readonly Action<ILogger, object, object, Exception?> ReadAction = LoggerMessage.Define<object, object>(
+        LogLevel.Information,
+        OnRead,
+        "{Value:X2} @ {Address:X4}");
+
+    public static readonly Action<ILogger, object, object, Exception?> WriteAction = LoggerMessage.Define<object, object>(
+        LogLevel.Information,
+        OnWrite,
+        "{Value:X2} @ {Address:X4}");
+    #endregion
 }
