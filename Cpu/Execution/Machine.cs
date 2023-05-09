@@ -46,6 +46,8 @@ public sealed record Machine : IMachine
     /// <inheritdoc/>
     public bool Cycle(Action<ICpuState> afterCycle)
     {
+        ArgumentNullException.ThrowIfNull(afterCycle, nameof(afterCycle));
+
         var result = this.Cycle();
         afterCycle(this.State);
 
@@ -70,14 +72,14 @@ public sealed record Machine : IMachine
     /// <inheritdoc/>
     public void Load(ReadOnlyMemory<byte> data)
     {
-        this.Logger.LogInformation(MachineEvents.OnLoadData, "{dataLength}", data.Length);
+        this.Logger.LogAction(MachineEvents.LoadDataAction, data.Length);
         this.State.Load(data);
     }
 
     /// <inheritdoc/>
     public ReadOnlyMemory<byte> Save()
     {
-        this.Logger.LogInformation(MachineEvents.OnSaveData, "Save state");
+        this.Logger.LogAction(MachineEvents.SaveStateAction);
         return this.State.Save();
     }
 
@@ -93,7 +95,7 @@ public sealed record Machine : IMachine
     {
         if (this.State.IsHardwareInterrupt)
         {
-            this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Hardware");
+            this.Logger.LogAction(MachineEvents.InterruptAction, "Hardware");
             this.CommonInterrupt(false, HardwareInterruptAddress);
 
             this.State.IsHardwareInterrupt = false;
@@ -105,7 +107,7 @@ public sealed record Machine : IMachine
     {
         if (this.State.IsSoftwareInterrupt && !this.State.Flags.IsInterruptDisable)
         {
-            this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Software");
+            this.Logger.LogAction(MachineEvents.InterruptAction, "Software");
             this.CommonInterrupt(true, SoftwareInterruptAddress);
 
             this.State.IsSoftwareInterrupt = false;
@@ -154,9 +156,9 @@ public sealed record Machine : IMachine
             this.State.AdvanceProgramCount(decoded);
             this.ExecuteDecoded(decoded);
         }
-        catch (ProgramExecutionExeption ex)
+        catch (ProgramExecutionException ex)
         {
-            this.Logger.LogError(MachineEvents.OnExecute, ex, "Failed to execute clock");
+            this.Logger.LogAction(MachineEvents.ExecutionExceptionAction, ex);
             result = false;
         }
 
@@ -169,14 +171,16 @@ public sealed record Machine : IMachine
         {
             var result = this.Decoder.Decode(this.State);
 
-            this.Logger.LogInformation(MachineEvents.OnDecode, "{Instruction} @ {ProgramCounter}",
-                result, this.State.Registers.ProgramCounter.AsHex());
+            this.Logger.LogAction(
+                MachineEvents.DecodeAction,
+                default, result,
+                this.State.Registers.ProgramCounter.AsHex());
 
             return result;
         }
         catch (Exception ex)
         {
-            throw new ProgramExecutionExeption("Failed to decode stream", ex);
+            throw new ProgramExecutionException("Failed to decode stream", ex);
         }
     }
 
@@ -189,12 +193,12 @@ public sealed record Machine : IMachine
             decoded.Instruction.Execute(this.State, decoded.ValueParameter);
             this.State.DecrementCycle();
 
-            this.Logger.LogInformation(MachineEvents.OnFlags, "{flagState}", this.State.Flags.ToString());
-            this.Logger.LogInformation(MachineEvents.OnRegisters, "{registerState}", this.State.Registers.ToString());
+            this.Logger.LogAction(MachineEvents.FlagAction, this.State.Flags);
+            this.Logger.LogAction(MachineEvents.RegisterAction, this.State.Registers);
         }
         catch (Exception ex)
         {
-            throw new ProgramExecutionExeption("Failed to execute instruction", ex);
+            throw new ProgramExecutionException("Failed to execute instruction", ex);
         }
     }
 }

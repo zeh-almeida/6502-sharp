@@ -41,4 +41,41 @@ internal static class MachineEvents
     /// Signifies a clock execution
     /// </summary>
     public static EventId OnExecute { get; } = new EventId(1600, "Execution");
+
+    #region Delegates
+    public static readonly Action<ILogger, object, Exception?> LoadDataAction = LoggerMessage.Define<object>(
+        LogLevel.Information,
+        OnLoadData,
+        "{DataLength}");
+
+    public static readonly Action<ILogger, Exception?> SaveStateAction = LoggerMessage.Define(
+        LogLevel.Information,
+        OnSaveData,
+        "Save state");
+
+    public static readonly Action<ILogger, object, Exception?> InterruptAction = LoggerMessage.Define<object>(
+        LogLevel.Information,
+        OnInterrupt,
+        "{InterruptType}");
+
+    public static readonly Action<ILogger, object, Exception?> FlagAction = LoggerMessage.Define<object>(
+        LogLevel.Information,
+        OnFlags,
+        "{FlagState}");
+
+    public static readonly Action<ILogger, object, Exception?> RegisterAction = LoggerMessage.Define<object>(
+        LogLevel.Information,
+        OnRegisters,
+        "{RegisterState}");
+
+    public static readonly Action<ILogger, object, object, Exception?> DecodeAction = LoggerMessage.Define<object, object>(
+        LogLevel.Information,
+        OnRegisters,
+        "{Instruction} @ {ProgramCounter}");
+
+    public static readonly Action<ILogger, Exception?> ExecutionExceptionAction = LoggerMessage.Define(
+        LogLevel.Error,
+        OnRegisters,
+        "Failed to execute clock");
+    #endregion
 }
