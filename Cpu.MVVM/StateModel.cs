@@ -5,6 +5,7 @@ using Cpu.Execution;
 using Cpu.Extensions;
 using Cpu.MVVM.Messages;
 using Cpu.States;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cpu.MVVM;
 
@@ -91,6 +92,7 @@ public partial class StateModel
     /// <param name="message">Message received</param>
     public void Receive(StateUpdateMessage message)
     {
+        ArgumentNullException.ThrowIfNull(message, nameof(message));
         this.UpdateCommand.Execute(message.Value);
     }
 
@@ -100,6 +102,7 @@ public partial class StateModel
     /// <param name="message">Message received</param>
     public void Receive(CyclesLeftMessage message)
     {
+        ArgumentNullException.ThrowIfNull(message, nameof(message));
         message.Reply(this.CyclesLeft);
     }
     #endregion
@@ -110,7 +113,7 @@ public partial class StateModel
     /// </summary>
     /// <param name="source"><see cref="ICpuState"/> with the values to update from</param>
     [RelayCommand]
-    protected void Update(ICpuState source)
+    protected void Update([NotNull] ICpuState source)
     {
         this.LastState = source;
         this.ExecutingOpcode = source.ExecutingOpcode.AsHex();

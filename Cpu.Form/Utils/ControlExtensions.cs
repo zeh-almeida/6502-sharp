@@ -19,10 +19,16 @@ public static class ControlExtensions
         this Control control, string controlPropName,
         ObservableObject source, string sourcePropName)
     {
+        ArgumentNullException.ThrowIfNull(control, nameof(control));
+        ArgumentNullException.ThrowIfNull(source, nameof(source));
+
+        ArgumentNullException.ThrowIfNullOrEmpty(controlPropName, nameof(controlPropName));
+        ArgumentNullException.ThrowIfNullOrEmpty(sourcePropName, nameof(sourcePropName));
+
         source.PropertyChanged += (object? sender, PropertyChangedEventArgs eventArgs) =>
         {
             if (sender is not null
-                && sourcePropName.Equals(eventArgs.PropertyName))
+                && sourcePropName.Equals(eventArgs.PropertyName, StringComparison.Ordinal))
             {
                 control.Invoke(() =>
                 {
@@ -87,6 +93,10 @@ public static class ControlExtensions
     /// <param name="sourcePropName">Property of the source to bind to</param>
     public static void BindTo(this ToolStripMenuItem control, ObservableObject source, string sourcePropName)
     {
+        ArgumentNullException.ThrowIfNull(control, nameof(control));
+        ArgumentNullException.ThrowIfNull(source, nameof(source));
+        ArgumentNullException.ThrowIfNullOrEmpty(sourcePropName, nameof(sourcePropName));
+
         _ = control.DataBindings.Add(
                 nameof(ToolStripMenuItem.Enabled),
                 source,

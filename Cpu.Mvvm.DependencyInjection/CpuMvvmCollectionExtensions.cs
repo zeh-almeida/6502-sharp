@@ -8,7 +8,7 @@ namespace Cpu.Mvvm.DependencyInjection;
 /// <summary>
 /// Extends <see cref="IServiceCollection"/> to add CPU MVVM dependency injection mechanisms
 /// </summary>
-public static class CpuMvvmCollection
+public static class CpuMvvmCollectionExtensions
 {
     /// <summary>
     /// Registers all necessary components for the CPU MVVM
@@ -29,5 +29,4 @@ public static class CpuMvvmCollection
 
         return collection;
     }
-
 }

@@ -168,11 +168,11 @@ public partial class CpuView : Form
 
         try
         {
-            await this.LoadProgram(programDialog.FileName);
+            await this.LoadProgram(programDialog.FileName).ConfigureAwait(true);
         }
         catch (Exception ex)
         {
-            this.Logger.LogError(ex, "{programPath}", programDialog.SafeFileName);
+            this.Logger.LogError(ex, "{ProgramPath}", programDialog.SafeFileName);
 
             _ = MessageBox.Show(
                 "Could not load program, check log for more information",
@@ -210,7 +210,7 @@ public partial class CpuView : Form
             }
             catch (Exception ex)
             {
-                this.Logger.LogError(ex, "{programPath}", programDialog.SelectedPath);
+                this.Logger.LogError(ex, "{ProgramPath}", programDialog.SelectedPath);
 
                 _ = MessageBox.Show(
                     "Could not save state, check log for more information",
@@ -235,8 +235,8 @@ public partial class CpuView : Form
         {
             try
             {
-                var state = await Serializer.LoadState(programDialog.FileName);
-                await this.EnableProgramExecution(state.State, state.ProgramPath);
+                var state = await Serializer.LoadState(programDialog.FileName).ConfigureAwait(true);
+                await this.EnableProgramExecution(state.State, state.ProgramPath).ConfigureAwait(true);
 
                 _ = MessageBox.Show(
                     $"Loaded state from '{programDialog.FileName}'",
@@ -246,7 +246,7 @@ public partial class CpuView : Form
             }
             catch (Exception ex)
             {
-                this.Logger.LogError(ex, "{programPath}", programDialog.FileName);
+                this.Logger.LogError(ex, "{ProgramPath}", programDialog.FileName);
 
                 _ = MessageBox.Show(
                     "Could not load state, check log for more information",
@@ -277,7 +277,7 @@ public partial class CpuView : Form
 
         await (!DialogResult.OK.Equals(result)
             ? Task.CompletedTask
-            : this.LoadProgram(this.CpuModel.Program.ProgramName));
+            : this.LoadProgram(this.CpuModel.Program.ProgramName)).ConfigureAwait(true);
     }
 
     private void TriggerInterruptButton_Click(object sender, EventArgs e)
@@ -288,8 +288,8 @@ public partial class CpuView : Form
 
     private async Task LoadProgram(string programName)
     {
-        var bytes = await Serializer.LoadProgram(programName);
-        await this.EnableProgramExecution(bytes, programName);
+        var bytes = await Serializer.LoadProgram(programName).ConfigureAwait(true);
+        await this.EnableProgramExecution(bytes, programName).ConfigureAwait(true);
 
         _ = MessageBox.Show(
             $"Program '{programName}' loaded",
@@ -301,6 +301,6 @@ public partial class CpuView : Form
     private async Task EnableProgramExecution(ReadOnlyMemory<byte> bytes, string programName)
     {
         this.CpuModel.Program.SetProgramNameCommand.Execute(programName);
-        await this.CpuModel.LoadProgramCommand.ExecuteAsync(bytes);
+        await this.CpuModel.LoadProgramCommand.ExecuteAsync(bytes).ConfigureAwait(true);
     }
 }

@@ -8,7 +8,7 @@ internal static class Serializer
     {
         var state = new Memory<byte>(new byte[ICpuState.Length]);
 
-        var program = await LoadFile(programPath, token);
+        var program = await LoadFile(programPath, token).ConfigureAwait(true);
         program.CopyTo(state[ICpuState.MemoryStateOffset..]);
 
         state.Span[ICpuState.MemoryStateOffset + 0xFFFE] = 0xFF;
@@ -51,6 +51,6 @@ internal static class Serializer
 
     private static async Task<ReadOnlyMemory<byte>> LoadFile(string programPath, CancellationToken token = default)
     {
-        return await File.ReadAllBytesAsync(programPath, token);
+        return await File.ReadAllBytesAsync(programPath, token).ConfigureAwait(true);
     }
 }

@@ -16,8 +16,6 @@ public static class CpuServiceCollectionExtensions
 {
     #region Constants
     private static Type InstructionType { get; } = typeof(IInstruction);
-
-    private static Type OpcodeType { get; } = typeof(IOpcodeInformation);
     #endregion
 
     /// <summary>

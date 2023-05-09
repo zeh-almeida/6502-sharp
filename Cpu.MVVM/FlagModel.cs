@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Cpu.Flags;
 using Cpu.MVVM.Messages;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cpu.MVVM;
 
@@ -48,6 +49,7 @@ public partial class FlagModel : ObservableObject, IRecipient<StateUpdateMessage
     /// <param name="message">Message received</param>
     public void Receive(StateUpdateMessage message)
     {
+        ArgumentNullException.ThrowIfNull(message, nameof(message));
         this.UpdateCommand.Execute(message.Value.Flags);
     }
     #endregion
@@ -58,7 +60,7 @@ public partial class FlagModel : ObservableObject, IRecipient<StateUpdateMessage
     /// </summary>
     /// <param name="source"><see cref="IFlagManager"/> with the values to update from</param>
     [RelayCommand]
-    protected void Update(IFlagManager source)
+    protected void Update([NotNull] IFlagManager source)
     {
         this.IsZero = source.IsZero;
         this.IsCarry = source.IsCarry;

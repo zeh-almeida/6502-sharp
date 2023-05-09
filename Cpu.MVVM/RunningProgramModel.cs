@@ -52,6 +52,10 @@ public partial class RunningProgramModel
     private bool _programLoaded = false;
     #endregion
 
+    #region Properties
+    private object ByteLock { get; } = new();
+    #endregion
+
     #region Constructors
     /// <summary>
     /// Instantiates a new RunningProgramModel
@@ -84,6 +88,7 @@ public partial class RunningProgramModel
     /// <param name="message">Loaded program data</param>
     public void Receive(ProgramLoadedMessage message)
     {
+        ArgumentNullException.ThrowIfNull(message, nameof(message));
         this.LoadProgramCommand.Execute(message.Value);
     }
 
@@ -93,6 +98,8 @@ public partial class RunningProgramModel
     /// <param name="message">Decoded instruction data</param>
     public void Receive(PropertyChangedMessage<DecodedInstruction> message)
     {
+        ArgumentNullException.ThrowIfNull(message, nameof(message));
+
         if (message.NewValue is not null)
         {
             this.AddInstructionCommand.Execute(message.NewValue);
@@ -126,7 +133,7 @@ public partial class RunningProgramModel
     [RelayCommand]
     protected void LoadProgram(ReadOnlyMemory<byte> program)
     {
-        lock (this.Bytes)
+        lock (this.ByteLock)
         {
             var builder = new StringBuilder(1 + (program.Length * CharsPer8Bit));
             var data = program.Span;
@@ -147,7 +154,7 @@ public partial class RunningProgramModel
     [RelayCommand]
     protected void ClearProgram()
     {
-        lock (this.Bytes)
+        lock (this.ByteLock)
         {
             this.Bytes = string.Empty;
             this.ProgramLoaded = false;

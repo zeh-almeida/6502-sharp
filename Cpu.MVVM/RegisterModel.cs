@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Cpu.Extensions;
 using Cpu.MVVM.Messages;
 using Cpu.Registers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cpu.MVVM;
 
@@ -70,6 +71,7 @@ public partial class RegisterModel
     /// <param name="message">Message sent</param>
     public void Receive(StateUpdateMessage message)
     {
+        ArgumentNullException.ThrowIfNull(message, nameof(message));
         this.UpdateCommand.Execute(message.Value.Registers);
     }
     #endregion
@@ -80,7 +82,7 @@ public partial class RegisterModel
     /// </summary>
     /// <param name="source"><see cref="IRegisterManager"/> with the values to update from</param>
     [RelayCommand]
-    protected void Update(IRegisterManager source)
+    protected void Update([NotNull] IRegisterManager source)
     {
         this.IndexX = source.IndexX.AsHex();
         this.IndexY = source.IndexY.AsHex();

@@ -55,6 +55,7 @@ public partial class MachineModel
     /// <param name="message">Contents of the loaded program</param>
     public void Receive(ProgramLoadedMessage message)
     {
+        ArgumentNullException.ThrowIfNull(message, nameof(message));
         this.LoadProgramCommand.Execute(message.Value);
     }
     #endregion

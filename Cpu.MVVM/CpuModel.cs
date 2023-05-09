@@ -79,7 +79,7 @@ public partial class CpuModel
     [RelayCommand(AllowConcurrentExecutions = false)]
     protected async Task LoadProgram(ReadOnlyMemory<byte> data)
     {
-        _ = await Task.Run(() => this.Messenger.Send(new ProgramLoadedMessage(data)));
+        _ = await Task.Run(() => this.Messenger.Send(new ProgramLoadedMessage(data))).ConfigureAwait(false);
     }
     #endregion
 }
