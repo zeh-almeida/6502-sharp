@@ -23,7 +23,7 @@ public sealed class PushProcessorStatus : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort _)
+    public override void Execute(ICpuState currentState, ushort value)
     {
         var bits = currentState.Flags.Save();
         currentState.Stack.Push(bits);

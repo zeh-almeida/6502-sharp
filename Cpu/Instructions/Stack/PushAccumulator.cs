@@ -23,7 +23,7 @@ public sealed class PushAccumulator : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort _)
+    public override void Execute(ICpuState currentState, ushort value)
     {
         var accumulator = currentState.Registers.Accumulator;
         currentState.Stack.Push16(accumulator);

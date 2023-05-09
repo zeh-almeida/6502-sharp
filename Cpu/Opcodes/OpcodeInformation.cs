@@ -70,9 +70,9 @@ public sealed class OpcodeInformation : IOpcodeInformation
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object? other)
+    public override bool Equals(object? obj)
     {
-        return other is IOpcodeInformation info
+        return obj is IOpcodeInformation info
             && this.Equals(info);
     }
 

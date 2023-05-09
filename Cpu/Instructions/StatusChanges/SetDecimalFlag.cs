@@ -22,7 +22,7 @@ public sealed class SetDecimalFlag : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort _)
+    public override void Execute(ICpuState currentState, ushort value)
     {
         currentState.Flags.IsDecimalMode = true;
     }

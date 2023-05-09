@@ -167,6 +167,8 @@ public sealed record CpuState : ICpuState
     /// <inheritdoc/>
     public void SetExecutingInstruction(DecodedInstruction decoded)
     {
+        ArgumentNullException.ThrowIfNull(decoded, nameof(decoded));
+
         this.DecodedInstruction = decoded;
         this.ExecutingOpcode = decoded.Information.Opcode;
 
@@ -183,6 +185,7 @@ public sealed record CpuState : ICpuState
     /// <inheritdoc/>
     public void AdvanceProgramCount(DecodedInstruction decoded)
     {
+        ArgumentNullException.ThrowIfNull(decoded, nameof(decoded));
         this.Registers.ProgramCounter += decoded.Information.Bytes;
     }
 }

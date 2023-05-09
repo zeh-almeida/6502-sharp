@@ -23,7 +23,7 @@ public sealed class ReturnFromSubroutine : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort _)
+    public override void Execute(ICpuState currentState, ushort value)
     {
         currentState.Registers.ProgramCounter = currentState.Stack.Pull16();
     }

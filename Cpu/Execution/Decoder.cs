@@ -37,6 +37,8 @@ public sealed record Decoder : IDecoder
     /// <inheritdoc/>
     public DecodedInstruction Decode(ICpuState currentState)
     {
+        ArgumentNullException.ThrowIfNull(currentState, nameof(currentState));
+
         var opcode = ReadNextOpcode(currentState);
         var opcodeInfo = this.FetchOpcode(opcode);
         var instruction = this.FetchInstruction(opcode);

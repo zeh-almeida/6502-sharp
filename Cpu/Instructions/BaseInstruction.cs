@@ -1,5 +1,6 @@
 ﻿using Cpu.Extensions;
 using Cpu.States;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Cpu.Instructions;
 
@@ -46,9 +47,9 @@ public abstract class BaseInstruction : IInstruction
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object? other)
+    public override bool Equals(object? obj)
     {
-        return other is BaseInstruction instruction
+        return obj is BaseInstruction instruction
             && this.Equals(instruction);
     }
 
@@ -73,10 +74,11 @@ public abstract class BaseInstruction : IInstruction
     /// <param name="additionalCycles">Number of cycles to add</param>
     /// <returns>The value read from memory</returns>
     protected static byte LoadExtraCycle(
-        ICpuState currentState,
+        [NotNull] ICpuState currentState,
         (bool, byte) result,
         int additionalCycles = 1)
     {
+
         if (result.Item1)
         {
             currentState.IncrementCycles(additionalCycles);
@@ -90,7 +92,7 @@ public abstract class BaseInstruction : IInstruction
     /// </summary>
     /// <param name="currentState">State to read and write to</param>
     /// <param name="value">Branch address to take</param>
-    protected static void ExecuteBranch(ICpuState currentState, ushort value)
+    protected static void ExecuteBranch([NotNull] ICpuState currentState, ushort value)
     {
         var currentAddress = currentState.Registers.ProgramCounter;
         currentState.Registers.ProgramCounter = currentAddress.BranchAddress((byte)value);
