@@ -27,7 +27,7 @@ public interface ICpuState
     public const ushort FlagOffset = 2;
 
     /// <summary>
-    /// Amount of cycles to add because of a triggered interrupt 
+    /// Amount of cycles to add because of a triggered interrupt
     /// </summary>
     public const int InterruptCycleCount = 6;
 

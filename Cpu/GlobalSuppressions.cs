@@ -12,3 +12,5 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Opcodes.Exceptions.DuplicateOpcodeException")]
 [assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Opcodes.Exceptions.MisconfiguredOpcodeException")]
+
+[assembly: SuppressMessage("Style", "IDE0230:Use UTF-8 string literal", Justification = "Instruction OP Codes must be legible", Scope = "namespaceanddescendants", Target = "~N:Cpu")]

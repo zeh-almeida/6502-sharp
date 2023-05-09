@@ -108,17 +108,17 @@ public sealed record MachineFixture : IDisposable, IAsyncDisposable
 
     public ValueTask DisposeAsync()
     {
-        return new ValueTask(Task.Run(() => this.Dispose()));
+        return new ValueTask(Task.Run(this.Dispose));
     }
 
     private static ReadOnlyMemory<byte> BuildProgramStream(string programName)
     {
-        var state = new byte[ICpuState.Length];
-
         if (Resources.ResourceManager.GetObject(programName) is not byte[] program)
         {
             throw new ArgumentException("Program not found", nameof(programName));
         }
+
+        var state = new byte[ICpuState.Length];
 
         program.CopyTo(state, ICpuState.MemoryStateOffset);
 
@@ -130,16 +130,16 @@ public sealed record MachineFixture : IDisposable, IAsyncDisposable
 
     private static ReadOnlyMemory<byte> BuildProgramStream(string programName, ushort offset)
     {
+        if (Resources.ResourceManager.GetObject(programName) is not byte[] program)
+        {
+            throw new ArgumentException("Program not found", nameof(programName));
+        }
+
         var state = new byte[ICpuState.Length];
 
         (var programLsb, var programMsb) = offset.SignificantBits();
         state[ICpuState.RegisterOffset + 0] = programLsb;
         state[ICpuState.RegisterOffset + 1] = programMsb;
-
-        if (Resources.ResourceManager.GetObject(programName) is not byte[] program)
-        {
-            throw new ArgumentException("Program not found", nameof(programName));
-        }
 
         program.CopyTo(state, ICpuState.MemoryStateOffset + offset);
 
