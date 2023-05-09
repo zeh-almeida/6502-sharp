@@ -12,7 +12,7 @@ namespace Cpu.DependencyInjection;
 /// <summary>
 /// Extends <see cref="IServiceCollection"/> to add CPU dependency injection mechanisms
 /// </summary>
-public static class CpuServiceCollection
+public static class CpuServiceCollectionExtensions
 {
     #region Constants
     private static Type InstructionType { get; } = typeof(IInstruction);
