@@ -11,7 +11,7 @@ public sealed record ProgramExecutionExeptionTest
     {
         const string message = "ERROR";
 
-        var subject = new ProgramExecutionExeption(message, null);
+        var subject = new ProgramExecutionException(message, null);
 
         Assert.Equal(message, subject.Message);
     }
@@ -20,7 +20,7 @@ public sealed record ProgramExecutionExeptionTest
     {
         var exception = new NullReferenceException();
 
-        var subject = new ProgramExecutionExeption(null, exception);
+        var subject = new ProgramExecutionException(null, exception);
 
         Assert.Equal(exception, subject.InnerException);
     }

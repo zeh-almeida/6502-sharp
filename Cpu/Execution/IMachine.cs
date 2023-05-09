@@ -22,14 +22,14 @@ public interface IMachine
     /// </summary>
     /// <param name="afterCycle">Action to validate <see cref="ICpuState"/></param>
     /// <returns>True if the cycle completed successfully, false otherwise</returns>
-    /// <exception cref="Exceptions.ProgramExecutionExeption"></exception>
+    /// <exception cref="Exceptions.ProgramExecutionException"></exception>
     bool Cycle(Action<ICpuState> afterCycle);
 
     /// <summary>
     /// Performs a single cycle of execution in the current program
     /// </summary>
     /// <returns>True if the cycle completed successfully, false otherwise</returns>
-    /// <exception cref="Exceptions.ProgramExecutionExeption"></exception>
+    /// <exception cref="Exceptions.ProgramExecutionException"></exception>
     bool Cycle();
     #endregion
 

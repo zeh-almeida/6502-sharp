@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents errors that occur during a program execution.
 /// </summary>
-public sealed class ProgramExecutionExeption : Exception
+public sealed class ProgramExecutionException : Exception
 {
     /// <summary>
     /// Initializes a new instance of the Cpu.Execution.Exceptions.ProgramExecutionExeption class
@@ -12,7 +12,7 @@ public sealed class ProgramExecutionExeption : Exception
     /// <param name="message">Message about the program which caused the error</param>
     /// <param name="innerException">Exception which if the cause for the current exception</param>
     /// <see cref="Cpu.Instructions.Exceptions.UnknownOpcodeException"/>
-    public ProgramExecutionExeption(string message, Exception innerException)
+    public ProgramExecutionException(string message, Exception innerException)
         : base(message, innerException)
     {
     }

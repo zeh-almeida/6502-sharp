@@ -5,12 +5,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Execution.Exceptions.ProgramExecutionExeption")]
+[assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Execution.Exceptions.ProgramExecutionException")]
+[assembly: SuppressMessage("Design", "CA1032:Implement standard exception constructors", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Execution.Exceptions.ProgramExecutionException")]
 
 [assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Instructions.Exceptions.UnknownOpcodeException")]
+[assembly: SuppressMessage("Design", "CA1032:Implement standard exception constructors", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Instructions.Exceptions.UnknownOpcodeException")]
+
 [assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Instructions.Exceptions.UnknownInstructionException")]
+[assembly: SuppressMessage("Design", "CA1032:Implement standard exception constructors", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Instructions.Exceptions.UnknownInstructionException")]
 
 [assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Opcodes.Exceptions.DuplicateOpcodeException")]
+[assembly: SuppressMessage("Design", "CA1032:Implement standard exception constructors", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Opcodes.Exceptions.DuplicateOpcodeException")]
+
 [assembly: SuppressMessage("Design", "RCS1194:Implement exception constructors.", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Opcodes.Exceptions.MisconfiguredOpcodeException")]
+[assembly: SuppressMessage("Design", "CA1032:Implement standard exception constructors", Justification = "Not to be used in any way", Scope = "type", Target = "~T:Cpu.Opcodes.Exceptions.MisconfiguredOpcodeException")]
 
 [assembly: SuppressMessage("Style", "IDE0230:Use UTF-8 string literal", Justification = "Instruction OP Codes must be legible", Scope = "namespaceanddescendants", Target = "~N:Cpu")]
