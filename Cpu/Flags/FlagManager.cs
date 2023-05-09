@@ -77,6 +77,6 @@ public sealed record FlagManager : IFlagManager
     /// <inheritdoc/>
     public override string ToString()
     {
-        return $"N:{this.IsNegative.AsBin()};Z:{this.IsZero.AsBin()};C:{this.IsCarry.AsBin()};I:{this.IsInterruptDisable.AsBin()};D:{this.IsDecimalMode.AsBin()};V:{this.IsOverflow.AsBin()}";
+        return $"N:{this.IsNegative.AsBinary()};Z:{this.IsZero.AsBinary()};C:{this.IsCarry.AsBinary()};I:{this.IsInterruptDisable.AsBinary()};D:{this.IsDecimalMode.AsBinary()};V:{this.IsOverflow.AsBinary()}";
     }
 }

@@ -34,7 +34,7 @@ public sealed class SubtractMemoryAccumulator : BaseInstruction
     {
         var accumulator = currentState.Registers.Accumulator;
         var loadValue = Load(currentState, value);
-        var carry = currentState.Flags.IsCarry ? 1 : 0;
+        var carry = currentState.Flags.IsCarry.AsBinary();
 
         var memoryValue = (byte)(loadValue + 1);
         var twoComplement = (byte)(~memoryValue + carry);

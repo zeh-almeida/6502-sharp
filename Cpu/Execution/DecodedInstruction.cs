@@ -51,6 +51,7 @@ public sealed record DecodedInstruction
     /// <inheritdoc/>
     public override string ToString()
     {
+        // 2 bytes = 16-bit
         var value = this.Information.Bytes > 2
             ? this.ValueParameter.AsAssembly()
             : ((byte)this.ValueParameter).AsAssembly();

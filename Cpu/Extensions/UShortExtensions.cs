@@ -133,7 +133,7 @@ public static class UShortExtensions
     public static ushort RotateLeft(this ushort value, bool isCarry)
     {
         var shiftedValue = value << 1;
-        var carryMask = isCarry ? 1 : 0;
+        var carryMask = isCarry.AsBinary();
 
         return (ushort)(shiftedValue | carryMask);
     }

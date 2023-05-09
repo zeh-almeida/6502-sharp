@@ -32,7 +32,7 @@ public sealed class IllegalSubtractWithCarry : BaseInstruction
     public override void Execute(ICpuState currentState, ushort value)
     {
         var accumulator = currentState.Registers.Accumulator;
-        var carry = currentState.Flags.IsCarry ? 1 : 0;
+        var carry = currentState.Flags.IsCarry.AsBinary();
 
         var twoComplement = (byte)(~value + carry);
         var operation = (ushort)(accumulator + twoComplement);

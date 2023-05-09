@@ -55,8 +55,8 @@ public sealed class AddWithCarry : BaseInstruction
         var loadValue = Load(currentState, value);
 
         var operation = currentState.Flags.IsDecimalMode
-                          ? DecimalCalculation(currentState, loadValue)
-                          : BinaryCalculation(currentState, loadValue);
+                      ? DecimalCalculation(currentState, loadValue)
+                      : BinaryCalculation(currentState, loadValue);
 
         currentState.Flags.IsZero = operation.IsZero();
         currentState.Registers.Accumulator = operation;
@@ -65,7 +65,7 @@ public sealed class AddWithCarry : BaseInstruction
     private static byte BinaryCalculation(ICpuState currentState, ushort loadValue)
     {
         var accumulator = currentState.Registers.Accumulator;
-        var carry = currentState.Flags.IsCarry ? 1 : 0;
+        var carry = currentState.Flags.IsCarry.AsBinary();
 
         var operation = (ushort)(accumulator + loadValue + carry);
 
@@ -78,7 +78,7 @@ public sealed class AddWithCarry : BaseInstruction
 
     private static byte DecimalCalculation(ICpuState currentState, ushort loadValue)
     {
-        var carry = currentState.Flags.IsCarry ? 1 : 0;
+        var carry = currentState.Flags.IsCarry.AsBinary();
 
         var accumulator = currentState.Registers.Accumulator.ToBCD();
         var value = ((byte)loadValue).ToBCD();

@@ -10,6 +10,6 @@ public sealed record BoolExtensionsTest
     [InlineData(false, 0)]
     public void AsBin_Converts(bool value, int expected)
     {
-        Assert.Equal(expected, value.AsBin());
+        Assert.Equal(expected, value.AsBinary());
     }
 }

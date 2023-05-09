@@ -1,5 +1,4 @@
-﻿using Cpu.Extensions;
-using Cpu.States;
+﻿using Cpu.States;
 
 namespace Cpu.Instructions.Branches;
 
@@ -28,15 +27,7 @@ public sealed class BranchCarrySet : BaseInstruction
     {
         if (currentState.Flags.IsCarry)
         {
-            var currentAddress = currentState.Registers.ProgramCounter;
-            var address = currentAddress.BranchAddress((byte)value);
-
-            var additionalCycles = currentAddress.CheckPageCrossed((ushort)(currentAddress + value))
-                ? 2
-                : 1;
-
-            currentState.Registers.ProgramCounter = address;
-            currentState.IncrementCycles(additionalCycles);
+            ExecuteBranch(currentState, value);
         }
     }
 }

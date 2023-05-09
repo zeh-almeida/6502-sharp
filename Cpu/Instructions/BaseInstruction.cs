@@ -1,4 +1,5 @@
-﻿using Cpu.States;
+﻿using Cpu.Extensions;
+using Cpu.States;
 
 namespace Cpu.Instructions;
 
@@ -7,6 +8,18 @@ namespace Cpu.Instructions;
 /// </summary>
 public abstract class BaseInstruction : IInstruction
 {
+    #region Constants
+    /// <summary>
+    /// Amount of additional clocks when a branch is taken
+    /// </summary>
+    public const int BranchTaken = 2;
+
+    /// <summary>
+    /// Amount of additional clocks when a branch is not taken
+    /// </summary>
+    public const int BranchNotTaken = 1;
+    #endregion
+
     #region Properties
     /// <inheritdoc/>
     public IEnumerable<byte> Opcodes { get; }
@@ -70,5 +83,32 @@ public abstract class BaseInstruction : IInstruction
         }
 
         return result.Item2;
+    }
+
+    /// <summary>
+    /// Performs the branch path for a instruction
+    /// </summary>
+    /// <param name="currentState">State to read and write to</param>
+    /// <param name="value">Branch address to take</param>
+    protected static void ExecuteBranch(ICpuState currentState, ushort value)
+    {
+        var currentAddress = currentState.Registers.ProgramCounter;
+        currentState.Registers.ProgramCounter = currentAddress.BranchAddress((byte)value);
+
+        var additionalCycles = GetAdditionalCycles(currentAddress, value);
+        currentState.IncrementCycles(additionalCycles);
+    }
+
+    /// <summary>
+    /// Calculates the amount of additional cycles when crossing pages
+    /// </summary>
+    /// <param name="address">Initial address</param>
+    /// <param name="value">Amount of addresses to jump</param>
+    /// <returns>Amount of additional clock cycles for the branch</returns>
+    private static int GetAdditionalCycles(ushort address, ushort value)
+    {
+        return address.CheckPageCrossed((ushort)(address + value))
+             ? BranchTaken
+             : BranchNotTaken;
     }
 }

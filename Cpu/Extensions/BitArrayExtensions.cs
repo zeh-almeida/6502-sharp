@@ -14,10 +14,7 @@ public static class BitArrayExtensions
     /// <returns>8-bit representation</returns>
     public static byte AsEightBit(this BitArray bitArray)
     {
-        if (bitArray is null)
-        {
-            throw new ArgumentNullException(nameof(bitArray));
-        }
+        ArgumentNullException.ThrowIfNull(bitArray, nameof(bitArray));
 
         var array = new byte[((bitArray.Length - 1) / 8) + 1];
         bitArray.CopyTo(array, 0);
@@ -32,10 +29,7 @@ public static class BitArrayExtensions
     /// <returns>16-bit representation</returns>
     public static ushort AsSixteenBit(this BitArray bitArray)
     {
-        if (bitArray is null)
-        {
-            throw new ArgumentNullException(nameof(bitArray));
-        }
+        ArgumentNullException.ThrowIfNull(bitArray, nameof(bitArray));
 
         var array = new byte[bitArray.Length];
         bitArray.CopyTo(array, 0);

@@ -28,6 +28,6 @@ public class ResourceLoader
     public virtual ResourceSet Load(ResourceManager manager)
     {
         return manager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)
-                ?? throw new Exception("Could not load resources");
+            ?? throw new Exception("Could not load resources");
     }
 }

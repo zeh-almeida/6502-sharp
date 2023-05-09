@@ -53,8 +53,8 @@ public sealed class SubtractWithCarry : BaseInstruction
         var loadValue = Load(currentState, value);
 
         var operation = currentState.Flags.IsDecimalMode
-                          ? DecimalCalculation(currentState, loadValue)
-                          : BinaryCalculation(currentState, loadValue);
+                      ? DecimalCalculation(currentState, loadValue)
+                      : BinaryCalculation(currentState, loadValue);
 
         currentState.Flags.IsZero = operation.IsZero();
         currentState.Registers.Accumulator = operation;
@@ -86,7 +86,7 @@ public sealed class SubtractWithCarry : BaseInstruction
 
     private static byte BinaryCalculation(ICpuState currentState, ushort loadValue)
     {
-        var carry = currentState.Flags.IsCarry ? 1 : 0;
+        var carry = currentState.Flags.IsCarry.AsBinary();
 
         var twoComplement = (byte)(~loadValue + carry);
         var operation = (ushort)(currentState.Registers.Accumulator + twoComplement);

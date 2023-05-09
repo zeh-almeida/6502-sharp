@@ -6,11 +6,11 @@
 public static class BoolExtensions
 {
     /// <summary>
-    /// Returns the bool value as a bynary
+    /// Returns the bool value as a binary
     /// </summary>
     /// <param name="value">Value to check</param>
     /// <returns>1 if true, 0 otherwise</returns>
-    public static int AsBin(this bool value)
+    public static int AsBinary(this bool value)
     {
         return value ? 1 : 0;
     }

@@ -10,6 +10,12 @@ namespace Cpu.Execution;
 /// </summary>
 public sealed record Machine : IMachine
 {
+    #region Constants
+    private const ushort HardwareInterruptAddress = 0xFFFA;
+
+    private const ushort SoftwareInterruptAddress = 0xFFFE;
+    #endregion
+
     #region Properties
     /// <inheritdoc/>
     public ICpuState State { get; }
@@ -88,20 +94,8 @@ public sealed record Machine : IMachine
         if (this.State.IsHardwareInterrupt)
         {
             this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Hardware");
+            this.CommonInterrupt(false, HardwareInterruptAddress);
 
-            this.State.Flags.IsBreakCommand = false;
-            var bits = this.State.Flags.Save();
-
-            this.State.Stack.Push(bits);
-            this.State.Stack.Push16(this.State.Registers.ProgramCounter);
-
-            // Adds cycles of fetching and pushing values.
-            // It is the same amount of cycles used by the 0x00 BRK Instruction,
-            // without the single decode cycle
-            this.State.SetCycleInterrupt();
-            this.State.Flags.IsInterruptDisable = true;
-
-            this.LoadInterruptProgramAddress(0xFFFA);
             this.State.IsHardwareInterrupt = false;
             this.State.IsSoftwareInterrupt = false;
         }
@@ -112,22 +106,27 @@ public sealed record Machine : IMachine
         if (this.State.IsSoftwareInterrupt && !this.State.Flags.IsInterruptDisable)
         {
             this.Logger.LogInformation(MachineEvents.OnInterrupt, "{InterruptType}", "Software");
+            this.CommonInterrupt(true, SoftwareInterruptAddress);
 
-            this.State.Flags.IsBreakCommand = true;
-            var bits = this.State.Flags.Save();
-
-            this.State.Stack.Push(bits);
-            this.State.Stack.Push16(this.State.Registers.ProgramCounter);
-
-            // Adds cycles of fetching and pushing values.
-            // It is the same amount of cycles used by the 0x00 BRK Instruction,
-            // without the single decode cycle
-            this.State.SetCycleInterrupt();
-            this.State.Flags.IsInterruptDisable = true;
-
-            this.LoadInterruptProgramAddress(0xFFFE);
             this.State.IsSoftwareInterrupt = false;
         }
+    }
+
+    private void CommonInterrupt(bool isBreak, ushort address)
+    {
+        this.State.Flags.IsBreakCommand = isBreak;
+        var bits = this.State.Flags.Save();
+
+        this.State.Stack.Push(bits);
+        this.State.Stack.Push16(this.State.Registers.ProgramCounter);
+
+        // Adds cycles of fetching and pushing values.
+        // It is the same amount of cycles used by the 0x00 BRK Instruction,
+        // without the single decode cycle
+        this.State.SetCycleInterrupt();
+        this.State.Flags.IsInterruptDisable = true;
+
+        this.LoadInterruptProgramAddress(address);
     }
 
     private void LoadInterruptProgramAddress(ushort address)

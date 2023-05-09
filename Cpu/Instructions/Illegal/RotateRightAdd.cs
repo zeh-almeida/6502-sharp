@@ -45,7 +45,7 @@ public sealed class RotateRightAdd : BaseInstruction
         var accumulator = currentState.Registers.Accumulator;
 
         var oldCarry = currentState.Flags.IsCarry;
-        var rotateCarry = (byte)(loadValue.IsFirstBitSet() ? 1 : 0);
+        var rotateCarry = (byte)loadValue.IsFirstBitSet().AsBinary();
 
         var shifted = loadValue.RotateRight(oldCarry);
         var operation = (ushort)(accumulator + shifted + rotateCarry);

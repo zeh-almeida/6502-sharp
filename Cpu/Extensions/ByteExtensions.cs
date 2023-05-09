@@ -133,7 +133,7 @@ public static class ByteExtensions
     public static byte RotateLeft(this byte value, bool isCarry)
     {
         var shiftedValue = value << 1;
-        var carryMask = isCarry ? 1 : 0;
+        var carryMask = isCarry.AsBinary();
 
         return (byte)(shiftedValue | carryMask);
     }
