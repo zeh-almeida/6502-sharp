@@ -1,12 +1,6 @@
 ﻿using Cpu.Execution;
 using Cpu.Extensions;
-using Cpu.Flags;
-using Cpu.Instructions;
-using Cpu.Memory;
-using Cpu.Opcodes;
-using Cpu.Registers;
 using Cpu.States;
-using Microsoft.Extensions.Logging;
 using System.Globalization;
 using Test.Integrated.Cpu.Files;
 
@@ -15,34 +9,15 @@ namespace Test.Integrated.Cpu.Common;
 public sealed record MachineFixture : IDisposable, IAsyncDisposable
 {
     #region Properties
-    public Machine Subject { get; }
-
-    private ILoggerFactory LogFactory { get; }
+    public IMachine Subject { get; }
 
     private bool IsDisposed { get; set; }
     #endregion
 
     #region Constructors
-    public MachineFixture()
+    public MachineFixture(IMachine machine)
     {
-        this.LogFactory = BuildLogFactory();
-
-        var opcodes = LoadOpcodes() as IEnumerable<IOpcodeInformation>;
-        var instructions = LoadInstructions() as IEnumerable<IInstruction>;
-
-        var machineLogger = this.LogFactory.CreateLogger<Machine>();
-        var memoryLogger = this.LogFactory.CreateLogger<MemoryManager>();
-
-        var flagManager = new FlagManager();
-        var registerManager = new RegisterManager();
-
-        var memoryManager = new MemoryManager(memoryLogger, registerManager);
-        var stackManager = new StackManager(memoryManager, registerManager);
-
-        var state = new CpuState(flagManager, stackManager, memoryManager, registerManager);
-
-        var decoder = new Decoder(opcodes, instructions);
-        this.Subject = new Machine(machineLogger, state, decoder);
+        this.Subject = machine;
     }
     #endregion
 
@@ -102,8 +77,6 @@ public sealed record MachineFixture : IDisposable, IAsyncDisposable
         {
             this.IsDisposed = true;
             GC.SuppressFinalize(this);
-
-            this.LogFactory.Dispose();
         }
     }
 
@@ -145,47 +118,5 @@ public sealed record MachineFixture : IDisposable, IAsyncDisposable
         program.CopyTo(state, ICpuState.MemoryStateOffset + offset);
 
         return state;
-    }
-
-    private static IEnumerable<IOpcodeInformation?> LoadOpcodes()
-    {
-        var loader = new OpcodeLoader();
-        loader.LoadAsync().Wait();
-
-        return loader.Opcodes;
-    }
-
-    private static IEnumerable<IInstruction?> LoadInstructions()
-    {
-        var instructionType = typeof(IInstruction);
-
-        return AppDomain.CurrentDomain
-            .GetAssemblies()
-            .SelectMany(a => a.GetTypes())
-            .Where(t => instructionType.IsAssignableFrom(t)
-                                  && !t.IsInterface
-                                  && !t.IsAbstract)
-            .Select(t => Activator.CreateInstance(t) as IInstruction)
-            .ToArray();
-    }
-
-    private static ILoggerFactory BuildLogFactory()
-    {
-        return LoggerFactory.Create(builder =>
-        {
-            _ = builder
-                .AddFilter("Microsoft", LogLevel.Warning)
-                .AddFilter("System", LogLevel.Warning)
-                .AddFilter("Cpu", LogLevel.Debug);
-
-            _ = builder.AddSimpleConsole(options =>
-              {
-                  options.SingleLine = true;
-                  options.IncludeScopes = true;
-                  options.UseUtcTimestamp = true;
-
-                  options.TimestampFormat = "yyyy-MM-dd HH:mm:ss ";
-              });
-        });
     }
 }

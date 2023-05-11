@@ -49,7 +49,7 @@ public sealed class CompareAccumulator : BaseInstruction
 
         var operation = (byte)(accumulator - loadValue);
 
-        currentState.Flags.IsZero = operation.Equals(accumulator);
+        currentState.Flags.IsZero = operation.IsZero();
         currentState.Flags.IsNegative = operation.IsLastBitSet();
         currentState.Flags.IsCarry = loadValue <= accumulator;
     }

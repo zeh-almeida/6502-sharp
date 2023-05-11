@@ -29,7 +29,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<RunSettingsFilePath>$(MSBuildProjectDirectory)\test.runsettings</RunSettingsFilePath>
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\..\test.runsettings</RunSettingsFilePath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -49,7 +49,7 @@
 		<PackageReference Include="Moq" />
 		<PackageReference Include="ReportGenerator" />
 		<PackageReference Include="xunit" />
-		<PackageReference Include="xunit.runner.visualstudio" >
+		<PackageReference Include="xunit.runner.visualstudio">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -84,12 +84,6 @@
 
 	<ItemGroup>
 		<DirsToClean Include="TestResults" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="test.runsettings">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 	<Target Name="ClearTestReports" AfterTargets="Build">

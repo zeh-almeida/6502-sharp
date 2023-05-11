@@ -100,7 +100,7 @@ public sealed record CompareAccumulatorTest : IClassFixture<CompareAccumulator>
 
         this.Subject.Execute(stateMock.Object, value);
 
-        stateMock.VerifySet(state => state.Flags.IsZero = false, Times.Once());
+        stateMock.VerifySet(state => state.Flags.IsZero = true, Times.Once());
         stateMock.VerifySet(state => state.Flags.IsNegative = false, Times.Once());
         stateMock.VerifySet(state => state.Flags.IsCarry = true, Times.Once());
     }

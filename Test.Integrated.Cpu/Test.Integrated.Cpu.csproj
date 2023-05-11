@@ -29,7 +29,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<RunSettingsFilePath>$(MSBuildProjectDirectory)\test.runsettings</RunSettingsFilePath>
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\..\test.runsettings</RunSettingsFilePath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -51,6 +51,8 @@
 		<PackageReference Include="Moq" />
 		<PackageReference Include="ReportGenerator" />
 		<PackageReference Include="xunit" />
+		<PackageReference Include="Xunit.DependencyInjection" />
+		<PackageReference Include="Xunit.DependencyInjection.Logging" />
 		<PackageReference Include="xunit.runner.visualstudio">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
@@ -81,7 +83,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Cpu\Cpu.csproj" />
+		<ProjectReference Include="..\Cpu.DependencyInjection\Cpu.DependencyInjection.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -109,13 +111,11 @@
 		<Folder Include="Files\SBC\" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Update="test.runsettings">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
 	<Target Name="ClearTestReports" AfterTargets="Build">
 		<RemoveDir Directories="@(DirsToClean)" />
 	</Target>
+
+	<ItemGroup>
+		<Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
 </Project>

@@ -10,11 +10,8 @@
 		<!-- Path relative to directory that contains .runsettings file-->
 		<ResultsDirectory>.\TestResults</ResultsDirectory>
 
-		<!-- Path to Test Adapters -->
-		<TestAdaptersPaths>%SystemDrive%\Temp\foo;%SystemDrive%\Temp\bar</TestAdaptersPaths>
-
-		<!-- Specify timeout in milliseconds. A valid value should be greater than 0 -->
-		<TestSessionTimeout>10000</TestSessionTimeout>
+		<!-- Specify timeout in milliseconds. A valid value should be >= 0. If 0, timeout will be infinity-->
+		<TestSessionTimeout>0</TestSessionTimeout>
 
 		<!-- Value that specifies the exit code when no tests are discovered -->
 		<TreatNoTestsAsError>true</TreatNoTestsAsError>

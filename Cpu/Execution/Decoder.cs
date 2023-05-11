@@ -3,7 +3,6 @@ using Cpu.Instructions;
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
-using System.Diagnostics;
 
 namespace Cpu.Execution;
 
@@ -46,7 +45,6 @@ public sealed record Decoder : IDecoder
         var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
         var result = new DecodedInstruction(opcodeInfo, instruction, instructionValue);
 
-        Debug.WriteLine($"{result} @ {currentState.Registers.ProgramCounter.AsHex()}");
         return result;
     }
 

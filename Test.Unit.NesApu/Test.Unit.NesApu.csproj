@@ -29,7 +29,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<RunSettingsFilePath>$(MSBuildProjectDirectory)\test.runsettings</RunSettingsFilePath>
+		<RunSettingsFilePath>$(MSBuildProjectDirectory)\..\test.runsettings</RunSettingsFilePath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -85,12 +85,6 @@
 
 	<ItemGroup>
 		<DirsToClean Include="TestResults" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="test.runsettings">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 	<Target Name="ClearTestReports" AfterTargets="Build">
