@@ -2,7 +2,6 @@
 using Xunit;
 
 namespace Test.Unit.Cpu.Registers;
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
 
 public sealed record RegisterManagerTest
 {
@@ -164,4 +163,3 @@ public sealed record RegisterManagerTest
         _ = Assert.Throws<ArgumentOutOfRangeException>(() => this.Subject.Load(memory));
     }
 }
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
