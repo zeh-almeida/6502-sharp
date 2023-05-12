@@ -9,6 +9,5 @@ public static class Program
     {
         _ = BenchmarkRunner
             .Run<CpuBenchmark>(DefaultConfig.Instance, args);
-        //.ToExitCode();
     }
 }

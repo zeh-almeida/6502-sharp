@@ -21,7 +21,7 @@ public class CpuBenchmark
     /// <summary>
     /// Expected iterations for the benchmark
     /// </summary>
-    public const int ExpectedIterations = 1_000;
+    public const int ExpectedIterations = 100;
 
     private const string ProgramName = "count_until";
     #endregion
