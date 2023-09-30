@@ -12,13 +12,13 @@ namespace Cpu.Instructions.Stack;
 /// </para>
 /// </summary>
 /// <see href="https://masswerk.at/6502/6502_instruction_set.html#TXS"/>
-public sealed class TransferXStack : BaseInstruction
+public sealed class TransferXPointer : BaseInstruction
 {
     #region Constructors
     /// <summary>
-    /// Instantiates a new <see cref="TransferXStack"/>
+    /// Instantiates a new <see cref="TransferXPointer"/>
     /// </summary>
-    public TransferXStack()
+    public TransferXPointer()
         : base(0x9A)
     { }
     #endregion

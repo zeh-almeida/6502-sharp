@@ -47,7 +47,7 @@ public static class CpuServiceCollectionExtensions
         return collection;
     }
 
-    private static IEnumerable<Type> LoadInstructionTypes()
+    private static Type[] LoadInstructionTypes()
     {
         return AppDomain.CurrentDomain
             .GetAssemblies()

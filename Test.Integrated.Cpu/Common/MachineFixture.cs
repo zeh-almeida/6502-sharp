@@ -6,12 +6,10 @@ using Test.Integrated.Cpu.Files;
 
 namespace Test.Integrated.Cpu.Common;
 
-public sealed record MachineFixture : IDisposable, IAsyncDisposable
+public sealed record MachineFixture
 {
     #region Properties
     public IMachine Subject { get; }
-
-    private bool IsDisposed { get; set; }
     #endregion
 
     #region Constructors
@@ -69,20 +67,6 @@ public sealed record MachineFixture : IDisposable, IAsyncDisposable
     {
         var program = BuildProgramStream(programName, offset);
         return this.Compute(program, cycleAction);
-    }
-
-    public void Dispose()
-    {
-        if (!this.IsDisposed)
-        {
-            this.IsDisposed = true;
-            GC.SuppressFinalize(this);
-        }
-    }
-
-    public ValueTask DisposeAsync()
-    {
-        return new ValueTask(Task.Run(this.Dispose));
     }
 
     private static ReadOnlyMemory<byte> BuildProgramStream(string programName)

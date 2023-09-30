@@ -13,6 +13,11 @@ public interface IMachine
     /// Current CPU state
     /// </summary>
     ICpuState State { get; }
+
+    /// <summary>
+    /// Status of the last cycle execution
+    /// </summary>
+    bool HasCycled { get; }
     #endregion
 
     #region Execution

@@ -8,20 +8,17 @@ using Test.Performance.Cpu.Files;
 
 namespace Test.Performance.Cpu;
 
-[GcServer(true)]
 [MemoryDiagnoser]
 [JsonExporterAttribute.FullCompressed]
 [MinColumn, MaxColumn, MeanColumn, MedianColumn]
-[SimpleJob(
-    invocationCount: ExpectedIterations,
-    iterationCount: ExpectedIterations)]
+[HideColumns("Error", "StdDev", "Median", "RatioSD")]
 public class CpuBenchmark
 {
     #region Constants
     /// <summary>
     /// Expected iterations for the benchmark
     /// </summary>
-    public const int ExpectedIterations = 100;
+    public const int ExpectedIterations = 1_000;
 
     private const string ProgramName = "count_until";
     #endregion
@@ -29,53 +26,44 @@ public class CpuBenchmark
     #region Properties
     private ReadOnlyMemory<byte> ExecutingProgram { get; set; }
 
-    private IServiceProvider ServiceProvider { get; set; }
-
     private IMachine? Machine { get; set; }
     #endregion
 
-    [GlobalSetup(Targets = new[] { nameof(ExecuteProgram) })]
+    [GlobalSetup]
     public void GlobalSetup()
     {
         var collection = new ServiceCollection();
-        this.ServiceProvider = collection
+        var serviceProvider = collection
             .AddLogging()
             .Add6502Cpu()
             .BuildServiceProvider();
 
         this.ExecutingProgram = ReadProgram(ProgramName);
+        this.Machine = serviceProvider.GetRequiredService<IMachine>();
     }
 
-    [GlobalCleanup(Targets = new[] { nameof(ExecuteProgram) })]
+    [GlobalCleanup]
     public void GlobalCleanup()
     {
         this.ExecutingProgram = Array.Empty<byte>();
-        this.ServiceProvider = null;
+        this.Machine = null;
     }
 
     [IterationSetup]
     public void IterationSetup()
     {
-        this.Machine = this.ServiceProvider.GetRequiredService<IMachine>();
-    }
-
-    [IterationCleanup]
-    public void IterationCleanup()
-    {
-        this.Machine = null;
+        this.Machine?.Load(this.ExecutingProgram);
     }
 
     [Benchmark]
     public void ExecuteProgram()
     {
-        this.Machine.Load(this.ExecutingProgram);
-
-        bool cycling;
-
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         do
         {
-            cycling = this.Machine.Cycle();
-        } while (cycling);
+            _ = this.Machine.Cycle();
+        } while (this.Machine.HasCycled);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 
     private static ReadOnlyMemory<byte> ReadProgram(string programName)

@@ -11,6 +11,8 @@ public sealed record OpcodeLoader
 {
     #region Constants
     private const int OpcodeAmount = byte.MaxValue;
+
+    private static JsonSerializerOptions JsonOptions { get; } = new JsonSerializerOptions(JsonSerializerDefaults.Web);
     #endregion
 
     #region Properties
@@ -58,13 +60,11 @@ public sealed record OpcodeLoader
     private async Task ReadResourcesAsync()
     {
         var resourceSet = this.Loader.LoadInstructions();
-
-        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
         var foundValues = new HashSet<IOpcodeInformation>(OpcodeAmount);
 
         foreach (DictionaryEntry item in resourceSet)
         {
-            if (item.Value is not byte[] bytes || !bytes.Any())
+            if (item.Value is not byte[] bytes || bytes.Length == 0)
             {
                 var value = item.Key.ToString();
                 throw new MisconfiguredOpcodeException(value);
@@ -73,7 +73,7 @@ public sealed record OpcodeLoader
             using var stream = new MemoryStream(bytes);
 
             // Must use concrete type when deserializing because you cannot instantiate interfaces
-            var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, options).ConfigureAwait(false);
+            var result = await JsonSerializer.DeserializeAsync<IEnumerable<OpcodeInformation>>(stream, JsonOptions).ConfigureAwait(false);
 
             foreach (var opcode in result)
             {
@@ -84,7 +84,7 @@ public sealed record OpcodeLoader
             }
         }
 
-        if (!foundValues.Any())
+        if (foundValues.Count == 0)
         {
             throw new MisconfiguredOpcodeException(nameof(resourceSet));
         }

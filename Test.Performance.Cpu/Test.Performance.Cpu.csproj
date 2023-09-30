@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net7.0</TargetFramework>
+
+		<TargetFrameworks>net8.0;net7.0</TargetFrameworks>
+		<LangVersion>Preview</LangVersion>
 
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -9,6 +11,12 @@
 		<Deterministic>true</Deterministic>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<ServerGarbageCollection>true</ServerGarbageCollection>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<Optimize>true</Optimize>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -72,5 +80,9 @@
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 			<Generator>ResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="BenchmarkDotNet.Artifacts\**" />
 	</ItemGroup>
 </Project>

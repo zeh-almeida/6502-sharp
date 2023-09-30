@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Test.Performance.Cpu": {
+      "commandName": "Project",
+      "commandLineArgs": "--filter \"*\" --runtimes net7.0 net8.0"
+    }
+  }
+}

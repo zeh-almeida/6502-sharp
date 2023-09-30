@@ -6,14 +6,14 @@ using Xunit;
 
 namespace Test.Unit.Cpu.Instructions.Illegal;
 
-public sealed record AndXAccumulatorStackTest : IClassFixture<AndXAccumulatorStack>
+public sealed record AndXAccumulatorStackTest : IClassFixture<AndXAccumulatorPointer>
 {
     #region Properties
-    private AndXAccumulatorStack Subject { get; }
+    private AndXAccumulatorPointer Subject { get; }
     #endregion
 
     #region Constructors
-    public AndXAccumulatorStackTest(AndXAccumulatorStack subject)
+    public AndXAccumulatorStackTest(AndXAccumulatorPointer subject)
     {
         this.Subject = subject;
     }

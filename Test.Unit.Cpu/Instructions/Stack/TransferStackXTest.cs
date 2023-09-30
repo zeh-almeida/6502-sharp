@@ -6,14 +6,14 @@ using Xunit;
 
 namespace Test.Unit.Cpu.Instructions.Stack;
 
-public sealed record TransferStackXTest : IClassFixture<TransferStackX>
+public sealed record TransferStackXTest : IClassFixture<TransferPointerX>
 {
     #region Properties
-    private TransferStackX Subject { get; }
+    private TransferPointerX Subject { get; }
     #endregion
 
     #region Constructors
-    public TransferStackXTest(TransferStackX subject)
+    public TransferStackXTest(TransferPointerX subject)
     {
         this.Subject = subject;
     }

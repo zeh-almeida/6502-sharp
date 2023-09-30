@@ -41,7 +41,7 @@ public sealed record OpcodeLoaderTest
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);
-        _ = await Assert.ThrowsAsync<MisconfiguredOpcodeException>(() => subject.LoadAsync());
+        _ = await Assert.ThrowsAsync<MisconfiguredOpcodeException>(subject.LoadAsync);
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public sealed record OpcodeLoaderTest
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);
-        _ = await Assert.ThrowsAsync<MisconfiguredOpcodeException>(() => subject.LoadAsync());
+        _ = await Assert.ThrowsAsync<MisconfiguredOpcodeException>(subject.LoadAsync);
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public sealed record OpcodeLoaderTest
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);
-        _ = await Assert.ThrowsAsync<MisconfiguredOpcodeException>(() => subject.LoadAsync());
+        _ = await Assert.ThrowsAsync<MisconfiguredOpcodeException>(subject.LoadAsync);
     }
 
     [Fact]
@@ -107,6 +107,6 @@ public sealed record OpcodeLoaderTest
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);
-        _ = await Assert.ThrowsAsync<DuplicateOpcodeException>(() => subject.LoadAsync());
+        _ = await Assert.ThrowsAsync<DuplicateOpcodeException>(subject.LoadAsync);
     }
 }

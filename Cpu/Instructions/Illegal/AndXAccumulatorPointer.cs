@@ -17,17 +17,17 @@ namespace Cpu.Instructions.Illegal;
 /// </summary>
 /// <see href="https://masswerk.at/6502/6502_instruction_set.html#TAS"/>
 /// <seealso cref="Logic.LogicAnd"/>
-/// <seealso cref="Stack.TransferXStack"/>
+/// <seealso cref="Stack.TransferXPointer"/>
 /// <seealso cref="Store.StoreAccumulator"/>
-/// <seealso cref="Stack.TransferStackX"/>
+/// <seealso cref="Stack.TransferPointerX"/>
 /// <seealso cref="Load.LoadAccumulator"/>
-public sealed class AndXAccumulatorStack : BaseInstruction
+public sealed class AndXAccumulatorPointer : BaseInstruction
 {
     #region Constructors
     /// <summary>
-    /// Instantiates a new <see cref="AndXAccumulatorStack"/>
+    /// Instantiates a new <see cref="AndXAccumulatorPointer"/>
     /// </summary>
-    public AndXAccumulatorStack()
+    public AndXAccumulatorPointer()
         : base(0x9B)
     { }
     #endregion

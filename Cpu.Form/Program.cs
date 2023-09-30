@@ -23,7 +23,7 @@ public static class Program
         Application.Run(view);
     }
 
-    private static IServiceProvider BuildProvider()
+    private static ServiceProvider BuildProvider()
     {
         var collection = new ServiceCollection();
 

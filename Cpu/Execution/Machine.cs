@@ -23,6 +23,9 @@ public sealed record Machine : IMachine
     private IDecoder Decoder { get; }
 
     private ILogger<Machine> Logger { get; }
+
+    /// <inheritdoc/>
+    public bool HasCycled { get; private set; }
     #endregion
 
     #region Constructors
@@ -60,13 +63,15 @@ public sealed record Machine : IMachine
         if (this.State.CyclesLeft > 0)
         {
             this.State.DecrementCycle();
-            return true;
+            this.HasCycled = true;
         }
         else
         {
-            return this.State.IsProgramRunning()
+            this.HasCycled = this.State.IsProgramRunning()
                 && this.Execute();
         }
+
+        return this.HasCycled;
     }
 
     /// <inheritdoc/>

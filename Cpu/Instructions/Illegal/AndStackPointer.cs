@@ -12,11 +12,11 @@ namespace Cpu.Instructions.Illegal;
 /// </para>
 /// </summary>
 /// <see href="https://masswerk.at/6502/6502_instruction_set.html#LAS"/>
-/// <seealso cref="Stack.TransferStackX"/>
+/// <seealso cref="Stack.TransferPointerX"/>
 /// <seealso cref="Transfers.TransferXAccumulator"/>
 /// <seealso cref="Logic.LogicAnd"/>
 /// <seealso cref="Transfers.TransferAccumulatorX"/>
-/// <seealso cref="Stack.TransferXStack"/>
+/// <seealso cref="Stack.TransferXPointer"/>
 public sealed class AndStackPointer : BaseInstruction
 {
     #region Constructors
