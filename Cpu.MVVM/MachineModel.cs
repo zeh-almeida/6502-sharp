@@ -10,8 +10,11 @@ namespace Cpu.MVVM;
 /// <summary>
 /// View Model representation of a <see cref="IMachine"/>
 /// </summary>
-public partial class MachineModel
-    : ObservableRecipient,
+/// <remarks>
+/// Instantiates the View Model
+/// </remarks>
+public partial class MachineModel(IMessenger messenger, IMachine machine)
+        : ObservableRecipient(messenger),
     IRecipient<ProgramLoadedMessage>
 {
     #region Attributes
@@ -23,20 +26,7 @@ public partial class MachineModel
     #endregion
 
     #region Properties
-    private IMachine Machine { get; }
-    #endregion
-
-    #region Constructors
-    /// <summary>
-    /// Instantiates the View Model
-    /// </summary>
-    /// <param name="messenger"><see cref="IMessenger"/> to communicate with</param>
-    /// <param name="machine"><see cref="IMachine"/> to be represented</param>
-    public MachineModel(IMessenger messenger, IMachine machine)
-        : base(messenger)
-    {
-        this.Machine = machine;
-    }
+    private IMachine Machine { get; } = machine;
     #endregion
 
     /// <summary>
