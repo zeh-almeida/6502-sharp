@@ -46,8 +46,8 @@ public static class LoggerExtensions
     /// </summary>
     /// <param name="logger"><see cref="ILogger"/> to be extended</param>
     /// <param name="logMessage"><see cref="Action{T1, T2, T3}"/> performing the message</param>
-    /// <param name="data">Multiple data to pass to the message</param>
     /// <param name="ex"><see cref="Exception"/> content for the message. May be null</param>
+    /// <param name="data">Multiple data to pass to the message</param>
     /// <see href="https://learn.microsoft.com/en-us/dotnet/core/extensions/high-performance-logging"/>
     public static void LogAction(this ILogger logger,
         Action<ILogger, object, object, Exception?> logMessage,

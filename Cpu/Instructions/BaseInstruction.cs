@@ -78,7 +78,6 @@ public abstract class BaseInstruction : IInstruction
         (bool, byte) result,
         int additionalCycles = 1)
     {
-
         if (result.Item1)
         {
             currentState.IncrementCycles(additionalCycles);
