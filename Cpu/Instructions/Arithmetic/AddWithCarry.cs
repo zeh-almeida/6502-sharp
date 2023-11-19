@@ -50,7 +50,7 @@ public sealed class AddWithCarry : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var loadValue = Load(currentState, value);
 
@@ -62,7 +62,7 @@ public sealed class AddWithCarry : BaseInstruction
         currentState.Registers.Accumulator = operation;
     }
 
-    private static byte BinaryCalculation(ICpuState currentState, ushort loadValue)
+    private static byte BinaryCalculation(in ICpuState currentState, in ushort loadValue)
     {
         var accumulator = currentState.Registers.Accumulator;
         var carry = currentState.Flags.IsCarry.AsBinary();
@@ -76,7 +76,7 @@ public sealed class AddWithCarry : BaseInstruction
         return (byte)operation;
     }
 
-    private static byte DecimalCalculation(ICpuState currentState, ushort loadValue)
+    private static byte DecimalCalculation(in ICpuState currentState, in ushort loadValue)
     {
         var carry = currentState.Flags.IsCarry.AsBinary();
 
@@ -99,7 +99,7 @@ public sealed class AddWithCarry : BaseInstruction
         return result;
     }
 
-    private static ushort Load(ICpuState currentState, ushort address)
+    private static ushort Load(in ICpuState currentState, in ushort address)
     {
         return currentState.ExecutingOpcode switch
         {

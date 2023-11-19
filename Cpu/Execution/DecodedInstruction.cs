@@ -52,6 +52,8 @@ public sealed record DecodedInstruction
     public override string ToString()
     {
         // 2 bytes = 16-bit
+        // 8-bit are 2 assembly digits long
+        // 16-bit are 4 assembly digits long
         var value = this.Information.Bytes > 2
             ? this.ValueParameter.AsAssembly()
             : ((byte)this.ValueParameter).AsAssembly();

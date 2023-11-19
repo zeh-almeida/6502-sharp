@@ -16,9 +16,9 @@ public static class LoggerExtensions
     /// <param name="ex"><see cref="Exception"/> content for the message. May be null</param>
     /// <see href="https://learn.microsoft.com/en-us/dotnet/core/extensions/high-performance-logging"/>
     public static void LogAction(this ILogger logger,
-        Action<ILogger, object, Exception?> logMessage,
-        object data,
-        Exception? ex = default)
+        in Action<ILogger, object, Exception?> logMessage,
+        in object data,
+        in Exception? ex = default)
     {
         ArgumentNullException.ThrowIfNull(logMessage, nameof(logMessage));
         ArgumentNullException.ThrowIfNull(data, nameof(data));
@@ -34,8 +34,8 @@ public static class LoggerExtensions
     /// <param name="ex"><see cref="Exception"/> content for the message. May be null</param>
     /// <see href="https://learn.microsoft.com/en-us/dotnet/core/extensions/high-performance-logging"/>
     public static void LogAction(this ILogger logger,
-        Action<ILogger, Exception?> logMessage,
-        Exception? ex = default)
+        in Action<ILogger, Exception?> logMessage,
+        in Exception? ex = default)
     {
         ArgumentNullException.ThrowIfNull(logMessage, nameof(logMessage));
         logMessage(logger, ex);
@@ -50,8 +50,8 @@ public static class LoggerExtensions
     /// <param name="data">Multiple data to pass to the message</param>
     /// <see href="https://learn.microsoft.com/en-us/dotnet/core/extensions/high-performance-logging"/>
     public static void LogAction(this ILogger logger,
-        Action<ILogger, object, object, Exception?> logMessage,
-        Exception? ex = default,
+        in Action<ILogger, object, object, Exception?> logMessage,
+        in Exception? ex = default,
         params object[] data)
     {
         ArgumentNullException.ThrowIfNull(logMessage, nameof(logMessage));

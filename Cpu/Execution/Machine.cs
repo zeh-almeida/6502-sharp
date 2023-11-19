@@ -47,7 +47,7 @@ public sealed record Machine : IMachine
     #endregion
 
     /// <inheritdoc/>
-    public bool Cycle(Action<ICpuState> afterCycle)
+    public bool Cycle(in Action<ICpuState> afterCycle)
     {
         ArgumentNullException.ThrowIfNull(afterCycle, nameof(afterCycle));
 
@@ -75,7 +75,7 @@ public sealed record Machine : IMachine
     }
 
     /// <inheritdoc/>
-    public void Load(ReadOnlyMemory<byte> data)
+    public void Load(in ReadOnlyMemory<byte> data)
     {
         this.Logger.LogAction(MachineEvents.LoadDataAction, data.Length);
         this.State.Load(data);
@@ -189,7 +189,7 @@ public sealed record Machine : IMachine
         }
     }
 
-    private void ExecuteDecoded(DecodedInstruction decoded)
+    private void ExecuteDecoded(in DecodedInstruction decoded)
     {
         try
         {

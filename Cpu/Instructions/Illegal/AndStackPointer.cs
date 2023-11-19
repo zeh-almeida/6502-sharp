@@ -29,7 +29,7 @@ public sealed class AndStackPointer : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var (crossed, loadValue) = currentState.Memory.ReadAbsoluteY(value);
 

@@ -26,7 +26,7 @@ public sealed class ReturnFromInterrupt : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         LoadProgramCounter(currentState);
         LoadProcessorStatus(currentState);

@@ -68,6 +68,6 @@ public interface IRegisterManager
     /// The last 2 bits are unused.
     /// </summary>
     /// <param name="data">To read values from</param>
-    void Load(ReadOnlyMemory<byte> data);
+    void Load(in ReadOnlyMemory<byte> data);
     #endregion
 }

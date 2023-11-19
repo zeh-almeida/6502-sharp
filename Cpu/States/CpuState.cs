@@ -97,7 +97,7 @@ public sealed record CpuState : ICpuState
     }
 
     /// <inheritdoc/>
-    public void Load(ReadOnlyMemory<byte> data)
+    public void Load(in ReadOnlyMemory<byte> data)
     {
         if (data.IsEmpty)
         {
@@ -147,7 +147,7 @@ public sealed record CpuState : ICpuState
     }
 
     /// <inheritdoc/>
-    public void IncrementCycles(int amount)
+    public void IncrementCycles(in int amount)
     {
         if (amount < 0)
         {
@@ -165,7 +165,7 @@ public sealed record CpuState : ICpuState
     #endregion
 
     /// <inheritdoc/>
-    public void SetExecutingInstruction(DecodedInstruction decoded)
+    public void SetExecutingInstruction(in DecodedInstruction decoded)
     {
         ArgumentNullException.ThrowIfNull(decoded, nameof(decoded));
 
@@ -183,7 +183,7 @@ public sealed record CpuState : ICpuState
     }
 
     /// <inheritdoc/>
-    public void AdvanceProgramCount(DecodedInstruction decoded)
+    public void AdvanceProgramCount(in DecodedInstruction decoded)
     {
         ArgumentNullException.ThrowIfNull(decoded, nameof(decoded));
         this.Registers.ProgramCounter += decoded.Information.Bytes;

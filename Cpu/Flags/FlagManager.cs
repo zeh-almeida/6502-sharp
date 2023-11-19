@@ -60,7 +60,7 @@ public sealed record FlagManager : IFlagManager
     }
 
     /// <inheritdoc/>
-    public void Load(byte value)
+    public void Load(in byte value)
     {
         var bits = new BitArray(new int[] { value });
 

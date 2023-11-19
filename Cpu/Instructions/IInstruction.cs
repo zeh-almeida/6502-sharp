@@ -22,12 +22,12 @@ public interface IInstruction
     /// <param name="currentState">Current CPU state</param>
     /// <param name="value">Operand, not always necessary</param>
     /// <returns>Modified CPU state</returns>
-    void Execute(ICpuState currentState, ushort value);
+    void Execute(in ICpuState currentState, in ushort value);
 
     /// <summary>
     /// Checks if the instruction supports an specific opcode
     /// </summary>
     /// <param name="opcode">To verify</param>
     /// <returns>True if supported, false otherwise</returns>
-    bool HasOpcode(byte opcode);
+    bool HasOpcode(in byte opcode);
 }

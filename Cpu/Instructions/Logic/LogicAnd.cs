@@ -32,7 +32,7 @@ public sealed class LogicAnd : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var toCompare = ValueToCompare(currentState, value);
         var result = (byte)(toCompare & currentState.Registers.Accumulator);

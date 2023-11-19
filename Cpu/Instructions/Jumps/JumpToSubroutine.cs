@@ -23,7 +23,7 @@ public sealed class JumpToSubroutine : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         currentState.Stack.Push16(currentState.Registers.ProgramCounter);
         currentState.Registers.ProgramCounter = value;

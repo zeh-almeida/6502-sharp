@@ -32,7 +32,7 @@ public sealed class IncrementMemory : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var operation = Read(currentState, value);
         operation = (byte)(operation + 1);

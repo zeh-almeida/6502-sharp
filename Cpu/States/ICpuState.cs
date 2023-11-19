@@ -112,7 +112,7 @@ public interface ICpuState
     /// <param name="data">To read values from</param>
     /// <exception cref="ArgumentNullException">if <paramref name="data"/> is null</exception>
     /// <exception cref="ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
-    void Load(ReadOnlyMemory<byte> data);
+    void Load(in ReadOnlyMemory<byte> data);
     #endregion
 
     #region Cycles
@@ -133,7 +133,7 @@ public interface ICpuState
     /// </summary>
     /// <param name="amount">Cycles to be added</param>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the amount is less than zero</exception>
-    void IncrementCycles(int amount);
+    void IncrementCycles(in int amount);
 
     /// <summary>
     /// Sets cycles for an interrupt execution
@@ -144,7 +144,7 @@ public interface ICpuState
     /// Prepares the state according to the decoded instruction
     /// </summary>
     /// <param name="decoded">information of the new instruction</param>
-    void SetExecutingInstruction(DecodedInstruction decoded);
+    void SetExecutingInstruction(in DecodedInstruction decoded);
     #endregion
 
     /// <summary>
@@ -157,5 +157,5 @@ public interface ICpuState
     /// Advance the program counter based on the decoded instruction
     /// </summary>
     /// <param name="decoded">Data to advance the program counter</param>
-    void AdvanceProgramCount(DecodedInstruction decoded);
+    void AdvanceProgramCount(in DecodedInstruction decoded);
 }

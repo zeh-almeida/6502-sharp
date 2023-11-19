@@ -37,9 +37,7 @@ public abstract class BaseInstruction : IInstruction
     }
     #endregion
 
-    /// <inheritdoc/>
-    public abstract void Execute(ICpuState currentState, ushort value);
-
+    #region Equality
     /// <inheritdoc/>
     public override int GetHashCode()
     {
@@ -59,9 +57,13 @@ public abstract class BaseInstruction : IInstruction
         return other is not null
             && this.Opcodes.Equals(other.Opcodes);
     }
+    #endregion
 
     /// <inheritdoc/>
-    public bool HasOpcode(byte opcode)
+    public abstract void Execute(in ICpuState currentState, in ushort value);
+
+    /// <inheritdoc/>
+    public bool HasOpcode(in byte opcode)
     {
         return this.Opcodes.Contains(opcode);
     }
@@ -74,9 +76,9 @@ public abstract class BaseInstruction : IInstruction
     /// <param name="additionalCycles">Number of cycles to add</param>
     /// <returns>The value read from memory</returns>
     protected static byte LoadExtraCycle(
-        [NotNull] ICpuState currentState,
+        [NotNull] in ICpuState currentState,
         (bool, byte) result,
-        int additionalCycles = 1)
+        in int additionalCycles = 1)
     {
         if (result.Item1)
         {
@@ -91,7 +93,7 @@ public abstract class BaseInstruction : IInstruction
     /// </summary>
     /// <param name="currentState">State to read and write to</param>
     /// <param name="value">Branch address to take</param>
-    protected static void ExecuteBranch([NotNull] ICpuState currentState, ushort value)
+    protected static void ExecuteBranch([NotNull] in ICpuState currentState, in ushort value)
     {
         var currentAddress = currentState.Registers.ProgramCounter;
         currentState.Registers.ProgramCounter = currentAddress.BranchAddress((byte)value);
@@ -106,7 +108,7 @@ public abstract class BaseInstruction : IInstruction
     /// <param name="address">Initial address</param>
     /// <param name="value">Amount of addresses to jump</param>
     /// <returns>Amount of additional clock cycles for the branch</returns>
-    private static int GetAdditionalCycles(ushort address, ushort value)
+    private static int GetAdditionalCycles(in ushort address, in ushort value)
     {
         return address.CheckPageCrossed((ushort)(address + value))
              ? BranchTaken

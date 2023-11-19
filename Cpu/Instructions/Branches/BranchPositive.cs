@@ -23,7 +23,7 @@ public sealed class BranchPositive : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         if (!currentState.Flags.IsNegative)
         {

@@ -73,6 +73,6 @@ public interface IFlagManager
     /// The last bit is unused.
     /// </summary>
     /// <param name="value">To read values from</param>
-    void Load(byte value);
+    void Load(in byte value);
     #endregion
 }

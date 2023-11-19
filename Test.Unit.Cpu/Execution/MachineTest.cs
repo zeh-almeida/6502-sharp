@@ -103,7 +103,7 @@ public sealed record MachineTest
             .Returns(false);
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Returns(this.Decoded);
 
         var result = this.Subject.Cycle();
@@ -123,7 +123,7 @@ public sealed record MachineTest
             .Returns(true);
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Throws<Exception>();
 
         var result = this.Subject.Cycle();
@@ -143,11 +143,11 @@ public sealed record MachineTest
             .Returns(true);
 
         _ = this.StateMock
-            .Setup(mock => mock.SetExecutingInstruction(It.IsAny<DecodedInstruction>()))
+            .Setup(mock => mock.SetExecutingInstruction(It.Ref<DecodedInstruction>.IsAny))
             .Throws<Exception>();
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Returns(this.Decoded);
 
         var result = this.Subject.Cycle();
@@ -178,7 +178,7 @@ public sealed record MachineTest
             .Returns(StreamByte);
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Returns(this.Decoded);
 
         var result = this.Subject.Cycle();
@@ -213,7 +213,7 @@ public sealed record MachineTest
             .Returns(0);
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Returns(this.Decoded);
 
         var cycleCount = 0;
@@ -240,7 +240,7 @@ public sealed record MachineTest
             .Returns(false);
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Returns(this.Decoded);
 
         var executionCount = 0;
@@ -263,7 +263,7 @@ public sealed record MachineTest
             .Returns(1);
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Throws<Exception>();
 
         var result = this.Subject.Cycle();
@@ -288,7 +288,7 @@ public sealed record MachineTest
             .Throws<Exception>();
 
         _ = this.DecoderMock
-            .Setup(mock => mock.Decode(It.IsAny<ICpuState>()))
+            .Setup(mock => mock.Decode(It.Ref<ICpuState>.IsAny))
             .Returns(this.Decoded);
 
         var result = this.Subject.Cycle();

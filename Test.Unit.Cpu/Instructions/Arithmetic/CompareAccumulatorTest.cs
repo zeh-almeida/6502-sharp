@@ -199,7 +199,7 @@ public sealed record CompareAccumulatorTest : IClassFixture<CompareAccumulator>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Never());
 
         stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
     }
@@ -220,7 +220,7 @@ public sealed record CompareAccumulatorTest : IClassFixture<CompareAccumulator>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Once());
 
         stateMock.Verify(state => state.Memory.ReadAbsoluteX(address), Times.Once());
     }
@@ -241,7 +241,7 @@ public sealed record CompareAccumulatorTest : IClassFixture<CompareAccumulator>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Never());
 
         stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
     }
@@ -262,7 +262,7 @@ public sealed record CompareAccumulatorTest : IClassFixture<CompareAccumulator>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Once());
 
         stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
     }
@@ -302,7 +302,7 @@ public sealed record CompareAccumulatorTest : IClassFixture<CompareAccumulator>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Never());
 
         stateMock.Verify(state => state.Memory.ReadIndirectY(address), Times.Once());
     }
@@ -323,7 +323,7 @@ public sealed record CompareAccumulatorTest : IClassFixture<CompareAccumulator>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Once());
 
         stateMock.Verify(state => state.Memory.ReadIndirectY(address), Times.Once());
     }

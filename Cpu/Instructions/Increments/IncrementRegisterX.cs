@@ -24,7 +24,7 @@ public sealed class IncrementRegisterX : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var operation = (byte)(currentState.Registers.IndexX + 1);
 

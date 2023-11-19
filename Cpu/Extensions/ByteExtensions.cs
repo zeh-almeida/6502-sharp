@@ -33,7 +33,7 @@ public static class ByteExtensions
     /// <param name="lsb">Least significant bits</param>
     /// <param name="msb">Most significant bits</param>
     /// <returns>Combined 8-bit value</returns>
-    public static byte CombineSignificantBits(this byte lsb, byte msb)
+    public static byte CombineSignificantBits(this byte lsb, in byte msb)
     {
         return (byte)(msb | lsb);
     }
@@ -44,7 +44,7 @@ public static class ByteExtensions
     /// <param name="lsb">Least significant bits</param>
     /// <param name="msb">Most significant bits</param>
     /// <returns>Combined 16-bit number</returns>
-    public static ushort CombineBytes(this byte lsb, byte msb)
+    public static ushort CombineBytes(this byte lsb, in byte msb)
     {
         return (ushort)((msb << 8) | lsb);
     }
@@ -76,7 +76,7 @@ public static class ByteExtensions
     /// <param name="index">Index of the bit to check</param>
     /// <returns>True if the bit is set, false otherwise</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the index is less than 0 or bigger than 7</exception>
-    public static bool IsBitSet(this byte value, int index)
+    public static bool IsBitSet(this byte value, in int index)
     {
         if (index is < 0 or >= 8)
         {
@@ -115,7 +115,7 @@ public static class ByteExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the last bit</param>
     /// <returns>Shifted value</returns>
-    public static byte RotateRight(this byte value, bool isCarry)
+    public static byte RotateRight(this byte value, in bool isCarry)
     {
         var shiftedValue = value >> 1;
         var carryMask = isCarry ? 0b_1000_0000 : 0b_0000_0000;
@@ -130,7 +130,7 @@ public static class ByteExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the first bit</param>
     /// <returns>Shifted value</returns>
-    public static byte RotateLeft(this byte value, bool isCarry)
+    public static byte RotateLeft(this byte value, in bool isCarry)
     {
         var shiftedValue = value << 1;
         var carryMask = isCarry.AsBinary();

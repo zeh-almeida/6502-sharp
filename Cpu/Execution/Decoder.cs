@@ -34,7 +34,7 @@ public sealed record Decoder : IDecoder
     #endregion
 
     /// <inheritdoc/>
-    public DecodedInstruction Decode(ICpuState currentState)
+    public DecodedInstruction Decode(in ICpuState currentState)
     {
         ArgumentNullException.ThrowIfNull(currentState, nameof(currentState));
 
@@ -43,9 +43,7 @@ public sealed record Decoder : IDecoder
         var instruction = this.FetchInstruction(opcode);
 
         var instructionValue = ReadOpcodeParameter(currentState, opcodeInfo);
-        var result = new DecodedInstruction(opcodeInfo, instruction, instructionValue);
-
-        return result;
+        return new DecodedInstruction(opcodeInfo, instruction, instructionValue);
     }
 
     private IOpcodeInformation FetchOpcode(byte opcode)
@@ -66,7 +64,7 @@ public sealed record Decoder : IDecoder
             ?? throw new UnknownOpcodeException(opcode);
     }
 
-    private static ushort ReadOpcodeParameter(ICpuState currentState, IOpcodeInformation opcodeInfo)
+    private static ushort ReadOpcodeParameter(in ICpuState currentState, in IOpcodeInformation opcodeInfo)
     {
         var pc = currentState.Registers.ProgramCounter;
 
@@ -87,7 +85,7 @@ public sealed record Decoder : IDecoder
         }
     }
 
-    private static byte ReadNextOpcode(ICpuState currentState)
+    private static byte ReadNextOpcode(in ICpuState currentState)
     {
         return currentState.Memory.ReadAbsolute(currentState.Registers.ProgramCounter);
     }

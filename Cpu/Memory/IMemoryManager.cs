@@ -25,7 +25,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">8-bit address</param>
     /// <param name="value">8-bit value</param>
-    void WriteZeroPage(ushort address, byte value);
+    void WriteZeroPage(in ushort address, in byte value);
 
     /// <summary>
     /// <para>Writes an 8-bit value using an 8-bit address fot the zero page space</para>
@@ -36,7 +36,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">8-bit address</param>
     /// <param name="value">8-bit value</param>
-    void WriteZeroPageX(ushort address, byte value);
+    void WriteZeroPageX(in ushort address, in byte value);
 
     /// <summary>
     /// <para>Writes an 8-bit value using an 8-bit address fot the zero page space</para>
@@ -47,14 +47,14 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">8-bit address</param>
     /// <param name="value">8-bit value</param>
-    void WriteZeroPageY(ushort address, byte value);
+    void WriteZeroPageY(in ushort address, in byte value);
 
     /// <summary>
     /// Writes an 8-bit value using an 16-bit address which must point to any address in the 16-bit space
     /// </summary>
     /// <param name="address">16-bit address</param>
     /// <param name="value">8-bit value</param>
-    void WriteAbsolute(ushort address, byte value);
+    void WriteAbsolute(in ushort address, in byte value);
 
     /// <summary>
     /// <para>Writes an 8-bit value using an 16-bit address which must point to any address in the 16-bit space</para>
@@ -63,7 +63,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address</param>
     /// <param name="value">8-bit value</param>
-    void WriteAbsoluteX(ushort address, byte value);
+    void WriteAbsoluteX(in ushort address, in byte value);
 
     /// <summary>
     /// <para>Writes an 8-bit value using an 16-bit address which must point to any address in the 16-bit space</para>
@@ -72,7 +72,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address</param>
     /// <param name="value">8-bit value</param>
-    void WriteAbsoluteY(ushort address, byte value);
+    void WriteAbsoluteY(in ushort address, in byte value);
 
     /// <summary>
     /// <para>Based on the supplied address, reads the zero page for the real address</para>
@@ -81,7 +81,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address pointing to the zero page</param>
     /// <param name="value">8-bit value</param>
-    void WriteIndirect(ushort address, byte value);
+    void WriteIndirect(in ushort address, in byte value);
 
     /// <summary>
     /// <para>Based on the supplied address and the X Register, reads the zero page for the real address</para>
@@ -91,7 +91,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address pointing to the zero page</param>
     /// <param name="value">8-bit value</param>
-    void WriteIndirectX(ushort address, byte value);
+    void WriteIndirectX(in ushort address, in byte value);
 
     /// <summary>
     /// <para>Based on the supplied address and the Y Register, reads the zero page for the real address</para>
@@ -102,7 +102,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address pointing to the zero page</param>
     /// <param name="value">8-bit value</param>
-    void WriteIndirectY(ushort address, byte value);
+    void WriteIndirectY(in ushort address, in byte value);
     #endregion
 
     #region Read
@@ -113,7 +113,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">8-bit address</param>
     /// <returns>Value at the desired address</returns>
-    byte ReadZeroPage(ushort address);
+    byte ReadZeroPage(in ushort address);
 
     /// <summary>
     /// <para>Reads an 8-bit value using an 8-bit address fot the zero page space</para>
@@ -124,7 +124,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">8-bit address</param>
     /// <returns>Value at the desired address</returns>
-    byte ReadZeroPageX(ushort address);
+    byte ReadZeroPageX(in ushort address);
 
     /// <summary>
     /// <para>Reads an 8-bit value using an 8-bit address fot the zero page space</para>
@@ -135,14 +135,14 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">8-bit address</param>
     /// <returns>Value at the desired address</returns>
-    byte ReadZeroPageY(ushort address);
+    byte ReadZeroPageY(in ushort address);
 
     /// <summary>
     /// Writes an 8-bit value using an 16-bit address which must point to any address in the 16-bit space
     /// </summary>
     /// <param name="address">16-bit address</param>
     /// <returns>Value at the desired address</returns>
-    byte ReadAbsolute(ushort address);
+    byte ReadAbsolute(in ushort address);
 
     /// <summary>
     /// <para>Reads an 8-bit value using an 16-bit address which must point to any address in the 16-bit space</para>
@@ -151,7 +151,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address</param>
     /// <returns>Indication of page crossing and value at the desired address</returns>
-    (bool, byte) ReadAbsoluteX(ushort address);
+    (bool, byte) ReadAbsoluteX(in ushort address);
 
     /// <summary>
     /// <para>Reads an 8-bit value using an 16-bit address which must point to any address in the 16-bit space</para>
@@ -160,7 +160,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address</param>
     /// <returns>Indication of page crossing and value at the desired address</returns>
-    (bool, byte) ReadAbsoluteY(ushort address);
+    (bool, byte) ReadAbsoluteY(in ushort address);
 
     /// <summary>
     /// <para>Based on the supplied address, reads the zero page for the real address</para>
@@ -169,7 +169,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address pointing to the zero page</param>
     /// <returns>Value at the desired address</returns>
-    byte ReadIndirect(ushort address);
+    byte ReadIndirect(in ushort address);
 
     /// <summary>
     /// <para>Based on the supplied address and the Y Register, reads the zero page for the real address</para>
@@ -180,7 +180,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address pointing to the zero page</param>
     /// <returns>Value at the desired address</returns>
-    byte ReadIndirectX(ushort address);
+    byte ReadIndirectX(in ushort address);
 
     /// <summary>
     /// <para>Based on the supplied address and the Y Register, reads the zero page for the real address</para>
@@ -191,7 +191,7 @@ public interface IMemoryManager
     /// </summary>
     /// <param name="address">16-bit address pointing to the zero page</param>
     /// <returns>Indication of page crossing and value at the desired address</returns>
-    (bool, byte) ReadIndirectY(ushort address);
+    (bool, byte) ReadIndirectY(in ushort address);
     #endregion
 
     #region Save/Load
@@ -209,6 +209,6 @@ public interface IMemoryManager
     /// <param name="data">To read values from</param>
     /// <exception cref="System.ArgumentNullException">if <paramref name="data"/> is null</exception>
     /// <exception cref="System.ArgumentOutOfRangeException">if <paramref name="data"/> is not exactly <see cref="Length"/> bytes long</exception>
-    void Load(ReadOnlyMemory<byte> data);
+    void Load(in ReadOnlyMemory<byte> data);
     #endregion
 }

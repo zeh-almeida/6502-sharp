@@ -28,7 +28,7 @@ public interface IMachine
     /// <param name="afterCycle">Action to validate <see cref="ICpuState"/></param>
     /// <returns>True if the cycle completed successfully, false otherwise</returns>
     /// <exception cref="Exceptions.ProgramExecutionException"></exception>
-    bool Cycle(Action<ICpuState> afterCycle);
+    bool Cycle(in Action<ICpuState> afterCycle);
 
     /// <summary>
     /// Performs a single cycle of execution in the current program
@@ -45,8 +45,8 @@ public interface IMachine
     /// <param name="data">Program data</param>
     /// <exception cref="ArgumentNullException"> thrown if the program supplied is null</exception>
     /// <exception cref="ArgumentOutOfRangeException">thrown if the program supplied has an invalid length</exception>
-    /// <see cref="ICpuState.Load(ReadOnlyMemory{byte})"/>
-    void Load(ReadOnlyMemory<byte> data);
+    /// <see cref="ICpuState.Load(in ReadOnlyMemory{byte})"/>
+    void Load(in ReadOnlyMemory<byte> data);
 
     /// <summary>
     /// Saves the current machine state into bytes

@@ -28,7 +28,7 @@ public sealed class AndYHighByte : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var highByte = (byte)((byte)value + 1);
         var registerY = currentState.Registers.IndexY;

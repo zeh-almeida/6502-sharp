@@ -22,7 +22,7 @@ public sealed class ClearInterruptDisable : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         currentState.Flags.IsInterruptDisable = false;
     }

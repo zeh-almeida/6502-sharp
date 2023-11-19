@@ -29,7 +29,7 @@ public sealed class ForceInterrupt : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         StoreProcessorStatus(currentState);
         StoreProgramCounter(currentState);

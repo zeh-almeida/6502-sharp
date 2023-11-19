@@ -33,7 +33,7 @@ public sealed class AndXAccumulatorPointer : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var highByte = (byte)((byte)(value >> 8) + 1);
 

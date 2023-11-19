@@ -4,6 +4,7 @@ using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
 using Cpu.States;
 using Moq;
+using Moq.Protected;
 using Test.Unit.Cpu.Utils;
 using Xunit;
 
@@ -121,10 +122,6 @@ public sealed record DecoderTest
         var opcodeMock = new Mock<IOpcodeInformation>();
         var instructionMock = new Mock<IInstruction>();
 
-        var state = this.StateMock.Object;
-        var opcodeInfo = opcodeMock.Object;
-        var instruction = instructionMock.Object;
-
         _ = this.StateMock
             .Setup(mock => mock.Registers.ProgramCounter)
             .Returns(pcAddress);
@@ -145,12 +142,12 @@ public sealed record DecoderTest
         _ = opcodeMock.Setup(m => m.MaximumCycles)
             .Returns(cycles);
 
-        _ = instructionMock.Setup(m => m.HasOpcode(It.IsAny<byte>()))
+        _ = instructionMock.Setup(m => m.HasOpcode(It.Ref<byte>.IsAny))
             .Returns(true);
 
         var subject = new Decoder(
-            new IOpcodeInformation[] { opcodeInfo },
-            new IInstruction[] { instruction });
+            new IOpcodeInformation[] { opcodeMock.Object },
+            new IInstruction[] { instructionMock.Object });
 
         var result = subject.Decode(this.StateMock.Object);
 
@@ -210,7 +207,7 @@ public sealed record DecoderTest
         _ = opcodeMock.Setup(m => m.MaximumCycles)
             .Returns(cycles);
 
-        _ = instructionMock.Setup(m => m.HasOpcode(It.IsAny<byte>()))
+        _ = instructionMock.Setup(m => m.HasOpcode(It.Ref<byte>.IsAny))
             .Returns(true);
 
         var subject = new Decoder(
@@ -267,7 +264,7 @@ public sealed record DecoderTest
         _ = opcodeMock.Setup(m => m.MaximumCycles)
             .Returns(cycles);
 
-        _ = instructionMock.Setup(m => m.HasOpcode(It.IsAny<byte>()))
+        _ = instructionMock.Setup(m => m.HasOpcode(It.Ref<byte>.IsAny))
             .Returns(true);
 
         var subject = new Decoder(

@@ -180,7 +180,7 @@ public sealed record LoadRegisterXTest : IClassFixture<LoadRegisterX>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Never());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Never());
 
         stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
         stateMock.VerifySet(state => state.Registers.IndexX = result, Times.Once());
@@ -202,7 +202,7 @@ public sealed record LoadRegisterXTest : IClassFixture<LoadRegisterX>
 
         this.Subject.Execute(stateMock.Object, address);
 
-        stateMock.Verify(state => state.IncrementCycles(It.IsAny<int>()), Times.Once());
+        stateMock.Verify(state => state.IncrementCycles(It.Ref<int>.IsAny), Times.Once());
 
         stateMock.Verify(state => state.Memory.ReadAbsoluteY(address), Times.Once());
         stateMock.VerifySet(state => state.Registers.IndexX = result, Times.Once());

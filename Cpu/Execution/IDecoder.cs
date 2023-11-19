@@ -12,5 +12,5 @@ public interface IDecoder
     /// </summary>
     /// <param name="currentState"><see cref="ICpuState"/> to gather information from</param>
     /// <returns>Decoded instruction</returns>
-    DecodedInstruction Decode(ICpuState currentState);
+    DecodedInstruction Decode(in ICpuState currentState);
 }

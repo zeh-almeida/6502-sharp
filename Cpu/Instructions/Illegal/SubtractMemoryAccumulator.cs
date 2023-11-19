@@ -30,7 +30,7 @@ public sealed class SubtractMemoryAccumulator : BaseInstruction
     #endregion
 
     /// <inheritdoc/>
-    public override void Execute(ICpuState currentState, ushort value)
+    public override void Execute(in ICpuState currentState, in ushort value)
     {
         var accumulator = currentState.Registers.Accumulator;
         var loadValue = Load(currentState, value);

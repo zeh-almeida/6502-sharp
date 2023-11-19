@@ -9,13 +9,13 @@ public interface IStackManager
     /// Pushes a new 8-bit value to the stack and increments the pointer
     /// </summary>
     /// <param name="value">Value to push</param>
-    void Push(byte value);
+    void Push(in byte value);
 
     /// <summary>
     /// Pushes a new 16-bit value to the stack and increments the pointer
     /// </summary>
     /// <param name="value">Value to push</param>
-    void Push16(ushort value);
+    void Push16(in ushort value);
 
     /// <summary>
     /// Pulls an existing 8-bit value from the stack and decrements the pointer

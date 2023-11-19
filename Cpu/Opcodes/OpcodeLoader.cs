@@ -38,7 +38,7 @@ public sealed record OpcodeLoader
     /// Initializes the loader
     /// </summary>
     /// <param name="loader"><see cref="ResourceLoader"/> to read from</param>
-    public OpcodeLoader(ResourceLoader loader)
+    public OpcodeLoader(in ResourceLoader loader)
     {
         this.Opcodes = Array.Empty<IOpcodeInformation>();
         this.Loader = loader;

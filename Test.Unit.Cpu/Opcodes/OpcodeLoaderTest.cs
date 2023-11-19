@@ -37,7 +37,7 @@ public sealed record OpcodeLoaderTest
             .Returns(enumerator.GetEnumerator());
 
         _ = loader
-            .Setup(m => m.Load(It.IsAny<ResourceManager>()))
+            .Setup(m => m.Load(It.Ref<ResourceManager>.IsAny))
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);
@@ -59,7 +59,7 @@ public sealed record OpcodeLoaderTest
             .Returns(enumerator.GetEnumerator());
 
         _ = loader
-            .Setup(m => m.Load(It.IsAny<ResourceManager>()))
+            .Setup(m => m.Load(It.Ref<ResourceManager>.IsAny))
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);
@@ -81,7 +81,7 @@ public sealed record OpcodeLoaderTest
             .Returns(enumerator.GetEnumerator());
 
         _ = loader
-            .Setup(m => m.Load(It.IsAny<ResourceManager>()))
+            .Setup(m => m.Load(It.Ref<ResourceManager>.IsAny))
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);
@@ -103,7 +103,7 @@ public sealed record OpcodeLoaderTest
             .Returns(enumerator.GetEnumerator());
 
         _ = loader
-            .Setup(m => m.Load(It.IsAny<ResourceManager>()))
+            .Setup(m => m.Load(It.Ref<ResourceManager>.IsAny))
             .Returns(sets.Object);
 
         var subject = new OpcodeLoader(loader.Object);

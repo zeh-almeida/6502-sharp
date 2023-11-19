@@ -55,7 +55,7 @@ public sealed record RegisterManager : IRegisterManager
     }
 
     /// <inheritdoc/>
-    public void Load(ReadOnlyMemory<byte> data)
+    public void Load(in ReadOnlyMemory<byte> data)
     {
         if (data.IsEmpty)
         {

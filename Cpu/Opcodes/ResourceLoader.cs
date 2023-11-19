@@ -7,7 +7,7 @@ namespace Cpu.Opcodes;
 /// <summary>
 /// Reads all available resources from the desired source
 /// </summary>
-public class ResourceLoader
+public record ResourceLoader // Unsealed because of unit tests
 {
     /// <summary>
     /// Reads all available Resources from the Instruction definitions
@@ -26,7 +26,7 @@ public class ResourceLoader
     /// <param name="manager"><see cref="ResourceManager"/> containing all resource definitions</param>
     /// <returns><see cref="ResourceSet"/> referencing all data</returns>
     /// <exception cref="MisconfiguredOpcodeException">Thrown if resources cannot be read</exception>
-    public virtual ResourceSet Load(ResourceManager manager)
+    public virtual ResourceSet Load(in ResourceManager manager) // Virtual because of unit tests
     {
         ArgumentNullException.ThrowIfNull(manager, nameof(manager));
 

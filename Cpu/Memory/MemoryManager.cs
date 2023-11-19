@@ -38,105 +38,105 @@ public sealed record MemoryManager : IMemoryManager
 
     #region Write
     /// <inheritdoc/>
-    public void WriteZeroPage(ushort address, byte value)
+    public void WriteZeroPage(in ushort address, in byte value)
     {
         var finalAddressZero = WrapZeroPageAddress(address);
         this.WriteAbsolute(finalAddressZero, value);
     }
 
     /// <inheritdoc/>
-    public void WriteZeroPageX(ushort address, byte value)
+    public void WriteZeroPageX(in ushort address, in byte value)
     {
-        var addressZero = (ushort)(address + this.RegisterManager.IndexX);
-        var finalAddressZero = WrapZeroPageAddress(addressZero);
+        var addressZero = address + this.RegisterManager.IndexX;
+        var finalAddressZero = WrapZeroPageAddress((ushort)addressZero);
 
         this.WriteAbsolute(finalAddressZero, value);
     }
 
     /// <inheritdoc/>
-    public void WriteZeroPageY(ushort address, byte value)
+    public void WriteZeroPageY(in ushort address, in byte value)
     {
-        var addressZero = (ushort)(address + this.RegisterManager.IndexY);
-        var finalAddressZero = WrapZeroPageAddress(addressZero);
+        var addressZero = address + this.RegisterManager.IndexY;
+        var finalAddressZero = WrapZeroPageAddress((ushort)addressZero);
 
         this.WriteAbsolute(finalAddressZero, value);
     }
 
     /// <inheritdoc/>
-    public void WriteAbsolute(ushort address, byte value)
+    public void WriteAbsolute(in ushort address, in byte value)
     {
         this.Logger.LogAction(MemoryEvents.WriteAction, default, value, address);
         this.MemoryArea.Span[address] = value;
     }
 
     /// <inheritdoc/>
-    public void WriteAbsoluteX(ushort address, byte value)
+    public void WriteAbsoluteX(in ushort address, in byte value)
     {
-        var addressX = (ushort)(address + this.RegisterManager.IndexX);
-        this.WriteAbsolute(addressX, value);
+        var addressX = address + this.RegisterManager.IndexX;
+        this.WriteAbsolute((ushort)addressX, value);
     }
 
     /// <inheritdoc/>
-    public void WriteAbsoluteY(ushort address, byte value)
+    public void WriteAbsoluteY(in ushort address, in byte value)
     {
-        var addressY = (ushort)(address + this.RegisterManager.IndexY);
-        this.WriteAbsolute(addressY, value);
+        var addressY = address + this.RegisterManager.IndexY;
+        this.WriteAbsolute((ushort)addressY, value);
     }
 
     /// <inheritdoc/>
-    public void WriteIndirect(ushort address, byte value)
+    public void WriteIndirect(in ushort address, in byte value)
     {
         var realAddress = this.ReadWord(address);
         this.WriteAbsolute(realAddress, value);
     }
 
     /// <inheritdoc/>
-    public void WriteIndirectX(ushort address, byte value)
+    public void WriteIndirectX(in ushort address, in byte value)
     {
-        var addressX = (ushort)(address + this.RegisterManager.IndexX);
-        var realAddress = this.ReadWord(addressX);
+        var addressX = address + this.RegisterManager.IndexX;
+        var realAddress = this.ReadWord((ushort)addressX);
 
         this.WriteAbsolute(realAddress, value);
     }
 
     /// <inheritdoc/>
-    public void WriteIndirectY(ushort address, byte value)
+    public void WriteIndirectY(in ushort address, in byte value)
     {
         var realAddress = this.ReadWord(address);
-        var addressY = (ushort)(realAddress + this.RegisterManager.IndexY);
+        var addressY = realAddress + this.RegisterManager.IndexY;
 
-        this.WriteAbsolute(addressY, value);
+        this.WriteAbsolute((ushort)addressY, value);
     }
     #endregion
 
     #region Read
     /// <inheritdoc/>
-    public byte ReadZeroPage(ushort address)
+    public byte ReadZeroPage(in ushort address)
     {
         var finalAddressZero = WrapZeroPageAddress(address);
         return this.ReadAbsolute(finalAddressZero);
     }
 
     /// <inheritdoc/>
-    public byte ReadZeroPageX(ushort address)
+    public byte ReadZeroPageX(in ushort address)
     {
-        var addressZero = (ushort)(address + this.RegisterManager.IndexX);
-        var finalAddressZero = WrapZeroPageAddress(addressZero);
+        var addressZero = address + this.RegisterManager.IndexX;
+        var finalAddressZero = WrapZeroPageAddress((ushort)addressZero);
 
         return this.ReadAbsolute(finalAddressZero);
     }
 
     /// <inheritdoc/>
-    public byte ReadZeroPageY(ushort address)
+    public byte ReadZeroPageY(in ushort address)
     {
-        var addressZero = (ushort)(address + this.RegisterManager.IndexY);
-        var finalAddressZero = WrapZeroPageAddress(addressZero);
+        var addressZero = address + this.RegisterManager.IndexY;
+        var finalAddressZero = WrapZeroPageAddress((ushort)addressZero);
 
         return this.ReadAbsolute(finalAddressZero);
     }
 
     /// <inheritdoc/>
-    public byte ReadAbsolute(ushort address)
+    public byte ReadAbsolute(in ushort address)
     {
         var value = this.MemoryArea.Span[address];
         this.Logger.LogAction(MemoryEvents.ReadAction, default, value, address);
@@ -145,47 +145,50 @@ public sealed record MemoryManager : IMemoryManager
     }
 
     /// <inheritdoc/>
-    public (bool, byte) ReadAbsoluteX(ushort address)
+    public (bool, byte) ReadAbsoluteX(in ushort address)
     {
-        var finalAddress = (ushort)(address + this.RegisterManager.IndexX);
+        var finalAddress = address + this.RegisterManager.IndexX;
+        var unboxedAddress = (ushort)finalAddress;
 
-        var pageCrossed = address.CheckPageCrossed(finalAddress);
-        return (pageCrossed, this.ReadAbsolute(finalAddress));
+        var pageCrossed = address.CheckPageCrossed(unboxedAddress);
+        return (pageCrossed, this.ReadAbsolute(unboxedAddress));
     }
 
     /// <inheritdoc/>
-    public (bool, byte) ReadAbsoluteY(ushort address)
+    public (bool, byte) ReadAbsoluteY(in ushort address)
     {
-        var finalAddress = (ushort)(address + this.RegisterManager.IndexY);
+        var finalAddress = address + this.RegisterManager.IndexY;
+        var unboxedAddress = (ushort)finalAddress;
 
-        var pageCrossed = address.CheckPageCrossed(finalAddress);
-        return (pageCrossed, this.ReadAbsolute(finalAddress));
+        var pageCrossed = address.CheckPageCrossed(unboxedAddress);
+        return (pageCrossed, this.ReadAbsolute(unboxedAddress));
     }
 
     /// <inheritdoc/>
-    public byte ReadIndirect(ushort address)
+    public byte ReadIndirect(in ushort address)
     {
         var realAddress = this.ReadAbsolute(address);
         return this.ReadAbsolute(realAddress);
     }
 
     /// <inheritdoc/>
-    public byte ReadIndirectX(ushort address)
+    public byte ReadIndirectX(in ushort address)
     {
-        var addressX = (ushort)(address + this.RegisterManager.IndexX);
-        var realAddress = this.ReadWord(addressX);
+        var addressX = address + this.RegisterManager.IndexX;
+        var realAddress = this.ReadWord((ushort)addressX);
 
         return this.ReadAbsolute(realAddress);
     }
 
     /// <inheritdoc/>
-    public (bool, byte) ReadIndirectY(ushort address)
+    public (bool, byte) ReadIndirectY(in ushort address)
     {
         var realAddress = this.ReadWord(address);
-        var finalAddress = (ushort)(realAddress + this.RegisterManager.IndexY);
+        var finalAddress = realAddress + this.RegisterManager.IndexY;
+        var unboxedAddress = (ushort)finalAddress;
 
-        var pageCrossed = realAddress.CheckPageCrossed(finalAddress);
-        return (pageCrossed, this.ReadAbsolute(finalAddress));
+        var pageCrossed = realAddress.CheckPageCrossed(unboxedAddress);
+        return (pageCrossed, this.ReadAbsolute(unboxedAddress));
     }
     #endregion
 
@@ -197,7 +200,7 @@ public sealed record MemoryManager : IMemoryManager
     }
 
     /// <inheritdoc/>
-    public void Load(ReadOnlyMemory<byte> data)
+    public void Load(in ReadOnlyMemory<byte> data)
     {
         if (data.IsEmpty)
         {
@@ -213,7 +216,7 @@ public sealed record MemoryManager : IMemoryManager
     }
     #endregion
 
-    private ushort ReadWord(ushort address)
+    private ushort ReadWord(in ushort address)
     {
         var addressLsb = this.ReadAbsolute(address);
         var addressMsb = this.ReadAbsolute((ushort)(address + 1));
@@ -221,7 +224,7 @@ public sealed record MemoryManager : IMemoryManager
         return addressLsb.CombineBytes(addressMsb);
     }
 
-    private static ushort WrapZeroPageAddress(ushort address)
+    private static ushort WrapZeroPageAddress(in ushort address)
     {
         return (ushort)(address & 0xFF);
     }

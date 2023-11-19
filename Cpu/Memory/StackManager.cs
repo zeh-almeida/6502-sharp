@@ -30,7 +30,7 @@ public sealed record StackManager : IStackManager
     #endregion
 
     /// <inheritdoc/>
-    public void Push(byte value)
+    public void Push(in byte value)
     {
         var pointer = this.RegisterManager.StackPointer;
         var address = PadStackPointer(pointer);
@@ -40,7 +40,7 @@ public sealed record StackManager : IStackManager
     }
 
     /// <inheritdoc/>
-    public void Push16(ushort value)
+    public void Push16(in ushort value)
     {
         (var lsb, var msb) = value.SignificantBits();
 
@@ -68,7 +68,7 @@ public sealed record StackManager : IStackManager
         return lsb.CombineBytes(msb);
     }
 
-    private static ushort PadStackPointer(byte value)
+    private static ushort PadStackPointer(in byte value)
     {
         return (ushort)(LowestAddress | value);
     }

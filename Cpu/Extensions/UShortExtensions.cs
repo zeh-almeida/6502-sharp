@@ -33,7 +33,7 @@ public static class UShortExtensions
     /// <param name="lsb">Least significant bits</param>
     /// <param name="msb">Most significant bits</param>
     /// <returns>Combined 16-bit value</returns>
-    public static ushort CombineSignificantBits(this ushort lsb, ushort msb)
+    public static ushort CombineSignificantBits(this ushort lsb, in ushort msb)
     {
         return (ushort)(msb | lsb);
     }
@@ -67,7 +67,7 @@ public static class UShortExtensions
     /// <param name="index">Index of the bit to check</param>
     /// <returns>True if the bit is set, false otherwise</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the index is less than 0 or bigger than 15</exception>
-    public static bool IsBitSet(this ushort value, int index)
+    public static bool IsBitSet(this ushort value, in int index)
     {
         if (index is < 0 or >= 16)
         {
@@ -115,7 +115,7 @@ public static class UShortExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the last bit</param>
     /// <returns>Shifted value</returns>
-    public static ushort RotateRight(this ushort value, bool isCarry)
+    public static ushort RotateRight(this ushort value, in bool isCarry)
     {
         var shiftedValue = value >> 1;
         var carryMask = isCarry ? 0b_1000_0000_0000_0000 : 0b_0000_0000_0000_0000;
@@ -130,7 +130,7 @@ public static class UShortExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the first bit</param>
     /// <returns>Shifted value</returns>
-    public static ushort RotateLeft(this ushort value, bool isCarry)
+    public static ushort RotateLeft(this ushort value, in bool isCarry)
     {
         var shiftedValue = value << 1;
         var carryMask = isCarry.AsBinary();
@@ -179,7 +179,7 @@ public static class UShortExtensions
     /// <param name="value">Value to calculate from</param>
     /// <param name="offset">Value to offset to</param>
     /// <returns>Jump address</returns>
-    public static ushort BranchAddress(this ushort value, byte offset)
+    public static ushort BranchAddress(this ushort value, in byte offset)
     {
         return offset < 0x80
              ? (ushort)(value + offset)
@@ -193,7 +193,7 @@ public static class UShortExtensions
     /// <param name="currentAddress">Current address being looked</param>
     /// <param name="newAddress">Final address to be checked against</param>
     /// <returns>True if the page was crossed, false otherwise</returns>
-    public static bool CheckPageCrossed(this ushort currentAddress, ushort newAddress)
+    public static bool CheckPageCrossed(this ushort currentAddress, in ushort newAddress)
     {
         var previousBoundary = currentAddress.MostSignificantBits();
         var currentBoundary = newAddress.MostSignificantBits();
