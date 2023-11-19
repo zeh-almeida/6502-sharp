@@ -2,18 +2,20 @@
 using Xunit;
 
 namespace Test.Unit.Cpu.Execution.Exceptions;
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
 
 public sealed record ProgramExecutionExeptionTest
 {
     [Fact]
     public void Instantiate_Message_IsSet()
     {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. - Necessary for null tests
         const string message = "ERROR";
         var subject = new ProgramExecutionException(message, null);
 
         Assert.Equal(message, subject.Message);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
     }
+
     [Fact]
     public void Instantiate_InnerException_IsSet()
     {
@@ -25,5 +27,3 @@ public sealed record ProgramExecutionExeptionTest
 #pragma warning restore CA2201 // Do not raise reserved exception types
     }
 }
-
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.

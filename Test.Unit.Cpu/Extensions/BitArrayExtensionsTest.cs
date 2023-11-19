@@ -13,6 +13,7 @@ public sealed record BitArrayExtensionsTest
 #pragma warning disable CS8604 // Possible null reference argument.
         BitArray target = null;
         _ = Assert.Throws<ArgumentNullException>(() => target.AsEightBit());
+#pragma warning restore CS8604 // Possible null reference argument.
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
     }
 
