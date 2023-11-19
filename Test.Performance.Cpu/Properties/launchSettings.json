@@ -2,7 +2,7 @@
   "profiles": {
     "Test.Performance.Cpu": {
       "commandName": "Project",
-      "commandLineArgs": "--filter \"*\" --runtimes net7.0 net8.0"
+      "commandLineArgs": "--filter \"*\" --runtimes net8.0"
     }
   }
 }
