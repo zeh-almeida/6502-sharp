@@ -1,4 +1,6 @@
-﻿namespace Cpu.Extensions;
+﻿using System.Runtime.CompilerServices;
+
+namespace Cpu.Extensions;
 
 /// <summary>
 /// Additional functionality to the <see cref="byte"/> struct
@@ -11,6 +13,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="value">8-bit value</param>
     /// <returns>Least significant digits</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte LeastSignificantBits(this byte value)
     {
         return (byte)(value & 0x0F);
@@ -22,6 +25,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="value">8-bit value</param>
     /// <returns>Most significant digits</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte MostSignificantBits(this byte value)
     {
         return (byte)(value & 0xF0);
@@ -33,6 +37,7 @@ public static class ByteExtensions
     /// <param name="lsb">Least significant bits</param>
     /// <param name="msb">Most significant bits</param>
     /// <returns>Combined 8-bit value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte CombineSignificantBits(this byte lsb, in byte msb)
     {
         return (byte)(msb | lsb);
@@ -44,6 +49,7 @@ public static class ByteExtensions
     /// <param name="lsb">Least significant bits</param>
     /// <param name="msb">Most significant bits</param>
     /// <returns>Combined 16-bit number</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort CombineBytes(this byte lsb, in byte msb)
     {
         return (ushort)((msb << 8) | lsb);
@@ -54,6 +60,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="value">Value to check</param>
     /// <returns>True if bit 0 is set, false otherwise</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsFirstBitSet(this byte value)
     {
         return value.IsBitSet(0);
@@ -64,6 +71,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="value">Value to check</param>
     /// <returns>True if bit 7 is set, false otherwise</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsLastBitSet(this byte value)
     {
         return value.IsBitSet(7);
@@ -76,6 +84,7 @@ public static class ByteExtensions
     /// <param name="index">Index of the bit to check</param>
     /// <returns>True if the bit is set, false otherwise</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the index is less than 0 or bigger than 7</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsBitSet(this byte value, in int index)
     {
         if (index is < 0 or >= 8)
@@ -103,6 +112,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="value">Value to check</param>
     /// <returns>True if zero, false otherwise</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsZero(this byte value)
     {
         return 0.Equals(value);
@@ -115,6 +125,7 @@ public static class ByteExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the last bit</param>
     /// <returns>Shifted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte RotateRight(this byte value, in bool isCarry)
     {
         var shiftedValue = value >> 1;
@@ -130,6 +141,7 @@ public static class ByteExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the first bit</param>
     /// <returns>Shifted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte RotateLeft(this byte value, in bool isCarry)
     {
         var shiftedValue = value << 1;
@@ -144,6 +156,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="value">Vale to break down</param>
     /// <returns>least and most significant value pair</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static (byte lsb, byte msb) SignificantBits(this byte value)
     {
         var lsb = value.LeastSignificantBits();
@@ -158,6 +171,7 @@ public static class ByteExtensions
     /// <param name="value">BCD byte to convert</param>
     /// <returns>Hex byte</returns>
     /// <see href="https://github.com/amensch/e6502/blob/master/e6502CPU/Utility/CPUMath.cs"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte ToHex(this byte value)
     {
         return value <= 9
@@ -171,6 +185,7 @@ public static class ByteExtensions
     /// <param name="value">Hex byte to convert</param>
     /// <returns>BCD byte</returns>
     /// <see href="https://github.com/amensch/e6502/blob/master/e6502CPU/Utility/CPUMath.cs"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte ToBCD(this byte value)
     {
         return (value & 0x0f) > 0x09
@@ -183,6 +198,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="opcode"> opcode to format</param>
     /// <returns>Formatted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string AsHex(this byte opcode)
     {
         return $"0x{opcode:X2}";
@@ -193,6 +209,7 @@ public static class ByteExtensions
     /// </summary>
     /// <param name="opcode"> opcode to format</param>
     /// <returns>Formatted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string AsAssembly(this byte opcode)
     {
         return $"${opcode:X2}";

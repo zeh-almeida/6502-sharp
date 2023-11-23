@@ -6,6 +6,7 @@ using Cpu.Opcodes;
 using Cpu.Registers;
 using Cpu.States;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
 namespace Cpu.DependencyInjection;
 
@@ -23,6 +24,7 @@ public static class CpuServiceCollectionExtensions
     /// </summary>
     /// <param name="collection"><see cref="IServiceCollection"/>`to register to</param>
     /// <returns>Populated registry</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static IServiceCollection Add6502Cpu(this IServiceCollection collection)
     {
         var instructions = LoadInstructionTypes();
@@ -47,6 +49,7 @@ public static class CpuServiceCollectionExtensions
         return collection;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static Type[] LoadInstructionTypes()
     {
         return AppDomain.CurrentDomain
@@ -58,6 +61,7 @@ public static class CpuServiceCollectionExtensions
             .ToArray();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static IEnumerable<IOpcodeInformation> LoadOpcodes()
     {
         var loader = new OpcodeLoader();

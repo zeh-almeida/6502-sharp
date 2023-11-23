@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace Cpu.Extensions;
 
@@ -12,6 +13,7 @@ public static class BitArrayExtensions
     /// </summary>
     /// <param name="bitArray">Bit array</param>
     /// <returns>8-bit representation</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte AsEightBit(this BitArray bitArray)
     {
         ArgumentNullException.ThrowIfNull(bitArray, nameof(bitArray));
@@ -27,6 +29,7 @@ public static class BitArrayExtensions
     /// </summary>
     /// <param name="bitArray">Bit array</param>
     /// <returns>16-bit representation</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort AsSixteenBit(this BitArray bitArray)
     {
         ArgumentNullException.ThrowIfNull(bitArray, nameof(bitArray));

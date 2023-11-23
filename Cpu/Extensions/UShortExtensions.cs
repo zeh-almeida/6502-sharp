@@ -1,4 +1,6 @@
-﻿namespace Cpu.Extensions;
+﻿using System.Runtime.CompilerServices;
+
+namespace Cpu.Extensions;
 
 /// <summary>
 /// Additional functionality to the <see cref="ushort"/> struct
@@ -11,6 +13,7 @@ public static class UShortExtensions
     /// </summary>
     /// <param name="value">16-bit value</param>
     /// <returns>Least significant digits</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort LeastSignificantBits(this ushort value)
     {
         return (ushort)(value & 0x00FF);
@@ -22,6 +25,7 @@ public static class UShortExtensions
     /// </summary>
     /// <param name="value">16-bit value</param>
     /// <returns>Most significant digits</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort MostSignificantBits(this ushort value)
     {
         return (ushort)(value & 0xFF00);
@@ -33,6 +37,7 @@ public static class UShortExtensions
     /// <param name="lsb">Least significant bits</param>
     /// <param name="msb">Most significant bits</param>
     /// <returns>Combined 16-bit value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort CombineSignificantBits(this ushort lsb, in ushort msb)
     {
         return (ushort)(msb | lsb);
@@ -43,6 +48,7 @@ public static class UShortExtensions
     /// </summary>
     /// <param name="value">Value to check</param>
     /// <returns>True if bit 0 is set, false otherwise</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsFirstBitSet(this ushort value)
     {
         return value.IsBitSet(0);
@@ -55,6 +61,7 @@ public static class UShortExtensions
     /// <param name="value">Value to check</param>
     /// <returns>True if bit 7 is set, false otherwise</returns>
     /// <see cref="ByteExtensions.IsLastBitSet(byte)"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsSeventhBitSet(this ushort value)
     {
         return value.IsBitSet(7);
@@ -67,6 +74,7 @@ public static class UShortExtensions
     /// <param name="index">Index of the bit to check</param>
     /// <returns>True if the bit is set, false otherwise</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown if the index is less than 0 or bigger than 15</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsBitSet(this ushort value, in int index)
     {
         if (index is < 0 or >= 16)
@@ -103,6 +111,7 @@ public static class UShortExtensions
     /// </summary>
     /// <param name="value">Value to check</param>
     /// <returns>True if zero, false otherwise</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsZero(this ushort value)
     {
         return 0.Equals(value);
@@ -115,6 +124,7 @@ public static class UShortExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the last bit</param>
     /// <returns>Shifted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort RotateRight(this ushort value, in bool isCarry)
     {
         var shiftedValue = value >> 1;
@@ -130,6 +140,7 @@ public static class UShortExtensions
     /// <param name="value">Value to shift</param>
     /// <param name="isCarry">If true, sets the first bit</param>
     /// <returns>Shifted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort RotateLeft(this ushort value, in bool isCarry)
     {
         var shiftedValue = value << 1;
@@ -144,6 +155,7 @@ public static class UShortExtensions
     /// </summary>
     /// <param name="value">Vale to break down</param>
     /// <returns>least and most significant value pair</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static (byte lsb, byte msb) SignificantBits(this ushort value)
     {
         var lsb = (byte)LeastSignificantBits(value);
@@ -157,6 +169,7 @@ public static class UShortExtensions
     /// </summary>
     /// <param name="opcode"> opcode to format</param>
     /// <returns>Formatted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string AsHex(this ushort opcode)
     {
         return $"0x{opcode:X4}";
@@ -167,6 +180,7 @@ public static class UShortExtensions
     /// </summary>
     /// <param name="opcode"> opcode to format</param>
     /// <returns>Formatted value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string AsAssembly(this ushort opcode)
     {
         return $"${opcode:X4}";
@@ -179,6 +193,7 @@ public static class UShortExtensions
     /// <param name="value">Value to calculate from</param>
     /// <param name="offset">Value to offset to</param>
     /// <returns>Jump address</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort BranchAddress(this ushort value, in byte offset)
     {
         return offset < 0x80
@@ -193,6 +208,7 @@ public static class UShortExtensions
     /// <param name="currentAddress">Current address being looked</param>
     /// <param name="newAddress">Final address to be checked against</param>
     /// <returns>True if the page was crossed, false otherwise</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool CheckPageCrossed(this ushort currentAddress, in ushort newAddress)
     {
         var previousBoundary = currentAddress.MostSignificantBits();
