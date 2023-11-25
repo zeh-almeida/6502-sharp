@@ -18,9 +18,9 @@ public class CpuBenchmark
     /// <summary>
     /// Expected iterations for the benchmark
     /// </summary>
-    public const int ExpectedIterations = 10_000;
+    public const int ExpectedIterations = 100_000;
 
-    private const string ProgramName = "count_until";
+    private const string ProgramName = "read_all_memory";
     #endregion
 
     #region Properties
