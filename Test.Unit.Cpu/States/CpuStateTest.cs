@@ -180,7 +180,7 @@ public sealed record CpuStateTest
 
         var result = this.Subject.Save();
 
-        Assert.Equal([.. expected], result.ToArray());
+        Assert.Equal(expected, result.ToArray());
     }
 
     [Fact]
