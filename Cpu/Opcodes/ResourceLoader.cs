@@ -1,6 +1,8 @@
-﻿using Cpu.Opcodes.Exceptions;
+﻿using CommunityToolkit.Diagnostics;
+using Cpu.Opcodes.Exceptions;
 using System.Globalization;
 using System.Resources;
+using System.Runtime.CompilerServices;
 
 namespace Cpu.Opcodes;
 
@@ -15,6 +17,7 @@ public record ResourceLoader // Unsealed because of unit tests
     /// <returns><see cref="ResourceSet"/> referencing all data</returns>
     /// <exception cref="MisconfiguredOpcodeException">Thrown if resources cannot be read</exception>
     /// <seealso cref="InstructionDefinition"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ResourceSet LoadInstructions()
     {
         return this.Load(InstructionDefinition.ResourceManager);
@@ -26,9 +29,10 @@ public record ResourceLoader // Unsealed because of unit tests
     /// <param name="manager"><see cref="ResourceManager"/> containing all resource definitions</param>
     /// <returns><see cref="ResourceSet"/> referencing all data</returns>
     /// <exception cref="MisconfiguredOpcodeException">Thrown if resources cannot be read</exception>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual ResourceSet Load(in ResourceManager manager) // Virtual because of unit tests
     {
-        ArgumentNullException.ThrowIfNull(manager, nameof(manager));
+        Guard.IsNotNull(manager);
 
         return manager.GetResourceSet(CultureInfo.CurrentUICulture, true, true)
             ?? throw new MisconfiguredOpcodeException("Could not load resources");

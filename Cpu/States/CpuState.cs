@@ -1,4 +1,5 @@
-﻿using Cpu.Execution;
+﻿using CommunityToolkit.Diagnostics;
+using Cpu.Execution;
 using Cpu.Flags;
 using Cpu.Memory;
 using Cpu.Registers;
@@ -99,17 +100,7 @@ public sealed record CpuState : ICpuState
     /// <inheritdoc/>
     public void Load(in ReadOnlyMemory<byte> data)
     {
-        if (data.IsEmpty)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        var dataLength = data.Length;
-
-        if (!ICpuState.Length.Equals(dataLength))
-        {
-            throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {ICpuState.Length}, was {dataLength}");
-        }
+        Guard.IsEqualTo(data.Length, ICpuState.Length, nameof(data));
 
         var flagState = data.Slice(ICpuState.FlagOffset, 1).Span[0];
 
@@ -149,11 +140,7 @@ public sealed record CpuState : ICpuState
     /// <inheritdoc/>
     public void IncrementCycles(in int amount)
     {
-        if (amount < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(amount), "Must be greater or equal to 0");
-        }
-
+        Guard.IsGreaterThan(amount, 0);
         this.CyclesLeft += amount;
     }
 
@@ -167,7 +154,7 @@ public sealed record CpuState : ICpuState
     /// <inheritdoc/>
     public void SetExecutingInstruction(in DecodedInstruction decoded)
     {
-        ArgumentNullException.ThrowIfNull(decoded, nameof(decoded));
+        Guard.IsNotNull(decoded);
 
         this.DecodedInstruction = decoded;
         this.ExecutingOpcode = decoded.Information.Opcode;
@@ -185,7 +172,7 @@ public sealed record CpuState : ICpuState
     /// <inheritdoc/>
     public void AdvanceProgramCount(in DecodedInstruction decoded)
     {
-        ArgumentNullException.ThrowIfNull(decoded, nameof(decoded));
+        Guard.IsNotNull(decoded);
         this.Registers.ProgramCounter += decoded.Information.Bytes;
     }
 }

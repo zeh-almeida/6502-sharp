@@ -1,4 +1,5 @@
-﻿using Cpu.Extensions;
+﻿using CommunityToolkit.Diagnostics;
+using Cpu.Extensions;
 using Cpu.Instructions;
 using Cpu.Instructions.Exceptions;
 using Cpu.Opcodes;
@@ -13,9 +14,9 @@ namespace Cpu.Execution;
 public sealed record Decoder : IDecoder
 {
     #region Properties
-    private IEnumerable<IOpcodeInformation> Opcodes { get; }
+    private HashSet<IOpcodeInformation> Opcodes { get; }
 
-    private IEnumerable<IInstruction> Instructions { get; }
+    private HashSet<IInstruction> Instructions { get; }
     #endregion
 
     #region Constructors
@@ -28,6 +29,9 @@ public sealed record Decoder : IDecoder
         IEnumerable<IOpcodeInformation> opcodes,
         IEnumerable<IInstruction> instructions)
     {
+        Guard.IsNotNull(opcodes);
+        Guard.IsNotNull(instructions);
+
         this.Opcodes = opcodes.ToHashSet();
         this.Instructions = instructions.ToHashSet();
     }
@@ -36,7 +40,7 @@ public sealed record Decoder : IDecoder
     /// <inheritdoc/>
     public DecodedInstruction Decode(in ICpuState currentState)
     {
-        ArgumentNullException.ThrowIfNull(currentState, nameof(currentState));
+        Guard.IsNotNull(currentState);
 
         var opcode = ReadNextOpcode(currentState);
         var opcodeInfo = this.FetchOpcode(opcode);

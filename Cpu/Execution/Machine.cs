@@ -1,4 +1,5 @@
-﻿using Cpu.Execution.Exceptions;
+﻿using CommunityToolkit.Diagnostics;
+using Cpu.Execution.Exceptions;
 using Cpu.Extensions;
 using Cpu.States;
 using Microsoft.Extensions.Logging;
@@ -49,7 +50,7 @@ public sealed record Machine : IMachine
     /// <inheritdoc/>
     public bool Cycle(in Action<ICpuState> afterCycle)
     {
-        ArgumentNullException.ThrowIfNull(afterCycle, nameof(afterCycle));
+        Guard.IsNotNull(afterCycle);
 
         var result = this.Cycle();
         afterCycle(this.State);

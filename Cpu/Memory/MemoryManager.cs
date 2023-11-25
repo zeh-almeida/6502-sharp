@@ -1,4 +1,5 @@
-﻿using Cpu.Extensions;
+﻿using CommunityToolkit.Diagnostics;
+using Cpu.Extensions;
 using Cpu.Registers;
 using Microsoft.Extensions.Logging;
 
@@ -202,16 +203,7 @@ public sealed record MemoryManager : IMemoryManager
     /// <inheritdoc/>
     public void Load(in ReadOnlyMemory<byte> data)
     {
-        if (data.IsEmpty)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        if (!IMemoryManager.Length.Equals(data.Length))
-        {
-            throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {IMemoryManager.Length}");
-        }
-
+        Guard.IsEqualTo(data.Length, IMemoryManager.Length, nameof(data));
         data.CopyTo(this.MemoryArea);
     }
     #endregion

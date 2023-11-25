@@ -219,7 +219,7 @@ public sealed record CpuStateTest
     [Fact]
     public void Load_Null_Throws()
     {
-        _ = Assert.Throws<ArgumentNullException>(() => this.Subject.Load(null));
+        _ = Assert.Throws<ArgumentException>(() => this.Subject.Load(null));
     }
 
     [Theory]
@@ -229,7 +229,7 @@ public sealed record CpuStateTest
     {
         var memory = new byte[length];
 
-        _ = Assert.Throws<ArgumentOutOfRangeException>(() => this.Subject.Load(memory));
+        _ = Assert.Throws<ArgumentException>(() => this.Subject.Load(memory));
     }
     #endregion
 

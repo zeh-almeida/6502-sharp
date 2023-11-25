@@ -31,16 +31,6 @@ public sealed record FlagManager : IFlagManager
     public bool IsNegative { get; set; }
     #endregion
 
-    #region Constructors
-    /// <summary>
-    /// Instantiates a new flag manager
-    /// </summary>
-    public FlagManager()
-    {
-        // Empty on purpose
-    }
-    #endregion
-
     /// <inheritdoc/>
     #region Save/Load
     public byte Save()

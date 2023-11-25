@@ -186,7 +186,7 @@ public static class ByteExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte ToBCD(this byte value)
     {
-        Guard.IsLessThan(value & 0x0f, 0x09, nameof(value));
+        Guard.IsLessThanOrEqualTo(value & 0x0f, 0x09, nameof(value));
         return (byte)(((value >> 4) * 10) + (value & 0x0f));
     }
 

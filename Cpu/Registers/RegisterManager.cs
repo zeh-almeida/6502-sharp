@@ -1,4 +1,5 @@
-﻿using Cpu.Extensions;
+﻿using CommunityToolkit.Diagnostics;
+using Cpu.Extensions;
 
 namespace Cpu.Registers;
 
@@ -28,15 +29,6 @@ public sealed record RegisterManager : IRegisterManager
     public byte IndexY { get; set; }
     #endregion
 
-    #region Constructors
-    /// <summary>
-    /// Instantiates a new manager
-    /// </summary>
-    public RegisterManager()
-    {
-    }
-    #endregion
-
     #region Load/Save
     /// <inheritdoc/>
     public ReadOnlyMemory<byte> Save()
@@ -57,15 +49,7 @@ public sealed record RegisterManager : IRegisterManager
     /// <inheritdoc/>
     public void Load(in ReadOnlyMemory<byte> data)
     {
-        if (data.IsEmpty)
-        {
-            throw new ArgumentNullException(nameof(data));
-        }
-
-        if (data.Length != StateLength)
-        {
-            throw new ArgumentOutOfRangeException(nameof(data), $"Must have a length of {StateLength}");
-        }
+        Guard.IsEqualTo(data.Length, StateLength, nameof(data));
 
         var span = data.Span;
 
