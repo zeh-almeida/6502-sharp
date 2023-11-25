@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using CommunityToolkit.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Cpu.Extensions;
 
@@ -77,10 +78,7 @@ public static class UShortExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsBitSet(this ushort value, in int index)
     {
-        if (index is < 0 or >= 16)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0-15");
-        }
+        Guard.IsInRange(index, 0, 16);
 
         var mask = index switch
         {

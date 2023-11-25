@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CommunityToolkit.Diagnostics;
+using System.Collections;
 using System.Runtime.CompilerServices;
 
 namespace Cpu.Extensions;
@@ -16,7 +17,7 @@ public static class BitArrayExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte AsEightBit(this BitArray bitArray)
     {
-        ArgumentNullException.ThrowIfNull(bitArray, nameof(bitArray));
+        Guard.IsNotNull(bitArray);
 
         var array = new byte[((bitArray.Length - 1) / 8) + 1];
         bitArray.CopyTo(array, 0);
@@ -32,7 +33,7 @@ public static class BitArrayExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort AsSixteenBit(this BitArray bitArray)
     {
-        ArgumentNullException.ThrowIfNull(bitArray, nameof(bitArray));
+        Guard.IsNotNull(bitArray);
 
         var array = new byte[bitArray.Length];
         bitArray.CopyTo(array, 0);

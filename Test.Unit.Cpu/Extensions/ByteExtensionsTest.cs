@@ -151,7 +151,7 @@ public sealed record ByteExtensionsTest
     [InlineData(0x2F)]
     public void ToBCD_LargeLsb_Throws(byte value)
     {
-        _ = Assert.Throws<InvalidOperationException>(() => value.ToBCD());
+        _ = Assert.Throws<ArgumentOutOfRangeException>(() => value.ToBCD());
     }
 
     [Theory]

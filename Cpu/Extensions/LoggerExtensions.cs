@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace Cpu.Extensions;
 
@@ -17,11 +18,11 @@ public static class LoggerExtensions
     /// <see href="https://learn.microsoft.com/en-us/dotnet/core/extensions/high-performance-logging"/>
     public static void LogAction(this ILogger logger,
         in Action<ILogger, object, Exception?> logMessage,
-        in object data,
+    in object data,
         in Exception? ex = default)
     {
-        ArgumentNullException.ThrowIfNull(logMessage, nameof(logMessage));
-        ArgumentNullException.ThrowIfNull(data, nameof(data));
+        Guard.IsNotNull(logMessage);
+        Guard.IsNotNull(data);
 
         logMessage(logger, data, ex);
     }
@@ -37,7 +38,7 @@ public static class LoggerExtensions
         in Action<ILogger, Exception?> logMessage,
         in Exception? ex = default)
     {
-        ArgumentNullException.ThrowIfNull(logMessage, nameof(logMessage));
+        Guard.IsNotNull(logMessage);
         logMessage(logger, ex);
     }
 
@@ -54,8 +55,8 @@ public static class LoggerExtensions
         in Exception? ex = default,
         params object[] data)
     {
-        ArgumentNullException.ThrowIfNull(logMessage, nameof(logMessage));
-        ArgumentNullException.ThrowIfNull(data, nameof(data));
+        Guard.IsNotNull(logMessage);
+        Guard.IsNotNull(data);
 
         logMessage(logger, data[0], data[1], ex);
     }

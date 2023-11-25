@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using CommunityToolkit.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Cpu.Extensions;
 
@@ -87,10 +88,7 @@ public static class ByteExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsBitSet(this byte value, in int index)
     {
-        if (index is < 0 or >= 8)
-        {
-            throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0-7");
-        }
+        Guard.IsInRange(index, 0, 8);
 
         var mask = index switch
         {
@@ -188,9 +186,8 @@ public static class ByteExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte ToBCD(this byte value)
     {
-        return (value & 0x0f) > 0x09
-            ? throw new InvalidOperationException($"Invalid BCD number: {value:X2}")
-            : (byte)(((value >> 4) * 10) + (value & 0x0f));
+        Guard.IsLessThan(value & 0x0f, 0x09, nameof(value));
+        return (byte)(((value >> 4) * 10) + (value & 0x0f));
     }
 
     /// <summary>
