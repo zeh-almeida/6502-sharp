@@ -79,5 +79,15 @@ namespace Test.Performance.Cpu.Files {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] read_all_memory {
+            get {
+                object obj = ResourceManager.GetObject("read_all_memory", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
